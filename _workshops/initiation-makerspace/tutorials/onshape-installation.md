@@ -50,13 +50,13 @@ image="2022-06-29-16-33-25.png" %}
 {% include step-tuto.html
 greyBackground = true
 title="STEP 2"
-content="Fill out the form below to create your education account. **Note**: use your *UniLaSalle* email to fill out the form."
+content="Fill out the form below to create your education account. **Note**: use your *university/student* email to fill out the form."
 image="2022-06-29-16-39-55.png" %}
 
 {% include step-tuto.html
 greyBackground = false
 title="STEP 3"
-content="An activation email should be sent to you after the form. Click on the link that will be sent to your email to activate your account.
+content="An activation email should be sent to you after you complete the form. Click on the link that will be sent to your email to activate your account.
 ![](2022-06-29-16-44-41.png)"
 image="2022-06-29-16-43-15.png" %}
 

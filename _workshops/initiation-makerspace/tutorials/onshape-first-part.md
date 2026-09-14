@@ -31,7 +31,7 @@ softwares:
 
 ![](2022-09-08-09-17-59.png)
 
-The objective of this tutorial is to discover the basic functions of OnShape by step-by-step creating the part shown above. All the functions used are not exhaustively explained, so feel free to test some options yourself.
+The goal of this tutorial is to discover the basic functions of OnShape by step-by-step creating the part shown above. All the functions used are not exhaustively explained, so feel free to test some options yourself.
 
 ## Creating Your Project
 
@@ -90,7 +90,7 @@ image="2022-09-07-14-24-44.png" %}
 {% include step-tuto.html
 greyBackground = false
 title="3 - Function and Part Tree"
-content="On the right, you will find the display area for the function and part tree. It details all the parts of your project (at the bottom) as well as all the functions of your current part (at the top). For better readability, you can hide this area by clicking on the button ![](2022-09-07-14-30-00.png)."
+content="On the right, you will find the display area for the function and part tree. It details all the parts of your project (at the bottom) as well as all the functions of your current part (at the top). For better readability, you can hide this area by clicking on this button ![](2022-09-07-14-30-00.png)."
 image="2022-09-07-14-28-22.png" %}
 
 {% include step-tuto.html
@@ -246,7 +246,7 @@ image="2022-09-07-15-48-40.png" %}
 {% include step-tuto.html
 greyBackground = true
 title="STEP 12: Drilling Sketch"
-content="Create a **sketch** on the top plane (Top) and reproduce the sketch opposite using the **Center Circle** tool ![](2022-09-08-08-49-03.png). Constrain the elements as seen previously, then **Validate** ![](2022-09-07-15-17-39.png) to exit."
+content="Create a **sketch** on the top plane (Top) and reproduce the following sketch  using the **Center Circle** tool ![](2022-09-08-08-49-03.png). Constrain the elements as seen previously, then **Validate** ![](2022-09-07-15-17-39.png) to exit."
 image="2022-09-07-16-23-34.png" %}
 
 {% include step-tuto.html

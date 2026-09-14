@@ -34,7 +34,7 @@ This workshop introduces you to two rapid prototyping techniques: **3D printing*
 - **Find your way around the MakerSpace**: its spaces, its machines and how to use them safely.
 - **Draw in 2D with Inkscape**: create clean vector paths ready for laser cutting (keychain, bookmark).
 - **Model in 3D with OnShape**: from your first part to a functional phone holder.
-- **Go from model to material**: slice a part with Cura and launch a print on the MakerSpace printers.
+- **Go from model to material**: slice a part with Orca and launch a print on the MakerSpace printers.
 
 ## Who is this workshop for?
 
