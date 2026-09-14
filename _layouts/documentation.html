@@ -1,6 +1,8 @@
 ---
 layout: default
 ---
+{%- assign _lang = page.lang | default: site.lang | default: 'fr' -%}
+{%- assign _i18n = site.data.i18n[_lang] | default: site.data.i18n.fr -%}
 <head>
     {% include model-viewer-include.html %}
     {% include kicanvas-include.html %}
@@ -175,7 +177,7 @@ layout: default
                 {% if page.time %}
                     <div class="panel-block">
                         {% include rating.html
-                            title="Durée"
+                            title=_i18n.duration
                             rating=page.time 
                             icon="fa-clock"
                             align="has-text-left"
@@ -209,7 +211,7 @@ layout: default
                 {% if page.difficulty %}
                     <div class="panel-block">
                         {% include rating.html
-                            title="Difficulté" 
+                            title=_i18n.difficulty 
                             rating=page.difficulty 
                             icon="fa-star"
                             align="has-text-left"
@@ -222,7 +224,7 @@ layout: default
                     <div class="panel-block">
                         <div class="content has-text-left is-flex align-items-center">
                             <!-- Texte Compatibilité avec icônes alignées sur la même ligne -->
-                            <p class="is-size-6 has-text-weight-semibold mr-2">Compatibilité :</p>
+                            <p class="is-size-6 has-text-weight-semibold mr-2">{{ _i18n.compatibility }}</p>
                             {% if page.compatibilities-os contains 'win' %}
                                 <span class="icon mr-1"><i class="fab fa-windows"></i></span>
                             {% endif %}
@@ -241,7 +243,7 @@ layout: default
                 {% if page.prerequisites %}
                     <div class="panel-block">
                         <div class="content">
-                            <p class="is-size-6 has-text-weight-semibold mb-0">Pré-requis :</p>
+                            <p class="is-size-6 has-text-weight-semibold mb-0">{{ _i18n.prerequisites_label }}</p>
                             <ul class="mt-1">
                                 {% for prerequisite in page.prerequisites %}
                                     {% if prerequisite.link %}
@@ -259,7 +261,7 @@ layout: default
                 {% if page.softwares %}
                     <div class="panel-block">
                         <div class="content">
-                            <p class="is-size-6 has-text-weight-semibold mb-0">Logiciels :</p>
+                            <p class="is-size-6 has-text-weight-semibold mb-0">{{ _i18n.softwares_label }}</p>
                             <ul class="mt-1">
                                 {% for software in page.softwares %}
                                     {% if software.link %}
@@ -277,7 +279,7 @@ layout: default
                 {% if page.hardwares %}
                     <div class="panel-block">
                         <div class="content">
-                            <p class="is-size-6 has-text-weight-semibold mb-0">Machines/Outils :</p>
+                            <p class="is-size-6 has-text-weight-semibold mb-0">{{ _i18n.hardwares_label }}</p>
                             <ul class="mt-1">
                                 {% for hardware in page.hardwares %}
                                     {% if hardware.link %}
@@ -387,7 +389,7 @@ layout: default
                 {% if page.todo %}
                     <div class="panel-block">
                         <span class="is-size-6 has-text-weight-semibold mb-1">
-                            Documentation réalisée à {{ page.todo }}%
+                            {{ _i18n.todo_label }} {{ page.todo }}%
                         </span>
                             {% if page.todo <= 25 %}
                                 <progress class="progress is-danger is-medium" value="{{ page.todo }}" max="100">{{ page.todo }}</progress>
@@ -403,7 +405,7 @@ layout: default
                 {% if page.author %}
                 <div class="panel-block">
                     <div class="content">
-                        <b>Créée par :&nbsp;</b> {{ page.author }}
+                        <b>{{ _i18n.created_by }}&nbsp;</b> {{ page.author }}
                     </div>
                 </div>
                 {% endif %}
@@ -482,7 +484,7 @@ layout: default
                   <a href="{{ prev_tuto.url | relative_url }}" class="tuto-nav-btn" data-base-url="{{ prev_tuto.url | relative_url }}">
                     <i class="fas fa-arrow-left"></i>
                     <span>
-                      <small>Précédent</small>
+                      <small>{{ _i18n.previous }}</small>
                       {{ prev_tuto.title }}
                     </span>
                   </a>
@@ -492,7 +494,7 @@ layout: default
                   {% if next_tuto %}
                   <a href="{{ next_tuto.url | relative_url }}" class="tuto-nav-btn tuto-nav-btn--next" data-base-url="{{ next_tuto.url | relative_url }}">
                     <span>
-                      <small>Suivant</small>
+                      <small>{{ _i18n.next }}</small>
                       {{ next_tuto.title }}
                     </span>
                     <i class="fas fa-arrow-right"></i>
@@ -538,7 +540,7 @@ layout: default
                   <a href="{{ prev_concept.url | relative_url }}" class="tuto-nav-btn" data-base-url="{{ prev_concept.url | relative_url }}">
                     <i class="fas fa-arrow-left"></i>
                     <span>
-                      <small>Précédent</small>
+                      <small>{{ _i18n.previous }}</small>
                       {{ prev_concept.title }}
                     </span>
                   </a>
@@ -548,7 +550,7 @@ layout: default
                   {% if next_concept %}
                   <a href="{{ next_concept.url | relative_url }}" class="tuto-nav-btn tuto-nav-btn--next" data-base-url="{{ next_concept.url | relative_url }}">
                     <span>
-                      <small>Suivant</small>
+                      <small>{{ _i18n.next }}</small>
                       {{ next_concept.title }}
                     </span>
                     <i class="fas fa-arrow-right"></i>
@@ -594,7 +596,7 @@ layout: default
                   <a href="{{ prev_special.url | relative_url }}" class="tuto-nav-btn" data-base-url="{{ prev_special.url | relative_url }}">
                     <i class="fas fa-arrow-left"></i>
                     <span>
-                      <small>Précédent</small>
+                      <small>{{ _i18n.previous }}</small>
                       {{ prev_special.title }}
                     </span>
                   </a>
@@ -604,7 +606,7 @@ layout: default
                   {% if next_special %}
                   <a href="{{ next_special.url | relative_url }}" class="tuto-nav-btn tuto-nav-btn--next" data-base-url="{{ next_special.url | relative_url }}">
                     <span>
-                      <small>Suivant</small>
+                      <small>{{ _i18n.next }}</small>
                       {{ next_special.title }}
                     </span>
                     <i class="fas fa-arrow-right"></i>

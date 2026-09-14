@@ -12,7 +12,7 @@ Enfin, le Makerspace est un outil pédagogique fort et ancré dans l’école. I
 
 ## Accès et horaires
 
-Le Makerspace est accessible librement chaque semaine le mercredi de 18h à 21h et le jeudi de 13h30 à 18h. (Dans le cadre de projets personnels, chacun est responsable du matériel et des ressources pour sa réalisation.)
+Le Makerspace est accessible en accès libre chaque semaine le mercredi de 18h à 21h et le jeudi de 13h30 à 18h. (Dans le cadre de projets personnels, chacun est responsable du matériel et des ressources pour sa réalisation.) En présence d'un responsable, il est également ouvert du lundi au vendredi de 9h à 18h (le mercredi selon la disponibilité d'un responsable).
 
 Un atelier peut être organisé chaque semaine (perfectionnement, initiation, découverte technique, etc…).
 

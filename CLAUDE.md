@@ -142,6 +142,14 @@ Le champ `kind` distingue les deux natures d'ateliers, sur la page `/workshops/`
 
 Le filtre est porté par l'include `card_collections.html` (paramètre `kind="project"` / `kind="course"`). Tout `index.md` d'atelier **doit** avoir un `kind` — sans lui, l'atelier n'apparaît dans aucune des deux sections.
 
+### Atelier en anglais — champ `lang`
+
+Le site est en français (`lang: fr` dans `_config.yml`), mais une page peut basculer son interface en anglais avec `lang: en` dans son front matter (ex : atelier `initiation-makerspace`). Les libellés des layouts `project-home`, `documentation` et de l'include `project-tutos.html` (« Tutoriels », « Commencer », « Précédent/Suivant », « Durée », « Pré-requis »…) sont lus dans `_data/i18n.yml` (clés `fr` / `en`).
+
+- Mettre `lang: en` sur **l'`index.md` et sur chaque sous-page** de l'atelier (la barre de progression et la navigation sont rendues par la sous-page).
+- Tout nouveau libellé ajouté à ces layouts doit passer par `_data/i18n.yml` (variable `_i18n`), jamais en dur.
+- La navbar et le footer restent en français (globaux au site).
+
 ---
 
 ## Navbar — dropdown Ateliers
