@@ -17,12 +17,12 @@ subtitle: Your first steps in rapid prototyping
 
 tutorials:
   - /workshops/initiation-makerspace/tutorials/getting-started/
-  - /workshops/initiation-makerspace/tutorials/inkscape-keychain/
-  - /workshops/initiation-makerspace/tutorials/inkscape-bookmark/
   - /workshops/initiation-makerspace/tutorials/onshape-installation/
   - /workshops/initiation-makerspace/tutorials/onshape-first-part/
   - /workshops/initiation-makerspace/tutorials/onshape-phone-holder/
   - /workshops/initiation-makerspace/tutorials/modeling-training/
+  - /workshops/initiation-makerspace/tutorials/inkscape-keychain/
+  - /workshops/initiation-makerspace/tutorials/inkscape-bookmark/
 ---
 
 Welcome to the **MakerSpace Initiation** workshop!
