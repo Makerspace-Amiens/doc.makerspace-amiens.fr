@@ -8,7 +8,7 @@ title: A propos
 subtitle: A propos du site de documentation du MakerSpace
 ---
 
-## 🇫🇷 MakerSpace Amiens – Documentation & Ressources
+## MakerSpace Amiens – Documentation & Ressources
 
 Ce site regroupe la documentation technique officielle et les ressources pédagogiques du MakerSpace d’UniLaSalle Amiens.
 
@@ -31,7 +31,7 @@ Le MakerSpace défend une approche fondée sur l’autonomie, la culture de la d
 
 ---
 
-## 🇬🇧 MakerSpace Amiens – Documentation & Resources
+## MakerSpace Amiens – Documentation & Resources
 
 This website provides the official technical documentation and educational resources of the MakerSpace at UniLaSalle Amiens.
 
