@@ -239,6 +239,12 @@ Règles importantes à respecter :
 - Nommer les langages des blocs de code (` ```bash `, ` ```cpp `, etc.).
 - **Ne pas encadrer de `< >` les URLs à l'intérieur des paramètres Liquid** (`items=`, `content=`, etc.) — markdownlint le fait par erreur lors d'un auto-fix.
 
+## Typographie du contenu
+
+- **Pas de tiret cadratin (—) dans le contenu documentaire** (`_docs/`, `_workshops/`, `_ressources/`, pages racine), ni dans le corps, ni dans le front matter, ni dans les paramètres d'includes Liquid. Reformuler avec `:` (explication), `,` (apposition), `;` (deux propositions liées), des parenthèses (incise) ou une phrase séparée.
+- Pour les titres d'étapes, le format est `## Étape 1 : Câbler l'écran` (deux-points, jamais de tiret).
+- **Piège YAML** : une valeur de front matter qui contient ` : ` doit être mise entre guillemets (`subtitle: "Niveau 2 : Accompagnée"`), sinon Jekyll lève une `YAML Exception` et la page n'est pas générée.
+
 ---
 
 ## CSS / Thème
