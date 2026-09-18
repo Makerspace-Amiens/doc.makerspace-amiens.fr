@@ -74,7 +74,7 @@ image_3="image-2.png" %}
 
 {% include step-tuto.html
 greyBackground = true
-content="Une fois la température atteinte, l’imprimante effectue un mouvement permettant de couper et de rétracter le filament. Attendez la fin de cette séquence : l’imprimante vous demandera alors de retirer le filament de l’extrudeur (voir image). Tirez doucement sur le filament pour l’extraire — il devrait venir sans forcer. Si ce n’est pas le cas, arrêtez immédiatement la procédure et contactez un encadrant. "
+content="Une fois la température atteinte, l’imprimante effectue un mouvement permettant de couper et de rétracter le filament. Attendez la fin de cette séquence : l’imprimante vous demandera alors de retirer le filament de l’extrudeur (voir image). Tirez doucement sur le filament pour l’extraire : il devrait venir sans forcer. Si ce n’est pas le cas, arrêtez immédiatement la procédure et contactez un encadrant. "
 image="image-3.png"
 image_2="image-4.png"
 image_3="image-5.png" %}

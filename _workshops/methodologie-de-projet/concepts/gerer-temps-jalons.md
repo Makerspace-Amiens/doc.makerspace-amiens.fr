@@ -24,7 +24,7 @@ une commande de composant met le temps qu'elle met à arriver, une carte
 électronique fabriquée à l'extérieur revient sous un délai fixe. Aucune
 énergie supplémentaire n'accélère ça.
 
-{% include message.html title="Le vrai risque planning" message="Ce n'est presque jamais le travail de l'équipe qui fait déraper un planning de projet maker. C'est un délai externe identifié trop tard — un composant en rupture de stock découvert en semaine 6, alors qu'il fallait le commander en semaine 1." status="is-warning" icon="fas fa-exclamation-triangle" %}
+{% include message.html title="Le vrai risque planning" message="Ce n'est presque jamais le travail de l'équipe qui fait déraper un planning de projet maker. C'est un délai externe identifié trop tard : un composant en rupture de stock découvert en semaine 6, alors qu'il fallait le commander en semaine 1." status="is-warning" icon="fas fa-exclamation-triangle" %}
 
 ## Identifier les délais externes dès le départ
 
@@ -64,7 +64,7 @@ est un.
 {% include code-snippet.html label="Copier le tableau (Markdown)" content=snippet_jalons %}
 
 Ces jalons reprennent directement les critères de réussite du cahier des
-charges — ce ne sont pas des dates inventées, ce sont les mêmes seuils,
+charges : ce ne sont pas des dates inventées, ce sont les mêmes seuils,
 placés dans le temps.
 
 ## Un planning simple suffit

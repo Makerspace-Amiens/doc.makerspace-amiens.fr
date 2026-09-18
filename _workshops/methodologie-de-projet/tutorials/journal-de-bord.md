@@ -66,8 +66,8 @@ driver de rechange (livraison 3 jours).
 ## Quand écrire une entrée
 
 - À la fin de chaque séance de travail, même courte.
-- À la fin de chaque point de synchro d'équipe, avec les décisions prises
-  — voir [Communiquer en équipe](/workshops/methodologie-de-projet/concepts/communiquer-en-equipe/).
+- À la fin de chaque point de synchro d'équipe, avec les décisions prises,
+  voir [Communiquer en équipe](/workshops/methodologie-de-projet/concepts/communiquer-en-equipe/).
 - Dès qu'un choix technique important est fait (en plus, si le choix est
   significatif, du format détaillé vu dans
   [Tracer ses choix techniques](/workshops/methodologie-de-projet/concepts/tracer-choix-techniques/)).

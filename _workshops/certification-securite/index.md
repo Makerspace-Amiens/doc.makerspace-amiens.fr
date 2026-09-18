@@ -37,13 +37,13 @@ Elle est indépendante des cours suivis : que la machine ait été vue en cours 
 
 L'accès au MakerSpace est organisé en 4 niveaux, selon le risque associé à chaque machine ou espace.
 
-**Niveau 0 — Espace commun.** Établis, outillage à main non motorisé, zone projet. Accès libre, aucun prérequis.
+**Niveau 0 : Espace commun.** Établis, outillage à main non motorisé, zone projet. Accès libre, aucun prérequis.
 
-**Niveau 1 — Impression 3D FDM.** Risque faible, utilisation en autonomie.
+**Niveau 1 : Impression 3D FDM.** Risque faible, utilisation en autonomie.
 
-**Niveau 2 — Résine, soudure, thermoformage.** Risque modéré à élevé, accompagnement pratique nécessaire.
+**Niveau 2 : Résine, soudure, thermoformage.** Risque modéré à élevé, accompagnement pratique nécessaire.
 
-**Niveau 3 — Laser, CNC.** Risque élevé, formation approfondie et toujours accompagnée.
+**Niveau 3 : Laser, CNC.** Risque élevé, formation approfondie et toujours accompagnée.
 
 Chaque module ci-dessous est indépendant des autres : vous pouvez les consulter dans l'ordre qui vous concerne.
 

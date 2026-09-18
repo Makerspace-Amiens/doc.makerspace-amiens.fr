@@ -54,7 +54,7 @@ Ce n'est pas un équipement pour de grandes quantités de solvants évaporés, d
 
 **Mise en route :** allumer l'éclairage, vérifier que la vitre frontale est abaissée, démarrer l'appareil. Une phase de stabilisation d'environ 40 secondes suit (alarme sonore intermittente) : ne rien manipuler sous la hotte pendant ce temps. Une fois l'alarme arrêtée, la sorbonne est prête à l'emploi.
 
-**Pendant l'utilisation :** toujours travailler avec la vitre frontale complètement abaissée — c'est elle qui garantit la vitesse d'aspiration maximale. Une vitre grande ouverte réduit fortement l'efficacité de la protection.
+**Pendant l'utilisation :** toujours travailler avec la vitre frontale complètement abaissée. C'est elle qui garantit la vitesse d'aspiration maximale. Une vitre grande ouverte réduit fortement l'efficacité de la protection.
 
 **Arrêt :** retirer le matériel de la zone de travail, nettoyer le plan de travail, éteindre l'éclairage, puis éteindre l'appareil.
 

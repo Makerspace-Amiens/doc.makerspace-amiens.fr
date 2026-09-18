@@ -8,7 +8,7 @@ component_toc: true
 doc_header: true
 
 title: Scie à ruban
-subtitle: Accès très restreint — référents uniquement
+subtitle: Accès très restreint, référents uniquement
 description: Coupure, coincement et bris de lame à connaître avant d'utiliser la scie à ruban.
 author: Adrien Bracq
 
@@ -17,7 +17,7 @@ hardwares:
     link: /docs/references/machines/scie-a-ruban/
 ---
 
-{% include message.html title="Accès très restreint, sur demande uniquement" message="Contrairement aux autres machines du MakerSpace, la scie à ruban n'est pas en libre accès. Elle est verrouillée par une clé conservée par les référents, et son usage se fait uniquement à leur demande, pour un besoin spécifique — pas en autonomie, même après ce module. Ce module documente les risques et les consignes applicables lorsqu'un référent vous fait utiliser la machine, il ne donne pas accès à la machine par lui-même." status="is-warning" icon="fas fa-key" %}
+{% include message.html title="Accès très restreint, sur demande uniquement" message="Contrairement aux autres machines du MakerSpace, la scie à ruban n'est pas en libre accès. Elle est verrouillée par une clé conservée par les référents, et son usage se fait uniquement à leur demande, pour un besoin spécifique, pas en autonomie, même après ce module. Ce module documente les risques et les consignes applicables lorsqu'un référent vous fait utiliser la machine, il ne donne pas accès à la machine par lui-même." status="is-warning" icon="fas fa-key" %}
 
 ## À qui s'adresse ce module
 
@@ -43,7 +43,7 @@ La lame reste en mouvement en continu, y compris juste après la fin d'une coupe
 {% include epi-item.html icon="fas fa-glasses" label="Lunettes de protection" %}
 </div>
 
-Les lunettes de protection sont obligatoires. Aucun gant à proximité de la lame en mouvement — même logique que pour les autres machines à outil rotatif : un gant happé se dégage moins facilement qu'une main nue.
+Les lunettes de protection sont obligatoires. Aucun gant à proximité de la lame en mouvement : même logique que pour les autres machines à outil rotatif : un gant happé se dégage moins facilement qu'une main nue.
 
 ## Consignes avant / pendant l'utilisation
 
@@ -58,7 +58,7 @@ Les lunettes de protection sont obligatoires. Aucun gant à proximité de la lam
 
 ## Conduite à tenir en cas d'incident
 
-{% include message.html title="La règle absolue" message="Quel que soit l'incident, prévenez immédiatement le référent MakerSpace présent — c'est lui qui prend la direction des opérations. Votre sécurité passe avant tout : en cas de doute sur un geste, ne le faites pas, alertez et évacuez plutôt que d'intervenir." status="is-danger" icon="fas fa-triangle-exclamation" %}
+{% include message.html title="La règle absolue" message="Quel que soit l'incident, prévenez immédiatement le référent MakerSpace présent : c'est lui qui prend la direction des opérations. Votre sécurité passe avant tout : en cas de doute sur un geste, ne le faites pas, alertez et évacuez plutôt que d'intervenir." status="is-danger" icon="fas fa-triangle-exclamation" %}
 
 **Blessure mécanique (coupure, arrachement) :** couper immédiatement la machine, ne pas déplacer la victime si la blessure est grave, premiers secours, alerter le 15 (SAMU) ou le 112 si nécessaire.
 

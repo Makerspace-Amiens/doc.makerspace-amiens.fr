@@ -463,7 +463,7 @@ content="
 2. **Courant trop faible** : Augmenter Vref de 10% et retester
 3. **Vitesse trop rapide** : Augmenter le délai entre steps (minimum 500µs en full step)
 4. **Alimentation insuffisante** : Vérifier que la PSU peut fournir au moins 1.5A sous 12V
-5. **Mauvaise identification des bobines** : Mesurer avec un multimètre — les fils d'une même bobine ont une résistance de 2 à 6Ω entre eux
+5. **Mauvaise identification des bobines** : Mesurer avec un multimètre ; les fils d'une même bobine ont une résistance de 2 à 6Ω entre eux
 " %}
 
 ### Le driver chauffe trop

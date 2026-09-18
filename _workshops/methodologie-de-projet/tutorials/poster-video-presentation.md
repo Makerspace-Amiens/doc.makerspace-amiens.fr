@@ -43,7 +43,7 @@ Un poster de présentation répond, visuellement, en quelques secondes de
 lecture : quel problème, quelle solution, quels résultats.
 
 - **Contexte/problème** : une phrase, reprise de votre cahier des charges.
-- **Solution** : un visuel du prototype — photo réelle, pas juste un rendu
+- **Solution** : un visuel du prototype : photo réelle, pas juste un rendu
   CAO.
 - **Résultats** : un chiffre marquant (ex. "taux de tri : 85%"), repris de
   [Documenter les tests et résultats](/workshops/methodologie-de-projet/tutorials/documenter-tests-resultats/).
@@ -64,7 +64,7 @@ Structure qui fonctionne pour ce format court :
 4. **Conclusion** (10-15s) : ce que ça a permis, ce qu'on ferait
    différemment.
 
-{% include message.html title="Réutilisez vos rushs existants" message="Les photos et courtes vidéos prises pendant le montage (voir [Documenter l'assemblage et le montage](/workshops/methodologie-de-projet/tutorials/documenter-assemblage-montage/)) servent souvent directement de plans pour cette vidéo — pas besoin de tout refilmer à la fin." status="is-info" icon="fas fa-info-circle" %}
+{% include message.html title="Réutilisez vos rushs existants" message="Les photos et courtes vidéos prises pendant le montage (voir [Documenter l'assemblage et le montage](/workshops/methodologie-de-projet/tutorials/documenter-assemblage-montage/)) servent souvent directement de plans pour cette vidéo, pas besoin de tout refilmer à la fin." status="is-info" icon="fas fa-info-circle" %}
 
 ## Intégrer les deux dans le site
 
@@ -77,7 +77,7 @@ Structure qui fonctionne pour ce format court :
 {% include message.html title="Attention à la taille du fichier" message="Une vidéo trop lourde (>50 Mo en stockage local dans le repo) ralentit le clonage pour tout le monde. Compressez-la, ou hébergez-la ailleurs (YouTube non répertorié) et intégrez-la avec une iframe standard à la place (voir juste en dessous)." status="is-warning" icon="fas fa-exclamation-triangle" %}
 
 Pour une vidéo hébergée sur YouTube plutôt que stockée dans le repo,
-utilisez une balise `<iframe>` classique — ça fonctionne sur n'importe
+utilisez une balise `<iframe>` classique : ça fonctionne sur n'importe
 quel site, y compris le vôtre basé sur Just the Docs :
 
 ```html
@@ -91,5 +91,5 @@ vidéo YouTube (après `watch?v=`).
 
 Listez, parmi les photos/vidéos déjà prises pendant le projet, celles
 réutilisables pour le poster et la vidéo. Identifiez seulement ce qui
-manque encore à filmer ou photographier — probablement moins que prévu si
+manque encore à filmer ou photographier, probablement moins que prévu si
 la documentation a été faite au fil de l'eau.

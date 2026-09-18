@@ -35,7 +35,7 @@ hardwares:
 Au-delà du modèle 3D lui-même : le matériau choisi et pourquoi, les
 tolérances importantes (un jeu trop serré ne s'imprime pas, un jeu trop
 large devient instable), et les pièces qui ont demandé plusieurs
-itérations — voir [Prototyper et itérer](/workshops/methodologie-de-projet/concepts/prototyper-iterer/).
+itérations, voir [Prototyper et itérer](/workshops/methodologie-de-projet/concepts/prototyper-iterer/).
 
 ## Méthode simple : exporter une image de votre modèle
 
@@ -43,12 +43,12 @@ C'est la méthode qui marche toujours, sans rien installer de plus.
 
 {% include step-tuto.html
   greyBackground=true
-  title="Étape 1 — Cadrer la vue"
+  title="Étape 1 : Cadrer la vue"
   content="Dans votre logiciel de CAO, positionnez la vue 3D comme vous voulez qu'elle apparaisse dans la documentation (orientation, zoom). Sous FreeCAD, utilisez les vues prédéfinies (isométrique, face, dessus...) accessibles dans le menu **Affichage** pour un cadrage propre et reproductible." %}
 
 {% include step-tuto.html
   greyBackground=true
-  title="Étape 2 — Exporter en image"
+  title="Étape 2 : Exporter en image"
   content="**Sous FreeCAD** : menu **Outils > Enregistrer une image...** (*Tools > Save picture...*). Choisissez un nom de fichier, un format (PNG), et éventuellement une taille standard dans la liste déroulante, puis **Enregistrer**.
 
 **Sous OnShape** : clic droit sur la vue 3D, **Enregistrer sous forme d'image**, ou utilisez la fonction de capture native du logiciel.
@@ -57,7 +57,7 @@ C'est la méthode qui marche toujours, sans rien installer de plus.
 
 {% include step-tuto.html
   greyBackground=true
-  title="Étape 3 — Intégrer l'image dans votre page"
+  title="Étape 3 : Intégrer l'image dans votre page"
   content="Copiez l'image dans le dossier de votre page `docs/` (par exemple `docs/images/`), puis dans votre fichier Markdown :
 
 ```markdown
@@ -68,11 +68,11 @@ Répétez l'opération pour chaque pièce ou vue importante (vue éclatée, dét
 
 ## Pour aller plus loin : modèle 3D interactif (optionnel, plus avancé)
 
-{% include message.html title="Réservé à ceux qui veulent creuser" message="Cette section demande de modifier un fichier de configuration de votre site (_includes/head_custom.html) — pas obligatoire, une image suffit largement pour la plupart des projets." status="is-info" icon="fas fa-info-circle" %}
+{% include message.html title="Réservé à ceux qui veulent creuser" message="Cette section demande de modifier un fichier de configuration de votre site (_includes/head_custom.html), pas obligatoire, une image suffit largement pour la plupart des projets." status="is-info" icon="fas fa-info-circle" %}
 
 Le composant `<model-viewer>` (développé par Google) permet d'afficher un
 modèle 3D manipulable (rotation, zoom) directement dans une page web,
-sans rien télécharger — un simple lien vers un fichier hébergé en ligne.
+sans rien télécharger : un simple lien vers un fichier hébergé en ligne.
 
 {% capture step_mv_1 %}Créez le fichier `docs/_includes/head_custom.html` (créez le dossier `_includes` s'il n'existe pas encore) avec ce contenu :
 
@@ -80,10 +80,10 @@ sans rien télécharger — un simple lien vers un fichier hébergé en ligne.
 <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 ```
 
-Just the Docs charge automatiquement ce fichier sur chaque page — c'est le point d'extension officiel du thème pour ajouter du script.{% endcapture %}
+Just the Docs charge automatiquement ce fichier sur chaque page : c'est le point d'extension officiel du thème pour ajouter du script.{% endcapture %}
 {% include step-tuto.html
   greyBackground=true
-  title="Étape 1 — Activer le script sur toutes les pages"
+  title="Étape 1 : Activer le script sur toutes les pages"
   content=step_mv_1 %}
 
 {% capture step_mv_2 %}Exportez votre assemblage au format `.glb` depuis votre logiciel de CAO (FreeCAD : `Fichier > Exporter`, format glTF ; OnShape : export direct en glTF depuis le menu contextuel du document). Copiez le fichier dans le dossier de votre page, puis :
@@ -93,7 +93,7 @@ Just the Docs charge automatiquement ce fichier sur chaque page — c'est le poi
 ```{% endcapture %}
 {% include step-tuto.html
   greyBackground=true
-  title="Étape 2 — Utiliser la balise dans vos pages"
+  title="Étape 2 : Utiliser la balise dans vos pages"
   content=step_mv_2 %}
 
 ## La nomenclature des pièces
@@ -107,7 +107,7 @@ Just the Docs charge automatiquement ce fichier sur chaque page — c'est le poi
 
 ## Photos de l'assemblage réel
 
-Comme pour l'électronique, le modèle CAO montre l'intention — une photo
+Comme pour l'électronique, le modèle CAO montre l'intention, une photo
 montre ce qui a vraiment été assemblé, avec les ajustements faits en
 cours de route.
 

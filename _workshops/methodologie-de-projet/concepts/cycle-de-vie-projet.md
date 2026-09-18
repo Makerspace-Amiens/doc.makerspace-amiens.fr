@@ -17,7 +17,7 @@ todo: 70
 
 ## Une vue d'ensemble avant de zoomer
 
-Le reste de cet atelier détaille chaque étape d'un projet une par une —
+Le reste de cet atelier détaille chaque étape d'un projet une par une :
 cadrage, recherche, conception, réalisation, tests, présentation. Avant de
 plonger dans le détail de la première, il est utile d'avoir la carte
 complète du chemin : ça évite de perdre de vue où on va, et ça explique
@@ -44,7 +44,7 @@ graph TD
     A -.vérifie.-> G
 ```
 
-{% include message.html title="Pourquoi le mentionner" message="Le cycle en V complet est pensé pour de gros projets industriels avec des équipes séparées par métier. Sur un projet de quelques semaines en petite équipe, on ne le suit pas à la lettre — mais l'idée centrale reste utile : chaque étape de conception doit avoir sa vérification en face, pas juste être livrée en espérant que ça fonctionne." status="is-info" icon="fas fa-info-circle" %}
+{% include message.html title="Pourquoi le mentionner" message="Le cycle en V complet est pensé pour de gros projets industriels avec des équipes séparées par métier. Sur un projet de quelques semaines en petite équipe, on ne le suit pas à la lettre, mais l'idée centrale reste utile : chaque étape de conception doit avoir sa vérification en face, pas juste être livrée en espérant que ça fonctionne." status="is-info" icon="fas fa-info-circle" %}
 
 ## Les étapes, dans cet atelier
 
@@ -62,7 +62,7 @@ graph LR
     E -->|ça passe| F[Présentation<br/>et clôture]
 ```
 
-- **Cadrage** : définir le besoin et écrire le cahier des charges — voir
+- **Cadrage** : définir le besoin et écrire le cahier des charges, voir
   [Définir son besoin et son cahier des charges](/workshops/methodologie-de-projet/concepts/definir-son-besoin/).
 - **Recherche** : regarder ce qui existe déjà, étudier la faisabilité
   technique avant de s'engager.
@@ -88,7 +88,7 @@ passent en parallèle, du premier jour au dernier.
 - **Suivre le temps** : jalons, délais externes (commandes, impression 3D)
   qui ne dépendent pas de vous.
 
-Chacun de ces trois points a sa propre page dans cet atelier — ce sont eux
+Chacun de ces trois points a sa propre page dans cet atelier : ce sont eux
 qui font la différence entre une équipe qui livre un prototype qui fonctionne
 et une équipe qui livre un prototype **documenté, compris et transmissible**.
 

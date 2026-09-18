@@ -75,7 +75,7 @@ image_4="image-3.png" %}
 
 {% include step-tuto.html
 greyBackground = true
-content="Une fois la température atteinte appuyez sur **Confirm**, l’imprimante effectue un mouvement permettant de rétracter le filament. Attendez la fin de cette séquence(voir image). Une fois terminé, appuyez vers l'arrière sur la molette et tirez doucement sur le filament pour l’extraire — il devrait venir sans forcer. Si ce n’est pas le cas, arrêtez immédiatement la procédure et contactez un encadrant. "
+content="Une fois la température atteinte appuyez sur **Confirm**, l’imprimante effectue un mouvement permettant de rétracter le filament. Attendez la fin de cette séquence(voir image). Une fois terminé, appuyez vers l'arrière sur la molette et tirez doucement sur le filament pour l’extraire : il devrait venir sans forcer. Si ce n’est pas le cas, arrêtez immédiatement la procédure et contactez un encadrant. "
 image="image-4.png"
 image_2="image-5.png"
 image_3="image-6.png" %}

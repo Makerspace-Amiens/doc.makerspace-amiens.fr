@@ -32,7 +32,7 @@ hardwares:
 
 Les tutoriels précédents (électronique, mécanique) documentent chaque
 brique séparément. Un guide de montage, lui, documente **l'ordre et la
-manière** de les assembler ensemble — l'information qui manque le plus
+manière** de les assembler ensemble, l'information qui manque le plus
 souvent, alors qu'elle est la plus utile à qui veut reproduire le projet.
 
 ## Structurer le guide avec `step-tuto.html`
@@ -43,7 +43,7 @@ minimum pour ne pas se tromper.
 
 {% capture snippet_step %}{% raw %}{% include step-tuto.html
   greyBackground=true
-  title="Étape 1 — Fixer le châssis"
+  title="Étape 1 : Fixer le châssis"
   content="Fixez les 4 pieds imprimés sur le châssis avec des vis M3x10. Ne serrez pas complètement avant l'étape 3."
   image="etape1.jpg" %}{% endraw %}{% endcapture %}
 {% include code-snippet.html label="Copier le gabarit d'étape (Liquid)" content=snippet_step %}
@@ -54,7 +54,7 @@ minimum pour ne pas se tromper.
   sur son support avec les 2 vis fournies, sens du câble vers le bas".
 - **L'ordre qui compte** : signalez explicitement si une étape doit
   absolument précéder une autre (ex. "ne serrez pas avant l'étape 3").
-- **Une photo prise pendant le vrai montage**, pas un rendu CAO — voir
+- **Une photo prise pendant le vrai montage**, pas un rendu CAO, voir
   [Documenter au fil de l'eau](/workshops/methodologie-de-projet/concepts/documenter-au-fil-de-leau/).
 
 ## La liste d'outils et de matériel en tête de page
@@ -77,5 +77,5 @@ minimum pour ne pas se tromper.
 
 Rédigez le guide de montage de votre prototype avec `step-tuto.html`, une
 étape par action significative, puis faites-le suivre par un camarade qui
-n'a jamais assemblé le projet — notez tout ce qui l'a bloqué ou fait
+n'a jamais assemblé le projet : notez tout ce qui l'a bloqué ou fait
 hésiter.

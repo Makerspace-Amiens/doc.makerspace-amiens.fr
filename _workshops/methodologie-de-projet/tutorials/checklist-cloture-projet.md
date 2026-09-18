@@ -30,20 +30,20 @@ hardwares:
 
 ## Ce que cette checklist n'est pas
 
-Ce n'est pas le moment de commencer à documenter — si vous avez suivi
+Ce n'est pas le moment de commencer à documenter : si vous avez suivi
 [Documenter au fil de l'eau](/workshops/methodologie-de-projet/concepts/documenter-au-fil-de-leau/)
 tout au long du projet, il s'agit ici de **relire et vérifier**, pas de
 rédiger depuis rien. Prévoyez ce passage dans votre planning avec de la
-marge — voir [Gérer le temps et les jalons](/workshops/methodologie-de-projet/concepts/gerer-temps-jalons/).
+marge, voir [Gérer le temps et les jalons](/workshops/methodologie-de-projet/concepts/gerer-temps-jalons/).
 
 ## La checklist
 
 ### Cadrage et méthode
 
 - [ ] Le cahier des charges (`docs/objectifs.md`) reflète le projet final,
-      pas seulement l'intention de départ — voir
+      pas seulement l'intention de départ, voir
       [Définir son besoin](/workshops/methodologie-de-projet/concepts/definir-son-besoin/).
-- [ ] Les choix techniques importants sont tracés avec leur raison —
+- [ ] Les choix techniques importants sont tracés avec leur raison,
       [Tracer ses choix techniques](/workshops/methodologie-de-projet/concepts/tracer-choix-techniques/).
 - [ ] Le journal de bord couvre l'ensemble du projet, pas juste les
       premières semaines.
@@ -60,9 +60,9 @@ marge — voir [Gérer le temps et les jalons](/workshops/methodologie-de-projet
 ### Transmissibilité
 
 - [ ] Le README répond à : c'est quoi, comment le lancer, où trouver plus
-      de détails, quelles limites — voir
+      de détails, quelles limites, voir
       [Rendre son projet transmissible](/workshops/methodologie-de-projet/concepts/rendre-projet-transmissible/).
-- [ ] Une licence est choisie et présente (`LICENSE` à la racine) — voir
+- [ ] Une licence est choisie et présente (`LICENSE` à la racine), voir
       [Comprendre la propriété intellectuelle de son projet](/docs/how-to-guides/propriete-intellectuelle-projet/).
 - [ ] Le "test de l'étranger total" a été fait : quelqu'un d'extérieur
       comprend le projet en quelques minutes, rien qu'avec la doc.
@@ -73,7 +73,7 @@ marge — voir [Gérer le temps et les jalons](/workshops/methodologie-de-projet
 - [ ] Poster prêt, lisible en quelques secondes.
 - [ ] Vidéo de présentation prête, dans le format attendu.
 
-{% include message.html title="Cochez avec l'équipe, pas seul" message="Faites cette relecture à plusieurs. Une personne seule ne remarque pas ce qui lui semble évident — c'est justement ce qui manque le plus souvent à un lecteur extérieur." status="is-warning" icon="fas fa-exclamation-triangle" %}
+{% include message.html title="Cochez avec l'équipe, pas seul" message="Faites cette relecture à plusieurs. Une personne seule ne remarque pas ce qui lui semble évident : c'est justement ce qui manque le plus souvent à un lecteur extérieur." status="is-warning" icon="fas fa-exclamation-triangle" %}
 
 ## Le gabarit à copier
 

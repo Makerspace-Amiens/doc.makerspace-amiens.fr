@@ -35,7 +35,7 @@ hardwares:
 - **Le niveau projet** : un README ou une page qui explique l'architecture
   générale, avant même d'ouvrir un fichier.
 
-Les deux sont nécessaires — l'un sans l'autre laisse toujours un trou.
+Les deux sont nécessaires : l'un sans l'autre laisse toujours un trou.
 
 ## Commenter utilement, pas commenter beaucoup
 
@@ -74,7 +74,7 @@ for (int i = 0; i < 10; i++) {
   tab2=tab2
 %}
 
-{% include message.html title="La règle simple" message="Un commentaire ne doit jamais répéter ce que le code dit déjà — il doit dire ce que le code ne peut pas dire : pourquoi ce choix, ce que fait cette valeur magique, ce qu'il ne faut surtout pas changer et pourquoi." status="is-info" icon="fas fa-info-circle" %}
+{% include message.html title="La règle simple" message="Un commentaire ne doit jamais répéter ce que le code dit déjà ; il doit dire ce que le code ne peut pas dire : pourquoi ce choix, ce que fait cette valeur magique, ce qu'il ne faut surtout pas changer et pourquoi." status="is-info" icon="fas fa-info-circle" %}
 
 ## Documenter l'architecture
 
@@ -92,7 +92,7 @@ et comment flasher/lancer le tout.
 
 ## Librairies utilisées
 
-- `AccelStepper` — gestion du moteur pas à pas, choisie pour son support natif de l'accélération
+- `AccelStepper` : gestion du moteur pas à pas, choisie pour son support natif de l'accélération
 
 ## Flasher le firmware
 

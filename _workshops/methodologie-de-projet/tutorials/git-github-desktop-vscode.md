@@ -43,53 +43,53 @@ graph LR
 ```
 
 - **Modifier** : vous éditez des fichiers normalement, dans VSCode ou
-  ailleurs — rien de spécial à Git à ce stade.
+  ailleurs, rien de spécial à Git à ce stade.
 - **Stage** (mettre en attente) : vous choisissez quels fichiers modifiés
   vont dans le prochain commit. Utile si vous avez travaillé sur deux
   choses différentes en même temps : vous pouvez committer l'une sans
   l'autre.
 - **Commit** : un instantané de ces modifications, avec un message qui
   explique quoi et pourquoi. Le commit reste **sur votre ordinateur**
-  jusqu'au push suivant — personne d'autre ne le voit encore.
+  jusqu'au push suivant : personne d'autre ne le voit encore.
 - **Push** : vos commits sont envoyés sur GitHub, où le reste de l'équipe
   peut les récupérer.
-- **Fetch / Pull** : l'inverse du push — récupérer les commits que les
+- **Fetch / Pull** : l'inverse du push, récupérer les commits que les
   autres ont envoyés sur GitHub, pour les avoir aussi sur votre machine.
   **Fetch** regarde ce qui a changé sans encore rien télécharger, **Pull**
   télécharge et applique les changements.
 
-{% include message.html title="Pourquoi pas juste Google Drive ?" message="Un dossier partagé écrase les fichiers sans prévenir en cas de modification simultanée. Git garde chaque version dans l'historique et prévient explicitement en cas de conflit — voir [Résoudre un conflit Git](/docs/how-to-guides/pull-requests-et-conflits-git/)." status="is-info" icon="fas fa-info-circle" %}
+{% include message.html title="Pourquoi pas juste Google Drive ?" message="Un dossier partagé écrase les fichiers sans prévenir en cas de modification simultanée. Git garde chaque version dans l'historique et prévient explicitement en cas de conflit, voir [Résoudre un conflit Git](/docs/how-to-guides/pull-requests-et-conflits-git/)." status="is-info" icon="fas fa-info-circle" %}
 
 ## Avec GitHub Desktop
 
 {% include step-tuto.html
   greyBackground=true
-  title="Étape 1 — Voir les changements"
+  title="Étape 1 : Voir les changements"
   content="Ouvrez GitHub Desktop, sélectionnez votre repo dans la liste en haut à gauche. L'onglet **Changes** liste tous les fichiers modifiés depuis le dernier commit, avec un aperçu des lignes ajoutées/supprimées."
   image="changes-github-desktop.png" %}
 
 {% include step-tuto.html
   greyBackground=true
-  title="Étape 2 — Committer"
+  title="Étape 2 : Committer"
   content="Cochez les fichiers à inclure dans ce commit (tous par défaut). En bas à gauche, écrivez un résumé court (impératif, ex. « Ajoute le calcul de vitesse moteur ») et, si besoin, une description plus longue. Cliquez sur **Commit to main**."
   image="commit-github-desktop.png" %}
 
 {% include step-tuto.html
   greyBackground=true
-  title="Étape 3 — Envoyer sur GitHub"
+  title="Étape 3 : Envoyer sur GitHub"
   content="Cliquez sur **Push origin** en haut. Vos commits sont maintenant visibles par toute l'équipe sur GitHub.com. Avant de commencer à travailler, pensez aussi à cliquer sur **Fetch origin** pour récupérer les changements des autres."
   image="push-github-desktop.png"
   image_2="push-origin-bouton-zoom.png" %}
 
 {% include step-tuto.html
   greyBackground=true
-  title="Étape 4 — Vérifier dans l'historique"
+  title="Étape 4 : Vérifier dans l'historique"
   content="Onglet **History** en haut : chaque commit envoyé apparaît dans la liste, avec son message et l'auteur. C'est là que vous retrouvez l'historique complet du projet, et que vous pouvez comparer ce qui a changé à chaque commit."
   image="history-github-desktop.png" %}
 
 ## Directement depuis VSCode
 
-VSCode intègre les mêmes fonctions sans changer d'application — pratique
+VSCode intègre les mêmes fonctions sans changer d'application, pratique
 si vous éditez déjà votre code ou votre documentation dedans. Le cycle
 est le même que dans GitHub Desktop, juste réparti sur quatre petites
 actions dans le même panneau.

@@ -14,7 +14,7 @@ tags: medieval-challenge
 
 ## Règles du jeu
 
-Chaque **essai** comprend **5 tirs**, à répartir librement entre **les tours à détruire** — pour marquer des points — et **les anneaux boosters** — pour multiplier le total.
+Chaque **essai** comprend **5 tirs**, à répartir librement entre **les tours à détruire** (pour marquer des points) et **les anneaux boosters** (pour multiplier le total).
 Les équipes doivent donc **trouver le bon équilibre entre force et précision** !
 
 {% include 3d-model.html model="BOARDTEXT.glb" poster="poster.webp" fullscreen_modal=true %}

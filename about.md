@@ -23,7 +23,7 @@ La plateforme rassemble :
 - Des workflows orientés prototypage rapide  
 - La documentation publique de certains projets étudiants  
 
-L’ensemble des ressources est partagé dans une démarche ouverte et transparente, afin de permettre à chacun de concevoir, prototyper et itérer efficacement — de l’idée au prototype fonctionnel.
+L’ensemble des ressources est partagé dans une démarche ouverte et transparente, afin de permettre à chacun de concevoir, prototyper et itérer efficacement, de l’idée au prototype fonctionnel.
 
 Ce site s’adresse en priorité aux étudiants et associations techniques d’UniLaSalle, tout en restant accessible aux enseignants, partenaires, industriels et à toute personne souhaitant comprendre nos pratiques d’ingénierie.
 
@@ -46,7 +46,7 @@ The platform gathers:
 - Rapid prototyping workflows  
 - Public documentation of selected student projects  
 
-All resources are shared in an open and transparent approach, enabling users to design, prototype and iterate efficiently — from concept to functional prototype.
+All resources are shared in an open and transparent approach, enabling users to design, prototype and iterate efficiently, from concept to functional prototype.
 
 This site is primarily intended for UniLaSalle students and technical associations, while remaining accessible to teachers, partners, industrial collaborators and external audiences interested in our engineering practices.
 
