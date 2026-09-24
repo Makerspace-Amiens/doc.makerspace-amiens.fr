@@ -32,7 +32,7 @@ hardwares:
 
 L'édition depuis GitHub (tutoriel précédent) ne montre pas le rendu final
 avec le vrai thème du site. En local, `jekyll serve` reconstruit le site à
-chaque sauvegarde et l'affiche dans votre navigateur en quelques secondes —
+chaque sauvegarde et l'affiche dans votre navigateur en quelques secondes :
 vous voyez immédiatement le résultat, sans rien publier.
 
 ## Installer Ruby et Bundler
@@ -82,20 +82,21 @@ gem install bundler
   tab3=tab3
 %}
 
-{% include message.html title="Pas de droits administrateur ?" message="Si vous ne pouvez pas installer de paquets système (pas de sudo), installez Ruby en espace utilisateur avec rbenv (github.com/rbenv/rbenv) — plus long à mettre en place, mais ne nécessite aucun droit root." status="is-info" icon="fas fa-info-circle" %}
+{% include message.html title="Pas de droits administrateur ?" message="Si vous ne pouvez pas installer de paquets système (pas de sudo), installez Ruby en espace utilisateur avec rbenv (github.com/rbenv/rbenv), plus long à mettre en place, mais ne nécessite aucun droit root." status="is-info" icon="fas fa-info-circle" %}
 
 ## Installer les dépendances du projet
 
 {% include step-tuto.html
   greyBackground=true
   title="bundle install"
-  content="Dans un terminal, à la racine de votre repo cloné :
+  content="Le site se trouve dans le dossier `docs/` de votre repo, avec son propre `Gemfile`. Dans un terminal, placez-vous dans ce dossier :
 
 ```bash
+cd docs
 bundle install
 ```
 
-Ça installe toutes les gems nécessaires (Jekyll, le thème, etc.), listées dans le fichier `Gemfile` du template." %}
+Ça installe toutes les gems nécessaires (Jekyll, le thème, etc.), listées dans le fichier `docs/Gemfile` du template. Toutes les commandes de ce tutoriel se lancent depuis `docs/`, pas depuis la racine du repo." %}
 
 {% include message.html title="Erreur de permission sur /var/lib/gems ou /usr/lib/ruby" message="Sans droits root, Bundler ne peut pas écrire dans le dossier système des gems. Configurez-le pour installer localement au projet à la place :
 
@@ -111,7 +112,7 @@ Le dossier `vendor/` est déjà ignoré par Git (voir `.gitignore`), ça ne poll
 {% include step-tuto.html
   greyBackground=true
   title="jekyll serve"
-  content="
+  content="Toujours depuis le dossier `docs/` :
 
 ```bash
 bundle exec jekyll serve
@@ -123,14 +124,15 @@ Ouvrez ensuite [http://localhost:4000](http://localhost:4000) dans votre navigat
 
 | Symptôme | Cause probable | Solution |
 |---|---|---|
-| `bundle: commande introuvable` alors que l'installation semblait réussie | La gem `bundler` est installée dans un dossier absent du PATH (fréquent sans droits root, dossier type `~/.local/share/gem/ruby/<version>/bin`) | Ajoutez ce dossier au PATH : `export PATH="$PATH:$(ruby -e 'puts Gem.user_dir')/bin"` — puis ajoutez cette ligne à `~/.bashrc` pour que ce soit permanent |
+| `bundle: commande introuvable` alors que l'installation semblait réussie | La gem `bundler` est installée dans un dossier absent du PATH (fréquent sans droits root, dossier type `~/.local/share/gem/ruby/<version>/bin`) | Ajoutez ce dossier au PATH : `export PATH="$PATH:$(ruby -e 'puts Gem.user_dir')/bin"`, puis ajoutez cette ligne à `~/.bashrc` pour que ce soit permanent |
 | `bundle install` échoue avec une erreur de permission sur un dossier système | Pas de droits root pour écrire dans le dossier de gems partagé | Voir l'encart ci-dessus : configurez `bundle config set --local path 'vendor/bundle'` |
 | Un terminal ne voit ni `ruby` ni `bundle` alors qu'un autre terminal les voit | Le terminal utilisé tourne en mode `sh` non interactif (ne charge pas `~/.bashrc`), ou (sous Linux avec VSCode installé en Flatpak) le terminal intégré tourne dans le bac à sable Flatpak, isolé du système hôte | Essayez `exec bash -l` ; si le souci persiste avec VSCode en Flatpak, réinstallez-le en `.deb`/`.rpm` natif, ou utilisez `flatpak-spawn --host bash -l` |
+| `Could not locate Gemfile` ou `bundle exec jekyll` introuvable | Vous êtes à la racine du repo, pas dans `docs/` | Faites `cd docs`, puis relancez la commande |
 | Le site build mais une page affiche une erreur ou ne s'affiche pas | Erreur dans le front matter YAML (indentation, guillemets manquants) | Lisez le message d'erreur affiché dans le terminal au moment du build, il indique généralement le fichier en cause |
 
 ## Exercice
 
 Installez Ruby et Bundler si ce n'est pas déjà fait, lancez
-`bundle exec jekyll serve` sur votre repo, et vérifiez que
+`bundle exec jekyll serve` depuis le dossier `docs/` de votre repo, et vérifiez que
 `http://localhost:4000` affiche bien votre site avec vos dernières
 modifications.

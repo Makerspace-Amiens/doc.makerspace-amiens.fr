@@ -8,28 +8,20 @@ component_toc: true
 doc_header: true
 
 title: Cycle de vie d'un projet
-subtitle: La carte du chemin, avant de zoomer sur chaque étape
-description: Comprendre les grandes phases d'un projet et ce qui doit tourner en continu tout du long, avant de rentrer dans le détail de chacune.
+subtitle: Comprendre les étapes d'un projet et les liens entre elles
+description: Découvrir les grandes étapes d'un projet et les habitudes à garder tout au long du travail en équipe.
 author: Adrien Bracq
 
 todo: 70
 ---
 
-## Une vue d'ensemble avant de zoomer
+## Avant de commencer
 
-Le reste de cet atelier détaille chaque étape d'un projet une par une —
-cadrage, recherche, conception, réalisation, tests, présentation. Avant de
-plonger dans le détail de la première, il est utile d'avoir la carte
-complète du chemin : ça évite de perdre de vue où on va, et ça explique
-pourquoi les pages suivantes de l'atelier sont dans cet ordre-là et pas un
-autre.
+Comment passer d'une idée à un prototype qui fonctionne et que d'autres pourront reprendre ? Cet atelier vous accompagne à chaque étape : cadrer le besoin, chercher des solutions, concevoir, réaliser, tester et présenter votre travail. Cette page donne une vue d'ensemble pour comprendre comment ces étapes s'enchaînent et vous situer dans votre projet.
 
-## Le cycle en V : le modèle que vous connaissez déjà
+## Un modèle de référence : le cycle en V
 
-Vous avez probablement déjà croisé le **cycle en V** dans vos autres cours
-d'ingénierie. L'idée : chaque étape de conception (branche descendante) a
-une étape de vérification miroir (branche ascendante) qui contrôle qu'on a
-bien répondu à ce qui avait été décidé plus haut.
+Vous avez peut-être déjà rencontré le **cycle en V** dans vos cours d'ingénierie. Son principe est simple : à chaque étape de conception correspond une étape de vérification. On précise d'abord le besoin et la manière d'y répondre, puis on réalise le système. Les tests permettent ensuite de vérifier que ce qui a été réalisé correspond à ce qui était prévu, jusqu'à valider la réponse au besoin initial.
 
 ```mermaid!
 graph TD
@@ -44,13 +36,11 @@ graph TD
     A -.vérifie.-> G
 ```
 
-{% include message.html title="Pourquoi le mentionner" message="Le cycle en V complet est pensé pour de gros projets industriels avec des équipes séparées par métier. Sur un projet de quelques semaines en petite équipe, on ne le suit pas à la lettre — mais l'idée centrale reste utile : chaque étape de conception doit avoir sa vérification en face, pas juste être livrée en espérant que ça fonctionne." status="is-info" icon="fas fa-info-circle" %}
+{% include message.html title="Ce qu'on en retient ici" message="Pour un projet de quelques semaines en petite équipe, nous utiliserons une version simplifiée de ce modèle. L'idée à garder : quand vous faites un choix de conception, prévoyez aussi comment vous vérifierez qu'il répond au besoin." status="is-info" icon="fas fa-info-circle" %}
 
-## Les étapes, dans cet atelier
+## Les étapes de votre projet
 
-Pour un projet MakerSpace, on simplifie le cycle en V en une version plus
-directe, avec une boucle explicite : si les tests ne passent pas, on
-retourne en conception, pas à la case départ.
+Au MakerSpace, nous suivrons les étapes ci-dessous. Elles vous donnent un fil conducteur, avec des retours en arrière lorsque c'est nécessaire : si un test révèle un problème, vous reprenez la conception pour corriger ce qui ne fonctionne pas.
 
 ```mermaid!
 graph LR
@@ -58,46 +48,32 @@ graph LR
     B --> C[Conception]
     C --> D[Réalisation]
     D --> E[Tests]
-    E -->|ça ne passe pas| C
-    E -->|ça passe| F[Présentation<br/>et clôture]
+    E -->|à corriger| C
+    E -->|résultats validés| F[Présentation<br/>et clôture]
 ```
 
-- **Cadrage** : définir le besoin et écrire le cahier des charges — voir
-  [Définir son besoin et son cahier des charges](/workshops/methodologie-de-projet/concepts/definir-son-besoin/).
-- **Recherche** : regarder ce qui existe déjà, étudier la faisabilité
-  technique avant de s'engager.
-- **Conception** : choisir et comparer des solutions techniques, itérer sur
-  des prototypes.
-- **Réalisation** : fabriquer/assembler chaque brique du projet (carte
-  électronique, pièces mécaniques, code).
-- **Tests** : vérifier que chaque brique, puis l'ensemble, répond aux
-  critères de réussite fixés au cadrage.
-- **Présentation et clôture** : poster, vidéo, documentation finale, passer
-  la main à la suite.
+- **Cadrage** : définir le besoin et écrire le cahier des charges (voir [Définir son besoin et son cahier des charges](/workshops/methodologie-de-projet/concepts/definir-son-besoin/)).
+- **Recherche** : regarder ce qui existe déjà et vérifier que les pistes envisagées sont techniquement réalisables avant de vous engager.
+- **Conception** : comparer les solutions techniques et faire des essais sur des prototypes pour affiner vos choix.
+- **Réalisation** : fabriquer les pièces, préparer la carte électronique, écrire le code et assembler le tout.
+- **Tests** : vérifier que chaque élément, puis l'ensemble, répond aux critères de réussite fixés au cadrage.
+- **Présentation et clôture** : présenter votre travail avec un poster et une vidéo, compléter la documentation et préparer la reprise du projet par une autre équipe.
 
-{% include message.html title="Ce n'est pas un one-shot" message="La flèche qui revient de Tests vers Conception n'est pas une exception : c'est le fonctionnement normal. Un prototype qui échoue au premier essai n'est pas un échec de projet, c'est une itération. Voir aussi [Prototyper et itérer](/workshops/methodologie-de-projet/concepts/prototyper-iterer/)." status="is-warning" icon="fas fa-exclamation-triangle" %}
+{% include message.html title="Prévoir plusieurs essais" message="Un prototype fonctionne rarement comme prévu dès le premier essai. Les tests servent aussi à comprendre ce qu'il faut modifier. Prévoyez du temps pour ces allers-retours entre conception et tests : ils font partie du travail. Voir aussi [Prototyper et itérer](/workshops/methodologie-de-projet/concepts/prototyper-iterer/)." status="is-warning" icon="fas fa-exclamation-triangle" %}
 
-## Ce qui tourne en continu, pas par étapes
+## Tout au long du projet
 
-Trois choses ne sont **pas des étapes du schéma ci-dessus** : elles se
-passent en parallèle, du premier jour au dernier.
+À chaque étape, vous aurez aussi besoin de garder trois habitudes :
 
-- **Documenter** : au fil de l'eau, pas seulement à la présentation finale.
-- **Gérer l'équipe et communiquer** : répartition des tâches, points de
-  synchro réguliers.
-- **Suivre le temps** : jalons, délais externes (commandes, impression 3D)
-  qui ne dépendent pas de vous.
+- **Documenter** : noter vos choix, vos essais et vos résultats au fur et à mesure, pendant que vous les avez encore en tête.
+- **Organiser le travail en équipe** : répartir les tâches et faire régulièrement le point pour savoir où chacun en est et discuter des difficultés rencontrées.
+- **Suivre le calendrier** : vous fixer des échéances et tenir compte des délais de commande ou de fabrication, comme l'attente pour une impression 3D.
 
-Chacun de ces trois points a sa propre page dans cet atelier — ce sont eux
-qui font la différence entre une équipe qui livre un prototype qui fonctionne
-et une équipe qui livre un prototype **documenté, compris et transmissible**.
+Nous reviendrons sur chacun de ces points dans l'atelier. Ils vous aident à avancer ensemble et à laisser une trace suffisamment claire de votre travail pour qu'une autre équipe puisse le comprendre et le poursuivre.
 
 ## Exercice
 
-En équipe, sur votre projet actuel :
+Prenez quelques minutes en équipe pour faire le point sur votre projet :
 
-1. Situez-vous sur le schéma "Les étapes, dans cet atelier" : à quelle
-   étape êtes-vous précisément aujourd'hui ?
-2. Identifiez, parmi les trois éléments "en continu", celui que votre
-   équipe néglige le plus en ce moment. Décidez d'une action concrète pour
-   cette semaine.
+1. Retrouvez votre position sur le schéma « Les étapes de votre projet ». À quelle étape êtes-vous aujourd'hui ?
+2. Parmi les trois habitudes ci-dessus, laquelle avez-vous le plus de mal à tenir ? Choisissez une action concrète à mettre en place cette semaine.

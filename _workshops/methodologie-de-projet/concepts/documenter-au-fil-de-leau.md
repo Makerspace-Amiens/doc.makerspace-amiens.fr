@@ -20,11 +20,11 @@ todo: 70
 ## Ce n'est pas le travail d'une seule personne
 
 Documenter n'est pas un rôle qu'on attribue à quelqu'un dans l'équipe,
-comme on attribue le mécanique ou l'électronique — voir
+comme on attribue le mécanique ou l'électronique. Voir
 [Constituer et organiser son équipe](/workshops/methodologie-de-projet/concepts/constituer-organiser-equipe/).
 **Chaque membre documente sa propre partie**, au fur et à mesure de ce
 qu'il fait. Une équipe où une seule personne "s'occupe de la doc" produit
-presque toujours une documentation incomplète, écrite de seconde main —
+presque toujours une documentation incomplète, écrite de seconde main,
 et en retard, puisque cette personne découvre le travail des autres au
 moment de l'écrire, pas au moment où il a été fait.
 
@@ -34,11 +34,11 @@ C'est la promesse que toutes les équipes se font, et que presque aucune ne
 tient. Voici pourquoi :
 
 - À la fin du projet, tout le monde est fatigué et sous pression de la
-  deadline — ce n'est jamais le bon moment pour rédiger correctement.
+  deadline : ce n'est jamais le bon moment pour rédiger correctement.
 - La mémoire s'efface vite : la raison exacte d'un choix technique fait en
   semaine 2 est souvent oubliée en semaine 8.
 - Les preuves visuelles disparaissent : une photo du prototype cassé, un
-  état intermédiaire du code, une version antérieure de la pièce imprimée —
+  état intermédiaire du code, une version antérieure de la pièce imprimée :
   si vous ne les captez pas sur le moment, elles n'existent plus après.
 - Si une personne de l'équipe est absente ou change en cours de route, tout
   ce qui n'a pas été écrit part avec elle.
@@ -78,7 +78,7 @@ moment du changement.
 ## Ce qu'on documente, et quand
 
 - **Après chaque séance de travail**, 5 à 10 minutes : ce qu'on a fait,
-  pourquoi, ce qu'il reste à faire. C'est le rôle du journal de bord — voir
+  pourquoi, ce qu'il reste à faire. C'est le rôle du journal de bord. Voir
   [Tenir un journal de bord](/workshops/methodologie-de-projet/tutorials/journal-de-bord/)
   pour le mettre en place concrètement (dans le repo créé avec
   [Créer son repo depuis le template](/workshops/methodologie-de-projet/tutorials/creer-repo-template/)).
@@ -89,10 +89,10 @@ moment du changement.
   fonctionne, choix d'un composant) : mise à jour de la page correspondante du
   site de documentation, pas juste une note volante.
 - **Avec des photos et captures prises sur le moment**, pas reconstituées
-  après coup — un état intermédiaire cassé ou raté est aussi utile à
+  après coup : un état intermédiaire cassé ou raté est aussi utile à
   montrer qu'un résultat qui fonctionne.
 
-{% include message.html title="Un exemple d'entrée de journal" message="12/03 — Remplacé le servomoteur par un moteur pas à pas + driver A4988 : le servo décroche au-delà de 200 g, mesuré au dynamomètre. Driver commandé, livraison sous 3 jours. Reste à faire : réécrire le code de contrôle moteur." status="is-success" icon="fas fa-check-circle" %}
+{% include message.html title="Un exemple d'entrée de journal" message="12/03. Remplacé le servomoteur par un moteur pas à pas + driver A4988 : le servo décroche au-delà de 200 g, mesuré au dynamomètre. Driver commandé, livraison sous 3 jours. Reste à faire : réécrire le code de contrôle moteur." status="is-success" icon="fas fa-check-circle" %}
 
 ## La passe de synthèse finale n'est pas un premier jet
 
@@ -113,7 +113,7 @@ partir de rien.
 En équipe, maintenant, pas en fin de semaine :
 
 1. Ouvrez le fichier de documentation de votre projet et ajoutez une entrée
-   pour ce que vous avez fait aujourd'hui ou cette semaine — même bref.
+   pour ce que vous avez fait aujourd'hui ou cette semaine, même bref.
 2. Décidez, en équipe, d'un moment fixe et récurrent (ex : "10 minutes à la
    fin de chaque séance") pour prendre cette habitude. Notez-le quelque
    part où toute l'équipe le voit.

@@ -18,14 +18,14 @@ todo: 70
 ## Rechercher l'existant, c'est le métier d'ingénieur
 
 S'appuyer sur des travaux existants est une pratique normale et attendue en
-ingénierie — aucun projet sérieux ne part d'une page blanche, et un bon
+ingénierie. Aucun projet sérieux ne part d'une page blanche, et un bon
 ingénieur commence toujours par regarder ce qui a déjà été fait avant de
 concevoir sa propre solution. Ce n'est ni du copier-coller, ni du
-plagiat — **à condition de toujours citer vos sources**.
+plagiat : **à condition de toujours citer vos sources**.
 
-{% include message.html title="Sourcer n'est pas optionnel" message="Reprendre une idée, un schéma, une portion de code ou une pièce CAO d'un projet existant est parfaitement légitime, à condition de dire clairement d'où ça vient et de respecter sa licence quand il y en a une. Présenter comme sien un travail réalisé par quelqu'un d'autre, sans le citer, est une question de propriété intellectuelle — pas seulement de bonnes manières." status="is-warning" icon="fas fa-balance-scale" %}
+{% include message.html title="Sourcer n'est pas optionnel" message="Reprendre une idée, un schéma, une portion de code ou une pièce CAO d'un projet existant est parfaitement légitime, à condition de dire clairement d'où ça vient et de respecter sa licence quand il y en a une. Présenter comme sien un travail réalisé par quelqu'un d'autre, sans le citer, est une question de propriété intellectuelle, pas seulement de bonnes manières." status="is-warning" icon="fas fa-balance-scale" %}
 
-Toute source utilisée — projet, schéma, bout de code, datasheet — doit
+Toute source utilisée (projet, schéma, bout de code, datasheet) doit
 être citée dans votre documentation, avec un lien et, si possible, la date
 de consultation. Voir la section "Recherche documentaire" plus bas pour le
 détail, et le guide
@@ -57,14 +57,14 @@ Cherchez des projets qui ressemblent au vôtre, même partiellement :
   similaire, même dans un contexte différent.
 
 Pour chaque projet trouvé, notez surtout **comment ils ont résolu le
-problème** et **quelles difficultés ils ont rencontrées** — c'est ça qui
+problème** et **quelles difficultés ils ont rencontrées** : c'est ça qui
 vous fait gagner du temps, pas juste le résultat final.
 
 ### Chercher aussi ce qui ne fonctionne pas
 
 Ne cherchez pas que des réussites. Les projets abandonnés, les échecs
 documentés, ou simplement les approches que vous n'aimez pas pour votre
-propre projet valent la peine d'être notés — avec la raison. Ça sert à
+propre projet valent la peine d'être notés, avec la raison. Ça sert à
 deux choses : éviter de tomber vous-même dans un piège déjà identifié par
 quelqu'un d'autre, et pouvoir justifier plus tard *pourquoi* vous n'avez
 pas suivi telle approche, plutôt que de répondre "on n'avait pas envie".
@@ -72,7 +72,7 @@ C'est exactement la matière première de la section "Options envisagées" du
 format d'arbitrage vu dans
 [Tracer ses choix techniques](/workshops/methodologie-de-projet/concepts/tracer-choix-techniques/).
 
-{% include message.html title="Rester léger" message="Il ne s'agit pas de produire une étude bibliographique exhaustive. 3 à 5 projets similaires, regardés 15 minutes chacun, suffisent largement pour un projet de quelques semaines — y compris les échecs et approches écartées." status="is-info" icon="fas fa-info-circle" %}
+{% include message.html title="Rester léger" message="Il ne s'agit pas de produire une étude bibliographique exhaustive. 3 à 5 projets similaires, regardés 15 minutes chacun, suffisent largement pour un projet de quelques semaines, y compris les échecs et approches écartées." status="is-info" icon="fas fa-info-circle" %}
 
 ## Recherche documentaire
 
@@ -109,7 +109,7 @@ l'a écrite.
 %}
 
 Dès que vous trouvez une source utile, **archivez-la tout de suite** dans
-votre documentation (lien + date de consultation) — c'est une application
+votre documentation (lien + date de consultation). C'est une application
 directe de [documenter au fil de l'eau](/workshops/methodologie-de-projet/concepts/documenter-au-fil-de-leau/) :
 un onglet de navigateur se ferme, un lien dans votre doc reste.
 
@@ -122,15 +122,16 @@ mieux qu'une semaine de conception basée sur une hypothèse fausse.
 Exemple, sur le robot de tri utilisé en exemple dans cet atelier : avant de
 concevoir le mécanisme de tri complet, l'équipe a testé en 20 minutes si un
 capteur de couleur bon marché distinguait correctement plastique, verre et
-métal sous l'éclairage réel du Forum des Sciences — un point de risque
-identifié dès le cahier des charges.
+métal sous l'éclairage réel du Forum des Sciences (un point de risque
+identifié dès le cahier des charges).
 
 {% include message.html title="Une pré-étude n'est pas un prototype fini" message="L'objectif est de répondre à une question précise (« est-ce que ça fonctionne assez bien ? ») avec le montage le plus rapide possible, pas de produire quelque chose de propre ou de présentable." status="is-warning" icon="fas fa-exclamation-triangle" %}
 
 ## Comment présenter ça
 
-Une courte synthèse suffit — elle vit dans le fichier `docs/etudes.md` du
-repo template. Un tableau comparatif est souvent le format le plus utile :
+Une courte synthèse suffit : elle vit dans la page `docs/etudes.md` de votre
+repo, sections **Recherche de l'existant** et **Pré-étude de faisabilité**.
+Un tableau comparatif est souvent le format le plus utile :
 
 | Solution étudiée | Source | Avantages | Inconvénients | Ce qu'on retient |
 |---|---|---|---|---|

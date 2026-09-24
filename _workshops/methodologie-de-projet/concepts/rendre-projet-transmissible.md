@@ -34,16 +34,16 @@ fonctionne.
 - **Un README clair à la racine du repo** : ce que fait le projet, comment
   le lancer, où trouver la documentation complète.
 - **Une documentation à jour**, produite au fil de l'eau plutôt qu'en
-  urgence — voir
+  urgence. Voir
   [Documenter au fil de l'eau](/workshops/methodologie-de-projet/concepts/documenter-au-fil-de-leau/).
-- **Les choix techniques expliqués**, pas seulement le résultat final —
-  voir [Tracer ses choix techniques](/workshops/methodologie-de-projet/concepts/tracer-choix-techniques/).
+- **Les choix techniques expliqués**, pas seulement le résultat final.
+  Voir [Tracer ses choix techniques](/workshops/methodologie-de-projet/concepts/tracer-choix-techniques/).
 - **Les limites connues, dites honnêtement** : ce qui ne fonctionne pas encore,
   ce qui a été testé mais écarté, ce qu'il faudrait améliorer. Une
   prochaine équipe perd un temps précieux à redécouvrir seule des limites
   que vous connaissiez déjà.
 - **Une licence ou une mention de réutilisation**, même simple (ex : "libre
-  de réutilisation, merci de citer ce projet") — sans ça, la question se
+  de réutilisation, merci de citer ce projet") : sans ça, la question se
   pose à chaque fois qu'un projet réutilise le vôtre.
 
 {% capture tab1 %}
@@ -82,7 +82,7 @@ document qu'on écrit en une soirée avant le rendu. Elle découle directement
 des bonnes pratiques déjà vues dans cet atelier, appliquées tout du long :
 documenter au fil de l'eau, tracer ses choix, tenir un journal de bord. La
 seule chose à faire spécifiquement à la fin, c'est une checklist de
-vérification — pas une rédaction de zéro.
+vérification, pas une rédaction de zéro.
 
 ## Exercice
 
@@ -92,4 +92,4 @@ Sur votre projet, en équipe :
    à quelqu'un d'extérieur au projet et demandez-lui ce qu'il comprend en
    5 minutes, sans aide.
 2. Ajoutez une section "Limites connues" à votre documentation, même si
-   le projet n'est pas terminé — trois lignes honnêtes suffisent.
+   le projet n'est pas terminé : trois lignes honnêtes suffisent.

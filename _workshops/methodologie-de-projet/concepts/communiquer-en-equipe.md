@@ -1,9 +1,9 @@
 ---
 layout: documentation
 hide_hero: false
-hero_image: hero.png
+hero_image: hero.jpg
 hero_darken: true
-image: hero.png
+image: hero.jpg
 component_toc: true
 doc_header: true
 
@@ -17,7 +17,7 @@ todo: 70
 
 ## Un outil, pas une qualité humaine
 
-Bien communiquer en équipe n'est pas une question de bonne entente — une
+Bien communiquer en équipe n'est pas une question de bonne entente : une
 équipe qui s'entend très bien peut quand même avancer en silos parce que
 personne ne prend le temps de dire où il en est. C'est un ensemble de
 pratiques concrètes à mettre en place, comme n'importe quel autre outil de
@@ -68,7 +68,7 @@ aider immédiatement, ou au moins savoir que c'est du sérieux.
 Une décision prise en réunion et jamais notée n'existe plus dès que
 quelqu'un l'oublie ou s'en souvient différemment. Le réflexe : à la fin de
 chaque point de synchro, une personne note en 2-3 lignes ce qui a été
-décidé, dans le [journal de bord](/workshops/methodologie-de-projet/tutorials/journal-de-bord/) —
+décidé, dans le [journal de bord](/workshops/methodologie-de-projet/tutorials/journal-de-bord/) :
 c'est une application directe de
 [documenter au fil de l'eau](/workshops/methodologie-de-projet/concepts/documenter-au-fil-de-leau/).
 
@@ -80,7 +80,7 @@ Le référent pédagogique, le jury, ou toute personne extérieure au projet
 doit pouvoir comprendre où vous en êtes sans relire tout l'historique.
 Deux réflexes utiles :
 
-- Faire un point régulier avec le référent, pas seulement au rendu final —
+- Faire un point régulier avec le référent, pas seulement au rendu final :
   ça permet de corriger le tir tôt si quelque chose s'écarte du besoin.
 - Savoir résumer l'état du projet en 30 secondes à n'importe quel moment :
   où on en est, ce qui fonctionne, ce qui bloque.
@@ -92,4 +92,9 @@ En équipe, maintenant :
 1. Fixez un jour et une heure récurrents pour votre point de synchro
    hebdomadaire. Notez-le quelque part où toute l'équipe le voit.
 2. À la fin de votre prochain point, désignez qui note les décisions dans
-   le journal de bord — et faites-le vraiment, pas "on s'en souviendra".
+   le journal de bord, et faites-le vraiment, pas "on s'en souviendra".
+
+---
+
+*Crédit photo : « Group of diverse young students collaborating on a project with a laptop in a modern office » par Giuseppe Lombardo, via [Noun Project](https://thenounproject.com/photo/group-of-diverse-young-students-collaborating-on-a-project-with-a-laptop-in-a-modern-office-5ljgjo/), sous licence [CC BY-NC-ND 2.0](https://creativecommons.org/licenses/by-nc-nd/2.0/).*
+{: .is-size-7 .has-text-grey }

@@ -30,8 +30,9 @@ hardwares:
 
 ## Ce qui est déjà prêt
 
-Le repo template prévoit deux emplacements dans `docs/index.md` :
-`images/poster.jpg` et `images/intro_amiens.mp4`. Si vous avez suivi
+La page d'accueil de votre site (`docs/index.md`) prévoit deux emplacements,
+avec un exemple à remplacer : `docs/assets/images/poster.jpg` et
+`docs/assets/images/intro_amiens.mp4`. Si vous avez suivi
 [Documenter au fil de l'eau](/workshops/methodologie-de-projet/concepts/documenter-au-fil-de-leau/),
 vous avez déjà l'essentiel du contenu : photos prises pendant le montage,
 résultats de tests, description du besoin. Le poster et la vidéo ne sont
@@ -43,7 +44,7 @@ Un poster de présentation répond, visuellement, en quelques secondes de
 lecture : quel problème, quelle solution, quels résultats.
 
 - **Contexte/problème** : une phrase, reprise de votre cahier des charges.
-- **Solution** : un visuel du prototype — photo réelle, pas juste un rendu
+- **Solution** : un visuel du prototype, photo réelle, pas juste un rendu
   CAO.
 - **Résultats** : un chiffre marquant (ex. "taux de tri : 85%"), repris de
   [Documenter les tests et résultats](/workshops/methodologie-de-projet/tutorials/documenter-tests-resultats/).
@@ -64,21 +65,34 @@ Structure qui fonctionne pour ce format court :
 4. **Conclusion** (10-15s) : ce que ça a permis, ce qu'on ferait
    différemment.
 
-{% include message.html title="Réutilisez vos rushs existants" message="Les photos et courtes vidéos prises pendant le montage (voir [Documenter l'assemblage et le montage](/workshops/methodologie-de-projet/tutorials/documenter-assemblage-montage/)) servent souvent directement de plans pour cette vidéo — pas besoin de tout refilmer à la fin." status="is-info" icon="fas fa-info-circle" %}
+{% include message.html title="Réutilisez vos rushs existants" message="Les photos et courtes vidéos prises pendant le montage (voir [Documenter l'assemblage et le montage](/workshops/methodologie-de-projet/tutorials/documenter-assemblage-montage/)) servent souvent directement de plans pour cette vidéo : pas besoin de tout refilmer à la fin." status="is-info" icon="fas fa-info-circle" %}
 
 ## Intégrer les deux dans le site
 
-```markdown
-![Poster projet](images/poster.jpg)
+Le plus simple : **remplacer les deux fichiers d'exemple** du template par
+les vôtres, en gardant les mêmes noms. La page d'accueil les affiche déjà.
 
-<video src="images/intro_amiens.mp4" controls title="Présentation du projet" style="width: 100%;"></video>
+| Fichier à remplacer | Contraintes |
+|---|---|
+| `docs/assets/images/poster.jpg` | Image de moins de **2 Mo** |
+| `docs/assets/images/intro_amiens.mp4` | 1 min 30 au format vertical, moins de **25 Mo** |
+
+Si vous préférez d'autres noms de fichiers (sans espace ni accent),
+changez-les aussi dans `docs/index.md`, aux deux endroits où ils
+apparaissent :
+
+```markdown
+![Poster du projet](assets/images/poster.jpg)
+
+<video src="assets/images/intro_amiens.mp4" controls title="Présentation du projet" style="width: 100%;"></video>
 ```
 
-{% include message.html title="Attention à la taille du fichier" message="Une vidéo trop lourde (>50 Mo en stockage local dans le repo) ralentit le clonage pour tout le monde. Compressez-la, ou hébergez-la ailleurs (YouTube non répertorié) et intégrez-la avec une iframe standard à la place (voir juste en dessous)." status="is-warning" icon="fas fa-exclamation-triangle" %}
+{% include message.html title="Attention à la taille des fichiers" message="Au-delà de **25 Mo**, le workflow CI de votre repo échoue (onglet **Actions**), et une image de plus de **2 Mo** déclenche un avertissement. Pour la vidéo, exportez en **720p** (par exemple avec le logiciel gratuit HandBrake) : c'est largement suffisant pour un format vertical. Si elle reste trop lourde, hébergez-la ailleurs (voir juste en dessous)." status="is-warning" icon="fas fa-exclamation-triangle" %}
 
 Pour une vidéo hébergée sur YouTube plutôt que stockée dans le repo,
-utilisez une balise `<iframe>` classique — ça fonctionne sur n'importe
-quel site, y compris le vôtre basé sur Just the Docs :
+utilisez une balise `<iframe>` classique à la place de la balise `<video>` ;
+ça fonctionne sur n'importe quel site, y compris le vôtre basé sur
+Just the Docs :
 
 ```html
 <iframe width="560" height="315" src="https://www.youtube.com/embed/VOTRE_ID_VIDEO" title="Présentation du projet" frameborder="0" allowfullscreen></iframe>
@@ -91,5 +105,5 @@ vidéo YouTube (après `watch?v=`).
 
 Listez, parmi les photos/vidéos déjà prises pendant le projet, celles
 réutilisables pour le poster et la vidéo. Identifiez seulement ce qui
-manque encore à filmer ou photographier — probablement moins que prévu si
+manque encore à filmer ou photographier, probablement moins que prévu si
 la documentation a été faite au fil de l'eau.

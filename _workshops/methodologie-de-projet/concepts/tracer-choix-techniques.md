@@ -20,8 +20,8 @@ todo: 70
 Une équipe qui choisit un composant, une architecture ou une méthode sans
 noter pourquoi s'expose à deux problèmes : le même débat peut ressurgir
 plus tard ("pourquoi on n'a pas pris l'autre capteur, déjà ?"), et personne
-d'extérieur à la décision — un nouveau membre, un encadrant, une prochaine
-promo — ne peut comprendre la logique du projet en le lisant.
+d'extérieur à la décision (un nouveau membre, un encadrant, une prochaine
+promo) ne peut comprendre la logique du projet en le lisant.
 
 ## Des fonctions aux solutions : le diagramme FAST
 
@@ -41,7 +41,7 @@ graph LR
 
 Ce n'est pas un exercice théorique : c'est directement la suite de la
 pré-étude de faisabilité vue dans
-[Rechercher l'existant](/workshops/methodologie-de-projet/concepts/rechercher-existant-faisabilite/) —
+[Rechercher l'existant](/workshops/methodologie-de-projet/concepts/rechercher-existant-faisabilite/) :
 le test rapide du capteur de couleur, dans cet exemple, a nourri ce choix.
 
 ## Un format simple pour documenter un arbitrage
@@ -58,23 +58,26 @@ l'éclairage réel du Forum des Sciences.
 **Options envisagées** : capteur de couleur (TCS3200), vision par caméra
 avec reconnaissance d'image, tri par poids.
 
-**Choix retenu et pourquoi** : capteur de couleur — la pré-étude a montré
+**Choix retenu et pourquoi** : capteur de couleur ; la pré-étude a montré
 une précision suffisante sous l'éclairage réel, pour un coût et une
 complexité bien inférieurs à la vision par caméra.
 
 **Compromis acceptés** : moins précis qu'une caméra sur des déchets très
-sales ou décolorés — acceptable pour une démonstration, à revoir si le
+sales ou décolorés, acceptable pour une démonstration, à revoir si le
 projet est repris pour un usage réel.
 ```
 
-{% include message.html title="Tous les choix ne méritent pas une entrée" message="Réservez ce format aux décisions coûteuses à revenir en arrière (choix d'un composant central, d'une architecture, d'une méthode de fabrication) — pas à chaque micro-décision du quotidien, qui a déjà sa place dans le journal de bord." status="is-info" icon="fas fa-info-circle" %}
+{% include message.html title="Tous les choix ne méritent pas une entrée" message="Réservez ce format aux décisions coûteuses à revenir en arrière (choix d'un composant central, d'une architecture, d'une méthode de fabrication) : pas à chaque micro-décision du quotidien, qui a déjà sa place dans le journal de bord." status="is-info" icon="fas fa-info-circle" %}
 
 ## Où ça vit
 
-Ce fichier tient dans `docs/etudes.md` du repo template, à la suite du
-tableau comparatif de la recherche de l'existant — les deux se complètent :
-l'un compare des solutions externes, l'autre documente le choix final et
-pourquoi.
+Ce format tient dans la section **Choix techniques** de la page
+`docs/etudes.md` de votre repo, à la suite du tableau comparatif de la
+recherche de l'existant. Les deux se complètent : l'un compare des solutions
+externes, l'autre documente le choix final et pourquoi. Si vous avez
+beaucoup de choix à documenter, faites une sous-page par choix (ajoutez
+`has_children: true` dans l'en-tête de `etudes.md` et `parent: Études et
+choix techniques` dans chaque sous-page).
 
 ## Exercice
 
@@ -82,5 +85,5 @@ Sur votre projet, en équipe :
 
 1. Identifiez un choix technique déjà fait mais jamais écrit noir sur
    blanc (ça arrive presque toujours).
-2. Rédigez-le avec le format ci-dessus, en équipe — c'est aussi l'occasion
+2. Rédigez-le avec le format ci-dessus, en équipe : c'est aussi l'occasion
    de vérifier que tout le monde est d'accord sur la raison du choix.

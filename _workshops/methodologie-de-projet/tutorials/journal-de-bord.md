@@ -10,7 +10,7 @@ doc_header: true
 
 title: Tenir un journal de bord
 subtitle: L'outil concret pour documenter au fil de l'eau
-description: Mettre en place un journal de bord simple pour noter, à chaque séance, ce qui a été fait, décidé, et ce qu'il reste à faire.
+description: Tenir un journal de bord personnel dans le template du projet, une page par séance de travail, pour noter ce qui a été fait, décidé, et ce qu'il reste à faire.
 author: Adrien Bracq
 
 time: 1
@@ -21,7 +21,7 @@ prerequisites:
   - label: Avoir un repo de projet créé
     link: /workshops/methodologie-de-projet/tutorials/creer-repo-template/
 softwares:
-  - label: Un éditeur de texte
+  - label: Un éditeur de texte (VSCode)
     link: ""
 hardwares:
   - label: Aucune machine requise
@@ -33,41 +33,121 @@ hardwares:
 C'est la mise en pratique concrète de
 [Documenter au fil de l'eau](/workshops/methodologie-de-projet/concepts/documenter-au-fil-de-leau/)
 et de [Communiquer en équipe](/workshops/methodologie-de-projet/concepts/communiquer-en-equipe/) :
-un seul fichier, mis à jour à chaque séance de travail ou point de synchro,
-qui devient la mémoire écrite du projet.
+une page par séance de travail, qui devient la mémoire écrite du projet.
 
-## Créer le fichier
+## Comment le template organise le journal
+
+Chaque membre de l'équipe tient **son propre** journal : une page par séance,
+que la séance ait lieu pendant les créneaux prévus ou en dehors. Le dossier
+`docs/journal/` du template est organisé ainsi :
+
+```text
+docs/journal/
+├── index.md              page « Journal de bord » (consignes)
+├── _modele-seance.md     modèle à copier (invisible sur le site)
+├── etudiant-1/
+│   ├── index.md          page de l'étudiant 1
+│   └── 2026-09-23.md     une séance
+└── etudiant-2/
+    └── index.md          page de l'étudiant 2
+```
+
+Le menu du site affiche « Journal de bord », puis un sous-menu par étudiant,
+puis une page par séance dans l'ordre chronologique.
+
+## Préparer son journal (une seule fois)
 
 {% include step-tuto.html
   greyBackground=true
-  title="Emplacement"
-  content="Créez `docs/journal.md` (à côté de `docs/objectifs.md` et `docs/etudes.md` déjà présents dans le template). Ajoutez-le au menu du site en lui donnant un front matter comme les autres pages du template (`layout: default`, `nav_order`, `title`)." %}
+  title="Étape 1 : Renommer votre dossier (facultatif)"
+  content="Dans `docs/journal/`, vous pouvez renommer le dossier `etudiant-1` avec votre prénom (par exemple `alice`), sans accent ni espace : c'est plus clair pour retrouver vos fichiers. Si votre équipe compte plus de deux personnes, dupliquez un dossier étudiant pour chaque membre supplémentaire." %}
 
-## Le format d'une entrée
+{% capture step_journal_2 %}Ouvrez `docs/journal/alice/index.md` et remplacez « Étudiant 1 » par votre prénom et votre nom **dans le titre** :
 
-Chaque entrée répond à trois questions, en quelques lignes : ce qui a été
-fait, pourquoi (les décisions prises), ce qu'il reste à faire.
+```yaml
+---
+layout: default
+title: Alice Martin
+parent: Journal de bord
+has_children: true
+---
+```
 
-{% capture snippet_journal %}## 12/03
+Supprimez ensuite le bloc **À modifier** qui suit l'en-tête.{% endcapture %}
+{% include step-tuto.html
+  greyBackground=true
+  title="Étape 2 : Mettre votre nom sur votre page"
+  content=step_journal_2 %}
 
-**Fait** : Remplacé le servomoteur par un moteur pas à pas + driver
-A4988.
+{% include message.html title="Le titre est le lien entre votre page et vos séances" message="Le champ `parent` de chacune de vos séances doit être **exactement** le `title` de cette page (ici `Alice Martin`). S'il diffère d'une lettre, vos séances n'apparaissent pas sous votre nom dans le menu." status="is-warning" icon="fas fa-exclamation-triangle" %}
 
-**Pourquoi** : le servo décroche au-delà de 200 g, mesuré au
-dynamomètre.
+## Ajouter une séance (à chaque séance)
 
-**Reste à faire** : réécrire le code de contrôle moteur, commander un
-driver de rechange (livraison 3 jours).
+{% capture step_journal_3 %}Copiez `docs/journal/_modele-seance.md` dans **votre** dossier et renommez la copie avec la date du jour au format `AAAA-MM-JJ` (par exemple `2026-09-23.md`). Le nom du fichier commence par la date : les séances s'affichent ainsi dans l'ordre chronologique.{% endcapture %}
+{% include step-tuto.html
+  greyBackground=true
+  title="Étape 1 : Copier le modèle"
+  content=step_journal_3 %}
+
+{% capture step_journal_4 %}Modifiez l'en-tête de la copie :
+
+```yaml
+---
+layout: default
+title: "2026-09-23 : découpe laser du boîtier"
+parent: Alice Martin
+grand_parent: Journal de bord
+---
+```
+
+- `title` : la date, puis le sujet de la séance.
+- `parent` : le titre de votre page étudiant, exactement.
+
+Supprimez aussi le commentaire HTML (`<!-- ... -->`) en haut du fichier : c'est une consigne du modèle.{% endcapture %}
+{% include step-tuto.html
+  greyBackground=true
+  title="Étape 2 : Remplir l'en-tête"
+  content=step_journal_4 %}
+
+{% include step-tuto.html
+  greyBackground=true
+  title="Étape 3 : Remplir les trois rubriques"
+  content="Renseignez le type de séance (planifiée ou hors créneau), sa durée, puis les trois rubriques : **Fait**, **Pourquoi**, **Reste à faire**. Voir le format ci-dessous." %}
+
+## Le format d'une séance
+
+Chaque page répond à trois questions, en quelques lignes : ce qui a été
+fait, pourquoi (les décisions prises), ce qu'il reste à faire. Voici la page
+d'exemple du template :
+
+{% capture snippet_journal %}# 2026-09-23 : découpe laser du boîtier
+
+**Séance :** planifiée · **Durée :** 2 h
+
+## Fait
+
+Découpe du boîtier en contreplaqué 3 mm. Premier assemblage à blanc.
+
+## Pourquoi
+
+Les encoches étaient trop serrées : ajout d'une compensation de 0,1 mm dans le
+fichier de découpe (réglage mesuré sur une chute).
+
+## Reste à faire
+
+- Redécouper la face avant avec la compensation.
+- Demander à l'équipe électronique l'emplacement définitif du connecteur USB.
 {% endcapture %}
-{% include code-snippet.html label="Copier le gabarit d'entrée (Markdown)" content=snippet_journal %}
+{% include code-snippet.html label="Copier l'exemple de séance (Markdown)" content=snippet_journal %}
 
-{% include message.html title="Court, mais régulier" message="5 à 10 minutes en fin de séance suffisent. Une entrée courte et systématique vaut mieux qu'une entrée détaillée écrite une fois par mois." status="is-success" icon="fas fa-check-circle" %}
+{% include message.html title="Court, mais régulier" message="5 à 10 minutes en fin de séance suffisent. Une page courte et systématique vaut mieux qu'une page détaillée écrite une fois par mois. « Pourquoi » est la rubrique la plus précieuse : c'est elle qu'une prochaine équipe cherchera." status="is-success" icon="fas fa-check-circle" %}
 
-## Quand écrire une entrée
+## Quand écrire une séance
 
-- À la fin de chaque séance de travail, même courte.
+- À la fin de chaque séance de travail, même courte, y compris **en dehors
+  des créneaux prévus**.
 - À la fin de chaque point de synchro d'équipe, avec les décisions prises
-  — voir [Communiquer en équipe](/workshops/methodologie-de-projet/concepts/communiquer-en-equipe/).
+  (voir [Communiquer en équipe](/workshops/methodologie-de-projet/concepts/communiquer-en-equipe/)).
 - Dès qu'un choix technique important est fait (en plus, si le choix est
   significatif, du format détaillé vu dans
   [Tracer ses choix techniques](/workshops/methodologie-de-projet/concepts/tracer-choix-techniques/)).
@@ -76,11 +156,14 @@ driver de rechange (livraison 3 jours).
 
 | Symptôme | Cause probable | Solution |
 |---|---|---|
-| Le journal s'arrête après 2 semaines | Personne n'est explicitement chargé de le tenir à jour | Décidez d'un tour de rôle, ou d'un rappel systématique en fin de réunion |
-| Les entrées sont toutes vagues ("on a avancé") | Pas de gabarit suivi | Reprenez le format à 3 questions ci-dessus, systématiquement |
-| Trop long à relire en fin de projet | Entrées jamais synthétisées | Voir la passe de synthèse finale dans [Documenter au fil de l'eau](/workshops/methodologie-de-projet/concepts/documenter-au-fil-de-leau/) |
+| Mes séances n'apparaissent pas sous mon nom dans le menu | Le `parent` d'une séance ne correspond pas exactement au `title` de votre page | Recopiez le titre de votre page étudiant dans le `parent` de chaque séance |
+| Les séances ne sont pas dans l'ordre | Le titre ne commence pas par la date `AAAA-MM-JJ` | Renommez le titre et le fichier avec la date en tête |
+| Le modèle `_modele-seance.md` n'apparaît pas dans le menu | C'est normal : son nom commence par « _ », il est invisible sur le site | Copiez-le, ne le modifiez pas |
+| Le journal s'arrête après 2 semaines | Personne ne s'en occupe explicitement | Décidez d'un rappel systématique en fin de réunion |
+| Trop long à relire en fin de projet | Séances jamais synthétisées | Voir la passe de synthèse finale dans [Documenter au fil de l'eau](/workshops/methodologie-de-projet/concepts/documenter-au-fil-de-leau/) |
 
 ## Exercice
 
-Créez `docs/journal.md` maintenant et ajoutez une première entrée pour ce
-que vous avez fait aujourd'hui, même bref.
+Préparez votre page étudiant (dossier et titre), supprimez la séance
+d'exemple `2026-09-23.md`, puis créez votre première séance avec ce que
+vous avez fait aujourd'hui, même bref.

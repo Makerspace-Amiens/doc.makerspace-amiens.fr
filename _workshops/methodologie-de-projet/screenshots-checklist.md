@@ -7,13 +7,13 @@
 ## Méthode
 
 1. Prends les captures **dans l'ordre de cette liste**, une par ligne, sans
-   sauter d'étape (même si tu comptes ne pas toutes les garder — plus
+   sauter d'étape (même si tu comptes ne pas toutes les garder : plus
    simple pour le tri automatique par horodatage ensuite).
 2. Raccourci GNOME par défaut : **Impr écran** (écran entier) ou
-   **Maj+Impr écran** (sélection d'une zone — préférable, permet de ne
+   **Maj+Impr écran** (sélection d'une zone, préférable, permet de ne
    capturer que la fenêtre/zone utile). Elles atterrissent dans
    `~/Images/Captures d'écran` ou `~/Pictures/Screenshots` selon la config.
-3. Quand un tutoriel (ou toute la liste) est fait, dis-le-moi — je
+3. Quand un tutoriel (ou toute la liste) est fait, dis-le-moi : je
    récupère le dossier, trie par horodatage, renomme et place chaque
    image au bon endroit, puis reconstruis pour vérifier.
 4. Pas obligé de tout faire d'un coup : on peut avancer tutoriel par
@@ -33,7 +33,7 @@ Dossier cible : `_workshops/methodologie-de-projet/tutorials/creer-repo-template
 5. GitHub Desktop après clone, menu **Repository > Open in Visual Studio Code** visible → `step5-open-in-vscode.png`
 6. VSCode avec le dossier ouvert, `docs/` et `project/` visibles dans l'explorateur → `step6-dossier-ouvert-vscode.png`
 
-## 2. Git, GitHub Desktop et VSCode ✅ FAIT (2026-08-20 — 11 captures, tutoriel restructuré avec des étapes supplémentaires : stage séparé côté VSCode, vérification dans l'historique côté GitHub Desktop, zooms sur les boutons Push/Sync)
+## 2. Git, GitHub Desktop et VSCode ✅ FAIT (2026-08-20, 11 captures, tutoriel restructuré avec des étapes supplémentaires : stage séparé côté VSCode, vérification dans l'historique côté GitHub Desktop, zooms sur les boutons Push/Sync)
 
 Dossier cible : `_workshops/methodologie-de-projet/tutorials/git-github-desktop-vscode/`
 
@@ -62,7 +62,7 @@ Dossier cible : `_workshops/methodologie-de-projet/tutorials/journal-de-bord/`
 
 Dossier cible : `_workshops/methodologie-de-projet/tutorials/modifier-site-github/`
 
-**Section "Activer la publication" ✅ FAIT (2026-08-20)** — 4 captures
+**Section "Activer la publication" ✅ FAIT (2026-08-20)** : 4 captures
 intégrées : `activer-pages-settings.png` (Settings > Pages), `about-vide.png`
 
 + `edit-repository-details.png` (carte About), `social-preview.png`.

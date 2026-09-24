@@ -8,7 +8,7 @@ image: hero.png
 component_toc: true
 doc_header: true
 
-title: Gérer son projet avec GitHub — Issues et Projects
+title: Gérer son projet avec GitHub - Issues et Projects
 subtitle: Répartir et suivre les tâches sans post-it ni fichier Excel
 description: Utiliser les Issues et les Projects de GitHub pour découper le travail en tâches, les assigner, et suivre l'avancement en équipe.
 author: Adrien Bracq
@@ -28,14 +28,14 @@ hardwares:
     link: ""
 ---
 
-{% include message.html title="Captures d'écran à venir" message="L'interface GitHub évolue régulièrement — les libellés de boutons ci-dessous correspondent à l'interface actuelle." status="is-info" icon="fas fa-camera" %}
+{% include message.html title="Captures d'écran à venir" message="L'interface GitHub évolue régulièrement : les libellés de boutons ci-dessous correspondent à l'interface actuelle." status="is-info" icon="fas fa-camera" %}
 
 ## Pourquoi pas juste une liste sur papier
 
 Un post-it ou une liste partagée fonctionne les deux premières semaines,
 puis se perd. Les Issues et Projects de GitHub vivent au même endroit que
 le code et la documentation, restent visibles par toute l'équipe, et
-gardent un historique — qui a fait quoi, et quand.
+gardent un historique : qui a fait quoi, et quand.
 
 ## Le vocabulaire
 
@@ -99,7 +99,12 @@ Un Project GitHub est un tableau kanban (colonnes *À faire* / *En cours* /
   title="Lier vos Issues au Project"
   content="Dans le Project, cliquez sur `+ Add item`, puis recherchez et sélectionnez les Issues déjà créées. Elles apparaissent comme des cartes que vous glissez d'une colonne à l'autre au fil de l'avancement." %}
 
-{% include message.html title="Un Project reflète la réalité, pas l'intention" message="Une carte reste dans « En cours » depuis 3 semaines ? C'est un signal à en parler au prochain point de synchro — voir [Communiquer en équipe](/workshops/methodologie-de-projet/concepts/communiquer-en-equipe/) — pas juste un chiffre à ignorer." status="is-warning" icon="fas fa-exclamation-triangle" %}
+{% include step-tuto.html
+  greyBackground=true
+  title="Le relier à la page Équipe de votre site"
+  content="La page `docs/equipe.md` de votre template contient une section optionnelle « Suivi des tâches » avec un bouton **Tableau de suivi du projet**. Il ouvre l'onglet **Projects** de votre repo : pour que votre tableau y apparaisse, dans cet onglet, bouton **Link a project**, puis choisissez votre Project. Si votre équipe n'utilise pas de Project, supprimez cette section de la page." %}
+
+{% include message.html title="Un Project reflète la réalité, pas l'intention" message="Une carte reste dans « En cours » depuis 3 semaines ? C'est un signal à en parler au prochain point de synchro (voir [Communiquer en équipe](/workshops/methodologie-de-projet/concepts/communiquer-en-equipe/)), pas juste un chiffre à ignorer." status="is-warning" icon="fas fa-exclamation-triangle" %}
 
 ## Répartir les tâches
 
@@ -124,7 +129,7 @@ fichiers, le guide
 [Utiliser les Pull Requests et résoudre un conflit Git](/docs/how-to-guides/pull-requests-et-conflits-git/)
 va plus loin : faire relire son travail avant de le fusionner dans
 `main`, et s'en sortir proprement quand deux modifications se
-percutent. Pas une étape obligatoire — seulement si le besoin s'en fait
+percutent. Pas une étape obligatoire : seulement si le besoin s'en fait
 sentir.
 
 ## Exercice

@@ -18,7 +18,7 @@ todo: 70
 ## Le piège du "on verra en avançant"
 
 Sur un projet, l'envie de commencer à souder, imprimer ou coder est
-forte — c'est souvent pour ça qu'on s'inscrit au MakerSpace. Mais démarrer
+forte : c'est souvent pour ça qu'on s'inscrit au MakerSpace. Mais démarrer
 sans avoir posé le besoin, c'est le meilleur moyen de refaire les mêmes choix
 trois fois, de découvrir une contrainte bloquante à la semaine 6, ou de
 livrer un prototype qui ne répond plus du tout à la question de départ.
@@ -31,7 +31,7 @@ ou la première pièce imprimée.
 
 ## Les cinq questions à se poser
 
-Posez-vous ces questions dans cet ordre — c'est le raisonnement naturel :
+Posez-vous ces questions dans cet ordre ; c'est le raisonnement naturel :
 pourquoi → quoi → pour qui → avec quelles limites → comment on vérifie.
 Ce sont exactement les cinq sections du gabarit plus bas, dans le même
 ordre : ce que vous répondez ici, vous le recopiez tel quel dedans.
@@ -89,9 +89,13 @@ si l'objectif est atteint.
 
 ## Un gabarit simple à réutiliser
 
-Vous n'avez pas besoin d'inventer un format. Ce gabarit tient dans le fichier
-`docs/objectifs.md` du repo template — copiez-le et remplissez-le en équipe
-dès la première réunion de projet.
+Vous n'avez pas besoin d'inventer un format. Ce gabarit tient dans la page
+`docs/objectifs.md` de votre repo, qui le reprend en trois sections :
+**Contexte**, **Problème et public cible** (les rubriques « Objectifs » et
+« Public cible » ci-dessous), et **Cahier des charges** (les rubriques
+« Contraintes » et « Critères de réussite », sous forme de tableau des
+fonctions, voir plus bas). Remplissez-le en équipe dès la première réunion de
+projet.
 
 ```markdown
 ## Contexte
@@ -118,7 +122,7 @@ dès la première réunion de projet.
 <Comment on sait, objectivement, que c'est réussi.>
 ```
 
-{% include message.html title="Bonne pratique" message="Remplissez ce gabarit ensemble, à l'oral, dès la première réunion — pas un seul membre de l'équipe dans son coin. C'est aussi le moment où les désaccords sur ce que le projet doit faire apparaissent, mieux vaut que ce soit à J1 qu'à J40." status="is-success" icon="fas fa-check-circle" %}
+{% include message.html title="Bonne pratique" message="Remplissez ce gabarit ensemble, à l'oral, dès la première réunion, pas un seul membre de l'équipe dans son coin. C'est aussi le moment où les désaccords sur ce que le projet doit faire apparaissent, mieux vaut que ce soit à J1 qu'à J40." status="is-success" icon="fas fa-check-circle" %}
 
 ### Exemple rempli
 
@@ -161,11 +165,11 @@ supervision technique pendant la démonstration, coût total ≤ 150 €.
 Remarquez que "Contexte" et "Objectifs" ne disent pas la même chose : le
 premier explique *pourquoi* le projet existe, le second dit *ce qu'il faut
 livrer*. Si vous ne savez pas quoi écrire dans "Objectifs", relisez votre
-"Contexte" — l'objectif est souvent la réponse directe au problème posé.
+"Contexte" : l'objectif est souvent la réponse directe au problème posé.
 
 Pour remplir les sections "Objectifs" et "Critères de réussite" sans rester
-au niveau des intentions vagues, il existe quelques méthodes outillées —
-elles sont détaillées juste en dessous. Elles ne servent pas qu'à remplir
+au niveau des intentions vagues, il existe quelques méthodes outillées.
+Elles sont détaillées juste en dessous. Elles ne servent pas qu'à remplir
 un document : elles produisent un support concret que vous réutiliserez
 plus tard dans le projet pour comparer et justifier de vrais choix
 techniques.
@@ -248,21 +252,23 @@ F3 = souhait, pas indispensable).
 
 C'est ce tableau, plus que les diagrammes eux-mêmes, qui devient directement
 réutilisable : chaque ligne peut être copiée telle quelle dans les
-"Critères de réussite" du gabarit vu plus haut.
+"Critères de réussite" du gabarit vu plus haut. C'est aussi le tableau que
+contient la section **Cahier des charges** de `docs/objectifs.md`, avec ce même
+exemple de robot de tri à remplacer par vos fonctions.
 
 ### Le diagramme FAST : passer des fonctions aux solutions
 
 Le FAST part d'une fonction (ex : "trier les déchets") et la décompose en
 sous-fonctions techniques, jusqu'aux solutions concrètes envisagées. On ne
 le détaille pas ici : il a surtout sa place plus tard dans le projet, au
-moment de comparer et justifier des choix techniques — voir
+moment de comparer et justifier des choix techniques. Voir
 [Tracer ses choix techniques](/workshops/methodologie-de-projet/concepts/tracer-choix-techniques/).
 
 ## Ce cahier des charges n'est pas figé
 
 Un projet évolue : une contrainte matérielle imprévue, un composant en
 rupture de stock, une idée qui s'avère meilleure en cours de route. Le
-cahier des charges peut changer — mais il doit changer **consciemment et par
+cahier des charges peut changer, mais il doit changer **consciemment et par
 écrit**, pas silencieusement dans la tête d'une seule personne. Chaque
 révision se documente au même endroit, avec la date et la raison du
 changement.
@@ -275,8 +281,9 @@ pas seulement à la fin.
 
 Sur votre propre projet, en équipe et à l'oral :
 
-1. Remplissez les cinq sections du gabarit (Contexte, Objectifs, Public
-   cible, Contraintes, Critères de réussite).
+1. Remplissez la page `docs/objectifs.md` de votre repo : les cinq rubriques
+   du gabarit (Contexte, Objectifs, Public cible, Contraintes, Critères de
+   réussite) tiennent dans ses trois sections.
 2. Relisez vos "Critères de réussite" : sont-ils vérifiables par quelqu'un
    d'extérieur à l'équipe, ou seulement compréhensibles par vous ?
 3. Si votre projet est ambitieux ou que votre référent le demande, tracez
