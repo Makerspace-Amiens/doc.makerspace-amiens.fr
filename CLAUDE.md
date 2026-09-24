@@ -171,6 +171,16 @@ Le dropdown est **généré dynamiquement** depuis `site.workshops | where: "lay
 - Dossier : sous-dossier **du même nom** que le `.md` (ex : `_docs/tutorials/electronics/port-serie/` pour `port-serie.md`).
 - Nommage : **noms descriptifs** en kebab-case (`schema-connexion-tx-rx.png`, `hero.png`), jamais des timestamps horodatés (`2021-11-08-11-37-38.png`).
 - Image de couverture : nommer `hero.png` ou `hero.jpg` et la référencer dans `hero_image` et `image`.
+- Photos : réelles (jamais générées par IA) et libres, avec crédit (auteur, source, licence) en fin de page : un trait `---` puis le texte suivi de `{: .is-size-7 .has-text-grey }`. Une image sous licence ND (ex. CC BY-NC-ND) ne se recadre, redimensionne ni recompresse jamais : la renommer seulement.
+
+---
+
+## Atelier `methodologie-de-projet` et repo `template-project`
+
+Les tutoriels de cet atelier décrivent le repo **template-project** des étudiants (`~/Documents/GitHub/template-project`, GitHub `Makerspace-Amiens/template-project`), qui est un site **Just the Docs**, pas ce site. Ce repo est la source de vérité : le relire (`docs/`, `project/`, `.github/workflows/ci.yml`) avant de modifier un tutoriel qui le décrit, et le garder aligné quand il évolue (voir `notes.md` de l'atelier pour le détail).
+
+- Les includes `step-tuto.html`, `message.html`, `youtube.html`, `content-tabs.html`... n'existent **pas** chez les étudiants : ne jamais leur demander de les utiliser. Ils disposent de `model3d.html`, `kicad.html`, `graphique.html`, de Mermaid et de MathJax (`docs/_includes/head_custom.html`), et des marqueurs `{: .a_modifier }` / `{: .a_supprimer }`.
+- Le `Gemfile` du template est dans `docs/` : toutes les commandes Jekyll s'y lancent.
 
 ---
 
@@ -237,7 +247,8 @@ Règles importantes à respecter :
 - Un seul titre `#` implicite (le `title` du front matter). Le corps commence à `##`.
 - Ligne vide avant et après les listes et les blocs de code.
 - Nommer les langages des blocs de code (` ```bash `, ` ```cpp `, etc.).
-- **Ne pas encadrer de `< >` les URLs à l'intérieur des paramètres Liquid** (`items=`, `content=`, etc.) — markdownlint le fait par erreur lors d'un auto-fix.
+- **Ne pas encadrer de `< >` les URLs à l'intérieur des paramètres Liquid** (`items=`, `content=`, etc.) : markdownlint le fait par erreur lors d'un auto-fix.
+- **Ne jamais utiliser le tiret cadratin `—`** dans le corps du contenu rédigé (prose, `message=`/`content=` des includes). Remplacer par la ponctuation adaptée au sens (`:`, `,`, parenthèses, ou deux phrases séparées) selon le contexte.
 
 ---
 
