@@ -182,6 +182,14 @@ Les tutoriels de cet atelier décrivent le repo **template-project** des étudia
 - Les includes `step-tuto.html`, `message.html`, `youtube.html`, `content-tabs.html`... n'existent **pas** chez les étudiants : ne jamais leur demander de les utiliser. Ils disposent de `model3d.html`, `kicad.html`, `graphique.html`, de Mermaid et de MathJax (`docs/_includes/head_custom.html`), et des marqueurs `{: .a_modifier }` / `{: .a_supprimer }`.
 - Le `Gemfile` du template est dans `docs/` : toutes les commandes Jekyll s'y lancent.
 
+### Template figé : des étudiants l'utilisent (depuis le 2026-09-25)
+
+Les étudiants de I2 ont dupliqué le template le 2026-09-25 (commit `f258512`). Leurs repos sont des **copies indépendantes** : une modification du template ne les atteint pas, et leurs repos contiennent des **liens en dur** vers ce site.
+
+- **Ne jamais renommer, déplacer ni supprimer** une page de ce site référencée par le template (vérifier avec `grep -rhoE 'https://doc\.makerspace-amiens\.fr[^) "]*' ~/Documents/GitHub/template-project`). En particulier : `/workshops/methodologie-de-projet/`, les concepts `definir-son-besoin`, `constituer-organiser-equipe`, `rechercher-existant-faisabilite`, `tracer-choix-techniques`, les tutoriels `documenter-carte-electronique`, `documenter-systeme-mecanique`, `documenter-code-firmware`, `documenter-assemblage-montage`, `documenter-tests-resultats`, `gerer-projet-github`, `journal-de-bord`, `poster-video-presentation`, et `/docs/tutorials/software/vscode-platformio/installation-vscode/`. Modifier leur contenu est permis ; changer leurs titres de section avec prudence.
+- **Côté template** : seulement des ajouts. Pas de suppression ni de renommage de fichier, de dossier ou de page (`mon-robot`, `etudiant-1`, `carte-principale.md`...), sinon les tutoriels ne correspondraient plus à ce que les étudiants ont sous les yeux.
+- Les tutoriels doivent rester justes pour la version `f258512` : si un ajout au template est documenté, le présenter comme optionnel (« si votre repo contient... ») pour les repos créés avant.
+
 ---
 
 ## Includes Liquid disponibles
