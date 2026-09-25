@@ -17,9 +17,9 @@ todo: 20
 
 ## 1. Pourquoi un vernier
 
-Un pied à coulisse à vernier permet de lire une cote au dixième de millimètre sans afficheur digital, grâce à une seconde graduation mobile (le **vernier**) placée à côté de la règle fixe. Comprendre comment ces deux graduations s'articulent est plus facile à voir qu'à expliquer — c'est l'objet de cet outil.
+Un pied à coulisse à vernier permet de lire une cote au dixième de millimètre sans afficheur digital, grâce à une seconde graduation mobile (le **vernier**) placée à côté de la règle fixe. Comprendre comment ces deux graduations s'articulent est plus facile à voir qu'à expliquer : c'est l'objet de cet outil.
 
-Le principe : le vernier comporte 10 divisions qui couvrent 9 mm de la règle fixe, donc chaque division du vernier vaut 0,9 mm — 0,1 mm de moins qu'une division de la règle. C'est ce léger décalage qui fait qu'une seule ligne du vernier s'aligne exactement avec une ligne de la règle fixe à chaque position, et c'est cette ligne qui donne le chiffre après la virgule.
+Le principe : le vernier comporte 10 divisions qui couvrent 9 mm de la règle fixe, donc chaque division du vernier vaut 0,9 mm, 0,1 mm de moins qu'une division de la règle. C'est ce léger décalage qui fait qu'une seule ligne du vernier s'aligne exactement avec une ligne de la règle fixe à chaque position, et c'est cette ligne qui donne le chiffre après la virgule.
 
 ## 2. Simulateur
 
