@@ -61,7 +61,7 @@ vitesse de gravure grâce à la technologie galvo.
 | Positionnement | Autofocus, double caméra (2 x 48 MP) |
 | Connectique | Wi-Fi, USB |
 | Logiciel | xTool Creative Space (SVG, DXF, JPG, PNG, BMP) |
-| Extraction | Tuyau d'évacuation fourni — extracteur ou purificateur d'air requis |
+| Extraction | Tuyau d'évacuation fourni, extracteur ou purificateur d'air requis |
 
 ## Possibilités et limitations
 
@@ -87,7 +87,7 @@ vitesse de gravure grâce à la technologie galvo.
 
 **Laser diode (non-métaux) :** bois (contreplaqué, tilleul), carton ondulé, cuir, acrylique non transparent, papier, verre/céramique (marquage de surface).
 
-**Interdit :** PVC — voir les [matériaux autorisés et interdits](/workshops/certification-securite/modules/laser/#matériaux-autorisés-et-interdits) du module Découpe laser pour la liste complète.
+**Interdit :** PVC. Voir les [matériaux autorisés et interdits](/workshops/certification-securite/modules/laser/#matériaux-autorisés-et-interdits) du module Découpe laser pour la liste complète.
 
 ## Utilisation au MakerSpace
 

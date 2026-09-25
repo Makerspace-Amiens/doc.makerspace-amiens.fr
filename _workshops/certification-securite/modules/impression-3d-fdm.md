@@ -8,7 +8,7 @@ component_toc: true
 doc_header: true
 
 title: Impression 3D FDM
-subtitle: Niveau 1 — Autonome
+subtitle: "Niveau 1 : Autonome"
 description: Chaleur, matériaux et supervision minimale à connaître avant d'utiliser une imprimante FDM en autonomie.
 author: Adrien Bracq
 
@@ -29,7 +29,7 @@ hardwares:
 
 À tout usager du Campus souhaitant utiliser une des imprimantes 3D FDM du MakerSpace en autonomie.
 
-Ce module peut être suivi à l'occasion du cours de 1ère année qui aborde l'impression 3D — mais il s'applique aussi bien à vous si vous ne l'avez pas eu dans ce cadre.
+Ce module peut être suivi à l'occasion du cours de 1ère année qui aborde l'impression 3D, mais il s'applique aussi bien à vous si vous ne l'avez pas eu dans ce cadre.
 
 ## Pourquoi ce niveau de vigilance
 
@@ -49,7 +49,7 @@ Le risque est globalement faible sur ces machines, mais un accès libre et peu s
 
 **En autonomie complète :** PLA, PETG, TPU.
 
-**Tout autre matériau (ABS et autres) :** non utilisable en autonomie. Leur usage est encadré par les référents — demandez avant toute utilisation, afin qu'elle se fasse dans les meilleures conditions (ventilation, réglages adaptés).
+**Tout autre matériau (ABS et autres) :** non utilisable en autonomie. Leur usage est encadré par les référents : demandez avant toute utilisation, afin qu'elle se fasse dans les meilleures conditions (ventilation, réglages adaptés).
 
 ## EPI et équipements requis
 
@@ -69,8 +69,8 @@ Aucun EPI spécifique en usage normal. Des gants de protection thermique sont re
 
 ## Conduite à tenir en cas d'incident
 
-{% include message.html title="La règle absolue" message="Quel que soit l'incident, prévenez immédiatement le référent MakerSpace présent — c'est lui qui prend la direction des opérations. Votre sécurité passe avant tout : en cas de doute sur un geste, ne le faites pas, alertez et évacuez plutôt que d'intervenir." status="is-danger" icon="fas fa-triangle-exclamation" %}
+{% include message.html title="La règle absolue" message="Quel que soit l'incident, prévenez immédiatement le référent MakerSpace présent : c'est lui qui prend la direction des opérations. Votre sécurité passe avant tout : en cas de doute sur un geste, ne le faites pas, alertez et évacuez plutôt que d'intervenir." status="is-danger" icon="fas fa-triangle-exclamation" %}
 
 **Brûlure légère :** refroidir immédiatement à l'**eau tempérée** pendant plusieurs minutes, ne jamais percer une cloque. Laissez la victime ajuster elle-même la température de l'eau selon ce qui la soulage : ni glacée, ni chaude.
 
-**Départ de feu :** ne vous approchez jamais d'un foyer d'origine électrique pour couper l'alimentation à la source. Ne coupez l'alimentation que si un interrupteur ou un arrêt d'urgence est accessible sans vous approcher du feu — sinon, donnez l'alerte (au référent présent et, si besoin, au 18/112) et évacuez calmement. Un extincteur ne s'utilise qu'à distance de sécurité, sur un départ de feu maîtrisable, et seulement si vous savez vous en servir.
+**Départ de feu :** ne vous approchez jamais d'un foyer d'origine électrique pour couper l'alimentation à la source. Ne coupez l'alimentation que si un interrupteur ou un arrêt d'urgence est accessible sans vous approcher du feu. Sinon, donnez l'alerte (au référent présent et, si besoin, au 18/112) et évacuez calmement. Un extincteur ne s'utilise qu'à distance de sécurité, sur un départ de feu maîtrisable, et seulement si vous savez vous en servir.

@@ -26,7 +26,7 @@ todo: 10
 
 Une plaque chauffante de soudage est une plaque métallique chauffée électriquement, sur laquelle on pose une carte électronique pour la porter à une température stable et homogène.
 
-Son usage principal est de souder ou dessouder directement dessus des composants montés en surface (CMS/SMD) : on chauffe toute la carte jusqu'à faire fondre l'étain ou la pâte à souder, ce qui permet de retirer ou replacer un composant sans avoir à concentrer la chaleur d'un fer sur un point précis — utile en particulier pour les gros composants (connecteurs CMS, circuits à nombreuses broches) dont les pattes sont difficiles à dessouder une par une.
+Son usage principal est de souder ou dessouder directement dessus des composants montés en surface (CMS/SMD) : on chauffe toute la carte jusqu'à faire fondre l'étain ou la pâte à souder, ce qui permet de retirer ou replacer un composant sans avoir à concentrer la chaleur d'un fer sur un point précis. C'est utile en particulier pour les gros composants (connecteurs CMS, circuits à nombreuses broches) dont les pattes sont difficiles à dessouder une par une.
 
 Elle sert aussi de préchauffage d'appoint avant d'intervenir au fer ou à la station à air chaud sur une carte déjà peuplée : la chaleur du fer se dissipe vite dans les plans de masse et les autres pistes, et préchauffer l'ensemble de la carte réduit l'écart de température que le fer doit encore apporter localement, ce qui limite le risque de décoller une pastille ou de fissurer une soudure par choc thermique.
 

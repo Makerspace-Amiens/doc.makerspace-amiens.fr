@@ -64,7 +64,7 @@ Elle est utilisée au MakerSpace pour la découpe et la gravure de pièces plate
 - Découpe de métal impossible (un laser CO2 ne coupe pas le métal, uniquement la gravure de surface).
 - Épaisseur de découpe limitée à 15 mm, au-delà seule la gravure reste possible.
 - **PVC strictement interdit** : sa découpe dégage du chlore, un gaz toxique.
-- ABS, polycarbonate, mousses et autres matériaux proscrits sur cette machine — voir le [module Découpe laser](/workshops/certification-securite/modules/laser/) pour la liste complète.
+- ABS, polycarbonate, mousses et autres matériaux proscrits sur cette machine. Voir le [module Découpe laser](/workshops/certification-securite/modules/laser/) pour la liste complète.
 
 ## Matériaux utilisables
 
@@ -72,7 +72,7 @@ Elle est utilisée au MakerSpace pour la découpe et la gravure de pièces plate
 
 **Gravure uniquement :** verre, pierre, métal (avec spray de marquage céramique).
 
-**Interdit :** PVC (dégage du chlore), et plus généralement tout matériau non validé par un référent — voir les [matériaux autorisés et interdits](/workshops/certification-securite/modules/laser/#matériaux-autorisés-et-interdits).
+**Interdit :** PVC (dégage du chlore), et plus généralement tout matériau non validé par un référent. Voir les [matériaux autorisés et interdits](/workshops/certification-securite/modules/laser/#matériaux-autorisés-et-interdits).
 
 ## Techniques & tutos
 
@@ -80,4 +80,4 @@ Voir l'atelier [Découpe Laser](/workshops/decoupe-laser/) pour les tutoriels de
 
 ## Notes
 
-Voir les [consignes de sécurité du module Découpe laser](/workshops/certification-securite/modules/laser/) avant toute utilisation — incendie, fumées et rayonnement laser sont les risques principaux sur cette machine.
+Voir les [consignes de sécurité du module Découpe laser](/workshops/certification-securite/modules/laser/) avant toute utilisation : incendie, fumées et rayonnement laser sont les risques principaux sur cette machine.

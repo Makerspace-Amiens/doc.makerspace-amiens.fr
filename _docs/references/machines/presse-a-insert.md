@@ -47,7 +47,7 @@ Presse verticale pour insérer des inserts filetés thermiques (en laiton) dans 
 
 ## Utilisation au MakerSpace
 
-À compléter : règles d'accès, réservation. Voir les [consignes de sécurité du module Thermoformage](/workshops/certification-securite/modules/thermoformage/) avant toute utilisation — la panne chauffe jusqu'à 500 °C.
+À compléter : règles d'accès, réservation. Voir les [consignes de sécurité du module Thermoformage](/workshops/certification-securite/modules/thermoformage/) avant toute utilisation : la panne chauffe jusqu'à 500 °C.
 
 ## Ressources
 

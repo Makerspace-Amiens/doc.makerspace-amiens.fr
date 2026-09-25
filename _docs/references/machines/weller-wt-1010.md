@@ -58,7 +58,7 @@ Elle est utilisée au MakerSpace pour le soudage et le dessoudage manuel de comp
 
 - Un seul canal / un seul fer : pas d'usage simultané à deux pannes différentes sur la même station.
 - Pas d'extraction de fumées intégrée : une aspiration externe est obligatoire à chaque utilisation.
-- Pannes non fournies au-delà du kit de base — une panne adaptée doit être choisie selon le composant.
+- Pannes non fournies au-delà du kit de base : une panne adaptée doit être choisie selon le composant.
 
 ## Matériaux utilisables
 
@@ -66,4 +66,4 @@ Alliages de soudure électronique standards (étain-plomb ou sans plomb) sur com
 
 ## Notes
 
-Voir les [consignes de sécurité du module Soudure électronique](/workshops/certification-securite/modules/soudure/) avant toute utilisation — toujours reposer le fer sur son support isolé et travailler sous aspiration.
+Voir les [consignes de sécurité du module Soudure électronique](/workshops/certification-securite/modules/soudure/) avant toute utilisation : toujours reposer le fer sur son support isolé et travailler sous aspiration.

@@ -54,7 +54,7 @@ Elle est utilisée au MakerSpace en complément du fer à souder [Weller WT 1010
 
 ### b. Limitations
 
-- Pas adaptée au soudage fin traversant ou CMS pas-fin — utiliser plutôt le [fer Weller WT 1010](/docs/references/machines/weller-wt-1010/).
+- Pas adaptée au soudage fin traversant ou CMS pas-fin : utiliser plutôt le [fer Weller WT 1010](/docs/references/machines/weller-wt-1010/).
 - Zone chauffée large et diffuse : risque d'endommager les composants voisins si mal maîtrisée.
 - Pas d'extraction de fumées intégrée : une aspiration externe est obligatoire à chaque utilisation.
 
@@ -64,4 +64,4 @@ Alliages de soudure électronique standards (étain-plomb ou sans plomb) sur com
 
 ## Notes
 
-Voir les [consignes de sécurité du module Soudure électronique](/workshops/certification-securite/modules/soudure/) avant toute utilisation — l'air soufflé atteint des températures élevées et l'aspiration des fumées est obligatoire.
+Voir les [consignes de sécurité du module Soudure électronique](/workshops/certification-securite/modules/soudure/) avant toute utilisation : l'air soufflé atteint des températures élevées et l'aspiration des fumées est obligatoire.

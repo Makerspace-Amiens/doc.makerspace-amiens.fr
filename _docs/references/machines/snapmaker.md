@@ -11,7 +11,7 @@ tag: additive-manufacturing
 
 title: SnapMaker 2.0 A350T
 subtitle: CNC modulaire 3-en-1
-description: Machine modulaire 3-en-1 (impression 3D, découpe/gravure laser, fraisage CNC) à têtes interchangeables — utilisée au MakerSpace pour son module de fraisage CNC.
+description: Machine modulaire 3-en-1 (impression 3D, découpe/gravure laser, fraisage CNC) à têtes interchangeables, utilisée au MakerSpace pour son module de fraisage CNC.
 author: Adrien Bracq
 
 manufacturer:
@@ -28,7 +28,7 @@ todo: 40
 
 ## Présentation
 
-Le SnapMaker 2.0 A350T est une machine modulaire : un même bâti (structure linéaire XYZ) accepte trois têtes interchangeables — impression 3D FDM, découpe/gravure laser et fraisage CNC — pilotées par le même logiciel (Snapmaker Luban / Snapmaker Orca).
+Le SnapMaker 2.0 A350T est une machine modulaire : un même bâti (structure linéaire XYZ) accepte trois têtes interchangeables (impression 3D FDM, découpe/gravure laser et fraisage CNC) pilotées par le même logiciel (Snapmaker Luban / Snapmaker Orca).
 
 Au MakerSpace, cette machine est mise à disposition pour son **module de fraisage CNC** : usinage de pièces plates en bois, acrylique, PCB ou plaques de carbone à partir d'un fichier de parcours d'outil.
 
@@ -41,16 +41,16 @@ Au MakerSpace, cette machine est mise à disposition pour son **module de fraisa
 | Zone de travail | CNC | 320 x 335 mm |
 | Puissance / outil | Laser | 1600 mW, longueur d'onde 450 nm, spot 0,2 x 0,3 mm |
 | Vitesse de rotation | CNC | 6 000 à 12 000 tr/min, mandrin ER11 (fraises Ø 0,5 à 6,35 mm) |
-| Dimensions hors tout | — | 495 x 506 x 580 mm |
-| Connectique | — | Wi-Fi, USB, clé USB |
+| Dimensions hors tout | - | 495 x 506 x 580 mm |
+| Connectique | - | Wi-Fi, USB, clé USB |
 
 ## Possibilités et limitations
 
 ### a. Possibilités
 
 - Fraisage CNC de pièces plates en bois, acrylique, PCB et plaques de fibre de carbone.
-- Impression 3D FDM (PLA, ABS, PETG, TPU, Wood PLA) — module non ouvert à l'usage libre au MakerSpace, voir Notes.
-- Découpe et gravure laser (bois, cuir, plastique non transparent, tissu, papier) — module non ouvert à l'usage libre au MakerSpace, voir Notes.
+- Impression 3D FDM (PLA, ABS, PETG, TPU, Wood PLA). Module non ouvert à l'usage libre au MakerSpace, voir Notes.
+- Découpe et gravure laser (bois, cuir, plastique non transparent, tissu, papier). Module non ouvert à l'usage libre au MakerSpace, voir Notes.
 
 ### b. Limitations
 
@@ -69,6 +69,6 @@ Au MakerSpace, cette machine est mise à disposition pour son **module de fraisa
 
 ## Notes
 
-Au MakerSpace, seul le **module de fraisage CNC** est actuellement couvert par un module de certification sécurité et ouvert à l'usage — voir les [consignes de sécurité du module CNC](/workshops/certification-securite/modules/cnc/) avant toute utilisation (outil rotatif, entraînement, projections).
+Au MakerSpace, seul le **module de fraisage CNC** est actuellement couvert par un module de certification sécurité et ouvert à l'usage. Voir les [consignes de sécurité du module CNC](/workshops/certification-securite/modules/cnc/) avant toute utilisation (outil rotatif, entraînement, projections).
 
 Les modules laser et impression 3D de cette machine ne sont pas ouverts à l'usage libre pour l'instant.

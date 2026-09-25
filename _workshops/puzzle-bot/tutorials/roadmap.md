@@ -25,7 +25,7 @@ Plutôt que de viser immédiatement un cas réaliste et complexe, le travail pro
 
 La progression est volontairement découpée afin d’introduire **une seule difficulté nouvelle à la fois**. Chaque étape doit faire l’objet d’une **validation expérimentale** avant de passer à la suivante. Cette approche permet de mieux identifier les sources d’erreurs, de consolider les acquis et de garantir un système fonctionnel à tout moment.
 
-Il est tout à fait acceptable — et parfois recommandé — de s’arrêter à un niveau intermédiaire pleinement opérationnel, à condition que celui-ci soit **robuste**, **maîtrisé** et **correctement documenté**. La qualité de la démarche et la compréhension du système priment sur la complexité finale.
+Il est tout à fait acceptable, et parfois recommandé, de s’arrêter à un niveau intermédiaire pleinement opérationnel, à condition que celui-ci soit **robuste**, **maîtrisé** et **correctement documenté**. La qualité de la démarche et la compréhension du système priment sur la complexité finale.
 
 {% include message.html
 title="Information"

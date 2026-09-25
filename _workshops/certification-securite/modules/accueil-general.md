@@ -8,7 +8,7 @@ component_toc: true
 doc_header: true
 
 title: Accueil général
-subtitle: Niveau 0 — Autonome
+subtitle: "Niveau 0 : Autonome"
 description: Les règles de base et les équipements de sécurité à connaître avant de mettre les pieds au MakerSpace, quel que soit votre usage.
 author: Adrien Bracq
 ---
@@ -45,7 +45,7 @@ Des exercices d'évacuation sont organisés plusieurs fois par an. Dans tous les
 
 <div class="consigne-list">
 {% include consigne-item.html type="do" content="Cheveux attachés et pas de vêtements amples à proximité de toute machine motorisée." %}
-{% include consigne-item.html type="do" content="Zone de circulation dégagée en permanence — pas de câbles ou de matériaux au sol." %}
+{% include consigne-item.html type="do" content="Zone de circulation dégagée en permanence, pas de câbles ou de matériaux au sol." %}
 {% include consigne-item.html type="do" content="Chaque utilisateur range son poste après usage." %}
 {% include consigne-item.html type="do" content="Respectez la jauge de la salle : certaines salles ont une capacité maximale indiquée à l'entrée." %}
 {% include consigne-item.html type="dont" content="Ne pas toucher au projet ou à la machine d'un autre sans son accord." %}
@@ -54,9 +54,9 @@ Des exercices d'évacuation sont organisés plusieurs fois par an. Dans tous les
 
 ## Conduite à tenir en cas d'incident
 
-{% include message.html title="La règle absolue" message="Quel que soit l'incident, prévenez immédiatement le référent MakerSpace présent — c'est lui qui prend la direction des opérations. Votre sécurité passe avant tout : en cas de doute sur un geste, ne le faites pas, alertez et évacuez plutôt que d'intervenir." status="is-danger" icon="fas fa-triangle-exclamation" %}
+{% include message.html title="La règle absolue" message="Quel que soit l'incident, prévenez immédiatement le référent MakerSpace présent : c'est lui qui prend la direction des opérations. Votre sécurité passe avant tout : en cas de doute sur un geste, ne le faites pas, alertez et évacuez plutôt que d'intervenir." status="is-danger" icon="fas fa-triangle-exclamation" %}
 
-**Incendie :** ne vous approchez jamais d'un foyer d'origine électrique pour couper l'alimentation à la source. Ne coupez l'alimentation que si un interrupteur ou un arrêt d'urgence est accessible sans vous approcher du feu — sinon, donnez l'alerte (au référent présent et, si besoin, au 18/112) et évacuez calmement vers le point de rassemblement. Un extincteur ne s'utilise qu'à distance de sécurité, sur un départ de feu maîtrisable, et seulement si vous savez vous en servir.
+**Incendie :** ne vous approchez jamais d'un foyer d'origine électrique pour couper l'alimentation à la source. Ne coupez l'alimentation que si un interrupteur ou un arrêt d'urgence est accessible sans vous approcher du feu. Sinon, donnez l'alerte (au référent présent et, si besoin, au 18/112) et évacuez calmement vers le point de rassemblement. Un extincteur ne s'utilise qu'à distance de sécurité, sur un départ de feu maîtrisable, et seulement si vous savez vous en servir.
 
 **Accident électrique :** ne touchez jamais la victime tant que l'alimentation n'est pas coupée. Ne coupez l'alimentation que si cela peut se faire sans risque pour vous ; sinon, n'approchez pas et alertez immédiatement le référent et les secours (15/112).
 

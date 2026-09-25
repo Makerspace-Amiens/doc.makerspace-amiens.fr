@@ -10,7 +10,7 @@ doc_header: true
 type: how-to
 
 title: Utiliser les Pull Requests et résoudre un conflit Git
-subtitle: Utilisation avancée de Git — pas indispensable pour tous les projets
+subtitle: Utilisation avancée de Git, pas indispensable pour tous les projets
 description: Faire relire son travail avant de le fusionner dans la branche principale via une Pull Request, et résoudre proprement un conflit quand deux modifications se percutent.
 author: Adrien Bracq
 
@@ -34,12 +34,12 @@ hardwares:
 
 Ce guide combine deux compétences liées : proposer son travail via une
 **Pull Request** pour qu'il soit relu avant d'atteindre la branche
-principale, et résoudre un **conflit Git** — qui survient justement le
+principale, et résoudre un **conflit Git**, qui survient justement le
 plus souvent au moment de fusionner une Pull Request.
 
 ## Prérequis
 
-- Être à l'aise avec le cycle stage / commit / push de base — voir
+- Être à l'aise avec le cycle stage / commit / push de base : voir
   [Git, GitHub Desktop et VSCode](/workshops/methodologie-de-projet/tutorials/git-github-desktop-vscode/).
 
 ## Procédure
@@ -71,7 +71,7 @@ graph LR
 
 **Avec VSCode** : cliquez sur le nom de branche en bas à gauche, `Create new branch`, entrez le nom.
 
-Travaillez et committez normalement sur cette branche — voir [Git, GitHub Desktop et VSCode](/workshops/methodologie-de-projet/tutorials/git-github-desktop-vscode/)." %}
+Travaillez et committez normalement sur cette branche : voir [Git, GitHub Desktop et VSCode](/workshops/methodologie-de-projet/tutorials/git-github-desktop-vscode/)." %}
 
 ### 3. Ouvrir la Pull Request
 
@@ -96,7 +96,7 @@ Donnez un titre clair et une description : ce qui a changé, pourquoi, et ce qu'
 {% include step-tuto.html
   greyBackground=true
   title="Merge"
-  content="Une fois la PR approuvée, bouton **Merge pull request** puis **Confirm merge**. Supprimez ensuite la branche (bouton proposé juste après) — elle a fait son travail, la garder ne sert à rien.
+  content="Une fois la PR approuvée, bouton **Merge pull request** puis **Confirm merge**. Supprimez ensuite la branche (bouton proposé juste après) : elle a fait son travail, la garder ne sert à rien.
 
 Si GitHub affiche **This branch has conflicts that must be resolved**, passez à la section suivante avant de pouvoir merger." %}
 
@@ -104,7 +104,7 @@ Si GitHub affiche **This branch has conflicts that must be resolved**, passez à
 
 Un conflit survient quand deux personnes ont modifié **les mêmes lignes**
 du même fichier, sur des branches différentes. Git sait fusionner
-automatiquement des modifications sur des lignes différentes — sur les
+automatiquement des modifications sur des lignes différentes. Sur les
 mêmes lignes, il ne peut pas deviner laquelle garder, et vous le demande.
 
 {% include message.html title="Ce n'est pas une erreur" message="Un conflit n'est pas le signe que vous avez mal fait quelque chose. C'est le fonctionnement normal de Git dès qu'une équipe travaille en parallèle sur les mêmes fichiers." status="is-info" icon="fas fa-info-circle" %}
@@ -130,7 +130,7 @@ La version de l'autre branche
 {% include step-tuto.html
   greyBackground=true
   title="Choisir la bonne version"
-  content="Ne cliquez pas au hasard : lisez les deux versions, et si besoin, discutez-en avec la personne qui a écrit l'autre version. Le résultat final ne doit contenir **aucun** marqueur `<<<<<<<`, `=======`, `>>>>>>>` restant — vérifiez en relisant le fichier entier une fois terminé." %}
+  content="Ne cliquez pas au hasard : lisez les deux versions, et si besoin, discutez-en avec la personne qui a écrit l'autre version. Le résultat final ne doit contenir **aucun** marqueur `<<<<<<<`, `=======`, `>>>>>>>` restant : vérifiez en relisant le fichier entier une fois terminé." %}
 
 {% include step-tuto.html
   greyBackground=true
@@ -143,7 +143,7 @@ La version de l'autre branche
 
 Des commits petits et fréquents, plutôt que d'énormes commits accumulés
 pendant des jours, réduisent fortement la fréquence et la taille des
-conflits — voir [Git, GitHub Desktop et VSCode](/workshops/methodologie-de-projet/tutorials/git-github-desktop-vscode/).
+conflits : voir [Git, GitHub Desktop et VSCode](/workshops/methodologie-de-projet/tutorials/git-github-desktop-vscode/).
 Travailler sur des branches séparées par brique du projet (voir
 [Constituer et organiser son équipe](/workshops/methodologie-de-projet/concepts/constituer-organiser-equipe/))
 aide aussi, puisque les mêmes fichiers sont alors modifiés par moins de

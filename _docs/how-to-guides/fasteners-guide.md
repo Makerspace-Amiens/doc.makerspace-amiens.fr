@@ -79,7 +79,7 @@ L'impression 3D impose de **prévoir un jeu fonctionnel** dans les trous pour co
 | M3       | 3.3 mm              | 2.7 mm                       | 4.2 mm                      |
 | M4       | 4.3 mm              | 3.5 mm                       | 5.8 mm                      |
 | M5       | 5.3 mm              | 4.2 mm                       | 6.5 mm                      |
-| M6       | 6.3 mm              | 5.0 mm                       | —                           |
+| M6       | 6.3 mm              | 5.0 mm                       | -                           |
 
 > 💡 Pensez à imprimer une pièce de test avec plusieurs diamètres en cas de doute.
 
@@ -161,7 +161,7 @@ Les vis **BHC** (DIN 7380) sont reconnaissables à leur **tête arrondie et bass
 
 - **Esthétique** : la tête bombée donne un rendu propre, sobre, professionnel.
 - **Profil bas** : plus discrète qu'une vis CHC, idéale si on veut éviter qu'une tête dépasse trop.
-- **Agréable au toucher** : pas d’arête vive — on ne s’accroche pas dessus.
+- **Agréable au toucher** : pas d’arête vive, on ne s’accroche pas dessus.
 - **Pas de lamage nécessaire** : on peut les visser directement à la surface, pratique sur pièces fines.
 - **Bonne surface d'appui** : répartit bien la pression sous la tête.
 
