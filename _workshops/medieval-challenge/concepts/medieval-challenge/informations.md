@@ -12,7 +12,7 @@ tags: medieval-challenge
 ---
 
 {% include message.html title="Attention" message="Cette page peut évoluer, pensez à la consulter régulièrement
-**V1.3 22/10/2025**" status="is-warning" dismissable="true" icon="fas fa-triangle-exclamation" %}
+**V2.0 24/09/2026**" status="is-warning" dismissable="true" icon="fas fa-triangle-exclamation" %}
 
 ## À propos du projet
 
@@ -70,7 +70,7 @@ Notez également qu'un espace de **10 mm** est disponible **sous la base** (par 
 {% include step-tuto.html
 greyBackground = false
 title = "Source d'énergie"
-content="Un **élastique est fourni** et peut être utilisé comme source d'énergie.
+content="Un **élastique ou un ressort sera fourni** et peut être utilisé comme source d'énergie.
 Seules les énergies mécaniques issues de la **déformation élastique des matériaux** et de la **gravité** sont autorisées.
 Toute autre source d'énergie (électricité, air comprimé, combustion, etc.) est interdite.
 Le tir doit être déclenché par une **corde de 50 cm** actionnée manuellement."
