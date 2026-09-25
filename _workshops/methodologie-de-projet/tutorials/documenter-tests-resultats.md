@@ -10,7 +10,7 @@ doc_header: true
 
 title: Documenter les tests et résultats
 subtitle: La preuve que le projet fonctionne, pas juste l'affirmation
-description: Rédiger un protocole de test simple et présenter des résultats mesurés, pour prouver — pas seulement affirmer — que votre projet répond au besoin.
+description: Rédiger un protocole de test simple et présenter des résultats mesurés, pour prouver (pas seulement affirmer) que votre projet répond au besoin.
 author: Adrien Bracq
 
 time: 1
@@ -38,7 +38,7 @@ d'une preuve.
 ## Repartir des critères de réussite
 
 Vos tests ne s'inventent pas au dernier moment : ils découlent directement
-des critères de réussite du cahier des charges — voir
+des critères de réussite du cahier des charges, voir
 [Définir son besoin](/workshops/methodologie-de-projet/concepts/definir-son-besoin/)
 et son tableau des fonctions. Si le critère est "taux de tri ≥ 80% sur 20
 essais", le test consiste littéralement à faire les 20 essais et compter.
@@ -63,7 +63,7 @@ température ambiante.
 | 2 | Verre | Métal | ❌ |
 | ... | ... | ... | ... |
 
-**Taux obtenu** : 17/20 = 85% — critère atteint.
+**Taux obtenu** : 17/20 = 85%, critère atteint.
 {% endcapture %}
 {% include code-snippet.html label="Copier le gabarit de protocole (Markdown)" content=snippet_protocole %}
 
@@ -71,15 +71,15 @@ température ambiante.
 
 - **Un tableau** pour des mesures répétées (comme ci-dessus).
 - **Une vidéo courte** pour un comportement dynamique (un mécanisme qui
-  bouge, un robot qui se déplace) — souvent plus parlant qu'une
+  bouge, un robot qui se déplace), souvent plus parlant qu'une
   description écrite.
 - **Un graphique** si vous avez des mesures continues (température dans le
   temps, vitesse selon la charge).
 
-{% include message.html title="Montrez aussi les échecs" message="Un test qui échoue (12% des essais ratés dans l'exemple ci-dessus) n'est pas à cacher. Notez dans quelles conditions ça échoue — c'est une information aussi utile que le taux de succès, et ça rejoint la section « Limites connues » vue dans Rendre son projet transmissible." status="is-info" icon="fas fa-info-circle" %}
+{% include message.html title="Montrez aussi les échecs" message="Un test qui échoue (12% des essais ratés dans l'exemple ci-dessus) n'est pas à cacher. Notez dans quelles conditions ça échoue : c'est une information aussi utile que le taux de succès, et ça rejoint la section « Limites connues » vue dans Rendre son projet transmissible." status="is-info" icon="fas fa-info-circle" %}
 
 ## Exercice
 
 Choisissez un critère de réussite de votre cahier des charges, écrivez son
 protocole de test avec le gabarit ci-dessus, exécutez-le réellement, et
-notez les résultats — y compris les échecs.
+notez les résultats, y compris les échecs.

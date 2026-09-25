@@ -73,4 +73,4 @@ Vous allez apprendre à cadrer, documenter et gérer un projet de bout en bout :
 
 ## Pourquoi ce projet ?
 
-Un projet réussi ne se limite pas à un prototype qui fonctionne : il doit pouvoir être compris, repris et transmis. Cet atelier donne la méthode et les outils utilisés au MakerSpace pour que chaque projet étudiant reste exploitable après le rendu — pour vous, pour l'équipe suivante, et pour l'école.
+Un projet réussi ne se limite pas à un prototype qui fonctionne : il doit pouvoir être compris, repris et transmis. Cet atelier donne la méthode et les outils utilisés au MakerSpace pour que chaque projet étudiant reste exploitable après le rendu, pour vous, pour l'équipe suivante, et pour l'école.

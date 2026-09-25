@@ -10,7 +10,7 @@ type: equipment
 tag:
 
 title: Scie à ruban portable
-subtitle: Découpe métal — usage très restreint
+subtitle: Découpe métal, usage très restreint
 description: Scie à ruban portable pour la découpe de métal, à usage très restreint (référents uniquement).
 author: Adrien Bracq
 

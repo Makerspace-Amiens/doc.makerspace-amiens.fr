@@ -416,8 +416,8 @@ content="Les accès à la carte SD génèrent des pics de courant (jusqu'à 200m
 
 ## Ressources
 
-- [Documentation SD.h — Espressif Arduino](https://docs.espressif.com/projects/arduino-esp32/en/latest/libraries.html)
-- [SD Card Formatter — Formatage FAT32](https://www.sdcard.org/downloads/formatter/)
+- [Documentation SD.h (Espressif Arduino)](https://docs.espressif.com/projects/arduino-esp32/en/latest/libraries.html)
+- [SD Card Formatter (formatage FAT32)](https://www.sdcard.org/downloads/formatter/)
 
 ---
 
@@ -427,7 +427,7 @@ Vous savez maintenant comment intégrer un socket SD sur un PCB avec l'ESP32 et 
 
 ### Points clés à retenir
 
-- **Bus SPI2** : SCK=18, MISO=19, MOSI=11, CS=5 — initialiser avec `SPI.begin(18, 19, 11, 5)`
+- **Bus SPI2** : SCK=18, MISO=19, MOSI=11, CS=5, initialiser avec `SPI.begin(18, 19, 11, 5)`
 - **Format FAT32** obligatoire pour la bibliothèque `SD.h`
 - **Pull-up 10kΩ** sur MISO et CS indispensables sur PCB
 - **Découplage** : 100nF + 10µF au plus près de VDD du socket

@@ -30,7 +30,7 @@ hardwares:
 
 ## Pourquoi Markdown
 
-Toute la documentation de votre projet (`docs/`) s'écrit en Markdown — un
+Toute la documentation de votre projet (`docs/`) s'écrit en Markdown, un
 langage de balisage léger, en texte brut, qui se transforme automatiquement
 en pages web mises en forme. Pas besoin de connaître le HTML : quelques
 symboles suffisent.
@@ -40,7 +40,7 @@ symboles suffisent.
 Markdown a été créé en 2004 par John Gruber, avec l'aide d'Aaron Swartz,
 avec un objectif précis :
 qu'un texte écrit en Markdown reste **lisible et compréhensible tel quel**,
-même sans être transformé en page web — contrairement au HTML.
+même sans être transformé en page web, contrairement au HTML.
 
 {% capture tab_html %}
 
@@ -80,13 +80,13 @@ une démonstration au Forum des Sciences.
   tab2=tab_md
 %}
 
-Le même contenu, mais le Markdown se lit directement — pas besoin de
+Le même contenu, mais le Markdown se lit directement, pas besoin de
 mentalement retirer des balises pour comprendre le texte.
 
 ### Pourquoi pas Word ou Google Docs
 
 - **Fichier texte brut** : Git le suit comme n'importe quel fichier de
-  code, avec un historique clair ligne par ligne — essayez de faire un
+  code, avec un historique clair ligne par ligne : essayez de faire un
   diff lisible sur un `.docx` pour voir la différence.
 - **Pas de format propriétaire** : un `.md` s'ouvre avec absolument
   n'importe quel éditeur de texte, sur n'importe quel système, encore
@@ -94,15 +94,15 @@ mentalement retirer des balises pour comprendre le texte.
   pour rester lisible.
 - **Vit au même endroit que le reste du projet** : la documentation
   versionnée dans le même repo que le code et les fichiers CAO, pas
-  perdue dans un Drive à part — ça rejoint directement
+  perdue dans un Drive à part, ça rejoint directement
   [Documenter au fil de l'eau](/workshops/methodologie-de-projet/concepts/documenter-au-fil-de-leau/).
 
 ### Où vous le retrouverez, au-delà de ce projet
 
-Markdown n'est pas propre à ce site — c'est devenu une sorte de langue
+Markdown n'est pas propre à ce site : c'est devenu une sorte de langue
 commune de la documentation technique :
 
-- **GitHub et GitLab** : README, Issues, Pull Requests, commentaires —
+- **GitHub et GitLab** : README, Issues, Pull Requests, commentaires,
   tout ce que vous avez déjà écrit dans les tutoriels précédents.
 - **Discord et Slack** : la mise en forme des messages (`**gras**`,
   `*italique*`, `` `code` ``) reprend en grande partie la syntaxe Markdown.
@@ -127,7 +127,7 @@ réutilisable bien au-delà de cet atelier.
 ### Titre de niveau 3
 ```
 
-{% include message.html title="Un seul niveau 1 par page" message="Sur ce site, le titre de niveau 1 est généré automatiquement à partir du champ title du front matter — commencez toujours le corps de vos pages à ##, jamais à #." status="is-warning" icon="fas fa-exclamation-triangle" %}
+{% include message.html title="Un seul niveau 1 par page" message="Sur ce site, le titre de niveau 1 est généré automatiquement à partir du champ title du front matter : commencez toujours le corps de vos pages à ##, jamais à #." status="is-warning" icon="fas fa-exclamation-triangle" %}
 
 ### Mise en forme du texte
 
@@ -248,7 +248,7 @@ void setup() {
 | Cellule 1 | Cellule 2 |
 ```
 
-C'est le format utilisé pour la plupart des gabarits de cet atelier — voir
+C'est le format utilisé pour la plupart des gabarits de cet atelier, voir
 par exemple le tableau de jalons dans
 [Gérer le temps et les jalons](/workshops/methodologie-de-projet/concepts/gerer-temps-jalons/).
 
@@ -258,7 +258,7 @@ Le site Jekyll de votre projet (dossier `docs/` de votre repo) est basé
 sur le thème [Just the Docs](https://just-the-docs.com), qui ajoute quelques
 extras utiles au Markdown standard, directement utilisables dans vos
 pages. Ça vaut le coup de parcourir sa documentation pour voir toutes
-les possibilités — deux exemples pour donner envie :
+les possibilités, deux exemples pour donner envie :
 
 **Un encart coloré**, sans écrire de HTML : ajoutez `{: .note }`,
 `{: .warning }` ou `{: .important }` juste après un paragraphe ou une
@@ -270,7 +270,7 @@ citation.
 ```
 
 C'est exactement ce que fait déjà `docs/premiers-pas/modifier_mon_site_avance.md`
-dans votre template (`{: .note-title }`) — aucune configuration
+dans votre template (`{: .note-title }`), aucune configuration
 supplémentaire à faire, ça fonctionne directement dans votre projet.
 
 **Un lien transformé en bouton** : ajoutez `{: .btn }` après un lien.
@@ -280,7 +280,7 @@ supplémentaire à faire, ça fonctionne directement dans votre projet.
 ```
 
 Le bouton "Notre projet sur Onshape" de la page d'accueil de votre
-template utilise déjà cette syntaxe — ouvrez `docs/index.md` pour voir
+template utilise déjà cette syntaxe : ouvrez `docs/index.md` pour voir
 l'exemple réel.
 
 ## Exercice

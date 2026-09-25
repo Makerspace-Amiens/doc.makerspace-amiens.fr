@@ -142,6 +142,14 @@ Le champ `kind` distingue les deux natures d'ateliers, sur la page `/workshops/`
 
 Le filtre est porté par l'include `card_collections.html` (paramètre `kind="project"` / `kind="course"`). Tout `index.md` d'atelier **doit** avoir un `kind` — sans lui, l'atelier n'apparaît dans aucune des deux sections.
 
+### Atelier en anglais — champ `lang`
+
+Le site est en français (`lang: fr` dans `_config.yml`), mais une page peut basculer son interface en anglais avec `lang: en` dans son front matter (ex : atelier `initiation-makerspace`). Les libellés des layouts `project-home`, `documentation` et de l'include `project-tutos.html` (« Tutoriels », « Commencer », « Précédent/Suivant », « Durée », « Pré-requis »…) sont lus dans `_data/i18n.yml` (clés `fr` / `en`).
+
+- Mettre `lang: en` sur **l'`index.md` et sur chaque sous-page** de l'atelier (la barre de progression et la navigation sont rendues par la sous-page).
+- Tout nouveau libellé ajouté à ces layouts doit passer par `_data/i18n.yml` (variable `_i18n`), jamais en dur.
+- La navbar et le footer restent en français (globaux au site).
+
 ---
 
 ## Navbar — dropdown Ateliers
@@ -230,6 +238,12 @@ Règles importantes à respecter :
 - Ligne vide avant et après les listes et les blocs de code.
 - Nommer les langages des blocs de code (` ```bash `, ` ```cpp `, etc.).
 - **Ne pas encadrer de `< >` les URLs à l'intérieur des paramètres Liquid** (`items=`, `content=`, etc.) — markdownlint le fait par erreur lors d'un auto-fix.
+
+## Typographie du contenu
+
+- **Pas de tiret cadratin (—) dans le contenu documentaire** (`_docs/`, `_workshops/`, `_ressources/`, pages racine), ni dans le corps, ni dans le front matter, ni dans les paramètres d'includes Liquid. Reformuler avec `:` (explication), `,` (apposition), `;` (deux propositions liées), des parenthèses (incise) ou une phrase séparée.
+- Pour les titres d'étapes, le format est `## Étape 1 : Câbler l'écran` (deux-points, jamais de tiret).
+- **Piège YAML** : une valeur de front matter qui contient ` : ` doit être mise entre guillemets (`subtitle: "Niveau 2 : Accompagnée"`), sinon Jekyll lève une `YAML Exception` et la page n'est pas générée.
 
 ---
 

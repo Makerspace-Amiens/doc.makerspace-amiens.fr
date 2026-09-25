@@ -20,7 +20,7 @@ todo: 70
 Face à un problème technique, le réflexe naturel est de vouloir concevoir
 directement la solution finale, propre et aboutie. Le risque : passer trois
 semaines sur une conception détaillée en CAO avant de découvrir, au premier
-test, qu'une hypothèse de base était fausse — et devoir tout refaire.
+test, qu'une hypothèse de base était fausse, et devoir tout refaire.
 
 ```mermaid!
 graph LR
@@ -43,7 +43,7 @@ les tolérances, les fixations définitives et l'esthétique finale, avant de
 rien imprimer.
 
 **Résultat** : trois semaines passées, et au premier test, le capteur
-choisi ne distingue pas bien le verre du plastique sous l'éclairage réel —
+choisi ne distingue pas bien le verre du plastique sous l'éclairage réel :
 il faut revoir une bonne partie de la conception mécanique en plus du choix
 du capteur.
 
@@ -70,7 +70,7 @@ Le mécanisme définitif peut être conçu en connaissant déjà le bon capteur.
 
 ## Un échec de test n'est pas un échec de projet
 
-{% include message.html title="Une information, pas une sanction" message="Un prototype qui casse ou qui ne fonctionne pas comme prévu n'est pas du temps perdu : c'est exactement l'information qui manquait avant de s'engager dans la version suivante. Documentez-le comme tel — voir [Tracer ses choix techniques](/workshops/methodologie-de-projet/concepts/tracer-choix-techniques/)." status="is-info" icon="fas fa-info-circle" %}
+{% include message.html title="Une information, pas une sanction" message="Un prototype qui casse ou qui ne fonctionne pas comme prévu n'est pas du temps perdu : c'est exactement l'information qui manquait avant de s'engager dans la version suivante. Documentez-le comme tel, voir [Tracer ses choix techniques](/workshops/methodologie-de-projet/concepts/tracer-choix-techniques/)." status="is-info" icon="fas fa-info-circle" %}
 
 ## Savoir quand s'arrêter d'itérer
 
@@ -90,6 +90,6 @@ Sur votre projet, en équipe :
 
 1. Identifiez la question technique qui vous inquiète le plus aujourd'hui.
 2. Concevez le prototype le plus rapide possible (quelques heures, pas
-   plusieurs jours) qui répond seulement à cette question — pas plus.
+   plusieurs jours) qui répond seulement à cette question, pas plus.
 3. Testez-le et notez le résultat dans votre journal de bord, qu'il
    fonctionne ou non.

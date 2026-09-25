@@ -8,7 +8,7 @@ component_toc: true
 doc_header: true
 
 title: CNC
-subtitle: Niveau 3 — Accompagnée
+subtitle: "Niveau 3 : Accompagnée"
 description: Outil rotatif, entraînement et projections à maîtriser avant d'utiliser le module fraisage du SnapMaker 2.0 A350T.
 author: Adrien Bracq
 
@@ -19,17 +19,17 @@ hardwares:
 
 ## À qui s'adresse ce module
 
-À tout usager du Campus souhaitant utiliser le module de fraisage CNC du SnapMaker 2.0 A350T. Ce module de sécurité couvre uniquement l'usage CNC/fraisage de cette machine — ses autres modules (laser, impression 3D) relèvent respectivement du [module Découpe laser](/workshops/certification-securite/modules/laser/) et du [module Impression 3D FDM](/workshops/certification-securite/modules/impression-3d-fdm/).
+À tout usager du Campus souhaitant utiliser le module de fraisage CNC du SnapMaker 2.0 A350T. Ce module de sécurité couvre uniquement l'usage CNC/fraisage de cette machine. Ses autres modules (laser, impression 3D) relèvent respectivement du [module Découpe laser](/workshops/certification-securite/modules/laser/) et du [module Impression 3D FDM](/workshops/certification-securite/modules/impression-3d-fdm/).
 
 Le fraisage CNC est techniquement abordé dans le module de cours « machines numériques » en B2, mais cette formation sécurité est volontairement maintenue globale et indépendante du programme suivi.
 
 ## Pourquoi ce niveau de vigilance
 
-Le module CNC est probablement l'équipement le plus dangereux du parc en usage direct : un outil rotatif à haute vitesse, avec un risque réel de projection et d'entraînement. Certains risques ne se manifestent pas tout de suite mais s'accumulent avec des expositions répétées — c'est le cas du bruit : le fait de ne rien ressentir sur le moment ne veut pas dire qu'il n'y a pas de conséquence à long terme sur l'audition.
+Le module CNC est probablement l'équipement le plus dangereux du parc en usage direct : un outil rotatif à haute vitesse, avec un risque réel de projection et d'entraînement. Certains risques ne se manifestent pas tout de suite mais s'accumulent avec des expositions répétées. C'est le cas du bruit : le fait de ne rien ressentir sur le moment ne veut pas dire qu'il n'y a pas de conséquence à long terme sur l'audition.
 
 ## Risques identifiés
 
-{% include risk-item.html level="eleve" icon="fas fa-compact-disc" title="Contact avec l'outil rotatif" content="Coupure ou arrachement en cas de contact direct — jamais d'usage sans supervision pour un débutant." %}
+{% include risk-item.html level="eleve" icon="fas fa-compact-disc" title="Contact avec l'outil rotatif" content="Coupure ou arrachement en cas de contact direct : jamais d'usage sans supervision pour un débutant." %}
 
 {% include risk-item.html level="eleve" icon="fas fa-shirt" title="Entraînement" content="Cheveux longs détachés, vêtements amples ou bijoux peuvent être happés par l'outil en rotation." %}
 
@@ -57,7 +57,7 @@ Les lunettes de protection sont obligatoires. La protection auditive est recomma
 
 ## Conduite à tenir en cas d'incident
 
-{% include message.html title="La règle absolue" message="Quel que soit l'incident, prévenez immédiatement le référent MakerSpace présent — c'est lui qui prend la direction des opérations. Votre sécurité passe avant tout : en cas de doute sur un geste, ne le faites pas, alertez et évacuez plutôt que d'intervenir." status="is-danger" icon="fas fa-triangle-exclamation" %}
+{% include message.html title="La règle absolue" message="Quel que soit l'incident, prévenez immédiatement le référent MakerSpace présent : c'est lui qui prend la direction des opérations. Votre sécurité passe avant tout : en cas de doute sur un geste, ne le faites pas, alertez et évacuez plutôt que d'intervenir." status="is-danger" icon="fas fa-triangle-exclamation" %}
 
 **Blessure mécanique (coupure, arrachement) :** couper immédiatement la machine, ne pas déplacer la victime si la blessure est grave, premiers secours, alerter le 15 (SAMU) ou le 112 si nécessaire.
 

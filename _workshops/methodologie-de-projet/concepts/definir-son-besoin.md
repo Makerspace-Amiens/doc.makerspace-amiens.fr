@@ -18,7 +18,7 @@ todo: 70
 ## Le piège du "on verra en avançant"
 
 Sur un projet, l'envie de commencer à souder, imprimer ou coder est
-forte — c'est souvent pour ça qu'on s'inscrit au MakerSpace. Mais démarrer
+forte : c'est souvent pour ça qu'on s'inscrit au MakerSpace. Mais démarrer
 sans avoir posé le besoin, c'est le meilleur moyen de refaire les mêmes choix
 trois fois, de découvrir une contrainte bloquante à la semaine 6, ou de
 livrer un prototype qui ne répond plus du tout à la question de départ.
@@ -31,7 +31,7 @@ ou la première pièce imprimée.
 
 ## Les cinq questions à se poser
 
-Posez-vous ces questions dans cet ordre — c'est le raisonnement naturel :
+Posez-vous ces questions dans cet ordre, c'est le raisonnement naturel :
 pourquoi → quoi → pour qui → avec quelles limites → comment on vérifie.
 Ce sont exactement les cinq sections du gabarit plus bas, dans le même
 ordre : ce que vous répondez ici, vous le recopiez tel quel dedans.
@@ -90,7 +90,7 @@ si l'objectif est atteint.
 ## Un gabarit simple à réutiliser
 
 Vous n'avez pas besoin d'inventer un format. Ce gabarit tient dans le fichier
-`docs/objectifs.md` du repo template — copiez-le et remplissez-le en équipe
+`docs/objectifs.md` du repo template : copiez-le et remplissez-le en équipe
 dès la première réunion de projet.
 
 ```markdown
@@ -118,7 +118,7 @@ dès la première réunion de projet.
 <Comment on sait, objectivement, que c'est réussi.>
 ```
 
-{% include message.html title="Bonne pratique" message="Remplissez ce gabarit ensemble, à l'oral, dès la première réunion — pas un seul membre de l'équipe dans son coin. C'est aussi le moment où les désaccords sur ce que le projet doit faire apparaissent, mieux vaut que ce soit à J1 qu'à J40." status="is-success" icon="fas fa-check-circle" %}
+{% include message.html title="Bonne pratique" message="Remplissez ce gabarit ensemble, à l'oral, dès la première réunion, pas un seul membre de l'équipe dans son coin. C'est aussi le moment où les désaccords sur ce que le projet doit faire apparaissent, mieux vaut que ce soit à J1 qu'à J40." status="is-success" icon="fas fa-check-circle" %}
 
 ### Exemple rempli
 
@@ -161,10 +161,10 @@ supervision technique pendant la démonstration, coût total ≤ 150 €.
 Remarquez que "Contexte" et "Objectifs" ne disent pas la même chose : le
 premier explique *pourquoi* le projet existe, le second dit *ce qu'il faut
 livrer*. Si vous ne savez pas quoi écrire dans "Objectifs", relisez votre
-"Contexte" — l'objectif est souvent la réponse directe au problème posé.
+"Contexte" : l'objectif est souvent la réponse directe au problème posé.
 
 Pour remplir les sections "Objectifs" et "Critères de réussite" sans rester
-au niveau des intentions vagues, il existe quelques méthodes outillées —
+au niveau des intentions vagues, il existe quelques méthodes outillées :
 elles sont détaillées juste en dessous. Elles ne servent pas qu'à remplir
 un document : elles produisent un support concret que vous réutiliserez
 plus tard dans le projet pour comparer et justifier de vrais choix
@@ -255,14 +255,14 @@ réutilisable : chaque ligne peut être copiée telle quelle dans les
 Le FAST part d'une fonction (ex : "trier les déchets") et la décompose en
 sous-fonctions techniques, jusqu'aux solutions concrètes envisagées. On ne
 le détaille pas ici : il a surtout sa place plus tard dans le projet, au
-moment de comparer et justifier des choix techniques — voir
+moment de comparer et justifier des choix techniques, voir
 [Tracer ses choix techniques](/workshops/methodologie-de-projet/concepts/tracer-choix-techniques/).
 
 ## Ce cahier des charges n'est pas figé
 
 Un projet évolue : une contrainte matérielle imprévue, un composant en
 rupture de stock, une idée qui s'avère meilleure en cours de route. Le
-cahier des charges peut changer — mais il doit changer **consciemment et par
+cahier des charges peut changer, mais il doit changer **consciemment et par
 écrit**, pas silencieusement dans la tête d'une seule personne. Chaque
 révision se documente au même endroit, avec la date et la raison du
 changement.

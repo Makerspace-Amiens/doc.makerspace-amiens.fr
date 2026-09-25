@@ -30,7 +30,7 @@ content="Objectif : Définir l'architecture globale avant de dessiner le schéma
 - Identifier les découplages critiques (VDD, VMOT) " %}
 
 {% include message.html
-title="Librairie Makerspace Amiens — fortement recommandée"
+title="Librairie Makerspace Amiens, fortement recommandée"
 message="Avant de commencer le schéma, importez la librairie KiCad du Makerspace Amiens. Elle référence les composants disponibles en stock (ESP32, A4988, SSD1306, connecteurs, passifs…) et vous évitera de chercher ou créer des symboles manuellement. Consultez le tutoriel [KiCAD - Importer des librairies](/docs/tutorials/software/kicad/kicad-import-librairies/) avant de démarrer l'étape 2.2."
 status="is-warning"
 icon="fas fa-exclamation-triangle" %}

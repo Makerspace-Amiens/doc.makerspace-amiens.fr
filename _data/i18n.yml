@@ -1,0 +1,77 @@
+# Libellés d'interface des layouts project-home / documentation / project-tutos.
+# La langue est choisie par `lang:` dans le front matter de la page (défaut : site.lang).
+fr:
+  all_workshops: Toutes les thématiques
+  tutorials_count: tutoriels
+  components_count: composants
+  resources_count: ressources
+  start: Commencer
+  presentation: Présentation
+  prerequisites: Prérequis
+  prerequisites_sub: Des ateliers à suivre avant de se lancer dans celui-ci.
+  concepts: Concepts
+  concepts_sub: Les notions clés à comprendre avant de se lancer.
+  tutorials: Tutoriels
+  tutorials_sub: Suivez les étapes dans l'ordre pour réaliser le projet de A à Z.
+  how_to_guides: Guides pratiques
+  how_to_guides_sub: Résolvez un problème précis, étape par étape.
+  resources: Ressources
+  resources_sub: Fiches de référence matériel, logiciels et outils pour mener le projet.
+  hardware: Matériel & Composants
+  software: Logiciels & Outils
+  references: Références
+  discover: Découvrir
+  back_to_project: Retour au projet
+  step: Étape
+  toggle_steps: Afficher ou masquer la liste complète des étapes
+  see_other: Voir l'autre
+  see_others: Voir les
+  others: autres
+  previous: Précédent
+  next: Suivant
+  duration: Durée
+  difficulty: Difficulté
+  compatibility: "Compatibilité :"
+  prerequisites_label: "Pré-requis :"
+  softwares_label: "Logiciels :"
+  hardwares_label: "Machines/Outils :"
+  todo_label: Documentation réalisée à
+  created_by: "Créée par :"
+
+en:
+  all_workshops: All workshops
+  tutorials_count: tutorials
+  components_count: components
+  resources_count: resources
+  start: Start
+  presentation: Overview
+  prerequisites: Prerequisites
+  prerequisites_sub: Workshops to complete before starting this one.
+  concepts: Concepts
+  concepts_sub: Key notions to understand before getting started.
+  tutorials: Tutorials
+  tutorials_sub: Follow the steps in order to complete the workshop from start to finish.
+  how_to_guides: How-to guides
+  how_to_guides_sub: Solve a specific problem, step by step.
+  resources: Resources
+  resources_sub: Reference sheets for the hardware, software and tools used in the workshop.
+  hardware: Hardware & Components
+  software: Software & Tools
+  references: References
+  discover: Discover
+  back_to_project: Back to the workshop
+  step: Step
+  toggle_steps: Show or hide the full list of steps
+  see_other: See the other
+  see_others: See the
+  others: other
+  previous: Previous
+  next: Next
+  duration: Duration
+  difficulty: Difficulty
+  compatibility: "Compatibility:"
+  prerequisites_label: "Prerequisites:"
+  softwares_label: "Software:"
+  hardwares_label: "Machines/Tools:"
+  todo_label: "Documentation completed:"
+  created_by: "Created by:"

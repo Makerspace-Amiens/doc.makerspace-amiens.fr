@@ -165,7 +165,7 @@ image_2 = "image.png"
 Le projet **RepRap** ne se limite pas à une simple avancée technologique : il porte en lui une **vision politique et sociale** forte, articulée par son créateur, **Adrian Bowyer**. À travers le développement d’une imprimante auto-réplicante, Bowyer propose une révolution non conventionnelle, qu’il qualifie de "**marxisme darwinien**" :
 
 > _"La machine à prototypage rapide réplicante va permettre l'appropriation révolutionnaire des moyens de production par le prolétariat. Mais elle va le faire sans les dangereux et défaillants aspects de la révolution, et même sans les aspects dangereux et défaillants de l'industrie."_  
-> — Adrian Bowyer
+> Adrian Bowyer
 
 Cette déclaration illustre l’ambition de Bowyer : offrir au plus grand nombre la possibilité de devenir acteurs de la fabrication, sans recourir aux structures traditionnelles, coûteuses ou centralisées. RepRap est ainsi bien plus qu’un outil : c’est une idée puissante qui redéfinit la relation entre innovation, production et société.
 

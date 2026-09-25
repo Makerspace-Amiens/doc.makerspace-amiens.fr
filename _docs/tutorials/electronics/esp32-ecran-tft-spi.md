@@ -55,10 +55,10 @@ Contrairement à l'I2C (2 fils, plusieurs esclaves par adressage), le SPI utilis
 
 | Fil | Rôle |
 |---|---|
-| **MOSI** | *Master Out Slave In* — données envoyées par l'ESP32 vers l'écran |
-| **MISO** | *Master In Slave Out* — données renvoyées par le périphérique (inutilisé pour un écran en écriture seule) |
+| **MOSI** | *Master Out Slave In*, données envoyées par l'ESP32 vers l'écran |
+| **MISO** | *Master In Slave Out*, données renvoyées par le périphérique (inutilisé pour un écran en écriture seule) |
 | **SCK** (ou SCLK) | Horloge, générée par l'ESP32 |
-| **CS** (*Chip Select*) | Sélectionne l'esclave actif — un fil dédié par périphérique sur le bus |
+| **CS** (*Chip Select*) | Sélectionne l'esclave actif, un fil dédié par périphérique sur le bus |
 
 Un écran ajoute généralement deux broches supplémentaires, hors du bus SPI standard :
 
@@ -72,10 +72,10 @@ Un écran ajoute généralement deux broches supplémentaires, hors du bus SPI s
 ## Matériel nécessaire
 
 - Une carte compatible ESP32 (framework Arduino)
-- Un écran TFT SPI (pilote ST7789 ou ILI9341 — le pilote exact figure généralement au dos de l'écran ou dans sa référence produit)
+- Un écran TFT SPI (pilote ST7789 ou ILI9341 ; le pilote exact figure généralement au dos de l'écran ou dans sa référence produit)
 - Une breadboard et des fils de câblage
 
-## Étape 1 — Câbler l'écran
+## Étape 1 : Câbler l'écran
 
 {% include step-tuto.html
 greyBackground=true
@@ -98,7 +98,7 @@ BLK   ────────────  3,3 V (ou un GPIO pour piloter le r�
 
 {% include message.html title="3,3 V, pas 5 V" message="Vérifie la tension d'alimentation acceptée par ton module : la plupart des écrans TFT SPI fonctionnent en 3,3 V, tension native des GPIO de l'ESP32. N'applique jamais 5 V sur une broche de données de l'ESP32." status="is-danger" icon="fas fa-exclamation-triangle" %}
 
-## Étape 2 — Installer et configurer TFT_eSPI
+## Étape 2 : Installer et configurer TFT_eSPI
 
 **TFT_eSPI** est la bibliothèque de référence pour piloter ces écrans sur ESP32 : rapide, et compatible avec de nombreux contrôleurs (ST7789, ILI9341, ST7735...). Sa particularité : la configuration matérielle (pins, contrôleur) ne se fait pas dans le code, mais dans un fichier `User_Setup.h` séparé.
 
@@ -141,11 +141,11 @@ Crée ensuite un fichier `User_Setup.h` à la racine de ton projet (à côté de
 #define SPI_FREQUENCY  40000000
 ```
 
-{% include message.html title="Écran noir après flashage ?" message="Un `User_Setup` mal configuré donne un écran noir, pas une erreur de compilation — c'est le piège classique de cette bibliothèque. Vérifie dans l'ordre : le rétroéclairage (BLK) est-il alimenté ? Le driver (ST7789_DRIVER / ILI9341_DRIVER) correspond-il à ton écran ? Les pins déclarées correspondent-elles au câblage réel ?" status="is-warning" icon="fas fa-exclamation-triangle" %}
+{% include message.html title="Écran noir après flashage ?" message="Un `User_Setup` mal configuré donne un écran noir, pas une erreur de compilation : c'est le piège classique de cette bibliothèque. Vérifie dans l'ordre : le rétroéclairage (BLK) est-il alimenté ? Le driver (ST7789_DRIVER / ILI9341_DRIVER) correspond-il à ton écran ? Les pins déclarées correspondent-elles au câblage réel ?" status="is-warning" icon="fas fa-exclamation-triangle" %}
 
 {% include message.html title="Checkpoint" message="Avant de continuer, vérifie que le projet compile et se flashe sans erreur, même si l'écran reste noir à ce stade (aucun dessin n'a encore été envoyé)." status="is-success" icon="fas fa-check-circle" %}
 
-## Étape 3 — Premières primitives
+## Étape 3 : Premières primitives
 
 `TFT_eSPI` expose un système de coordonnées `(0,0)` en haut à gauche de l'écran.
 
@@ -174,7 +174,7 @@ void loop() {}
 
 {% include message.html title="Checkpoint" message="Tu dois voir le texte « Hello ESP32 ! », un rectangle, un cercle rouge et une ligne verte à l'écran. Si l'écran reste noir, reviens à la configuration de l'Étape 2 avant d'aller plus loin." status="is-success" icon="fas fa-check-circle" %}
 
-### Les couleurs — format RGB565
+### Les couleurs : format RGB565
 
 `TFT_eSPI` code chaque couleur sur 16 bits (5 bits rouge, 6 bits vert, 5 bits bleu) plutôt que les 24 bits habituels (RGB888). Des constantes couvrent les couleurs courantes (`TFT_BLACK`, `TFT_WHITE`, `TFT_RED`, `TFT_GREEN`, `TFT_BLUE`, `TFT_YELLOW`...), et une couleur personnalisée se construit avec :
 
@@ -204,7 +204,7 @@ L'écran affiche un texte, des formes fixes, et un cercle blanc qui se déplace 
 
 ## Pour aller plus loin
 
-- Concept [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/) — comparer SPI, I2C et UART en détail.
+- Concept [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/) : comparer SPI, I2C et UART en détail.
 - Tutoriel [Écran OLED SSD1306 avec ESP32](/docs/tutorials/electronics/esp32-ssd1306-oled/) pour découvrir l'alternative I2C, plus lente mais avec seulement 2 fils.
 - Tutoriel [GPIO sur ESP32](/docs/tutorials/electronics/esp32-gpio/) pour combiner cet écran avec un bouton ou un joystick en entrée.
 - Remplace `delay()` par un minuteur basé sur `millis()` pour animer l'écran sans jamais bloquer la lecture d'autres entrées (bouton, joystick).

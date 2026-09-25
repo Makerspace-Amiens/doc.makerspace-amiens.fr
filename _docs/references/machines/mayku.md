@@ -73,7 +73,7 @@ Thermoformeuse à vide de bureau. Une feuille de plastique est chauffée dans un
 
 ## Matériaux utilisables
 
-PETG, HIPS, ABS, polystyrène, polypropylène, polycarbonate, polyéthylène, acrylique (PMMA) — en feuille, épaisseur environ 0,25 à 1,5 mm.
+PETG, HIPS, ABS, polystyrène, polypropylène, polycarbonate, polyéthylène, acrylique (PMMA). En feuille, épaisseur environ 0,25 à 1,5 mm.
 
 ## Techniques & tutos
 
@@ -81,4 +81,4 @@ Aucun tutoriel dédié sur ce site pour l'instant.
 
 ## Notes
 
-Voir les [consignes de sécurité du module Thermoformage](/workshops/certification-securite/modules/thermoformage/) avant toute utilisation — l'élément chauffant et la feuille montent à haute température.
+Voir les [consignes de sécurité du module Thermoformage](/workshops/certification-securite/modules/thermoformage/) avant toute utilisation : l'élément chauffant et la feuille montent à haute température.
