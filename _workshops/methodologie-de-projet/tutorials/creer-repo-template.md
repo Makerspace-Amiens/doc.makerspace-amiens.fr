@@ -1,10 +1,10 @@
 ---
 layout: documentation
 hide_hero: false
-hero_image: hero.png
+hero_image: hero.jpg
 hero_height: is-small
 hero_darken: true
-image: hero.png
+image: hero.jpg
 component_toc: true
 doc_header: true
 
@@ -169,3 +169,8 @@ vous voyez tous la même structure de dossiers.
 [Git, GitHub Desktop et VSCode](/workshops/methodologie-de-projet/tutorials/git-github-desktop-vscode/),
 puis remplacer le contenu d'exemple avec
 [Personnaliser le template de son projet](/workshops/methodologie-de-projet/tutorials/personnaliser-template/).
+
+---
+
+*Crédit photo : « a computer screen with a bunch of code on it » par Chris Ried, via [Unsplash](https://unsplash.com/photos/ieic5Tq8YMk), sous [licence Unsplash](https://unsplash.com/license).*
+{: .is-size-7 .has-text-grey }

@@ -76,7 +76,7 @@ température ambiante.
 
 - **Un tableau** pour des mesures répétées (comme ci-dessus).
 - **Une vidéo courte** pour un comportement dynamique (un mécanisme qui
-  bouge, un robot qui se déplace) : souvent plus parlant qu'une
+  bouge, un système en fonctionnement) : souvent plus parlant qu'une
   description écrite.
 - **Un graphique** si vous avez des mesures continues (température dans le
   temps, vitesse selon la charge). Le template sait en tracer un à partir
@@ -227,7 +227,7 @@ Pour aller plus loin (les bases du Markdown sont dans
 - [Lettres grecques et symboles mathématiques (Overleaf)](https://www.overleaf.com/learn/latex/List_of_Greek_letters_and_math_symbols) :
   pour retrouver la commande d'un symbole.
 
-## Exemple complet : l'autonomie d'un robot sur batterie
+## Exemple complet : l'autonomie sur batterie du robot de tri
 
 Reprenons le critère « autonomie ≥ 4 h » et déroulons les cinq temps de la
 démonstration.

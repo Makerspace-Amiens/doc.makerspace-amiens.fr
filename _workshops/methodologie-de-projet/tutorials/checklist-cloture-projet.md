@@ -46,6 +46,9 @@ marge. Voir [Gérer le temps et les jalons](/workshops/methodologie-de-projet/co
 - [ ] Les choix techniques importants sont tracés avec leur raison
       (`docs/etudes.md`) :
       [Tracer ses choix techniques](/workshops/methodologie-de-projet/concepts/tracer-choix-techniques/).
+- [ ] Les sources utilisées (projets existants, schémas, bouts de code,
+      datasheets) sont citées. Voir
+      [Rechercher l'existant](/workshops/methodologie-de-projet/concepts/rechercher-existant-faisabilite/).
 - [ ] La page Équipe (`docs/equipe.md`) est à jour : membres, rôles,
       fonctionnement.
 - [ ] Le journal de bord (`docs/journal/`) couvre l'ensemble du projet, pour
@@ -53,18 +56,36 @@ marge. Voir [Gérer le temps et les jalons](/workshops/methodologie-de-projet/co
 
 ### Documentation de chaque brique
 
+- [ ] Chaque sous-ensemble est documenté dans toutes ses dimensions
+      (mécanique, électronique, code) : un lecteur trouve au même endroit, ou
+      par des liens directs, tout ce qui le concerne.
 - [ ] Carte(s) électronique(s) : schéma et PCB affichés (fichiers à jour dans
       `docs/assets/kicad/`), nomenclature, photos du montage réel, sources
       dans `project/ecad/`.
+- [ ] Brochage : toutes les broches sont dans `pins.h`, et le tableau de
+      brochage de la page de la carte dit **exactement** la même chose que
+      `pins.h` et que le schéma KiCad. Voir
+      [Documenter une carte électronique](/workshops/methodologie-de-projet/tutorials/documenter-carte-electronique/).
 - [ ] Système(s) mécanique(s) : modèle 3D affiché, nomenclature, matériaux ;
       export `projet.step` et fichiers de fabrication à jour dans
       `project/mcad/`.
 - [ ] Code/firmware : commentaires utiles, page d'architecture
-      (`docs/conception/firmware.md`) et README de `project/firmware/`.
+      (`docs/conception/firmware.md`) et README de `project/firmware/`, qui
+      permet de compiler et téléverser sans aide.
+- [ ] La logique du code est décrite par au moins un schéma (organigramme ou
+      diagramme d'états), à jour avec la version finale du code. Voir
+      [Documenter son code et son firmware](/workshops/methodologie-de-projet/tutorials/documenter-code-firmware/).
+- [ ] Les extraits de code de la documentation sont copiés du vrai code, avec
+      le langage indiqué sur chaque bloc. Voir
+      [Documenter son code et son firmware](/workshops/methodologie-de-projet/tutorials/documenter-code-firmware/).
 - [ ] Guide de montage (`docs/fabrication/`) testé par quelqu'un d'extérieur
       au projet.
 - [ ] Résultats de tests (`docs/tests.md`) présentés avec des mesures
-      réelles, échecs inclus.
+      réelles, échecs inclus, et un tableau de synthèse à jour.
+- [ ] Pour chaque critère chiffré, la valeur calculée (démonstration avec
+      ses hypothèses et ses formules) est comparée à la valeur mesurée, et
+      l'écart est expliqué. Voir
+      [Documenter les tests et résultats](/workshops/methodologie-de-projet/tutorials/documenter-tests-resultats/).
 
 ### Transmissibilité
 
@@ -110,16 +131,22 @@ marge. Voir [Gérer le temps et les jalons](/workshops/methodologie-de-projet/co
 
 - [ ] Cahier des charges à jour
 - [ ] Choix techniques tracés
+- [ ] Sources citées
 - [ ] Page Équipe à jour
 - [ ] Journal de bord complet, pour chaque membre
 
 ### Documentation des briques
 
+- [ ] Chaque sous-ensemble documenté (mécanique, électronique, code)
 - [ ] Électronique
+- [ ] Brochage : `pins.h`, tableau et schéma KiCad cohérents
 - [ ] Mécanique
-- [ ] Code/firmware
+- [ ] Code/firmware (architecture, README, compilation)
+- [ ] Schéma de la logique du code à jour
+- [ ] Extraits de code exacts, langage indiqué
 - [ ] Guide de montage testé
-- [ ] Résultats de tests
+- [ ] Résultats de tests, synthèse à jour
+- [ ] Calcul comparé à la mesure pour les critères chiffrés
 
 ### Transmissibilité
 

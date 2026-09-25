@@ -60,7 +60,7 @@ Structure qui fonctionne pour ce format court :
 1. **Présentation du projet** (10-15s) : qui, quoi, pourquoi.
 2. **Explication du fonctionnement** (20-30s) : comment ça marche,
    avec des plans du mécanisme ou du montage.
-3. **Vues du prototype / application** (30-40s) : le robot en action, les
+3. **Vues du prototype / application** (30-40s) : le prototype en action, les
    résultats de tests si filmables.
 4. **Conclusion** (10-15s) : ce que ça a permis, ce qu'on ferait
    différemment.

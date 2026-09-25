@@ -1,10 +1,10 @@
 ---
 layout: documentation
 hide_hero: false
-hero_image: hero.png
+hero_image: hero.jpg
 hero_height: is-small
 hero_darken: true
-image: hero.png
+image: hero.jpg
 component_toc: true
 doc_header: true
 
@@ -238,7 +238,7 @@ void setup() {
   tab2=tab6
 %}
 
-{% include message.html title="Toujours nommer le langage" message="Après les trois backticks d'ouverture, précisez le langage (```cpp,```python, ```bash...) : ça active la coloration syntaxique et c'est une règle de style de ce site." status="is-info" icon="fas fa-info-circle" %}
+{% include message.html title="Toujours nommer le langage" message="Après les trois backticks d'ouverture, précisez le langage (`cpp`, `python`, `bash`...) : ça active la coloration syntaxique. Voir la section « Le code dans votre documentation » plus bas." status="is-info" icon="fas fa-info-circle" %}
 
 ### Tableaux
 
@@ -251,6 +251,34 @@ void setup() {
 C'est le format utilisé pour la plupart des gabarits de cet atelier. Voir
 par exemple le tableau de jalons dans
 [Gérer le temps et les jalons](/workshops/methodologie-de-projet/concepts/gerer-temps-jalons/).
+
+## Le code dans votre documentation
+
+La documentation d'un projet contient souvent du code : un extrait de
+firmware, une commande à taper, un fichier de configuration. Markdown a deux
+façons de l'écrire.
+
+| | Code inline | Bloc de code |
+|---|---|---|
+| Comment l'écrire | Un backtick de chaque côté : `` `mot` `` | Trois backticks sur une ligne seule, avant et après le code |
+| À utiliser pour | Un mot ou une courte expression au milieu d'une phrase | Plusieurs lignes à lire ou à copier |
+| Exemples | `platformio.ini`, `pinMode()`, `docs/_config.yml` | Un extrait de firmware, une suite de commandes |
+
+Après les trois backticks d'ouverture d'un bloc, écrivez toujours le
+**langage** : `cpp` pour du code Arduino ou ESP32, `python`, `bash` pour des
+commandes, `text` pour tout ce qui n'est pas du code. Il active la coloration
+syntaxique (mots-clés, textes et commentaires en couleurs).
+
+Une convention à suivre dans toute votre documentation : ce que l'on **lit ou
+tape** (noms de fichiers, commandes, fonctions, valeurs) va en `code`, ce sur
+quoi l'on **clique** (boutons, menus) va en **gras**. Par exemple : ouvrez
+**Fichier > Exporter**, puis enregistrez le fichier sous `projet.step`.
+
+Pour montrer un bloc de code à l'intérieur d'un autre (comme le font les
+exemples de ce tutoriel), entourez le tout de **quatre** backticks au lieu de
+trois : sinon, les trois premiers backticks internes ferment le bloc trop tôt.
+
+{% include message.html title="Et pour bien présenter du code ?" message="Quel extrait montrer, comment l'introduire, quels langages utiliser selon les fichiers du projet, comment présenter une commande et sa réponse : tout ça est dans [Documenter son code et son firmware](/workshops/methodologie-de-projet/tutorials/documenter-code-firmware/)." status="is-info" icon="fas fa-info-circle" %}
 
 ## Aller plus loin sur le site Jekyll de votre projet
 
@@ -265,7 +293,7 @@ les possibilités, deux exemples pour donner envie :
 
 ```markdown
 {: .warning }
-> N'oubliez jamais de tester votre robot avant la démonstration.
+> N'oubliez jamais de tester votre prototype avant la démonstration.
 ```
 
 Ces deux encarts sont déjà définis dans la configuration du template
@@ -298,3 +326,8 @@ directement dans le fichier.
 Ouvrez `docs/objectifs.md` de votre projet (rempli dans le tutoriel sur le
 cahier des charges) et vérifiez qu'il utilise correctement les titres, une
 liste, et au moins un lien. Corrigez si besoin.
+
+---
+
+*Crédit image : icône « Markdown » par [Icons8](https://icons8.com/icon/pSIyj3XGA9SW/markdown), utilisée selon la [licence gratuite d'Icons8](https://icons8.com/license) (lien vers [icons8.com](https://icons8.com) obligatoire).*
+{: .is-size-7 .has-text-grey }
