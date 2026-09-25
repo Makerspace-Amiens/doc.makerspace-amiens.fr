@@ -15,15 +15,13 @@ tags: medieval-challenge
 {% include message.html title="Attention" message="Cette page peut évoluer, pensez à la consulter régulièrement
 **V2.0 24/09/2026**" status="is-warning" dismissable="true" icon="fas fa-triangle-exclamation" %}
 
-
 ## Règles du jeu
 
 Le tournoi se déroule en **deux phases.** Chaque **phase** comprend **4 tirs** pour marquer des points. Le but est d'atteindre une zone précise qui **change d'emplacement entre les deux phases**.
 
 Les équipes doivent donc trouver un moyen d'être **précis** avec leur catapulte et de pouvoir **choisir la zone à atteindre** !
 
-
-![Table de jeu](/workspaces/doc.makerspace-amiens.fr/_workshops/medieval-challenge/concepts/medieval-challenge/informations/tournamentTable.png)
+![table de jeu]({{'/workshops/medieval-challenge/concepts/medieval-challenge/tournament/table.png'}} "Table de jeu")
 
 ### Les zones
 
