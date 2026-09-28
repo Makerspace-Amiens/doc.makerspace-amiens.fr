@@ -14,11 +14,18 @@ project_tags:
 description: "Apprendre à cadrer, documenter et gérer un projet de A à Z : du repo GitHub à la présentation finale, en passant par le travail en équipe."
 subtitle: De l'idée au projet transmissible
 
-special_section_label: Slides
-special_section_icon: fas fa-chalkboard-teacher
-special_section_desc: "Les supports de présentation des séances, à projeter en plein écran."
-specials:
-  - /workshops/methodologie-de-projet/slides/introduction-methodologie/
+special_sections:
+  - label: Le cours
+    icon: fas fa-compass
+    desc: "Le programme des séances et ce sur quoi vous êtes évalués."
+    items:
+      - /workshops/methodologie-de-projet/syllabus/
+      - /workshops/methodologie-de-projet/evaluation/
+  - label: Slides
+    icon: fas fa-chalkboard-teacher
+    desc: "Les supports de présentation des séances, à projeter en plein écran."
+    items:
+      - /workshops/methodologie-de-projet/slides/introduction-methodologie/
 
 concepts:
   - /workshops/methodologie-de-projet/concepts/cycle-de-vie-projet/
