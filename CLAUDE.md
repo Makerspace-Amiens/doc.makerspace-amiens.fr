@@ -152,9 +152,26 @@ Le site est en français (`lang: fr` dans `_config.yml`), mais une page peut bas
 
 ---
 
+### Sections de cartes : `specials` et `special_sections`
+
+Deux mécanismes, rendus par `_includes/ph-special-section.html` (cartes titre + description + « Découvrir ») :
+
+- `specials:` + `special_section_label` / `_icon` / `_desc` : **une** section en **bas** de page (historique : otto-mks, certification-securite, medieval-challenge).
+- `special_sections:` : **plusieurs** sections en **haut** de page, juste après Présentation et avant Prérequis/Concepts, en cartes courtes comme Concepts (icône de la section, titre, `subtitle` ou à défaut `description`). Chaque entrée : `label`, `icon`, `desc`, `items` (liste d'URLs).
+
+```yaml
+special_sections:
+  - label: L'atelier
+    icon: fas fa-compass
+    desc: "Le programme de l'atelier et ce sur quoi vous êtes évalués."
+    items:
+      - /workshops/methodologie-de-projet/syllabus/
+      - /workshops/methodologie-de-projet/evaluation/
+```
+
 ### Slides (reveal.js)
 
-Pour l'instant, les decks d'un atelier sont listés via la section spécifique existante (`specials:` + `special_section_label: Slides`, `special_section_icon: fas fa-chalkboard-teacher`, `special_section_desc`), comme dans `methodologie-de-projet`. Pas de section dédiée dans `project-home.html`.
+Les decks d'un atelier sont listés dans une section de cartes du haut de page (`special_sections:`, voir ci-dessus), comme dans `methodologie-de-projet`.
 
 Un deck est un `.md` avec `layout: slides` (ex. `_workshops/<slug>/slides/<deck>.md`), sans champ `type` et hors de `tutorials:` :
 
@@ -165,7 +182,11 @@ Un deck est un `.md` avec `layout: slides` (ex. `_workshops/<slug>/slides/<deck>
 - Vérification visuelle possible : servir `_site` (`python3 -m http.server`) et `firefox --headless --no-remote --profile ~/dossier-visible/p --screenshot ~/dossier-visible/s.png "http://localhost:PORT/...#/N"` (Firefox snap : profil et sortie dans un dossier **non caché** du home, pas dans `/tmp` ni `~/.cache`).
 - Attributs d'une slide : commentaire `<!-- .slide: data-auto-animate data-background-color="#ef2e31" class="slide-section" -->` n'importe où dans la slide (traité par `_includes/reveal-section.html`). Slide de titre : `title_slide_attrs` / `title_slide_class` dans le front matter. Fond sombre : ajouter `class="has-dark-background"` (reveal ne le détecte que pour `data-background-color`) pour passer le texte en blanc.
 - Slides verticales : `<!-- .down -->` sépare des sous-slides à l'intérieur d'une slide.
-- Classes du thème : `slide-section` (slide de transition), `slide-center`, `demo-flow` / `demo-box` (`is-accent`, `is-big`) pour les blocs Auto-Animate (même `data-id` d'une slide à l'autre), `big-number`, `caption`, `columns`. Fragments sur un item de liste : `- {: .fragment .fade-up} texte` (l'IAL en ligne suivante s'applique à toute la liste). Code surligné par étapes : `<pre><code class="language-cpp" data-trim data-line-numbers="1|3-5">` en HTML brut.
+- Slide d'activité : sous le titre, `<p class="activity-meta"><span><i class="fas fa-user"></i>Individuel</span><span><i class="far fa-clock"></i>7 min</span></p>` (pastilles, la première en rouge ; Font Awesome 5).
+- Aperçu d'une page du site dans une slide : `<iframe class="page-preview" data-src="/url/#ancre" title="..."></iframe>` (`data-src` : chargement à l'approche de la slide ; l'ancre évite l'en-tête vide des pages `hide_hero`). Pratique en sous-slide (`<!-- .down -->`) après la slide qui en parle.
+- Lien vers la doc du site : terminer chaque slide de contenu par `[Titre de la page](/url/){: .doc-link}` (pastille avec icône livre ; plusieurs liens sur la même ligne, séparés par une espace). Relier systématiquement les slides aux concepts/tutoriels déjà écrits. Raccourcis clavier : `<kbd>Ctrl</kbd>`.
+- Blocs de code : le layout remplace le HTML coloré par Rouge par le texte brut avant l'init, pour que le plugin highlight de reveal.js les colore (sinon les `<span>` s'affichent en clair) ; ` ```text ` reste sans coloration.
+- Classes du thème : `slide-section` (slide de transition), `slide-center`, `demo-flow` / `demo-box` (`is-accent`, `is-big`) pour les blocs Auto-Animate (même `data-id` d'une slide à l'autre), `big-number`, `caption`, `columns`, `{: .table-dense}` après un tableau long (7 lignes ou plus). Fragments sur un item de liste : `- {: .fragment .fade-up} texte` (l'IAL en ligne suivante s'applique à toute la liste). Code surligné par étapes : `<pre><code class="language-cpp" data-trim data-line-numbers="1|3-5">` en HTML brut.
 - Démo complète de toutes ces possibilités : `_workshops/methodologie-de-projet/slides/demo-reveal.md`.
 - Images : `![alt](chemin)` puis éventuellement une légende `{: .caption}` ; pour réutiliser les captures d'un tutoriel, chemin absolu (`/workshops/<slug>/tutorials/<tuto>/x.png`), sinon ranger l'image dans le sous-dossier du même nom que le deck. Hauteur plafonnée à 440px (400px en colonnes).
 - Thème autonome dans `assets/css/slides.scss` (Bulma n'est pas chargé : hormis `message.html`, les includes stylés par Bulma s'affichent bruts). Export PDF : ajouter `?print-pdf` à l'URL puis imprimer depuis Chrome.
