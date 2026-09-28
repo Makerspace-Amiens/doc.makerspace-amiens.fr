@@ -89,6 +89,22 @@
       code.parentElement.replaceWith(diagram);
     });
 
+    // Blocs de code : kramdown les colore déjà avec Rouge (spans HTML), que le plugin
+    // highlight de reveal.js échapperait. On repart du texte brut avec la bonne
+    // classe de langage ; `text` reste sans coloration.
+    document.querySelectorAll(".reveal div.highlighter-rouge").forEach(function (block) {
+      var source = block.querySelector("pre code");
+      if (!source) return;
+      var match = block.className.match(/language-(\S+)/);
+      var lang = match && match[1] !== "text" ? match[1] : "plaintext";
+      var pre = document.createElement("pre");
+      var code = document.createElement("code");
+      code.className = "language-" + lang;
+      code.textContent = source.textContent;
+      pre.appendChild(code);
+      block.replaceWith(pre);
+    });
+
     mermaid.initialize({
       startOnLoad: false,
       theme: "base",

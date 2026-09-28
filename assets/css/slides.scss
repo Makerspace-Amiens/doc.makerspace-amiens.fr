@@ -116,7 +116,7 @@ body {
   pre {
     width: 100%;
     margin: 0.5em 0;
-    font-size: 0.6em;
+    font-size: 0.72em;
     box-shadow: none;
     border: 1px solid $border;
     border-radius: 8px;
@@ -140,16 +140,66 @@ body {
   /* Légende sous une image : paragraphe suivi de {: .caption} */
   .caption {
     text-align: center;
-    font-size: 0.65em;
+    font-size: 0.75em;
     color: $muted;
     margin-top: 0.5em;
   }
 
   .columns img { max-height: 400px; }
 
-  table {
-    border-collapse: collapse;
+  /* Lien vers la page du site qui approfondit la slide :
+     [Titre](/url/){: .doc-link}, en dernière ligne de la slide */
+  kbd {
+    display: inline-block;
+    padding: 0.05em 0.45em;
+    border: 1px solid $border;
+    border-bottom-width: 3px;
+    border-radius: 6px;
+    background: #ffffff;
+    font-family: var(--r-main-font);
     font-size: 0.8em;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  a.doc-link {
+    display: inline-block;
+    margin: 0.4em 0.4em 0 0;
+    padding: 0.2em 0.8em;
+    border: 1px solid $border;
+    border-radius: 999px;
+    font-size: 0.6em;
+    font-weight: 600;
+    color: $text;
+    text-decoration: none;
+
+    &::before {
+      content: "\f518";
+      font-family: "Font Awesome 5 Free";
+      font-weight: 900;
+      color: $accent;
+      margin-right: 0.5em;
+    }
+
+    &:hover { border-color: $accent; color: $accent; }
+  }
+
+  /* Aperçu d'une page du site : <iframe class="page-preview" data-src="/url/">
+     (data-src : reveal.js ne charge la page qu'à l'approche de la slide) */
+  .page-preview {
+    display: block;
+    width: 100%;
+    height: 470px;
+    border: 1px solid $border;
+    border-radius: 8px;
+    background: #ffffff;
+  }
+
+  table {
+    width: 100%;
+    margin-bottom: 0.8em;
+    border-collapse: collapse;
+    font-size: 0.9em;
 
     th, td {
       padding: 0.4em 0.8em;
@@ -158,6 +208,9 @@ body {
     }
 
     th { font-weight: 700; }
+
+    /* Tableau long (7 lignes et plus) : {: .table-dense} après le tableau */
+    &.table-dense { font-size: 0.72em; th, td { padding: 0.3em 0.7em; } }
   }
 
   blockquote {
@@ -274,10 +327,33 @@ body {
 
   .demo-arrow { color: $muted; font-size: 0.9em; }
 
+  /* Slide d'activité : modalité, durée, matériel en pastilles sous le titre
+     <p class="activity-meta"><span>…</span>…</p> */
+  .activity-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4em;
+    margin: -0.2em 0 0.9em;
+
+    span {
+      padding: 0.25em 0.8em;
+      border-radius: 999px;
+      background: $surface;
+      font-size: 0.6em;
+      font-weight: 600;
+      color: $text;
+
+      &:first-child { background: $accent; color: #ffffff; }
+      i { margin-right: 0.4em; }
+    }
+  }
+
   .big-number {
     font-size: 5em;
     font-weight: 800;
     line-height: 1;
+    /* la marge des <p> est en em : sans ça, 0.7 × 5em d'espace sous le chiffre */
+    margin-bottom: 0.1em;
     color: $accent;
     letter-spacing: -0.04em;
   }
