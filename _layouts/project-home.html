@@ -10,7 +10,6 @@
 {%- assign concepts  = '' | split: '' -%}
 {%- assign hardware  = '' | split: '' -%}
 {%- assign software  = '' | split: '' -%}
-{%- assign specials  = '' | split: '' -%}
 {%- assign prereqs   = '' | split: '' -%}
 
 {%- comment %} Tutoriels : liste ordonnée depuis le frontmatter du projet ─── {% endcomment -%}
@@ -53,12 +52,6 @@
 {%- for url in page.prerequisites -%}
   {%- assign found = all_docs | where: 'url', url | first -%}
   {%- if found -%}{%- assign prereqs = prereqs | push: found -%}{%- endif -%}
-{%- endfor -%}
-
-{%- comment %} Section spéciale (ex: ottolympiades) : liste depuis le frontmatter du projet ─── {% endcomment -%}
-{%- for url in page.specials -%}
-  {%- assign found = all_docs | where: 'url', url | first -%}
-  {%- if found -%}{%- assign specials = specials | push: found -%}{%- endif -%}
 {%- endfor -%}
 
 {%- assign total_time = 0 -%}
@@ -126,6 +119,11 @@
       </div>
     </section>
     {% endif %}
+
+    <!-- ══ SECTIONS SPÉCIFIQUES DU HAUT (special_sections:) ═══════════════ -->
+    {% for sec in page.special_sections %}
+    {% include ph-special-section.html label=sec.label icon=sec.icon desc=sec.desc urls=sec.items compact=true %}
+    {% endfor %}
 
     <!-- ══ PRÉREQUIS ════════════════════════════════════════════════════════ -->
     {% if prereqs.size > 0 %}
@@ -329,42 +327,8 @@
     </section>
     {% endif %}
 
-    <!-- ══ SECTION SPÉCIFIQUE ════════════════════════════════════════════════ -->
-    {% if specials.size > 0 and page.special_section_label %}
-    <section class="ph-section">
-      <div class="container">
-        <div class="ph-section-header">
-          <div>
-            <h2 class="ph-section-title">
-              <i class="{{ page.special_section_icon | default: 'fas fa-star' }}"></i>
-              {{ page.special_section_label }}
-            </h2>
-            {% if page.special_section_desc %}
-            <p class="ph-section-sub">{{ page.special_section_desc }}</p>
-            {% endif %}
-          </div>
-        </div>
-        <div class="columns is-multiline">
-          {% for doc in specials %}
-          <div class="column is-4-desktop is-6-tablet">
-            <a href="{{ doc.url | relative_url }}?project={{ page.project_slug }}" class="ph-special-card">
-              {% if doc.image %}
-              <div class="ph-special-card-img">
-                <img src="{{ doc.url | relative_url }}{{ doc.image }}" alt="{{ doc.title }}" loading="lazy">
-              </div>
-              {% endif %}
-              <div class="ph-special-card-body">
-                <h3 class="ph-special-card-title">{{ doc.title }}</h3>
-                {% if doc.description %}<p class="ph-special-card-desc">{{ doc.description }}</p>{% endif %}
-                <span class="ph-special-card-link">{{ _i18n.discover }} <i class="fas fa-arrow-right"></i></span>
-              </div>
-            </a>
-          </div>
-          {% endfor %}
-        </div>
-      </div>
-    </section>
-    {% endif %}
+    <!-- ══ SECTION SPÉCIFIQUE (bas de page) ═══════════════════════════════ -->
+    {% include ph-special-section.html label=page.special_section_label icon=page.special_section_icon desc=page.special_section_desc urls=page.specials %}
 
     {% unless page.hide_footer %}{% include footer.html %}{% endunless %}
     {%- include footer-scripts.html -%}

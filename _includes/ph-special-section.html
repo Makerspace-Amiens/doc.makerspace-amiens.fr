@@ -1,0 +1,62 @@
+{%- comment %}
+  ph-special-section.html : une section de cartes dans project-home.html.
+  Paramètres : label, icon, desc, urls (liste d'URLs de pages du site),
+  compact (cartes courtes comme Concepts, au lieu des grandes cartes à image).
+  Utilisée pour la section spécifique historique (specials:, en bas de page)
+  et pour les sections du haut (special_sections:, juste après la présentation).
+{% endcomment -%}
+{%- assign _cards = '' | split: '' -%}
+{%- for url in include.urls -%}
+  {%- assign found = all_docs | where: 'url', url | first -%}
+  {%- if found -%}{%- assign _cards = _cards | push: found -%}{%- endif -%}
+{%- endfor -%}
+{% if _cards.size > 0 and include.label %}
+    <section class="ph-section">
+      <div class="container">
+        <div class="ph-section-header">
+          <div>
+            <h2 class="ph-section-title">
+              <i class="{{ include.icon | default: 'fas fa-star' }}"></i>
+              {{ include.label }}
+            </h2>
+            {% if include.desc %}
+            <p class="ph-section-sub">{{ include.desc }}</p>
+            {% endif %}
+          </div>
+        </div>
+        {% if include.compact %}
+        <div class="ph-resource-grid">
+          {% for doc in _cards %}
+          <a href="{{ doc.url | relative_url }}?project={{ page.project_slug }}" class="ph-resource-card">
+            <div class="ph-resource-icon"><i class="{{ include.icon | default: 'fas fa-star' }}"></i></div>
+            <div class="ph-resource-body">
+              <span class="ph-resource-title">{{ doc.title }}</span>
+              {% assign _sub = doc.subtitle | default: doc.description %}
+              {% if _sub %}<span class="ph-resource-sub">{{ _sub }}</span>{% endif %}
+            </div>
+          </a>
+          {% endfor %}
+        </div>
+        {% else %}
+        <div class="columns is-multiline">
+          {% for doc in _cards %}
+          <div class="column is-4-desktop is-6-tablet">
+            <a href="{{ doc.url | relative_url }}?project={{ page.project_slug }}" class="ph-special-card">
+              {% if doc.image %}
+              <div class="ph-special-card-img">
+                <img src="{{ doc.url | relative_url }}{{ doc.image }}" alt="{{ doc.title }}" loading="lazy">
+              </div>
+              {% endif %}
+              <div class="ph-special-card-body">
+                <h3 class="ph-special-card-title">{{ doc.title }}</h3>
+                {% if doc.description %}<p class="ph-special-card-desc">{{ doc.description }}</p>{% endif %}
+                <span class="ph-special-card-link">{{ _i18n.discover }} <i class="fas fa-arrow-right"></i></span>
+              </div>
+            </a>
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+    </section>
+{% endif %}
