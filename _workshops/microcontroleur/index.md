@@ -14,6 +14,15 @@ project_tags:
 description: "Découvrir les microcontrôleurs de l'architecture jusqu'au projet multijoueur, avec l'ESP32-S3 et Arduino-ESP32."
 subtitle: De l'architecture au jeu embarqué
 
+special_sections:
+  - label: Slides
+    icon: fas fa-chalkboard-teacher
+    desc: "Les supports des trois cours magistraux, à projeter en plein écran."
+    items:
+      - /workshops/microcontroleur/slides/cm1-decouvrir-le-microcontroleur/
+      - /workshops/microcontroleur/slides/cm2-entrees-et-sorties/
+      - /workshops/microcontroleur/slides/cm3-bus-et-machine-a-etats/
+
 concepts:
   - /workshops/microcontroleur/concepts/qu-est-ce-qu-un-microcontroleur/
   - /workshops/microcontroleur/concepts/du-materiel-au-logiciel/
