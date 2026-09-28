@@ -152,6 +152,24 @@ Le site est en français (`lang: fr` dans `_config.yml`), mais une page peut bas
 
 ---
 
+### Slides (reveal.js)
+
+Pour l'instant, les decks d'un atelier sont listés via la section spécifique existante (`specials:` + `special_section_label: Slides`, `special_section_icon: fas fa-chalkboard-teacher`, `special_section_desc`), comme dans `methodologie-de-projet`. Pas de section dédiée dans `project-home.html`.
+
+Un deck est un `.md` avec `layout: slides` (ex. `_workshops/<slug>/slides/<deck>.md`), sans champ `type` et hors de `tutorials:` :
+
+- Front matter : `title`, `subtitle`, `author`, `description`, `kicker` (sur-titre, défaut : nom du site), `back_link` (bouton retour, en général l'URL de l'atelier). La slide de titre est générée à partir de ces champs.
+- Chaque `---` du corps (précédé d'une ligne vide, sinon il devient un titre setext) sépare deux slides : le layout découpe le HTML rendu sur `<hr />`. Ne pas utiliser `---` pour autre chose dans un deck.
+- Markdown kramdown complet : includes Liquid, Mermaid (` ```mermaid! `, dessiné à l'affichage de sa slide car reveal.css masque les autres en `display: none`), KaTeX, `{: .fragment}` pour une apparition progressive, `<aside class="notes" markdown="1">` pour les notes orateur (touche `S`), `<div class="columns" markdown="1">` pour deux colonnes.
+- Habillage inspiré du masque PowerPoint UniLaSalle (rouge du site `#ef2e31`, police Inter, logos dans `assets/img/slides/`) : couverture rouge générée depuis le front matter (trait en L blanc épais, texte calé sur le trait, logo centré en bas), slides de contenu avec petite flèche ↗ et bandeau rouge bas (numéro + logo, `class="no-band"` pour le retirer), `class="slide-section"` = slide de transition rouge avec trait en L épais à angle arrondi, texte calé en bas sur le trait (il monte si le titre s'allonge), logo UniLaSalle centré en bas (sans flèche en filigrane) et texte noir, slide de fin automatique (logo « Demain commence ici », `end_slide: false` pour la retirer). Les listes numérotées s'affichent en `01`, `02`... rouges (sommaire). Flèches SVG dans `_includes/reveal-arrows.html`. Le masque `.pptx` source n'est pas versionné (il serait publié tel quel).
+- Vérification visuelle possible : servir `_site` (`python3 -m http.server`) et `firefox --headless --no-remote --profile ~/dossier-visible/p --screenshot ~/dossier-visible/s.png "http://localhost:PORT/...#/N"` (Firefox snap : profil et sortie dans un dossier **non caché** du home, pas dans `/tmp` ni `~/.cache`).
+- Attributs d'une slide : commentaire `<!-- .slide: data-auto-animate data-background-color="#ef2e31" class="slide-section" -->` n'importe où dans la slide (traité par `_includes/reveal-section.html`). Slide de titre : `title_slide_attrs` / `title_slide_class` dans le front matter. Fond sombre : ajouter `class="has-dark-background"` (reveal ne le détecte que pour `data-background-color`) pour passer le texte en blanc.
+- Slides verticales : `<!-- .down -->` sépare des sous-slides à l'intérieur d'une slide.
+- Classes du thème : `slide-section` (slide de transition), `slide-center`, `demo-flow` / `demo-box` (`is-accent`, `is-big`) pour les blocs Auto-Animate (même `data-id` d'une slide à l'autre), `big-number`, `caption`, `columns`. Fragments sur un item de liste : `- {: .fragment .fade-up} texte` (l'IAL en ligne suivante s'applique à toute la liste). Code surligné par étapes : `<pre><code class="language-cpp" data-trim data-line-numbers="1|3-5">` en HTML brut.
+- Démo complète de toutes ces possibilités : `_workshops/methodologie-de-projet/slides/demo-reveal.md`.
+- Images : `![alt](chemin)` puis éventuellement une légende `{: .caption}` ; pour réutiliser les captures d'un tutoriel, chemin absolu (`/workshops/<slug>/tutorials/<tuto>/x.png`), sinon ranger l'image dans le sous-dossier du même nom que le deck. Hauteur plafonnée à 440px (400px en colonnes).
+- Thème autonome dans `assets/css/slides.scss` (Bulma n'est pas chargé : hormis `message.html`, les includes stylés par Bulma s'affichent bruts). Export PDF : ajouter `?print-pdf` à l'URL puis imprimer depuis Chrome.
+
 ## Navbar — dropdown Ateliers
 
 Le dropdown est **généré dynamiquement** depuis `site.workshops | where: "layout", "project-home"`, trié alphabétiquement et **scindé en deux groupes** (Projets / Thématiques) selon le champ `kind`. Ne pas modifier la liste dans `_data/navigation.yml` — tout atelier avec `layout: project-home` apparaît automatiquement dans le groupe correspondant à son `kind`.
