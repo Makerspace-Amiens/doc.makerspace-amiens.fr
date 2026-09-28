@@ -1,0 +1,442 @@
+---
+---
+/* Thème reveal.js aux couleurs du site (layout slides.html).
+   Autonome : Bulma n'est pas chargé sur les slides. */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap");
+
+$accent: #ef2e31;
+$accent-soft: #fcc7c8;
+$text: #09090b;
+$muted: #71717a;
+$border: #e4e4e7;
+$surface: #f4f4f5;
+$sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+$mono: 'JetBrains Mono', ui-monospace, monospace;
+
+:root {
+  --r-background-color: #ffffff;
+  --r-main-font: #{$sans};
+  --r-main-font-size: 30px;
+  --r-main-color: #{$text};
+  --r-heading-font: #{$sans};
+  --r-heading-color: #{$text};
+  --r-heading-font-weight: 700;
+  --r-heading-letter-spacing: -0.02em;
+  --r-heading-text-transform: none;
+  --r-link-color: #{$accent};
+  --r-link-color-hover: #c81e21;
+  --r-selection-background-color: #{$accent-soft};
+  --r-code-font: #{$mono};
+}
+
+body {
+  background: #ffffff;
+}
+
+.reveal {
+  font-family: var(--r-main-font);
+  font-size: var(--r-main-font-size);
+  color: var(--r-main-color);
+  line-height: 1.45;
+
+  .slides {
+    text-align: left;
+  }
+
+  /* margin: 0 dans Reveal.initialize : la slide occupe tout le cadre 1280x720,
+     les marges intérieures sont portées par les sections. */
+  .slides > section,
+  .slides > section > section {
+    height: 100%;
+    padding: 64px 96px 96px;
+    box-sizing: border-box;
+  }
+
+  .slides > section.stack { padding: 0; }
+
+  h1, h2, h3, h4 {
+    font-family: var(--r-heading-font);
+    font-weight: var(--r-heading-font-weight);
+    letter-spacing: var(--r-heading-letter-spacing);
+    color: var(--r-heading-color);
+    line-height: 1.15;
+    margin: 0 0 0.6em;
+  }
+
+  h1 { font-size: 2.4em; }
+  h2 { font-size: 1.6em; }
+  /* ### juste sous le titre : phrase d'introduction */
+  h3 { font-size: 1.05em; font-weight: 600; color: $muted; margin-top: -0.4em; }
+
+  p { margin: 0 0 0.7em; }
+
+  strong { font-weight: 700; }
+
+  a { color: var(--r-link-color); }
+
+  ul, ol {
+    display: block;
+    margin: 0 0 0.7em 1.2em;
+  }
+
+  li { margin: 0.35em 0; }
+
+  /* Listes numérotées façon sommaire du masque : 01, 02... en rouge */
+  ol {
+    list-style: none;
+    counter-reset: uls-item;
+    margin-left: 0;
+
+    > li {
+      counter-increment: uls-item;
+      position: relative;
+      padding-left: 2.2em;
+
+      &::before {
+        content: counter(uls-item, decimal-leading-zero);
+        position: absolute;
+        left: 0;
+        color: $accent;
+        font-weight: 800;
+      }
+    }
+  }
+
+  ul li::marker { color: $accent; }
+
+  code {
+    font-family: var(--r-code-font);
+    font-size: 0.85em;
+    background: $surface;
+    padding: 0.1em 0.35em;
+    border-radius: 4px;
+  }
+
+  pre {
+    width: 100%;
+    margin: 0.5em 0;
+    font-size: 0.6em;
+    box-shadow: none;
+    border: 1px solid $border;
+    border-radius: 8px;
+
+    code {
+      padding: 1em;
+      max-height: 480px;
+      background: $surface;
+    }
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+    max-height: 440px;
+    margin: 0 auto;
+    border: 1px solid $border;
+    border-radius: 8px;
+  }
+
+  /* Légende sous une image : paragraphe suivi de {: .caption} */
+  .caption {
+    text-align: center;
+    font-size: 0.65em;
+    color: $muted;
+    margin-top: 0.5em;
+  }
+
+  .columns img { max-height: 400px; }
+
+  table {
+    border-collapse: collapse;
+    font-size: 0.8em;
+
+    th, td {
+      padding: 0.4em 0.8em;
+      border-bottom: 1px solid $border;
+      text-align: left;
+    }
+
+    th { font-weight: 700; }
+  }
+
+  blockquote {
+    margin: 0.5em 0;
+    padding: 0.5em 1em;
+    border-left: 4px solid $accent;
+    background: $surface;
+    font-style: normal;
+    width: auto;
+    box-shadow: none;
+  }
+
+  .mermaid {
+    display: flex;
+    justify-content: center;
+    margin: 0.5em 0;
+
+    svg { max-height: 480px; max-width: 100%; }
+  }
+
+  /* Deux colonnes : <div class="columns" markdown="1"> ... </div> */
+  .columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5em;
+    align-items: start;
+  }
+
+  /* Include message.html (styles Bulma absents ici) */
+  .message {
+    margin: 0.6em 0;
+    border-radius: 8px;
+    background: $surface;
+    border-left: 6px solid $muted;
+    font-size: 0.8em;
+
+    &.is-info    { border-left-color: #3b82f6; }
+    &.is-success { border-left-color: #22c55e; }
+    &.is-warning { border-left-color: #f59e0b; }
+    &.is-danger  { border-left-color: $accent; }
+
+    .message-header { padding: 0.5em 0.9em 0; font-weight: 700; }
+    .message-body { padding: 0.4em 0.9em 0.6em; p:last-child { margin: 0; } }
+  }
+
+  /* Code : fond clair (thème highlight.js github) */
+  pre code.hljs { background: #ffffff; }
+
+  /* Slides sur fond sombre (data-background-color sombre, ou class="has-dark-background") */
+  section.has-dark-background {
+    &, h1, h2, h3, p, li, strong, .slide-kicker, .slide-subtitle, .slide-author, .caption { color: #ffffff; }
+    ul li::marker { color: #ffffff; }
+    a { color: #ffffff; text-decoration: underline; }
+  }
+
+  /* Slide de transition : gros titre à droite du trait en L */
+  .slide-section {
+    display: flex !important;
+    flex-direction: column;
+    /* Le texte s'appuie sur le trait horizontal (y = 526px) et monte au-dessus */
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding: 0 120px 234px 206px !important;
+
+    h2 { font-size: 2.8em; margin: 0 0 0.15em; position: relative; }
+    p { font-size: 1.1em; position: relative; margin: 0; }
+
+    .slide-section-logo {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 24px;
+      height: 92px;
+      max-height: none;
+      border: none;
+      border-radius: 0;
+      margin: 0;
+    }
+
+    /* Comme dans le masque : texte noir sur le rouge par défaut */
+    &[data-uls-red] h2,
+    &[data-uls-red] p { color: $text; }
+  }
+
+  .slide-center {
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  /* Blocs de démonstration (Auto-Animate) */
+  .demo-flow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1em;
+  }
+
+  .demo-box {
+    padding: 0.6em 1em;
+    border-radius: 12px;
+    background: $surface;
+    border: 2px solid $border;
+    font-weight: 600;
+    font-size: 0.85em;
+
+    &.is-accent { background: $accent; border-color: $accent; color: #ffffff; }
+    &.is-big { font-size: 2em; padding: 1em 1.6em; }
+  }
+
+  .demo-arrow { color: $muted; font-size: 0.9em; }
+
+  .big-number {
+    font-size: 5em;
+    font-weight: 800;
+    line-height: 1;
+    color: $accent;
+    letter-spacing: -0.04em;
+  }
+
+  /* ── Habillage inspiré du masque UniLaSalle ───────────────────────── */
+
+  /* Grande flèche en filigrane (couverture, transitions, fin) */
+  .uls-watermark {
+    position: absolute;
+    left: 2%;
+    top: 12%;
+    width: 46%;
+    color: #ffffff;
+    opacity: 0.1;
+    pointer-events: none;
+  }
+
+  /* Trait en L terminé par une flèche (slides de transition) */
+  .uls-line {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    color: $text;
+    pointer-events: none;
+  }
+
+  /* Petite flèche à gauche du titre, centrée sur sa première ligne
+     (padding-top 64px + demi-hauteur de ligne du h2 ≈ 91px) */
+  .uls-corner {
+    position: absolute;
+    top: 70px;
+    left: 38px;
+    width: 42px;
+    height: 42px;
+    color: $accent;
+  }
+
+  /* Bandeau bas : numéro à gauche, logo à droite */
+  .uls-band {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 48px;
+    padding: 0 28px 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 1;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 600;
+
+    /* Le fond déborde de la slide : le bandeau touche les bords de l'écran
+       même quand la slide 16:9 ne remplit pas toute la fenêtre. */
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -2000px;
+      right: -2000px;
+      bottom: -2000px;
+      z-index: -1;
+      background: $accent;
+    }
+
+    img { height: 30px; max-height: none; border: none; border-radius: 0; margin: 0; }
+  }
+
+  /* Couverture : même composition que les transitions, trait en L blanc
+     plus épais, texte calé en bas sur le trait (y = 546px) */
+  .uls-line-big { color: #ffffff; }
+
+  .slide-title {
+    display: flex !important;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding: 0 120px 220px 206px !important;
+
+    h1 { font-size: 2.6em; margin: 0 0 0.25em; position: relative; }
+    p { position: relative; margin: 0 0 0.3em; }
+    p:last-of-type { margin-bottom: 0; }
+
+    /* Titre noir comme dans le masque, sur-titre et sous-titre blancs,
+       auteur noir : alternance qui fait écho au trait blanc */
+    &.has-dark-background h1,
+    &.has-dark-background .slide-author { color: $text; }
+  }
+
+  .slide-title-logo {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 24px;
+    height: 92px !important;
+    border: none !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+  }
+
+  .slide-kicker {
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.7em;
+  }
+
+  .slide-subtitle { font-size: 1.1em; }
+
+  .slide-author {
+    margin-top: 0.8em !important;
+    font-size: 0.75em;
+  }
+
+  /* Slide de fin : logo UniLaSalle « Demain commence ici » */
+  .slide-end {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+
+    img:not(.uls-watermark) {
+      position: relative;
+      width: 62%;
+      max-height: none;
+      border: none;
+      border-radius: 0;
+    }
+  }
+
+  .progress { color: $accent; height: 4px; }
+
+
+  /* Flèches de navigation (controlsLayout: "edges") : rouges sur fond blanc,
+     blanches quand la slide courante a un fond sombre ou rouge */
+  .controls { color: $accent; }
+  &.has-dark-background .controls,
+  &.has-dark-background .progress { color: #ffffff; }
+}
+
+.slides-back {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 40;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: $muted;
+  background: #ffffff;
+  border: 1px solid $border;
+  text-decoration: none;
+
+  &:hover { color: $accent; border-color: $accent; }
+}
+
+/* Export PDF (?print-pdf) : pas de bouton retour */
+.print-pdf .slides-back { display: none; }

@@ -1,0 +1,36 @@
+{%- comment %}
+  reveal-section.html : une slide reveal.js (utilisé par _layouts/slides.html).
+  Paramètres : body (HTML de la slide), num (numéro affiché dans le bandeau).
+  Un commentaire `<!-- .slide: attributs -->` dans la slide est retiré du contenu
+  et ses attributs sont posés sur la <section> (fond, auto-animate, transition...).
+  Habillage (inspiré du masque UniLaSalle) :
+  - class="slide-section" : slide de transition, fond rouge + trait en L + logo, sans bandeau ;
+  - sinon : petite flèche en haut à gauche + bandeau rouge (numéro, logo) en bas,
+    sauf avec class="no-band".
+{% endcomment -%}
+{%- assign _body = include.body | strip -%}
+{%- assign _attrs = '' -%}
+{%- if _body contains '<!-- .slide:' -%}
+  {%- assign _after = _body | split: '<!-- .slide:' | last | split: '-->' | first -%}
+  {%- assign _comment = '<!-- .slide:' | append: _after | append: '-->' -%}
+  {%- assign _attrs = _after | strip -%}
+  {%- assign _body = _body | remove_first: _comment | strip -%}
+{%- endif -%}
+{%- if _attrs contains 'slide-section' -%}
+  {%- unless _attrs contains 'data-background' -%}
+    {%- assign _attrs = _attrs | append: ' data-background-color="#ef2e31" data-uls-red' -%}
+  {%- endunless -%}
+<section {{ _attrs }}>
+{% include reveal-arrows.html line=true %}
+{{ _body }}
+<img class="slide-section-logo" src="{{ '/assets/img/slides/logo-unilasalle-blanc.png' | relative_url }}" alt="UniLaSalle Amiens, École d'ingénieurs Énergie &amp; Numérique">
+</section>
+{%- else -%}
+<section {{ _attrs }}>
+{% include reveal-arrows.html corner=true %}
+{{ _body }}
+{%- unless _attrs contains 'no-band' %}
+<div class="uls-band"><span>{{ include.num }}</span><img src="{{ '/assets/img/slides/logo-unilasalle-blanc.png' | relative_url }}" alt="UniLaSalle Amiens"></div>
+{%- endunless %}
+</section>
+{%- endif -%}

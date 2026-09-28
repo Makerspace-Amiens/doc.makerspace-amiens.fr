@@ -1,0 +1,18 @@
+{%- comment %}
+  reveal-arrows.html : flèches décoratives des slides (motif du masque UniLaSalle).
+  watermark : grande flèche en filigrane ; line : trait en L terminé par une flèche
+  (line_big : version épaisse et blanche de la couverture) ;
+  corner : petite flèche rouge en haut à gauche.
+{% endcomment -%}
+{%- if include.watermark -%}
+<svg class="uls-watermark" viewBox="0 0 120 100" aria-hidden="true"><path d="M20 -20 V55 H95 M72 32 L95 55 L72 78" fill="none" stroke="currentColor" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/></svg>
+{%- endif -%}
+{%- if include.line -%}
+<svg class="uls-line" viewBox="0 0 1280 720" aria-hidden="true"><path d="M163 -20 V472 A54 54 0 0 0 217 526 H1090 M1058 494 L1090 526 L1058 558" fill="none" stroke="currentColor" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/></svg>
+{%- endif -%}
+{%- if include.line_big -%}
+<svg class="uls-line uls-line-big" viewBox="0 0 1280 720" aria-hidden="true"><path d="M150 -20 V472 A74 74 0 0 0 224 546 H1080 M1030 496 L1080 546 L1030 596" fill="none" stroke="currentColor" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/></svg>
+{%- endif -%}
+{%- if include.corner -%}
+<svg class="uls-corner" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 L19 5 M8 5 H19 V16" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+{%- endif -%}

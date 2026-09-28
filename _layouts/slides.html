@@ -1,0 +1,148 @@
+---
+---
+{%- comment %}
+  slides.html : présentation reveal.js (https://revealjs.com) écrite en Markdown.
+  Le Markdown est rendu par kramdown (includes Liquid compris), puis découpé en
+  slides à chaque ligne `---` (rendue en <hr />). La première slide (titre)
+  est générée depuis title / subtitle / author du front matter.
+  Front matter optionnel : back_link (URL du bouton retour, ex. l'atelier),
+  kicker (sur-titre), title_slide_attrs / title_slide_class (attributs et
+  classes de la slide de titre).
+  end_slide: false masque la slide de fin (logo UniLaSalle).
+  Dans une slide : `<!-- .slide: attributs -->` pose des attributs sur la
+  <section> ; `<!-- .down -->` crée une slide verticale sous la courante.
+{% endcomment -%}
+{%- assign slides = content | split: '<hr />' -%}
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: 'fr' }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ page.title }} | {{ site.title | strip }}</title>
+  {% if page.description %}<meta name="description" content="{{ page.description }}">{% endif %}
+  <link rel="icon" href="{{ site.favicon | relative_url }}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+  <link rel="stylesheet" href="{{ '/assets/css/slides.css' | relative_url }}">
+</head>
+<body>
+  {% if page.back_link %}
+  <a class="slides-back" href="{{ page.back_link | relative_url }}" title="Retour"><i class="fas fa-arrow-left"></i></a>
+  {% endif %}
+
+  <div class="reveal">
+    <div class="slides">
+      <section class="slide-title has-dark-background {{ page.title_slide_class }}" data-background-color="#ef2e31" {{ page.title_slide_attrs }}>
+        {% include reveal-arrows.html line_big=true %}
+        <p class="slide-kicker">{{ page.kicker | default: site.title | strip }}</p>
+        <h1>{{ page.title }}</h1>
+        {% if page.subtitle %}<p class="slide-subtitle">{{ page.subtitle }}</p>{% endif %}
+        {% if page.author %}<p class="slide-author">{{ page.author }}</p>{% endif %}
+        <img class="slide-title-logo" src="{{ '/assets/img/slides/logo-unilasalle-blanc.png' | relative_url }}" alt="UniLaSalle Amiens, École d'ingénieurs Énergie &amp; Numérique">
+      </section>
+      {%- assign slide_num = 1 -%}
+      {% for slide in slides %}
+      {%- assign slide_body = slide | strip -%}
+      {% if slide_body != '' %}
+        {%- assign slide_num = slide_num | plus: 1 -%}
+        {% if slide_body contains '<!-- .down -->' %}
+      <section>
+          {% assign sub_slides = slide_body | split: '<!-- .down -->' %}
+          {% for sub in sub_slides %}
+            {%- if forloop.first -%}{%- assign sub_num = slide_num -%}{%- else -%}{%- assign sub_num = slide_num | append: '.' | append: forloop.index0 -%}{%- endif -%}
+            {% include reveal-section.html body=sub num=sub_num %}
+          {% endfor %}
+      </section>
+        {% else %}
+          {% include reveal-section.html body=slide_body num=slide_num %}
+        {% endif %}
+      {% endif %}
+      {% endfor %}
+      {% unless page.end_slide == false %}
+      <section class="slide-end has-dark-background" data-background-color="#ef2e31">
+        {% include reveal-arrows.html watermark=true %}
+        <img src="{{ '/assets/img/slides/logo-unilasalle-fin.png' | relative_url }}" alt="UniLaSalle Amiens, Demain commence ici">
+      </section>
+      {% endunless %}
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/notes/notes.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/highlight/highlight.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/zoom/zoom.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+
+    // Mermaid : même conversion que _includes/mermaid-include.html. reveal.css masque
+    // les slides (display: none) sauf la slide affichée : un diagramme ne peut être
+    // dessiné que lorsque sa slide est visible, d'où le rendu à la demande plus bas.
+    document.querySelectorAll('pre > code[class^="language-mermaid"]').forEach(function (code) {
+      var diagram = document.createElement("div");
+      diagram.className = "mermaid";
+      diagram.textContent = code.textContent;
+      code.parentElement.replaceWith(diagram);
+    });
+
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: "base",
+      themeVariables: {
+        fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+        fontSize: "22px",
+        background: "#ffffff",
+        primaryColor: "#f4f4f5",
+        primaryTextColor: "#09090b",
+        primaryBorderColor: "#a1a1aa",
+        secondaryColor: "#fcc7c8",
+        secondaryBorderColor: "#ef2e31",
+        lineColor: "#71717a",
+        textColor: "#09090b",
+        edgeLabelBackground: "#ffffff",
+      },
+    });
+
+    async function renderMermaid(scope) {
+      var nodes = scope.querySelectorAll(".mermaid:not([data-processed])");
+      if (nodes.length === 0) return;
+      try {
+        await mermaid.run({ nodes: nodes });
+      } catch (e) {
+        console.error(e);
+      }
+      Reveal.layout();
+    }
+
+    renderMathInElement(document.querySelector(".reveal"), {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+      ],
+    });
+
+    Reveal.on("ready", function (event) {
+      // Export PDF (?print-pdf) : toutes les slides sont visibles d'un coup
+      renderMermaid(/print-pdf/.test(location.search) ? document.querySelector(".reveal") : event.currentSlide);
+    });
+    Reveal.on("slidechanged", function (event) {
+      renderMermaid(event.currentSlide);
+    });
+
+    Reveal.initialize({
+      hash: true,
+      transition: "fade",
+      center: false,
+      width: 1280,
+      height: 720,
+      margin: 0,
+      controlsLayout: "edges",
+      plugins: [RevealNotes, RevealHighlight, RevealZoom],
+    });
+  </script>
+</body>
+</html>
