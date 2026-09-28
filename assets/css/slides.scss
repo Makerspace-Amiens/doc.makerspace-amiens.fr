@@ -284,12 +284,12 @@ body {
 
   /* ── Habillage inspiré du masque UniLaSalle ───────────────────────── */
 
-  /* Grande flèche en filigrane (couverture, transitions, fin) */
+  /* Grande flèche en filigrane (slide de fin), dans le repère 1280x720 */
   .uls-watermark {
     position: absolute;
-    left: 2%;
-    top: 12%;
-    width: 46%;
+    inset: 0;
+    width: 100%;
+    height: 100%;
     color: #ffffff;
     opacity: 0.1;
     pointer-events: none;

@@ -1,11 +1,12 @@
 {%- comment %}
   reveal-arrows.html : flèches décoratives des slides (motif du masque UniLaSalle).
-  watermark : grande flèche en filigrane ; line : trait en L terminé par une flèche
+  watermark : grande flèche en filigrane, dont la branche part du haut de la slide ;
+  line : trait en L terminé par une flèche
   (line_big : version épaisse et blanche de la couverture) ;
   corner : petite flèche rouge en haut à gauche.
 {% endcomment -%}
 {%- if include.watermark -%}
-<svg class="uls-watermark" viewBox="0 0 120 100" aria-hidden="true"><path d="M20 -20 V55 H95 M72 32 L95 55 L72 78" fill="none" stroke="currentColor" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<svg class="uls-watermark" viewBox="0 0 1280 720" aria-hidden="true"><path d="M124 -80 V356 H492 M379 243 L492 356 L379 469" fill="none" stroke="currentColor" stroke-width="88" stroke-linecap="round" stroke-linejoin="round"/></svg>
 {%- endif -%}
 {%- if include.line -%}
 <svg class="uls-line" viewBox="0 0 1280 720" aria-hidden="true"><path d="M163 -20 V472 A54 54 0 0 0 217 526 H1090 M1058 494 L1090 526 L1058 558" fill="none" stroke="currentColor" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/></svg>
