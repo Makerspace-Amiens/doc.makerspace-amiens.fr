@@ -159,6 +159,54 @@
       controlsLayout: "edges",
       plugins: [RevealNotes, RevealHighlight, RevealZoom],
     });
+
+    // Chrono des activités : la pastille ⏱ d'une slide d'activité (« 12 min »,
+    // « 2 × 4 min ») devient un compte à rebours. Clic ou touche T : lancer,
+    // mettre en pause, reprendre ; une fois terminé, un clic le remet à zéro.
+    function setupTimer(pill) {
+      var text = pill.textContent.trim();
+      var product = text.match(/(\d+)\s*[×x]\s*(\d+)\s*min/);
+      var single = text.match(/(\d+)\s*min/);
+      var minutes = product ? product[1] * product[2] : single ? +single[1] : 0;
+      if (!minutes) return;
+
+      var icon = pill.querySelector("i").outerHTML;
+      var total = minutes * 60, remaining = total, ticker = null;
+      pill.classList.add("activity-timer");
+      pill.title = "Lancer ou mettre en pause le chrono (touche T)";
+
+      function render() {
+        var started = remaining < total || ticker;
+        var mm = Math.floor(remaining / 60), ss = String(remaining % 60).padStart(2, "0");
+        pill.innerHTML = icon + (started ? "<time>" + mm + ":" + ss + "</time>" : text);
+        pill.classList.toggle("is-running", !!ticker);
+        pill.classList.toggle("is-paused", !ticker && started && remaining > 0);
+        pill.classList.toggle("is-done", remaining === 0);
+      }
+      function toggle() {
+        if (remaining === 0) { remaining = total; render(); return; }
+        if (ticker) { clearInterval(ticker); ticker = null; }
+        else {
+          ticker = setInterval(function () {
+            remaining = Math.max(0, remaining - 1);
+            if (remaining === 0) { clearInterval(ticker); ticker = null; }
+            render();
+          }, 1000);
+        }
+        render();
+      }
+      pill.addEventListener("click", toggle);
+      pill.toggleTimer = toggle;
+    }
+
+    document.querySelectorAll(".activity-meta span").forEach(function (pill) {
+      if (pill.querySelector(".fa-clock")) setupTimer(pill);
+    });
+
+    Reveal.addKeyBinding({ keyCode: 84, key: "T", description: "Chrono de l'activité" }, function () {
+      var pill = Reveal.getCurrentSlide().querySelector(".activity-timer");
+      if (pill) pill.toggleTimer();
+    });
   </script>
 </body>
 </html>
