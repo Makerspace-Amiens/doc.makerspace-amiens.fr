@@ -26,6 +26,9 @@ special_sections:
     desc: "Les supports de présentation des séances, à projeter en plein écran."
     items:
       - /workshops/methodologie-de-projet/slides/introduction-methodologie/
+      - /workshops/methodologie-de-projet/slides/seance-2-cahier-des-charges-existant/
+      - /workshops/methodologie-de-projet/slides/seance-3-sous-systemes-organisation/
+      - /workshops/methodologie-de-projet/slides/seance-4-choisir-documenter/
 
 concepts:
   - /workshops/methodologie-de-projet/concepts/cycle-de-vie-projet/
