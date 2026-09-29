@@ -230,7 +230,7 @@ Quelqu'un d'extérieur au projet, c'est exactement le lecteur de votre documenta
 
 - **Pour qui ?** Les visiteurs de la Journée des Projets et le jury, puis l'équipe qui reprendra la machine
 - **Pour quoi faire ?** Réaliser automatiquement un dessin sur papier à partir d'un fichier, sans intervention pendant le tracé
-- **Comment saura-t-on que c'est réussi ?** Voir les critères ci-dessous
+- **Comment saura-t-on que c'est réussi ?** Voir les critères, slides suivantes
 {: .fragment}
 
 On ne parle ni de moteurs, ni d'Arduino, ni de CAO : ce sont des solutions.

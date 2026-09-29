@@ -151,6 +151,7 @@ body {
   }
 
   .columns img { max-height: 400px; }
+  .columns blockquote { font-size: 0.75em; margin-top: 0; }
 
   /* Lien vers la page du site qui approfondit la slide :
      [Titre](/url/){: .doc-link}, en dernière ligne de la slide */
@@ -233,7 +234,8 @@ body {
     justify-content: center;
     margin: 0.5em 0;
 
-    svg { max-height: 480px; max-width: 100%; }
+    /* Mermaid fixe la taille du SVG en ligne : !important pour la plafonner */
+    svg { max-height: 360px !important; max-width: 100%; height: auto; }
   }
 
   /* Deux colonnes : <div class="columns" markdown="1"> ... </div> */
@@ -351,6 +353,22 @@ body {
       &:first-child { background: $accent; color: #ffffff; }
       i { margin-right: 0.4em; }
     }
+
+    /* Chrono (layout slides.html) : pastille ⏱ cliquable */
+    .activity-timer {
+      cursor: pointer;
+      user-select: none;
+
+      time { font-variant-numeric: tabular-nums; }
+
+      &.is-running { background: $text; color: #ffffff; }
+      &.is-paused { background: $text; color: #ffffff; opacity: 0.55; }
+      &.is-done { background: $accent; color: #ffffff; animation: timer-done 1s ease-in-out infinite; }
+    }
+  }
+
+  @keyframes timer-done {
+    50% { transform: scale(1.12); }
   }
 
   .big-number {
