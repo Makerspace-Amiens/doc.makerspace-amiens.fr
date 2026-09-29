@@ -137,6 +137,11 @@ body {
     border-radius: 8px;
   }
 
+  /* Illustration à laisser respirer : le plafond de 440px ne laisse pas la place
+     au titre, à la légende de crédit et aux liens dans les 560px utiles d'une
+     slide. Poser {: .img-md} après l'image pour la ramener à 320px. */
+  img.img-md { max-height: 320px; }
+
   /* Légende sous une image : paragraphe suivi de {: .caption} */
   .caption {
     text-align: center;
