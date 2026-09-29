@@ -311,9 +311,34 @@ Règles importantes à respecter :
 
 ---
 
+## Skills Claude Code
+
+Les workflows récurrents du dépôt sont des **skills** dans `.claude/skills/<nom>/SKILL.md`
+(et non des slash commands : un skill se déclenche aussi sur l'intention, sans avoir à
+taper la commande). Chacun reste invocable par `/<nom>`.
+
+| Skill | Rôle |
+|---|---|
+| `commit` | Commit suivant Conventional Commits 1.0.0 et les conventions du dépôt |
+| `new-tutorial` | Tutoriel dans `_docs/tutorials/` |
+| `new-how-to` | Guide pratique dans `_docs/how-to-guides/` |
+| `new-concept` | Concept dans `_docs/concepts/` |
+| `new-reference` | Fiche de référence dans `_docs/references/` (gabarits par sous-dossier dans `references/`) |
+| `new-ressource` | Ressource dans `_ressources/` |
+| `new-workshop` | Atelier complet dans `_workshops/` |
+| `new-workshop-page` | Sous-page d'un atelier existant |
+
+Toute règle de contenu ajoutée ici (champ de front matter, convention de nommage,
+interdiction typographique) doit être répercutée dans les skills de création concernés,
+sinon les nouvelles pages repartiront sur l'ancienne convention.
+
+---
+
 ## Commits
 
 Format : `type(scope): description courte` — voir `CONTRIBUTING.md` pour la liste complète.
+La convention suit [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/) ;
+la spec et la procédure complète sont dans le skill `.claude/skills/commit/` (invoqué par `/commit`).
 
 Scopes courants : `docs`, `workshop`, `theme`, `nav`, `config`.
 Types courants : `feat` (nouveau contenu), `fix` (correction), `chore` (tooling/config), `style` (CSS).

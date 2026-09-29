@@ -8,5 +8,5 @@ _site/
 vendor/
 documentation-website/
 .DS_Store
-.claude
 .gitignore
+.claude/settings.local.json

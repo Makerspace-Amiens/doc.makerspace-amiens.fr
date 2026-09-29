@@ -448,7 +448,7 @@ vers ce workshop (décision architecturale actée plus haut, jamais
 commencée) : pertinent maintenant que les tutoriels #2/#3/#9/#10 existent
 réellement ici et peuvent servir de base à cette migration.
 
-Commande pour une nouvelle page : `/new-workshop-page methodologie-de-projet concepts/<slug>` ou `tutorials/<slug>`.
+Skill pour une nouvelle page : `/new-workshop-page methodologie-de-projet concepts/<slug>` ou `tutorials/<slug>`.
 
 Ne pas oublier d'ajouter l'URL de chaque nouvelle page dans les listes
 `concepts:` / `tutorials:` du front matter de `index.md`, **dans l'ordre du
