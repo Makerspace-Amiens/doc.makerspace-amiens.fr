@@ -312,6 +312,17 @@ La parade : après un changement d'état, ignorer les lectures pendant 20 à 50 
 
 ---
 
+## Le rebond, vu à l'oscilloscope
+
+![Trace d'oscilloscope : le signal d'un interrupteur bascule une dizaine de fois avant de se stabiliser](rebonds-bouton-oscilloscope.jpg){: .img-md}
+
+Un seul appui, et le signal bascule une dizaine de fois en moins de 2 ms. Photo : Tomoldbury, via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Switch_bounce.JPG), domaine public.
+{: .caption}
+
+[GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link}
+
+---
+
 ## L'anti-rebond, sans bloquer
 
 <pre><code class="language-cpp" data-trim data-line-numbers="1-2|4|5-8|9-11">
@@ -465,7 +476,7 @@ L'ADC de l'ESP32 n'est pas parfaitement linéaire, surtout près des extrémité
 <div class="columns" markdown="1">
 <div markdown="1">
 
-![Carte ESP32-S3 sur breadboard, reliée par des fils de couleur à un module joystick](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/hero.webp)
+![Carte ESP32-S3 sur breadboard, reliée par des fils de couleur à un module joystick](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/hero.webp){: .img-md}
 
 Le montage du Pong
 {: .caption}

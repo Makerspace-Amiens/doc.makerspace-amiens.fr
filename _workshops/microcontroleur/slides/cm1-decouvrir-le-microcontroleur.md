@@ -209,9 +209,9 @@ CPU, mémoires, périphériques, bus
 
 ## Le schéma-bloc, votre carte mentale
 
-![Schéma-bloc fonctionnel de l'ESP32-S3](/workshops/microcontroleur/concepts/architecture-microcontroleur/functional-block-diagram.png)
+![Schéma-bloc fonctionnel de l'ESP32-S3](/workshops/microcontroleur/concepts/architecture-microcontroleur/functional-block-diagram.png){: .img-md}
 
-Tous les concepts de l'atelier viennent détailler l'une de ces briques. Gardez ce schéma en tête.
+Chaque concept de l'atelier détaille l'une de ces briques.
 {: .caption}
 
 [Architecture d'un microcontrôleur](/workshops/microcontroleur/concepts/architecture-microcontroleur/){: .doc-link}
@@ -664,9 +664,9 @@ Architecture, registres, GPIO et absence de système d'exploitation, réunis en 
 
 ## Le montage le plus simple
 
-![LED rouge et résistance série sur breadboard, reliées à une carte ESP32-S3](/workshops/microcontroleur/tutorials/toolchain-blink/esp32-s3-blink.png)
+![LED rouge et résistance série sur breadboard, reliées à une carte ESP32-S3](/workshops/microcontroleur/tutorials/toolchain-blink/esp32-s3-blink.png){: .img-md}
 
-Une LED, une résistance série, une carte. C'est la base du montage du Pong : les boutons, le joystick et l'écran viendront s'y ajouter, sans jamais rien défaire.
+La base du montage du Pong : boutons, joystick et écran viendront s'y ajouter.
 {: .caption}
 
 [Vérification de la toolchain](/workshops/microcontroleur/tutorials/toolchain-blink/){: .doc-link}

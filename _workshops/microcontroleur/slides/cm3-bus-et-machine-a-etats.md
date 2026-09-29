@@ -126,6 +126,17 @@ D'où la notation **`8N1`**. Format ou vitesse qui diffèrent : c'est le charabi
 
 ---
 
+## Une trame, en vrai
+
+![Copie d'écran d'oscilloscope montrant une trame série, les curseurs mesurant la durée d'un bit](trame-uart-oscilloscope.png){: .img-md}
+
+Les curseurs mesurent **103,6 µs** par bit, soit 9600 bauds. Copie d'écran : Haji akhundov, via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:RS232-UART_Oscilloscope_Screenshot.png), sous [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/deed.fr).
+{: .caption}
+
+[Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link}
+
+---
+
 ## Là où vous l'utilisez déjà
 
 ```cpp
