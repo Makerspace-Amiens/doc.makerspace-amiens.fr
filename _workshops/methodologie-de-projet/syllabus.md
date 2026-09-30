@@ -62,7 +62,7 @@ Chaque séance suit le même schéma : un apport court, du travail sur votre doc
 
 | Thème | Dans le repo |
 |---|---|
-| Séance 2 : cahier des charges complet, recherche de l'existant ([slides](/workshops/methodologie-de-projet/slides/seance-2-cahier-des-charges-existant/)) | `objectifs.md`, `etudes.md` |
+| Séance 2 : point Git et GitHub, cahier des charges complet, recherche de l'existant ([slides](/workshops/methodologie-de-projet/slides/seance-2-cahier-des-charges-existant/)) | `objectifs.md`, `etudes.md` |
 | Séance 3 : découper la machine en sous-systèmes, organiser le travail avec un GitHub Project ([slides](/workshops/methodologie-de-projet/slides/seance-3-sous-systemes-organisation/)) | `conception/index.md`, `equipe.md`, issues, jalons et Project |
 | Séance 4 : choisir les solutions de chaque sous-système, tracer ses choix, documenter la conception ([slides](/workshops/methodologie-de-projet/slides/seance-4-choisir-documenter/)) | `etudes.md`, `conception/` |
 | Séance 5 : revue croisée avec la grille d'évaluation | Corrections, plan pour la suite du projet |

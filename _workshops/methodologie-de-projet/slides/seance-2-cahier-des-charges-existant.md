@@ -10,20 +10,89 @@ back_link: /workshops/methodologie-de-projet/
 
 ## Au programme
 
-1. Où en êtes-vous ?
-2. Le cahier des charges complet
-3. Rechercher l'existant
-4. Garder la trace
+1. Git et GitHub : faire le point
+2. Où en êtes-vous ?
+3. Le cahier des charges complet
+4. Rechercher l'existant
+5. Garder la trace
 
 <aside class="notes" markdown="1">
-Déroulé (1 h 30, avec PC) : retour sur la consigne 10 min, cahier des charges 30 min, existant 37 min, journal et consigne 13 min.
+Déroulé (1 h 30, avec PC) : Git et GitHub 20 min (10 min de rappel, 10 min de tour complet et de questions), retour sur la consigne 5 min, cahier des charges 23 min, existant 30 min, journal et consigne 12 min.
 </aside>
+
+---
+
+<!-- .slide: class="slide-section" -->
+
+## Git et GitHub : faire le point
+
+Les bons réflexes, et vos questions
+
+---
+
+## Le cycle de base
+
+```mermaid!
+graph LR
+    A[Pull<br/>récupérer] --> B[Modifier<br/>les fichiers]
+    B --> C[Commit<br/>enregistrer]
+    C --> D[Push<br/>envoyer]
+    D -.à la séance suivante.-> A
+```
+
+| Étape | GitHub Desktop | VS Code |
+|---|---|---|
+| Récupérer | **Fetch origin**, puis **Pull origin** | **Synchroniser** |
+| Enregistrer | Cocher les fichiers, message, **Commit to main** | **+** sur les fichiers, message, **Valider** |
+| Envoyer | **Push origin** | **Synchroniser les modifications** |
+{: .table-dense}
+
+[Git, GitHub Desktop et VSCode](/workshops/methodologie-de-projet/tutorials/git-github-desktop-vscode/){: .doc-link}
+
+---
+
+## Les bons réflexes
+
+- **Pull en arrivant**, avant de toucher à quoi que ce soit
+- **Commit souvent**, avec un message qui dit ce qui change : « Ajoute FC3 au cahier des charges », pas « modif »
+- **Push en partant** : un travail resté sur votre PC n'existe pas pour l'équipe
+- **Vérifiez sur GitHub** que c'est arrivé, puis sur le site publié (onglet **Actions** au vert)
+- **Évitez d'éditer le même fichier à plusieurs en même temps** : répartissez-vous les pages
+
+---
+
+## Les problèmes les plus fréquents
+
+| Symptôme | Cause probable | Solution |
+|---|---|---|
+| Push refusé | Quelqu'un a poussé avant vous | **Pull**, puis de nouveau **Push** |
+| Conflit | Deux personnes ont modifié la même ligne | Garder la bonne version dans le fichier, **Commit**, **Push** |
+| Le site ne se met pas à jour | Le build a échoué, souvent à cause du front matter | Onglet **Actions**, lire l'erreur du run en rouge |
+| Bouton Commit grisé | Pas de message, ou aucun fichier coché | Vérifier les deux |
+| Une image ne s'affiche pas | Chemin faux, ou majuscules : `Photo.JPG` ≠ `photo.jpg` | Nom en minuscules, chemin vérifié |
+{: .table-dense}
+
+[Résoudre un conflit Git](/docs/how-to-guides/pull-requests-et-conflits-git/){: .doc-link} [Modifier son site depuis GitHub](/workshops/methodologie-de-projet/tutorials/modifier-site-github/){: .doc-link}
+
+---
+
+## Activité : le tour complet
+
+<p class="activity-meta"><span><i class="fas fa-user"></i>Individuel</span><span><i class="far fa-clock"></i>10 min</span><span><i class="fas fa-laptop"></i>Sur PC</span></p>
+
+1. **Pull** sur le repo de votre équipe
+2. Complétez votre entrée de journal de la séance 1 (une précision, une photo, une faute corrigée)
+3. **Commit** avec un message clair, puis **Push**
+4. Vérifiez sur GitHub, puis sur le **site publié**
+
+Bloqué à une étape ? Levez la main : c'est le moment de régler ça, pas la veille du rendu.
+{: .caption}
 
 ---
 
 ## Activité : où en êtes-vous ?
 
-<p class="activity-meta"><span><i class="fas fa-user-friends"></i>Binôme de projets différents</span><span><i class="far fa-clock"></i>10 min</span><span><i class="fab fa-github"></i>Sur GitHub</span></p>
+<p class="activity-meta"><span><i class="fas fa-user-friends"></i>Binôme de projets différents</span><span><i class="far fa-clock"></i>5 min</span><span><i class="fab fa-github"></i>Sur GitHub</span></p>
 
 Ouvrez le repo de **votre** équipe et montrez à votre binôme :
 
@@ -95,7 +164,7 @@ Un niveau inventé « pour remplir la case » ne sert à rien : il faut pouvoir 
 
 ## Activité : complétez votre cahier des charges
 
-<p class="activity-meta"><span><i class="fas fa-user"></i>Individuel</span><span><i class="far fa-clock"></i>20 min</span><span><i class="fas fa-laptop"></i>Sur PC</span></p>
+<p class="activity-meta"><span><i class="fas fa-user"></i>Individuel</span><span><i class="far fa-clock"></i>15 min</span><span><i class="fas fa-laptop"></i>Sur PC</span></p>
 
 1. **Pull** avant tout : vos coéquipiers modifient le même fichier
 2. Dans `objectifs.md`, ajoutez **au moins deux** fonctions ou contraintes, avec critère, niveau et flexibilité
@@ -221,7 +290,7 @@ Chaque ligne se termine par une **décision** reliée au cahier des charges.
 
 ## Activité : votre fiche de l'existant
 
-<p class="activity-meta"><span><i class="fas fa-user"></i>Individuel</span><span><i class="far fa-clock"></i>25 min</span><span><i class="fas fa-laptop"></i>Sur PC</span></p>
+<p class="activity-meta"><span><i class="fas fa-user"></i>Individuel</span><span><i class="far fa-clock"></i>20 min</span><span><i class="fas fa-laptop"></i>Sur PC</span></p>
 
 1. **Pull**, puis ouvrez `etudes.md`, section **Recherche de l'existant**
 2. Ajoutez **deux lignes** au tableau : une autre **machine qui dessine** (un projet de l'an dernier, par exemple), et une solution trouvée ailleurs pour **une partie** de votre machine (lever le stylo, tenir la feuille…)
@@ -244,7 +313,7 @@ Le journal, à chaque séance
 
 ## Activité : le journal de la séance
 
-<p class="activity-meta"><span><i class="fas fa-user"></i>Individuel</span><span><i class="far fa-clock"></i>8 min</span><span><i class="fas fa-laptop"></i>Sur PC</span></p>
+<p class="activity-meta"><span><i class="fas fa-user"></i>Individuel</span><span><i class="far fa-clock"></i>7 min</span><span><i class="fas fa-laptop"></i>Sur PC</span></p>
 
 Une nouvelle entrée datée dans votre dossier :
 
