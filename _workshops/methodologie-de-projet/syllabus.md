@@ -50,7 +50,7 @@ Les séances ont lieu en **groupes de TD**, qui ne correspondent pas forcément 
 
 | Partie | Contenu |
 |---|---|
-| Sans PC (30 min) | Ce qui peut mal tourner dans un projet, les étapes d'un projet, l'évaluation, définir son besoin |
+| Sans PC (30 min) | Ce qui peut mal tourner dans un projet, l'évaluation, les étapes d'un projet, définir son besoin |
 | Avec PC (1 h) | Correction sur un exemple, documenter au fil de l'eau, première entrée de journal, relecture croisée |
 | Pour la séance suivante | Besoin et rôles dans le repo, début de la recherche de l'existant |
 

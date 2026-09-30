@@ -11,8 +11,8 @@ back_link: /workshops/methodologie-de-projet/
 ## Au programme
 
 1. Ce qui peut mal tourner
-2. Comment se passe un projet
-3. Comment vous serez évalués
+2. Comment vous serez évalués
+3. Comment se passe un projet
 4. Définir son besoin
 5. Documenter au fil de l'eau
 
@@ -51,6 +51,8 @@ Regrouper les réponses dans les familles de la slide suivante, puis la dévoile
 {: .fragment}
 - **Une organisation floue** : personne ne savait qui faisait quoi
 {: .fragment}
+- **Une charge mal répartie, et aucune trace** : quelqu'un a tout fait, quelqu'un n'a rien fait, et rien pour le montrer en cas de souci
+{: .fragment}
 - **Le temps** : tout s'est fait la dernière semaine
 {: .fragment}
 - **La mémoire** : « pourquoi on avait choisi ça, déjà ? »
@@ -60,44 +62,6 @@ Regrouper les réponses dans les familles de la slide suivante, puis la dévoile
 
 Chacune de ces familles a sa réponse dans ce cours.
 {: .fragment .caption}
-
----
-
-<!-- .slide: class="slide-section" -->
-
-## Comment se passe un projet
-
-Les grandes étapes, et où vous en êtes
-
----
-
-## Les étapes d'un projet
-
-```mermaid!
-graph LR
-    A[Cadrage] --> B[Recherche]
-    B --> C[Conception]
-    C --> D[Réalisation]
-    D --> E[Tests]
-    E -->|à corriger| C
-    E -->|validé| F[Présentation<br/>et clôture]
-    style A fill:#ef2e31,stroke:#ef2e31,color:#ffffff
-```
-
-**Vous êtes ici : au cadrage.** Les retours en arrière sont normaux : un test qui échoue renvoie à la conception.
-
-[Cycle de vie d'un projet](/workshops/methodologie-de-projet/concepts/cycle-de-vie-projet/){: .doc-link}
-
----
-
-## Ce que la méthode apporte
-
-- **Cadrer** : savoir ce qu'on doit obtenir avant de choisir comment
-- **S'organiser** : des rôles, des jalons, un point d'équipe à chaque séance
-- **Garder la trace** : pouvoir expliquer, reprendre et présenter son travail
-
-La technique fait avancer le projet, la méthode évite qu'il s'arrête.
-{: .caption}
 
 ---
 
@@ -116,7 +80,7 @@ Grille d'évaluation et attendus
 
 <p class="big-number">60 %</p>
 
-**Individuel** : votre journal de bord et vos contributions au repo
+**Individuel** : votre journal de bord et vos contributions au repo du projet
 
 </div>
 <div markdown="1">
@@ -152,6 +116,55 @@ La grille complète est sur la page [Évaluation du cours](/workshops/methodolog
 <iframe class="page-preview" data-src="/workshops/methodologie-de-projet/evaluation/#ce-qui-est-évalué" title="Page Évaluation du cours"></iframe>
 
 Toujours en ligne : `doc.makerspace-amiens.fr/workshops/methodologie-de-projet/evaluation/`
+{: .caption}
+
+---
+
+<!-- .slide: class="slide-section" -->
+
+## Comment se passe un projet
+
+Les grandes étapes, et où vous en êtes
+
+---
+
+## Les étapes d'un projet
+
+```mermaid!
+graph LR
+    A[Cadrage] --> B[Recherche]
+    B --> C[Conception]
+    C --> D[Réalisation]
+    D --> E[Tests]
+    E -->|à corriger| C
+    E -->|validé| F[Présentation<br/>et clôture]
+    style A fill:#ef2e31,stroke:#ef2e31,color:#ffffff
+```
+
+**Vous êtes ici : au cadrage.** Les retours en arrière sont normaux : un test qui échoue renvoie à la conception. **↓** : le modèle de référence.
+
+[Cycle de vie d'un projet](/workshops/methodologie-de-projet/concepts/cycle-de-vie-projet/){: .doc-link}
+
+<!-- .down -->
+
+## Le modèle de référence : le cycle en V
+
+<div class="v-model"><svg viewBox="0 0 1088 365" role="img" aria-label="Cycle en V : besoin, cahier des charges et conception à gauche, réalisation en bas, tests unitaires, tests d'intégration et validation du besoin à droite"><defs><marker id="v-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z"/></marker></defs><line class="v-flow" x1="130.0" y1="69" x2="245.0" y2="110" marker-end="url(#v-arrow)"/><line class="v-flow" x1="245.0" y1="164" x2="360.0" y2="205" marker-end="url(#v-arrow)"/><line class="v-flow" x1="360.0" y1="259" x2="499.0" y2="300" marker-end="url(#v-arrow)"/><line class="v-flow" x1="589.0" y1="300" x2="728.0" y2="259" marker-end="url(#v-arrow)"/><line class="v-flow" x1="728.0" y1="205" x2="843.0" y2="164" marker-end="url(#v-arrow)"/><line class="v-flow" x1="843.0" y1="110" x2="958.0" y2="69" marker-end="url(#v-arrow)"/><line class="v-verify" x1="252" y1="42.0" x2="836" y2="42.0"/><text class="v-label" x="544.0" y="32.0">vérifie</text><line class="v-verify" x1="367" y1="137.0" x2="721" y2="137.0"/><text class="v-label" x="544.0" y="127.0">vérifie</text><line class="v-verify" x1="482" y1="232.0" x2="606" y2="232.0"/><text class="v-label" x="544.0" y="222.0">vérifie</text><rect class="v-box" x="20" y="15" width="220" height="54" rx="10"/><text x="130.0" y="42.0">Besoin</text><rect class="v-box" x="135" y="110" width="220" height="54" rx="10"/><text x="245.0" y="137.0">Cahier des charges</text><rect class="v-box" x="250" y="205" width="220" height="54" rx="10"/><text x="360.0" y="232.0">Conception</text><rect class="v-box v-check" x="848" y="15" width="220" height="54" rx="10"/><text x="958.0" y="42.0">Validation du besoin</text><rect class="v-box v-check" x="733" y="110" width="220" height="54" rx="10"/><text x="843.0" y="137.0">Tests d'intégration</text><rect class="v-box v-check" x="618" y="205" width="220" height="54" rx="10"/><text x="728.0" y="232.0">Tests unitaires</text><rect class="v-box v-make" x="434" y="300" width="220" height="54" rx="10"/><text x="544.0" y="327.0">Réalisation</text></svg></div>
+
+À chaque étape de conception (à gauche) correspond une étape de vérification (à droite). En projet court, on en garde l'idée : **prévoir dès la conception comment on vérifiera**.
+{: .caption}
+
+[Le cycle en V](/workshops/methodologie-de-projet/concepts/cycle-de-vie-projet/#un-modèle-de-référence--le-cycle-en-v){: .doc-link}
+
+---
+
+## Ce que la méthode apporte
+
+- **Cadrer** : savoir ce qu'on doit obtenir avant de choisir comment
+- **S'organiser** : des rôles, des jalons, un point d'équipe à chaque séance
+- **Garder la trace** : pouvoir expliquer, reprendre et présenter son travail
+
+La technique fait avancer le projet, la méthode évite qu'il s'arrête.
 {: .caption}
 
 ---
@@ -201,7 +214,7 @@ Pour **votre** projet, en une ou deux phrases chacune :
 
 1. **Pour qui ?** Qui va utiliser le résultat, et dans quelles conditions ?
 2. **Pour quoi faire ?** Quel problème le projet résout-il ?
-3. **Comment saura-t-on que c'est réussi ?** Écrivez **deux critères mesurables**
+3. **Comment saura-t-on que c'est réussi ?** Écrivez **deux critères**, chacun avec son **niveau chiffré** (« en moins de 2 minutes » ≠ « rapide »)
 
 Gardez vos notes : elles vous serviront tout à l'heure.
 {: .caption}
@@ -279,7 +292,7 @@ Kit fourni : moteurs et électronique de commande. F0 : impératif, F3 : négoci
 
 - Ces tableaux sont le **strict minimum**, pas la correction attendue
 - Il manque volontairement des fonctions et des contraintes : **à vous de compléter**
-- C'est à votre équipe de fixer les **niveaux minimum** et de les justifier
+- C'est un **contrat** avec votre équipe et votre client : à vous de fixer des niveaux **logiques et atteignables**, et de les justifier
 - Votre cahier des charges **évoluera** : notez ce qui change et pourquoi
 
 [Définir son besoin et son cahier des charges](/workshops/methodologie-de-projet/concepts/definir-son-besoin/){: .doc-link}
