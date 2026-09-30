@@ -238,6 +238,31 @@ body {
     svg { max-height: 360px !important; max-width: 100%; height: auto; }
   }
 
+  /* Cycle en V dessiné en SVG (deck séance 1) */
+  .v-model svg {
+    display: block;
+    width: 100%;
+    max-height: 370px;
+
+    text {
+      font-family: var(--r-main-font);
+      font-size: 21px;
+      font-weight: 600;
+      fill: $text;
+      text-anchor: middle;
+      dominant-baseline: central;
+    }
+
+    .v-box { fill: $surface; stroke: #a1a1aa; stroke-width: 1.5; }
+    .v-check { fill: #ffffff; stroke: $accent; stroke-width: 2; }
+    .v-make { fill: $accent; stroke: $accent; }
+    .v-make + text { fill: #ffffff; }
+    .v-flow { stroke: $muted; stroke-width: 2.5; }
+    .v-verify { stroke: $accent; stroke-width: 2; stroke-dasharray: 7 6; }
+    .v-label { font-size: 16px; font-weight: 500; fill: $accent; dominant-baseline: auto; }
+    marker path { fill: $muted; }
+  }
+
   /* Deux colonnes : <div class="columns" markdown="1"> ... </div> */
   .columns {
     display: grid;
@@ -516,6 +541,13 @@ body {
   .controls { color: $accent; }
   &.has-dark-background .controls,
   &.has-dark-background .progress { color: #ffffff; }
+
+  /* La flèche du bas tombe sur le bandeau rouge : toujours en blanc, avec
+     une ombre légère pour rester visible quel que soit le fond */
+  .controls .navigate-down {
+    color: #ffffff;
+    filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.45));
+  }
 }
 
 .slides-back {
