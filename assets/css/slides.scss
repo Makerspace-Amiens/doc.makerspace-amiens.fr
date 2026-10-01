@@ -263,6 +263,15 @@ body {
     marker path { fill: $muted; }
   }
 
+  /* Graphique Chart.js (include graphique.html) : hauteur fixe par défaut */
+  .graphique {
+    margin: 0.4em 0;
+
+    .graphique-zone { position: relative; height: 360px; }
+    figcaption { text-align: center; font-size: 0.55em; color: $muted; margin-top: 0.3em; }
+    .graphique-erreur { color: $accent; font-size: 0.6em; }
+  }
+
   /* Deux colonnes : <div class="columns" markdown="1"> ... </div> */
   .columns {
     display: grid;

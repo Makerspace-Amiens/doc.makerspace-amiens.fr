@@ -1,0 +1,143 @@
+{%- comment -%}
+Graphique Chart.js. Mêmes paramètres que l'include du template étudiant
+(template-project/docs/_includes/graphique.html), plus la saisie directe des données.
+
+Depuis un CSV :
+  {% include graphique.html csv="mesures.csv" titre="Décharge de la batterie" y="Tension (V)" %}
+  csv : chemin relatif à la page (fichier dans le sous-dossier du même nom que le .md),
+        ou absolu s'il commence par « / ».
+  Le CSV : une ligne d'en-tête, la 1re colonne pour l'axe X, une colonne par courbe.
+  Séparateur « , » ou « ; » (export tableur français, virgule décimale acceptée).
+
+Données écrites dans la page (petits graphiques) :
+  {% include graphique.html x_valeurs="0,1,2,3" y_valeurs="5,4.8,4.5,4.1" serie="Tension" x="Temps (h)" y="Tension (V)" %}
+  Jusqu'à trois courbes : y_valeurs / serie, y_valeurs2 / serie2, y_valeurs3 / serie3.
+  Valeurs séparées par « , » (décimales avec un point) ou par « ; » (décimales avec une virgule).
+
+Options : type="line" (défaut), "bar", "scatter" ou "radar" (x_valeurs = les branches) ; titre ; x et y (titres des axes) ;
+hauteur="300" (en pixels, sinon proportions 2:1 sur une page, hauteur fixe dans les slides).
+{%- endcomment -%}
+{%- assign _csv = include.csv -%}
+{%- assign _csv_url = nil -%}
+{%- if _csv -%}
+  {%- assign _debut = _csv | slice: 0, 4 -%}
+  {%- assign _premier = _csv | slice: 0 -%}
+  {%- if _debut == 'http' -%}
+    {%- assign _csv_url = _csv -%}
+  {%- elsif _premier == '/' -%}
+    {%- assign _csv_url = _csv | relative_url -%}
+  {%- else -%}
+    {%- assign _csv_url = page.url | append: _csv | relative_url -%}
+  {%- endif -%}
+{%- endif -%}
+<figure class="graphique">
+  <div class="graphique-zone"{% if include.hauteur %} style="height: {{ include.hauteur }}px"{% endif %}><canvas></canvas></div>
+  {%- if _csv %}
+  <figcaption><a href="{{ _csv_url }}">Télécharger les données (CSV)</a></figcaption>
+  {%- endif %}
+</figure>
+<script>
+(function () {
+  var figure = document.currentScript.previousElementSibling;
+  var type = {{ include.type | default: 'line' | jsonify }};
+  var titre = {{ include.titre | default: '' | jsonify }};
+  var titreX = {{ include.x | default: '' | jsonify }};
+  var titreY = {{ include.y | default: '' | jsonify }};
+  var hauteurFixe = {{ include.hauteur | default: '' | jsonify }} !== "" || !!figure.closest(".reveal");
+
+  // Chart.js n'est chargé qu'une fois par page, et seulement s'il y a un graphique
+  window.chargementChartJs = window.chargementChartJs || new Promise(function (ok, erreur) {
+    var script = document.createElement("script");
+    script.src = "https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js";
+    script.onload = function () {
+      // Aux couleurs du site (assets/css/_tokens.scss)
+      Chart.defaults.font.family = "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
+      Chart.defaults.color = "#3f3f46";
+      Chart.defaults.borderColor = "#e4e4e7";
+      // Dans les slides, texte plus grand pour la projection
+      if (document.querySelector(".reveal")) Chart.defaults.font.size = 18;
+      ok();
+    };
+    script.onerror = function () { erreur(new Error("Chart.js n'a pas pu être chargé")); };
+    document.head.appendChild(script);
+  });
+
+  var couleurs = ["#ef2e31", "#18181b", "#71717a", "#f59e0b", "#3b82f6"];
+
+  function lireTableau(lignes) {
+    var separateur = lignes[0].indexOf(";") >= 0 ? ";" : ",";
+    var cellules = lignes.map(function (l) { return l.split(separateur).map(function (c) { return c.trim(); }); });
+    var nombre = function (c) { return c === "" ? null : Number(separateur === ";" ? c.replace(",", ".") : c); };
+    return { entetes: cellules[0], brut: cellules.slice(1), valeurs: cellules.slice(1).map(function (l) { return l.map(nombre); }) };
+  }
+
+  // Données écrites dans la page : reconstruites sous forme de tableau, comme un CSV
+  function donneesEnLigne() {
+    var x = {{ include.x_valeurs | default: '' | jsonify }};
+    var series = [
+      [{{ include.serie | default: '' | jsonify }}, {{ include.y_valeurs | default: '' | jsonify }}],
+      [{{ include.serie2 | default: '' | jsonify }}, {{ include.y_valeurs2 | default: '' | jsonify }}],
+      [{{ include.serie3 | default: '' | jsonify }}, {{ include.y_valeurs3 | default: '' | jsonify }}]
+    ].filter(function (s) { return s[1] !== ""; });
+    var sep = (x + series.map(function (s) { return s[1]; }).join("")).indexOf(";") >= 0 ? ";" : ",";
+    var colonnes = [x.split(sep)].concat(series.map(function (s) { return s[1].split(sep); }));
+    var entete = [titreX].concat(series.map(function (s, i) { return s[0] || "Série " + (i + 1); }));
+    var lignes = [entete.join(sep)];
+    for (var i = 0; i < colonnes[0].length; i++) {
+      lignes.push(colonnes.map(function (c) { return (c[i] || "").trim(); }).join(sep));
+    }
+    return lignes;
+  }
+
+  var source = {{ _csv_url | default: '' | jsonify }};
+  var lecture = source
+    ? fetch(source).then(function (r) {
+        if (!r.ok) throw new Error("fichier introuvable : " + source);
+        return r.text();
+      }).then(function (texte) {
+        return texte.trim().split(/\r?\n/).filter(function (l) { return l.trim() !== ""; });
+      })
+    : Promise.resolve(donneesEnLigne());
+
+  Promise.all([window.chargementChartJs, lecture]).then(function (resultats) {
+    var tableau = lireTableau(resultats[1]);
+    var xNumerique = tableau.valeurs.every(function (l) { return l[0] !== null && !isNaN(l[0]); });
+    var radar = type === "radar";
+    var lineaire = xNumerique && type !== "bar" && !radar;
+    var series = tableau.entetes.slice(1).map(function (nom, i) {
+      var couleur = couleurs[i % couleurs.length];
+      return {
+        label: nom,
+        data: tableau.valeurs.map(function (l, j) {
+          return lineaire ? { x: l[0], y: l[i + 1] } : l[i + 1];
+        }),
+        borderColor: couleur,
+        backgroundColor: type === "bar" ? couleur + "cc" : radar ? couleur + "33" : couleur,
+        fill: radar,
+        borderWidth: 2,
+        pointRadius: type === "scatter" ? 4 : 2,
+        tension: 0.15
+      };
+    });
+    new Chart(figure.querySelector("canvas"), {
+      type: type,
+      data: { labels: tableau.brut.map(function (l) { return l[0]; }), datasets: series },
+      options: {
+        maintainAspectRatio: !hauteurFixe,
+        plugins: {
+          title: { display: titre !== "", text: titre, font: { size: Chart.defaults.font.size + 3, weight: "600" } },
+          legend: { display: series.length > 1 }
+        },
+        // Un radar n'a pas d'axes X et Y mais une échelle circulaire, qui part de 0
+        scales: radar ? { r: { beginAtZero: true } } : {
+          x: { type: lineaire ? "linear" : "category", title: { display: (titreX || tableau.entetes[0]) !== "", text: titreX || tableau.entetes[0] } },
+          y: { title: { display: titreY !== "", text: titreY } }
+        }
+      }
+    });
+  }).catch(function (e) {
+    figure.insertAdjacentHTML("afterbegin",
+      "<p class=\"graphique-erreur\">Graphique impossible à afficher : " + e.message + "</p>");
+  });
+})();
+</script>
