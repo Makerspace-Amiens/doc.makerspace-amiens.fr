@@ -273,6 +273,7 @@ Les étudiants de I2 ont dupliqué le template le 2026-09-25 (commit `f258512`).
 | **KaTeX** | Délimiteurs `$ ... $` (inline) et `$$ ... $$` (bloc) — rendu automatique |
 | **Model Viewer** | Tag `<model-viewer>` dans le contenu (include `model-viewer-include.html` chargé dans `documentation.html`) |
 | **KiCanvas** | Tag `<kicanvas-schematic>` pour afficher des fichiers KiCad |
+| **Chart.js** | `{% include graphique.html csv="mesures.csv" titre="…" y="Tension (V)" %}` (CSV dans le sous-dossier de la page, ou chemin absolu `/…`), ou données en ligne `x_valeurs="0,1,2" y_valeurs="5,4.8,4.5" serie="…"` (jusqu'à 3 courbes : `y_valeurs2`/`serie2`, `y_valeurs3`/`serie3`). Options `type` (line, bar, scatter, radar : `x_valeurs` = les branches), `x`, `y`, `hauteur`. Mêmes paramètres que l'include du template étudiant. Fonctionne aussi dans les slides (hauteur fixe 360 px, texte agrandi). Chart.js est chargé à la demande, seulement sur les pages qui ont un graphique. Exemples dans `_docs/tutorials/writing-guide.md`. |
 
 Mermaid et KaTeX ne sont chargés que sur les pages avec `layout: documentation`.
 
