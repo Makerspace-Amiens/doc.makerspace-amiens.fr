@@ -472,76 +472,38 @@ graph3d-subtitle: Découvrez les liens entre nos projets et nos machines
 
 ---
 
-## 11. Skill Graph
+## 11. Graphique radar
 
-Un skill graph simple avec un set de datas :
+Pour un profil de compétences ou une auto-évaluation : l'include `graphique.html` avec `type="radar"`. Les branches sont données par `x_valeurs`, chaque profil par `y_valeurs` / `serie` (jusqu'à trois). Toutes les options sont détaillées à la section suivante.
 
-{% include skill-radar.html
-  id="radar-maker"
-  title="Profil Maker"
-  labels="CAO,Impression 3D,Électronique,Programmation,Documentation"
-
-  label_1="Actuel"
-  values_1="80,85,70,75,90"
-  color_1="#3273dc"
-%}
+{% include graphique.html type="radar" x_valeurs="CAO,Impression 3D,Électronique,Programmation,Documentation" y_valeurs="80,85,70,75,90" serie="Actuel" y_valeurs2="90,95,85,80,100" serie2="Objectif" titre="Profil maker" hauteur="420" %}
 
 ```liquid
-{% raw %}
-
-{% include skill-radar.html
-  id="radar-maker-1"
-  title="Profil Maker"
-  labels="CAO,Impression 3D,Électronique,Programmation,Documentation"
-
-  label_1="Actuel"
-  values_1="80,85,70,75,90"
-  color_1="#3273dc"
-%}
-
-{% endraw %}
+{% raw %}{% include graphique.html type="radar" x_valeurs="CAO,Impression 3D,Électronique,Programmation,Documentation" y_valeurs="80,85,70,75,90" serie="Actuel" y_valeurs2="90,95,85,80,100" serie2="Objectif" titre="Profil maker" hauteur="420" %}{% endraw %}
 ```
 
-Vous pouvez ajouter jusqu'à 5 set de datas en même temps. Attention aux id : ils ne doivent pas être similaire sur une même page.
+## 12. Graphique à partir de données
 
-{% include skill-radar.html
-  id="radar-maker-2"
-  title="Profil Maker"
-  labels="CAO,Impression 3D,Électronique,Programmation,Documentation"
+L'include `graphique.html` trace un graphique avec [Chart.js](https://www.chartjs.org/). Il reprend les paramètres de l'include du même nom dans le template des projets étudiants : un exemple se copie de l'un à l'autre.
 
-  label_1="Actuel"
-  values_1="80,5,70,75,90"
-  color_1="#3273dc"
+### Depuis un fichier CSV
 
-  label_2="Objectif"
-  values_2="90,95,85,0,100"
-  color_2="#48c774"
+Placez le CSV dans le sous-dossier de la page (comme les images) : une ligne d'en-tête, la première colonne pour l'axe X, une colonne par courbe. Séparateur `,` ou `;` (export tableur français, virgule décimale acceptée). Données d'exemple :
 
-  label_3="Référence"
-  values_3="70,70,70,70,70"
-  color_3="#ffdd57"
-%}
+{% include graphique.html csv="decharge-batterie.csv" titre="Décharge de la batterie" y="Tension (V)" %}
 
 ```liquid
-{% raw %}
-
-{% include skill-radar.html
-  id="radar-maker-2"
-  title="Profil Maker"
-  labels="CAO,Impression 3D,Électronique,Programmation,Documentation"
-
-  label_1="Actuel"
-  values_1="80,5,70,75,90"
-  color_1="#3273dc"
-
-  label_2="Objectif"
-  values_2="90,95,85,0,100"
-  color_2="#48c774"
-
-  label_3="Référence"
-  values_3="70,70,70,70,70"
-  color_3="#ffdd57"
-%}
-
-{% endraw %}
+{% raw %}{% include graphique.html csv="decharge-batterie.csv" titre="Décharge de la batterie" y="Tension (V)" %}{% endraw %}
 ```
+
+### Avec les données écrites dans la page
+
+Pour quelques points, sans fichier : `x_valeurs` pour l'axe X, puis jusqu'à trois courbes (`y_valeurs` / `serie`, `y_valeurs2` / `serie2`, `y_valeurs3` / `serie3`).
+
+{% include graphique.html type="bar" x_valeurs="Lun,Mar,Mer,Jeu,Ven" y_valeurs="4,7,5,9,6" serie="Impressions 3D" y_valeurs2="2,3,6,4,5" serie2="Découpes laser" titre="Utilisation des machines (exemple)" y="Nombre de travaux" %}
+
+```liquid
+{% raw %}{% include graphique.html type="bar" x_valeurs="Lun,Mar,Mer,Jeu,Ven" y_valeurs="4,7,5,9,6" serie="Impressions 3D" y_valeurs2="2,3,6,4,5" serie2="Découpes laser" titre="Utilisation des machines (exemple)" y="Nombre de travaux" %}{% endraw %}
+```
+
+Options : `type` (`line` par défaut, `bar`, `scatter`, `radar`), `titre`, `x` et `y` (titres des axes), `hauteur` (en pixels). Le graphique fonctionne aussi dans les slides (`layout: slides`), avec une hauteur fixe de 360 px par défaut.
