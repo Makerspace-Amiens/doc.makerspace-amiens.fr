@@ -1,340 +1,367 @@
 ---
 layout: documentation
 hide_hero: false
-hero_image: "slide_120_image_4.png"
+hero_image: "slide_120_image_4.jpg"
 hero_darken: true
-image: "slide_120_image_4.png"
+image: "slide_120_image_4.jpg"
 component_toc: true
 doc_header: true
 type: concept
 tag: fabrication-additive
 
 title: Le workflow logiciel
-subtitle: 
-description: 
+subtitle: Du modèle 3D à la pièce imprimée
+description: La chaîne logicielle de l'impression 3D (modélisation, export, slicer, réglages, G-code) et les règles pour concevoir une pièce imprimable.
 author: Adrien Bracq
 
 time: 2
-difficulty: 1
+difficulty: 2
 
 prerequisites:
-  - label: Aucun pré-requis nécessaire
-    link: ""
+  - label: Les technologies d'impression
+    link: /docs/concepts/3d-printing-technologies/
 
-todo: 10
+todo: 90
 ---
 
-{% include message.html title="Attention" message="La page est en cours de rédaction. C'est pour l'instant un extrait brut des slides [du cours d'introduction à l'impression 3D.](/assets/pdf/initiation-fabrication-additive.pdf)"
-status="is-warning" dismissable="false" icon="fas fa-exclamation-triangle" %}
+{% include message.html title="Information" message="Cette page est la version rédigée et approfondie du cours. Les slides correspondantes : [Partie 3 : le workflow, du modèle 3D à la pièce](/workshops/fab-additive/slides/workflow-impression-3d/)." status="is-info" icon="fas fa-info-circle" %}
 
-<!-- markdownlint-disable MD024 -- extrait brut de slides, titres dupliqués d'une diapo à l'autre ; à réécrire avec la page (cf. todo: 10) -->
+## Du fichier à la pièce
 
-## Workflow Logiciel
+Une imprimante 3D ne comprend pas un modèle 3D : elle exécute une liste d'instructions de déplacement et de chauffe. Entre les deux, une chaîne de logiciels transforme une forme en trajets.
 
-Workflow Logiciel
+```mermaid!
+graph LR
+    A[Modèle 3D<br/>CAO, scan, bibliothèque] --> B[Export<br/>STL, 3MF]
+    B --> C[Slicer<br/>couches et réglages]
+    C --> D[G-code<br/>instructions]
+    D --> E[Imprimante]
+    style C fill:#ef2e31,stroke:#ef2e31,color:#ffffff
+```
 
-## Principe général
+![Modèle 3D, G-code, impression](slide_105_image_8.png)
 
-Principe général Le workflow Logiciel 105   Logiciel de modélisation Slicer Machine 3D
+Le **slicer** est le pivot de la chaîne : c'est lui qui décide comment la matière sera déposée. Deux personnes qui impriment le même fichier avec des réglages différents obtiennent deux pièces différentes, en qualité, en solidité et en temps.
 
-![Slide 105 Image](slide_105_image_8.png)
+## Obtenir un modèle 3D
 
-![Slide 105 Image](slide_105_image_9.png)
+| Voie | Outil | Pour | Limite |
+|---|---|---|---|
+| Télécharger | Printables, Thingiverse, Cults, GrabCAD | Objet déjà conçu | Rarement à votre cote |
+| Scanner | Scanner 3D, photogrammétrie | Copier un objet existant | Maillage à retoucher |
+| Modéliser | Blender | Formes organiques | Imprécis en mécanique |
+| Concevoir (CAO) | Onshape, Fusion, SolidWorks, FreeCAD | Pièces techniques cotées | Apprentissage |
+| Coder | OpenSCAD | Pièces paramétriques | Programmation |
+| Générer (IA) | Rodin | Concept rapide | Modèle à retravailler |
 
-![Slide 105 Image](slide_105_image_10.png)
+Pour une pièce de projet, qui doit s'assembler avec d'autres et respecter des cotes, la **CAO** est presque toujours la bonne voie.
 
-## La Modélisation
+### Télécharger un modèle
 
-La Modélisation 106 Les logiciels de conception, de modélisation, Scan 3D, …
+![Page d'accueil de Printables](slide_107_image_4.jpg)
 
-## Récupérer son fichier 3D
+- **[Printables](https://www.printables.com/)** : la plateforme de Prusa, valable pour toutes les machines.
+- **[Thingiverse](https://www.thingiverse.com/)** : l'une des plus grandes communautés de modèles gratuits.
+- **[Cults](https://cults3d.com/)** : modèles gratuits et payants, orientés design.
+- **[GrabCAD](https://grabcad.com/)** : modèles d'ingénierie et composants industriels, souvent en STEP.
+- **[YouMagine](https://www.youmagine.com/)** : plateforme open source.
 
-Récupérer son fichier 3D Les bibliothèques 3D 107 PrusaPrinters : <https://www.printables.com/>
-Plateforme de partage de fichiers 3D optimisée pour les imprimantes Prusa, mais compatible avec toutes les machines. Thingiverse : <https://www.thingiverse.com/>
-L'une des plus grandes communautés de modèles 3D gratuits, idéale pour les amateurs et les makers. YouMagine : <https://www.youmagine.com/>
-Plateforme open source mettant l'accent sur le partage et la collaboration autour de modèles 3D. Cults : <https://cults3d.com/>
-Bibliothèque en ligne proposant des fichiers 3D gratuits et payants, avec un focus sur le design artistique. GrabCAD : <https://grabcad.com/>
-Plateforme orientée ingénierie, spécialisée dans les modèles 3D industriels et les fichiers techniques.  Et bien d’autres…
+Un modèle téléchargé reste l'œuvre de son auteur. La plupart sont publiés sous licence **Creative Commons** : vérifiez si elle autorise la modification (pas de mention ND) et l'usage commercial (pas de mention NC), et citez toujours l'auteur.
 
-![Slide 107 Image](slide_107_image_4.png)
+### Scanner un objet
 
-## Récupérer son fichier 3D
+{% include image-row.html image_1="slide_108_image_4.jpg" image_2="slide_108_image_5.jpg" %}
 
-Récupérer son fichier 3D Scanner son objet 108 Principe : Utilisation d’un scanner 3D pour capturer la forme, les dimensions et les détails d’un objet physique.  Avantages : Permet de recréer des objets existants en version numérique. Idéal pour la rétro-conception ou la duplication.  Exemples d’applications : Fabrication de pièces sur mesure. Création de modèles pour l'impression 3D. Scan corporel pour la médecine ou la mode.
+Un scanner 3D capture la forme d'un objet réel sous forme d'un nuage de points, puis d'un maillage. Trois techniques coexistent : la **lumière structurée** (un motif projeté se déforme sur l'objet), le **laser** (une ligne balaie la surface) et la **photogrammétrie** (un logiciel reconstruit le volume à partir de dizaines de photos prises sous tous les angles).
 
-![Slide 108 Image](slide_108_image_4.png)
+Le scan est précieux en rétro-conception (copier une pièce cassée, épouser une forme existante) et pour le sur-mesure (orthèses, prothèses). Ses limites :
 
-![Slide 108 Image](slide_108_image_5.png)
+- une précision limitée sur les scanners grand public, insuffisante pour des pièces techniques ;
+- des surfaces difficiles : transparentes, réfléchissantes, très sombres ou sans relief (on les matifie avec un spray) ;
+- un maillage toujours imparfait : trous, bruit, zones manquantes à reprendre ;
+- un maillage n'est pas une pièce cotée : pour une pièce mécanique, on redessine souvent la pièce en CAO en s'appuyant sur le scan.
 
-## Récupérer son fichier 3D
+### Modéliser ou concevoir : maillage contre solide
 
-Récupérer son fichier 3D Scanner son objet 109 Précision limitée : Les scanners grand public offrent souvent une résolution inférieure à celle requise pour des pièces complexes ou techniques.  Problèmes avec certaines surfaces : Difficulté à scanner des objets : Transparents (ex. verre). Réfléchissants (ex. métal poli). Trop sombres ou avec peu de contraste.  Post-traitement nécessaire : Les modèles scannés nécessitent souvent une retouche pour corriger les erreurs ou combler les zones manquantes.  Coût et accessibilité : Les scanners professionnels sont coûteux et nécessitent une expertise pour une utilisation optimale.
+Deux familles de logiciels produisent un modèle 3D, avec deux représentations différentes.
 
-![Slide 109 Image](slide_109_image_4.png)
+{% include image-row.html image_1="slide_110_image_5.jpg" image_2="slide_112_image_5.jpg" %}
 
-![Slide 109 Image](slide_109_image_5.png)
+- **Modélisation polygonale** (Blender, ZBrush) : l'objet est une **surface faite de facettes** que l'on sculpte librement. Idéal pour les formes organiques (personnages, sculptures), mais il n'y a pas de cotes : obtenir un trou de 8 mm exactement ou modifier une épaisseur après coup est laborieux.
+- **CAO paramétrique** (Onshape, Fusion, SolidWorks, FreeCAD, Catia) : l'objet est un **solide exact** construit par une suite d'opérations (esquisse contrainte, extrusion, perçage, congé...). Chaque cote est un paramètre : on la modifie, et toute la pièce se reconstruit en suivant l'**arbre de construction**. C'est l'outil des pièces techniques et des assemblages.
 
-## Modélisation 3D
+![Interface de Blender](slide_110_image_4.jpg)
 
-Modélisation 3D Les logiciels de modélisation 110 Principe : Les logiciels de modélisation comme Blender permettent de créer des modèles artistiques ou organiques pour divers usages, y compris l’impression 3D.  Avantages : Flexibilité : Permet de créer des formes complexes et organiques (personnages, sculptures). Compatibilité : Export facile en formats courants (STL, OBJ). Gratuité : Certains logiciels comme Blender sont open source.  Inconvénients : Courbe d’apprentissage élevée : Interface complexe pour les débutants. Précision limitée : Moins adapté pour des pièces mécaniques ou techniques précises.
+![Pièce mécanique cotée dans un logiciel de CAO](slide_112_image_6.jpg)
 
-![Slide 110 Image](slide_110_image_4.png)
+{% include image-row.html image_1="slide_111_image_4.jpg" image_2="slide_111_image_5.jpg" image_3="slide_112_image_4.jpg" %}
 
-![Slide 110 Image](slide_110_image_5.jpg)
+Onshape et Fusion sont gratuits pour les étudiants, FreeCAD est libre ; SolidWorks, Catia, Creo, Inventor et Siemens NX sont les références industrielles. Pour apprendre : l'[atelier CAO](/workshops/cao/) et [Installer Onshape](/docs/tutorials/software/onshape/onshape-installation/).
 
-## Conception Assistée
+### Modéliser par le code : OpenSCAD
 
-Conception Assistée Les logiciels de CAO 111 Principe : Les logiciels de CAO permettent de concevoir des objets techniques et précis grâce à une approche paramétrique, où chaque élément est défini par des dimensions et des contraintes ajustables.  Avantages : Précision : Idéal pour les pièces mécaniques, techniques ou fonctionnelles. Conception paramétrique : Modifications faciles et rapides en ajustant les paramètres définis. Compatibilité industrielle : Essentiel pour l’ingénierie, l’architecture, et l’industrie (ex. : aéronautique, automobile).  Inconvénients : Complexité : Courbe d’apprentissage importante, surtout pour les fonctionnalités avancées. Coût : Certains logiciels professionnels (ex. SolidWorks) sont onéreux.
+OpenSCAD décrit une pièce par un **script** : des formes de base (cube, cylindre, sphère) combinées par des opérations booléennes (union, différence, intersection). C'est la géométrie de construction de solides (CSG).
 
-![Slide 111 Image](slide_111_image_4.jpg)
+```text
+largeur = 30;
+difference() {
+  cube([largeur, 20, 10]);
+  translate([largeur/2, 10, -1])
+    cylinder(d = 8, h = 12);
+}
+```
 
-![Slide 111 Image](slide_111_image_5.png)
+Ce script crée un bloc de 30 × 20 × 10 mm percé d'un trou de 8 mm en son centre. Changer `largeur` régénère la pièce, et le trou reste centré. L'approche est idéale pour les pièces répétitives ou paramétriques (boîtiers à dimensions variables, engrenages), et le fichier texte se versionne avec Git. Elle est peu adaptée aux formes organiques.
 
-## Conception Assistée
+{% include image-row.html image_1="slide_113_image_4.jpg" image_2="slide_113_image_5.png" %}
 
-Conception Assistée Les logiciels de CAO 112 SolidWorks : Logiciel professionnel de CAO paramétrique, utilisé pour la conception mécanique et l'ingénierie. Fusion 360 : Solution tout-en-un de modélisation paramétrique et simulation, gratuite pour les étudiants et makers. FreeCAD : Logiciel open source pour la conception paramétrique 3D, idéal pour les débutants et les projets personnels. Onshape : Plateforme de CAO basée sur le cloud, conçue pour la collaboration en temps réel. Catia : Logiciel avancé de Dassault Systèmes, utilisé dans l’aéronautique, l’automobile et l’architecture. Creo (Pro/ENGINEER) : Logiciel puissant pour la modélisation 3D et la conception paramétrique, souvent utilisé dans l'industrie manufacturière. Autodesk Inventor : Logiciel de conception mécanique pour la création de modèles complexes en 3D. Siemens NX : Outil intégré pour la conception, la simulation et la fabrication, largement utilisé dans l’industrie. Alibre Design : Logiciel accessible et polyvalent pour la modélisation paramétrique de projets mécaniques et industriels.
+### Générer par IA
 
-![Slide 112 Image](slide_112_image_4.jpg)
+![Présentation de l'outil Rodin](slide_114_image_4.jpg)
 
-![Slide 112 Image](slide_112_image_5.jpg)
+Des outils comme Rodin génèrent un modèle 3D à partir d'un texte ou d'une image, en quelques minutes et sans compétence de modélisation. Le résultat convient pour un concept ou un objet décoratif, mais les détails sont souvent imparfaits, le maillage n'est pas coté et doit presque toujours être retravaillé. La qualité dépend beaucoup de la précision de la description.
 
-![Slide 112 Image](slide_112_image_6.png)
+## Exporter
 
-## Modélisation par code
+### Les formats d'export
 
-Modélisation par code OpenSCAD 113 Qu’est-ce que OpenSCAD ? Logiciel open source de modélisation 3D basé sur la programmation. Permet de créer des modèles à partir de scripts codés, sans interface graphique complexe. Avantages : Conception paramétrique : Modifier facilement les modèles en ajustant les variables. Précision : Idéal pour des pièces techniques ou répétitives. Gratuit et léger : Accessible à tous les utilisateurs, même avec du matériel modeste. Inconvénients : Basé sur le code : Nécessite des notions de programmation, moins intuitif pour les débutants. Limité pour les formes organiques : Pas idéal pour les designs artistiques ou complexes. Applications : Fabrication de pièces techniques. Prototypes avec géométries simples et paramétriques. Automatisation de modèles répétitifs.
+| Format | Contient | Usage |
+|---|---|---|
+| **STL** | La géométrie seule, en triangles | Le plus universel |
+| **OBJ** | Géométrie, couleurs, textures | Modèles multicolores |
+| **3MF** | Géométrie, unités, couleurs, matériaux, réglages d'impression | Projet complet, format moderne |
+| **STEP** | Géométrie exacte (solide CAO) | Échange entre logiciels de CAO |
 
-![Slide 113 Image](slide_113_image_4.jpg)
+### Le STL et ses pièges
 
-![Slide 113 Image](slide_113_image_5.png)
+Le STL décrit la surface de la pièce comme un ensemble de **triangles**. À l'export, le logiciel de CAO approxime donc les surfaces courbes : un cylindre devient un prisme à nombreuses facettes. Si la tolérance d'export est trop grossière, les facettes se voient sur la pièce imprimée ; trop fine, le fichier devient énorme pour rien. Les réglages d'export (déviation, angle) se règlent dans le logiciel de CAO.
 
-## Modélisation par IA
+Trois pièges classiques :
 
-Modélisation par IA Rodin 114 Qu’est-ce que Rodin ? Rodin est un outil basé sur l’IA qui permet de créer des modèles 3D directement à partir de descriptions textuelles ou d’autres données d’entrée.  Caractéristiques : Création rapide et intuitive : Pas besoin de compétences en modélisation, l’IA génère des modèles complexes en quelques étapes. Adapté aux débutants et experts : Idéal pour des concepts artistiques ou des prototypes fonctionnels. Compatibilité : Export des modèles dans des formats courants (STL, OBJ) pour l’impression 3D ou d’autres applications.  Limites : Les détails complexes peuvent être imparfaits (coiffures, expressions). Les modèles générés doivent souvent être retravaillés pour un usage optimal. La qualité du modèle dépend de la clarté de l'entrée textuelle.
+- **pas d'unités** : un STL ne dit pas si ses nombres sont des millimètres ou des pouces. Une pièce qui arrive 25,4 fois trop petite dans le slicer a été exportée en pouces ;
+- **maillage non étanche** : des trous ou des faces retournées empêchent le slicer de savoir ce qui est « dedans ». Les slicers réparent les petits défauts, pas les gros ;
+- **plus aucun paramètre** : le STL est une forme figée. Pour modifier la pièce, on repart toujours du fichier de CAO, jamais du STL.
 
-![Slide 114 Image](slide_114_image_4.png)
+### Le 3MF
 
-## L’Export
+Le **3MF** (*3D Manufacturing Format*) est une archive qui contient la géométrie avec ses **unités**, les couleurs, les matériaux et même les **réglages d'impression** (orientation, hauteur de couche, supports). C'est un standard ouvert porté par le 3MF Consortium (Microsoft, Autodesk, Stratasys, Ultimaker...), adopté par Cura, PrusaSlicer, OrcaSlicer et Bambu Studio. Un fichier 3MF enregistré depuis le slicer permet de retrouver exactement le projet d'impression : c'est le format à préférer.
 
-L’Export 115 Les fichiers d’export
+## Trancher : le slicer
 
-## Les fichiers d’export
+### Ce que fait le slicer
 
-Les fichiers d’export Les plus anciens 116 STL (Standard Tessellation Language)  Description : Format le plus courant, décrit la géométrie 3D en triangles. Avantages : Simple, universel, compatible avec la plupart des logiciels et imprimantes. Limites : Pas d’informations sur la couleur, les textures ou les matériaux. OBJ (Object File)  Description : Format polyvalent incluant les géométries, couleurs et textures. Avantages : Idéal pour les modèles multicolores ou complexes. Limites : Fichiers souvent plus volumineux.
+![Pièce tranchée dans le slicer](slide_119_image_4.jpg)
 
-## Le 3MF (3D Manufacturing Format)
+Le slicer convertit un modèle 3D (STL, 3MF, parfois STEP) en **G-code** :
 
-Le 3MF (3D Manufacturing Format) Un format qui gagne en popularité 117 Stockage d'informations complètes : Contrairement au STL, qui ne contient que la géométrie, le 3MF peut inclure : Couleurs et textures. Propriétés des matériaux (densité, élasticité, etc.). Paramètres d'impression (ex. : orientation, épaisseur de couche, supports).  Format compact : Le 3MF est plus léger que les fichiers OBJ ou STL + fichiers annexes (textures, etc.).  Standard ouvert et universel : Développé par le 3MF Consortium, soutenu par des acteurs majeurs (Microsoft, Autodesk, Stratasys, Ultimaker, etc.). Adopté par des logiciels comme Cura, PrusaSlicer, et des plateformes comme Thingiverse.  Interopérabilité accrue : Permet de transférer facilement un projet complet entre différents logiciels ou imprimantes sans perdre d'informations.
+1. il **coupe** le modèle par des plans horizontaux espacés d'une hauteur de couche ;
+2. pour chaque couche, il calcule les **contours** de la section, puis les **périmètres** (parois), les **couches pleines** du dessus et du dessous, et le **remplissage** de l'intérieur ;
+3. il ajoute les **supports** sous les surplombs et l'aide à l'**adhérence** (bordure, radeau) ;
+4. il ordonne tous ces trajets, fixe les vitesses, les températures, la ventilation et les rétractions, et écrit le tout en G-code ;
+5. il **estime** le temps d'impression et la quantité de filament.
 
-## Le Slicer
+L'**aperçu couche par couche** est l'outil le plus utile du slicer : on y voit, avant d'imprimer, un surplomb oublié, un détail trop fin qui disparaît ou un pont trop long.
 
-Le Slicer 118 Les logiciels
+### Quel slicer ?
 
-## Le Slicer
+| Slicer | Éditeur | Pour |
+|---|---|---|
+| **OrcaSlicer** | Communauté (fork de Bambu Studio) | Multimarque, open source |
+| Bambu Studio | Bambu Lab | Imprimantes Bambu Lab |
+| PrusaSlicer | Prusa Research | Multimarque, open source |
+| Cura | UltiMaker | Multimarque, nombreux plugins |
+| ChiTuBox, Lychee | | Imprimantes résine |
 
-Le Slicer Présentation 119 Définition : Un slicer est un logiciel qui convertit un modèle 3D (ex. STL, OBJ) en G-code, un ensemble d’instructions que l’imprimante 3D utilise pour fabriquer l’objet.  Fonctionnement : Chargement du modèle 3D : Importe un fichier comme STL ou 3MF dans le slicer. Découpe en couches : Le slicer divise le modèle en couches horizontales. Génération des instructions : Il crée le G-code, contenant : Trajectoires de la tête d’impression. Paramètres d’impression (température, vitesse, supports, etc.).  Le slicer est un outil essentiel pour préparer vos impressions 3D, reliant le modèle numérique à l'imprimante.
+Trois d'entre eux ont un ancêtre commun : Slic3r a donné PrusaSlicer, dont Bambu Studio est un fork, dont OrcaSlicer est lui-même un fork. Leurs interfaces se ressemblent donc beaucoup ; Cura a sa propre lignée. Au MakerSpace, les tutoriels utilisent **OrcaSlicer** : voir [Impression 3D avec OrcaSlicer](/docs/tutorials/production/imprimer-une-piece/).
 
-![Slide 119 Image](slide_119_image_4.png)
+{% include image-row.html image_1="slide_124_image_4.jpg" image_2="slide_124_image_5.jpg" %}
 
-## Le Slicer
+{% include image-row.html image_1="slide_123_image_4.jpg" image_2="slide_123_image_5.jpg" %}
 
-Le Slicer Les différents logiciels 120 Par Compatibilité avec des imprimantes spécifiques Multimarques/Open Source : Cura, PrusaSlicer, SuperSlicer, OrcaSlicer. Marques spécifiques : BambuLab : Bambu Studio, OrcaSlicer. Creality : Creality Slicer (modifié à partir de Cura). Raise3D : IdeaMaker. MakerBot : MakerBot Print. FlashForge : FlashPrint. (…)  Par Types d’Impression : FDM (Filament) : Cura, PrusaSlicer, Simplify3D, IdeaMaker, OrcaSlicer, SuperSlicer. SLA/DLP (Résine) : ChiTuBox, Lychee Slicer. (…)
+{% include image-row.html image_1="slide_122_image_4.png" image_2="slide_122_image_5.jpg" %}
 
-![Slide 120 Image](slide_120_image_4.png)
+{% include image-row.html image_1="slide_121_image_4.jpg" image_2="slide_121_image_5.jpg" %}
 
-## CURA
+De haut en bas : OrcaSlicer, Bambu Studio, PrusaSlicer et Cura.
 
-CURA Ultimaker 121 Qu’est-ce que Cura ?: Slicer open source développé par Ultimaker, compatible avec de nombreuses imprimantes 3D.  Avantages: Gratuit, facile à utiliser, supporte de nombreux paramètres avancés et plugins.  Inconvénients: Peut être gourmand en ressources, interface simple pour les débutants.
+### L'anomalie : FullControl
 
-![Slide 121 Image](slide_121_image_4.jpg)
+{% include image-row.html image_1="slide_125_image_4.png" image_2="/workshops/fab-additive/slides/workflow-impression-3d/fullcontrol-structure.png" %}
 
-![Slide 121 Image](slide_121_image_5.jpg)
+[FullControl](https://fullcontrol.xyz) renverse la logique : il n'y a plus de modèle 3D à trancher. On décrit **directement les trajets de la buse** par programmation (en Python ou dans un configurateur en ligne), et FullControl écrit le G-code. On peut ainsi créer des structures impossibles à obtenir avec un slicer classique : treillis, objets mathématiques, parois d'un seul cordon ondulé, structures légères pour la recherche.
 
-## Prusa Slicer
+## Les réglages de base
 
-Prusa Slicer Prusa research 122 Qu’est-ce que PrusaSlicer ?: Slicer basé sur Slic3r, optimisé pour les imprimantes Prusa mais compatible avec d'autres marques.  Avantages: Open source, interface intuitive, paramètres avancés pour des impressions optimisées.  Inconvénients: Interface légèrement différente des standards, peut nécessiter un temps d'adaptation.
+![Panneau de réglages d'un slicer](slide_128_image_4.jpg)
 
-![Slide 122 Image](slide_122_image_4.png)
+Les réglages servent trois objectifs, souvent contradictoires : la **qualité** (précision, finition), l'**efficacité** (temps et matière) et la **fiabilité** (la pièce tient sur le plateau jusqu'au bout). Les profils fournis par le fabricant de l'imprimante et du filament sont un bon point de départ ; on n'ajuste qu'un paramètre à la fois.
 
-![Slide 122 Image](slide_122_image_5.png)
+### Les températures
 
-## Bambu Slicer
+{% include image-row.html image_1="slide_129_image_4.jpg" image_2="slide_129_image_5.jpg" %}
 
-Bambu Slicer BambuLab 123 Qu’est-ce que Bambu Studio ?: Slicer développé pour les imprimantes Bambu Lab, offrant des fonctionnalités spécifiques pour ces machines.  Avantages: Intégré avec les imprimantes Bambu, gestion avancée des couleurs et des matériaux.  Inconvénients: Principalement conçu pour l'écosystème Bambu, support limité pour d'autres imprimantes.
+- **Buse** : chaque fabricant de filament indique une plage (de 190 à 250 °C selon la matière). Trop froid, les couches adhèrent mal et la pièce casse entre deux couches ; trop chaud, le filament coule, fait des fils et les détails s'affaissent.
+- **Plateau** : de 50 à 110 °C selon le filament. Il maintient la première couche collée et limite le gauchissement.
 
-![Slide 123 Image](slide_123_image_4.png)
+Plus on imprime vite, plus il faut chauffer : le filament passe moins de temps dans la buse. Une **tour de température**, qui imprime chaque étage à une température différente, permet de choisir la meilleure valeur pour une bobine donnée.
 
-![Slide 123 Image](slide_123_image_5.jpg)
+### La hauteur de couche
 
-## Orca Slicer
+![Même pièce imprimée à 0,2, 0,1 et 0,05 mm](slide_130_image_4.png)
 
-Orca Slicer Slicer multi-marque OpenSource 124 Qu’est-ce qu’OrcaSlicer ?: Fork de Bambu Studio, apportant des fonctionnalités supplémentaires et une compatibilité élargie.  Avantages: Support multi-marques, communauté active, amélioration continue des fonctionnalités.  Inconvénients: Moins connu, peut manquer de support officiel.
+Le temps d'impression est à peu près inversement proportionnel à la hauteur de couche : passer de 0,2 à 0,1 mm double le nombre de couches et presque le temps. **0,2 mm** convient à la plupart des pièces avec une buse de 0,4 mm.
 
-![Slide 124 Image](slide_124_image_4.jpg)
+Les couches créent un **effet d'escalier** sur les pentes douces et les dessus arrondis, d'autant plus visible que la couche est épaisse. Une surface verticale, elle, a le même aspect quelle que soit la hauteur de couche. D'où l'intérêt de la **hauteur de couche variable**, proposée par les slicers récents : fine sur les courbes, épaisse sur les parois droites.
 
-![Slide 124 Image](slide_124_image_5.jpg)
+La hauteur de couche ne doit pas dépasser environ 75 % du diamètre de buse, et la première couche est souvent un peu plus épaisse pour bien coller.
 
-## Full Control XYZ
+### Parois et couches pleines
 
-Full Control XYZ L’anomalie… <https://fullcontrol.xyz> 125 Open source : Projet disponible sur GitHub, conçu pour repousser les limites des slicers traditionnels.  Fonctionnalité clé : Permet la génération manuelle et avancée de structures directement en G-code, sans nécessiter un modèle 3D intermédiaire.  Contrôle total sur l’impression : Les utilisateurs peuvent créer des structures paramétriques complexes, comme des treillis, des objets mathématiques ou des géométries sur mesure.
+$$\text{épaisseur de paroi} = \text{nombre de périmètres} \times \text{largeur du cordon}$$
 
-![Slide 125 Image](slide_125_image_4.png)
+Avec une buse de 0,4 mm, un cordon fait environ 0,45 mm : trois périmètres donnent une paroi d'environ 1,35 mm. Une paroi dessinée en CAO avec une épaisseur qui n'est pas un multiple de la largeur du cordon laisse un vide ou un cordon de remplissage au milieu.
 
-## Full Control XYZ
+{% include image-row.html image_1="/workshops/fab-additive/slides/workflow-impression-3d/parois-trois-perimetres.png" image_2="/workshops/fab-additive/slides/workflow-impression-3d/parois-un-perimetre.png" %}
 
-Full Control XYZ L’anomalie… <https://fullcontrol.xyz> 126 Exploration de nouveaux usages : Idéal pour la recherche, le prototypage, ou les applications nécessitant une précision extrême (bio-impression, structures légères).  Indépendance vis-à-vis des formats traditionnels : Plus besoin de fichiers STL ou OBJ, tout est défini directement dans le slicer.  Évolution des slicers : Introduit une approche programmative et personnalisable, s’éloignant des slicers conventionnels qui s’appuient sur des modèles figés.  FullControl.xyz ouvre de nouvelles perspectives pour les makers et chercheurs en permettant une maîtrise inédite de la fabrication additive.
+Les **couches pleines** ferment la pièce dessus et dessous. Il en faut en général 3 à 5, soit environ 0,8 à 1 mm d'épaisseur : en dessous, le remplissage se devine à travers la surface du dessus.
 
-## Le Slicer
+{% include image-row.html image_1="/workshops/fab-additive/slides/workflow-impression-3d/couches-pleines-fond.png" image_2="/workshops/fab-additive/slides/workflow-impression-3d/couches-pleines-dessus.png" %}
 
-Le Slicer 127 Les réglages de base
+### Le remplissage
 
-## Le Slicer
+![Motifs de remplissage à 20, 40, 60 et 80 %](slide_132_image_5.png)
 
-Le Slicer Les réglages de base 128 Pourquoi les réglages de base sont importants ? Qualité d’impression : Optimiser la précision, la solidité, et les finitions des objets imprimés. Efficacité : Réduire les temps d’impression tout en économisant du filament. Adhérence et stabilité : Garantir que l’objet reste bien fixé au plateau et ne se déforme pas.  Principaux réglages abordés : Température de la buse et du plateau. Hauteur de couche (résolution). Remplissage et motifs. Supports pour les surplombs. Adhérence au plateau (bordures, jupe, radeau).
+L'intérieur d'une pièce FDM n'est pas plein : un **remplissage** de 10 à 20 % suffit pour la plupart des pièces. La solidité d'une pièce vient surtout de ses **parois** : pour la renforcer, ajouter un ou deux périmètres est souvent plus efficace et plus rapide que doubler le remplissage. Le motif compte aussi : la grille et les lignes sont rapides, le **gyroïde** et le nid d'abeille répartissent mieux les efforts dans toutes les directions.
 
-![Slide 128 Image](slide_128_image_4.png)
+### Les supports
 
-## Températures d’impression
+{% include image-row.html image_1="slide_133_image_4.png" image_2="slide_133_image_5.png" %}
 
-Températures d’impression Les réglages de base 129 Température du filament: Chaque fabricant indique une plage optimale (200-240°C pour la buse).  Température du plateau: Recommandée entre 60 et 100°C selon le filament. Respectez les valeurs pour éviter les déformations
+Chaque couche doit reposer sur la précédente. Un **surplomb** jusqu'à environ 45° par rapport à la verticale s'imprime seul, car chaque cordon s'appuie à moitié sur le précédent ; au-delà, il faut des **supports**, structures temporaires retirées après impression. Ils coûtent du temps et de la matière, et laissent des traces sur la face supportée.
 
-![Slide 129 Image](slide_129_image_4.jpg)
+Les slicers proposent des supports classiques (grille sous le surplomb) et des supports **arborescents** (*tree*), qui ne touchent la pièce qu'aux points nécessaires et se retirent plus facilement. La distance entre le support et la pièce (de l'ordre d'une hauteur de couche) règle le compromis entre une face propre et un support facile à enlever.
 
-![Slide 129 Image](slide_129_image_5.jpg)
+### L'adhérence au plateau
 
-## Hauteur de couche
+{% include image-row.html image_1="slide_134_image_5.png" image_2="slide_134_image_4.png" image_3="slide_134_image_6.png" %}
 
-Hauteur de couche Les réglages de base 130 Impact sur la qualité: Hauteurs basses (0,1 mm) = plus de détails, mais impression lente. Hauteurs élevées (0,2 mm) = impression rapide, mais moins précise.  Configuration variable: Certains slicers permettent d’ajuster la hauteur selon les zones pour optimiser le temps et la qualité.
+- **Jupe** (*skirt*) : une ligne tracée autour de la pièce, sans la toucher. Elle amorce la buse et montre si le plateau est bien réglé.
+- **Bordure** (*brim*) : quelques cordons collés au pied de la pièce, qui élargissent la surface de contact. Pour les pièces petites, fines ou hautes.
+- **Radeau** (*raft*) : une base complète sous la pièce, contre le gauchissement de l'ABS ou pour un plateau imparfait. La face du dessous en garde une surface rugueuse.
+- **Oreilles** : des disques aux seuls coins, là où le gauchissement commence.
 
-![Slide 130 Image](slide_130_image_4.png)
+La première couche est la plus importante de toute l'impression : un plateau propre (dégraissé à l'alcool), bien nivelé et à la bonne température règle la plupart des décollements. Voir [La pièce ne colle pas](/docs/how-to-guides/3d-printing-troubleshooting/#adhésion-au-plateau-la-pièce-ne-colle-pas).
 
-## Parois et couches solides
+### Ponts et refroidissement
 
-Parois et couches solides Les réglages de base 131    Parois verticales (Périmètres): Nombre de périmètres x diamètre de la buse = épaisseur des murs.       Couches solides: Déterminez le nombre de couches solides en haut et en bas (généralement 3-5). Plus de couches = meilleure résistance
+{% include image-row.html image_1="slide_135_image_4.png" image_2="slide_135_image_5.png" image_3="slide_135_image_6.png" %}
 
-## Remplissage et motifs
+Un **pont** est un cordon tiré dans le vide entre deux appuis. Il tient si le plastique se fige avant de s'affaisser : le slicer ralentit et pousse le **ventilateur** au maximum sur les ponts. Le refroidissement dépend du matériau : le PLA aime un refroidissement fort, qui fige les détails et les surplombs ; l'ABS et l'ASA demandent un refroidissement faible, sinon les couches se décollent.
 
-Remplissage et motifs Les réglages de base 132 Pourcentage de remplissage: 10-20% pour la plupart des impressions. Augmentez pour des objets plus résistants.  Motifs de remplissage: Choisissez des motifs comme nid d’abeille ou lignes pour ajuster solidité et temps d’impression.
+## Concevoir pour l'impression
 
-![Slide 132 Image](slide_132_image_5.png)
+Une pièce bien dessinée s'imprime sans réglage compliqué. Les règles suivantes se décident dans le logiciel de CAO, pas dans le slicer. Elles sont détaillées, avec les cotes à respecter, dans [Règles de conception et conseils](/docs/how-to-guides/3d-printing-design-rules/).
 
-## Supports
+### Éviter les supports
 
-Supports Les réglages de base 133  Rôle des supports: Structures temporaires pour soutenir les parties en surplomb. Minimise les échecs.    Optimisation: Réduisez les supports en orientant mieux l’objet ou en adaptant la conception.
+{% include image-row.html image_1="slide_137_image_4.png" image_2="slide_137_image_5.png" %}
 
-![Slide 133 Image](slide_133_image_4.png)
+Un surplomb à angle droit demande un support ; un **chanfrein à 45°** à la même place s'imprime seul. Un congé, lui, commence presque à l'horizontale et demande un support : sous un surplomb, on préfère le chanfrein. Voir [Porte-à-faux](/docs/how-to-guides/3d-printing-design-rules/#porte-à-faux).
 
-![Slide 133 Image](slide_133_image_5.png)
+### Choisir la face posée sur le plateau
 
-## Adhérence au plateau
+{% include image-row.html image_1="slide_138_image_4.png" image_2="slide_138_image_5.png" %}
 
-Adhérence au plateau Les réglages de base 134 Bordure: Augmente l’adhérence, utile pour des objets petits ou fins.    Radeau: Structure de base sous l’objet, idéale pour prévenir le warping sur certains matériaux comme l’ABS ou le PETG.
+La face posée contre le plateau est la plus lisse et la plus plane de la pièce ; une face imprimée sur des supports est irrégulière. On pose donc à plat la face qui doit être belle ou servir de référence, et l'on conçoit la pièce avec une grande face plane quand c'est possible.
 
-![Slide 134 Image](slide_134_image_4.png)
+### Orienter les couches selon l'effort
 
-![Slide 134 Image](slide_134_image_5.png)
+{% include image-row.html image_1="slide_139_image_4.png" image_2="slide_139_image_5.png" %}
 
-![Slide 134 Image](slide_134_image_6.png)
+Une pièce FDM casse entre deux couches (voir [l'anisotropie](/docs/concepts/3d-printing-technologies/#principe)). Pour une équerre dont on charge l'aile verticale, la version posée sur la tranche (à gauche) est bien plus solide : chaque couche contient tout le profil en L, et l'angle ne peut pas se décoller. Posée à plat (à droite), l'aile casse au ras de la base. On oriente la pièce pour que l'effort principal ne cherche pas à séparer les couches.
 
-## Pontage et refroidissement
+### Découper le modèle
 
-Pontage et refroidissement Les réglages de base 135 Pontage: Impression dans le vide en tirant une ligne entre deux points. Dépend du refroidissement.  Refroidissement: Ventilation active pour solidifier rapidement les couches fines ou en porte-à-faux.
+{% include image-row.html image_1="slide_140_image_4.jpg" image_2="slide_140_image_5.png" %}
 
-![Slide 135 Image](slide_135_image_4.png)
+Une forme impossible à poser à plat (une sphère, une pièce en arche) peut être découpée en parties qui ont chacune une grande face plane, puis assemblées par collage, emboîtement ou vissage. Chaque partie s'imprime sans support et avec une meilleure surface.
 
-![Slide 135 Image](slide_135_image_5.png)
+### Prévoir du jeu dans les assemblages
 
-![Slide 135 Image](slide_135_image_6.png)
+{% include image-row.html image_1="slide_141_image_4.jpg" image_2="slide_141_image_5.png" %}
 
-## Optimiser ses designs
+Une pièce imprimée n'est jamais exactement à la cote : le cordon déborde légèrement, la matière se rétracte en refroidissant. Deux pièces dessinées à la même cote ne s'emboîtent donc pas. On prévoit un **jeu**, de l'ordre de 0,15 à 0,3 mm selon l'ajustement voulu, à valider par une pièce de test sur sa machine et son filament.
 
-Optimiser ses designs 136 Les astuces à avoir en tête
+La **couture**, le point où chaque couche commence et finit, forme une petite bosse. À l'intérieur d'un trou, elle gêne l'emboîtement : une encoche dessinée dans le trou l'accueille. Voir [Jeu](/docs/how-to-guides/3d-printing-design-rules/#jeu) et [Pourquoi une pièce fabriquée n'est jamais exactement à la cote](/docs/concepts/tolerances-fabrication/).
 
-## Minimiser les supports
+### Orienter les trous
 
-Minimiser les supports Optimiser ses designs 137 Pourquoi ? Les imprimantes ne peuvent pas imprimer dans le vide. Les supports augmentent le temps, le matériau utilisé et peuvent affecter la qualité des surfaces.  Solution Concevez les objets pour réduire au maximum les surplombs nécessitant des supports.
+{% include image-row.html image_1="slide_142_image_4.png" image_2="slide_142_image_5.png" image_3="slide_141_image_6.jpg" %}
 
-![Slide 137 Image](slide_137_image_4.png)
+Un trou dont l'axe est horizontal (percé dans une paroi verticale) a son sommet en surplomb : il s'affaisse et sort ovale. Un trou dont l'axe est vertical (dans une face horizontale) sort bien rond. Quand le trou doit rester horizontal, on lui donne une **forme de goutte d'eau** : la pointe en haut s'imprime sans support. La forme du logo RepRap en est un clin d'œil. Les trous sortent aussi souvent un peu plus petits que prévu : pour un axe ou une vis, on les agrandit légèrement ou on les reprend au foret. Voir [Trous horizontaux](/docs/how-to-guides/3d-printing-design-rules/#trous-horizontaux).
 
-![Slide 137 Image](slide_137_image_5.png)
+### Les détails plus fins que la buse
 
-## Positionnement sur le plateau
+{% include image-row.html image_1="slide_143_image_4.png" image_2="slide_143_image_5.png" %}
 
-Positionnement sur le plateau Optimiser ses designs 138 Surface directe: Les surfaces en contact direct avec le plateau sont lisses et régulières.  Surfaces sur supports: Elles sont souvent irrégulières et moins esthétiques. Orientez les modèles pour minimiser cette situation.
-
-![Slide 138 Image](slide_138_image_4.png)
-
-![Slide 138 Image](slide_138_image_5.png)
-
-## Résistance des couches
-
-Résistance des couches Optimiser ses designs 139 Orientation des couches  Les pièces sont plus fragiles dans la direction parallèle aux couches. Concevez en fonction des contraintes prévues.
-
-![Slide 139 Image](slide_139_image_4.png)
-
-![Slide 139 Image](slide_139_image_5.png)
-
-## Découpe des modèles
-
-Découpe des modèles Optimiser ses designs 140 Pourquoi découper ?: Couper un modèle complexe (comme une sphère) en plusieurs parties peut faciliter l'impression et améliorer la qualité des surfaces.  Assemblage: Les parties imprimées séparément peuvent être assemblées pour un meilleur rendu global.
-
-![Slide 140 Image](slide_140_image_4.png)
-
-![Slide 140 Image](slide_140_image_5.png)
-
-## Tolérances dans les assemblages
-
-Tolérances dans les assemblages Optimiser ses designs 141 Importance des tolérances: Prévoir un espace de jeu (ex. : 0,15 mm pour une tige de 10 mm) est essentiel pour un assemblage réussi. Des astuces type « goutte d’eau » peuvent améliorer les tolérances de vos impressions  Ajustements nécessaires: Chaque configuration d’imprimante et matériau peut nécessiter plusieurs essais pour optimiser les tolérances.
-
-![Slide 141 Image](slide_141_image_4.png)
-
-![Slide 141 Image](slide_141_image_5.png)
-
-![Slide 141 Image](slide_141_image_6.jpg)
-
-## Orientation des trous
-
-Orientation des trous Optimiser ses designs 142 Trous imprimés verticalement : Un trou imprimé verticalement risque de ne pas être parfaitement circulaire.  Orientation horizontale : Imprimez les trous horizontalement pour un meilleur rendu et une plus grande précision.
-
-![Slide 142 Image](slide_142_image_4.png)
-
-![Slide 142 Image](slide_142_image_5.png)
-
-## Largeur des périmètres
-
-Largeur des périmètres Optimiser ses designs 143 Périmètre simple: Avec une buse standard de 0,4 mm, la largeur imprimée est d'environ 0,45 mm.  Impact: Cela affecte directement l’épaisseur des parois et doit être pris en compte lors de la conception.
-
-![Slide 143 Image](slide_143_image_4.png)
-
-![Slide 143 Image](slide_143_image_5.png)
-
-## Le GCode
-
-Le GCode 144 Les instructions machine
+La buse ne peut pas tracer un trait plus fin que son cordon, environ 0,45 mm pour une buse de 0,4 mm. Un texte en relief, une nervure ou une paroi plus fins disparaissent ou s'impriment mal. On dessine les détails au moins aussi larges que le cordon, et les parois en multiples de sa largeur. Voir [Taille des détails](/docs/how-to-guides/3d-printing-design-rules/#taille-des-détails).
 
 ## Le G-code
 
-Le G-code Qu’est-ce que le G-code ? 145 Définition: Le G-code est un langage de commande utilisé pour contrôler les machines-outils, dont les imprimantes 3D.  Origines: Créé dans les années 1950 pour les machines CNC, il est devenu un standard pour l’automatisation.  Usage en impression 3D: Chaque commande du G-code définit des actions comme déplacer la tête d’impression, ajuster la température, ou contrôler la vitesse.
+### Le langage de la machine
 
-![Slide 145 Image](slide_145_image_4.png)
+Le **G-code** est le langage des machines à commande numérique, né dans les années 1950 pour les fraiseuses et standardisé ensuite (ISO 6983). Chaque ligne est une commande : une lettre et un numéro, suivis de paramètres.
 
-## Le G-code
+```gcode
+M140 S60          ; plateau à 60 °C, sans attendre
+M104 S215         ; buse à 215 °C, sans attendre
+M190 S60          ; attendre que le plateau soit à 60 °C
+M109 S215         ; attendre que la buse soit à 215 °C
+G28               ; retour à l'origine de tous les axes
+G90               ; coordonnées absolues
+M83               ; extrusion relative
+G1 Z0.2 F1500     ; descendre à 0,2 mm
+G1 X10 Y20 E0.8 F1800 ; aller en X10 Y20 en extrudant 0,8 mm de filament
+M106 S255         ; ventilateur de pièce à fond
+```
 
-Le G-code Principe de fonctionnement 146 Structure des commandes: Chaque ligne commence par une lettre (ex. G pour mouvement, M pour contrôle) suivie de paramètres.  Exemple: G1 X10 Y20 Z0.2 F1500 : Déplace la tête à X=10, Y=20, Z=0.2 à une vitesse de 1500 mm/min.  Lien avec le slicer: Le G-code est généré par un slicer à partir d’un modèle 3D, traduisant le fichier en commandes machine.
+| Commande | Rôle |
+|---|---|
+| `G0`, `G1` | Déplacement, sans ou avec extrusion (`E`), à la vitesse `F` en mm/min |
+| `G28` | Retour à l'origine (*homing*) |
+| `G90`, `G91` | Coordonnées absolues ou relatives |
+| `M82`, `M83` | Extrusion absolue ou relative |
+| `M104`, `M109` | Température de buse : régler, ou régler et attendre |
+| `M140`, `M190` | Température du plateau : régler, ou régler et attendre |
+| `M106`, `M107` | Ventilateur de pièce : allumer (`S0` à `S255`), éteindre |
 
-![Slide 146 Image](slide_146_image_4.png)
+Les lettres `G` pilotent les mouvements, les lettres `M` les fonctions de la machine. Le G-code est interprété par le **firmware** de l'imprimante (Marlin, Klipper, ou les firmwares des fabricants), et chaque firmware ajoute ses propres commandes.
 
-## Le G-code
+### Lire un fichier G-code
 
-Le G-code Pourquoi comprendre le G-code ? 147 Dépannage: Permet d’identifier et de corriger des problèmes d’impression directement dans le fichier.  Optimisation: Ajuster manuellement certaines commandes pour améliorer la qualité ou la vitesse.  Personnalisation: Créer des routines spécifiques (ex. : nettoyage, calibration).  Applications avancées: Utile pour automatiser des processus ou intégrer des fonctions non standardisées.
+{% include image-row.html image_1="slide_145_image_4.jpg" image_2="slide_146_image_4.png" %}
 
-![Slide 147 Image](slide_147_image_4.png)
+![Aperçu d'une couche et du G-code correspondant](slide_147_image_4.jpg)
+
+Un fichier G-code compte des centaines de milliers de lignes, presque toutes des `G1`. Le slicer y ajoute des **commentaires** (après `;`) qui structurent le fichier : changement de couche, hauteur Z, numéro de couche sur le total, type de trajet. Le **G-code de démarrage**, au début du fichier, chauffe la machine, fait l'origine et le nivellement, puis trace une ligne de purge ; le **G-code de fin** éteint les chauffes et dégage la tête.
+
+### Pourquoi le comprendre ?
+
+- **Dépanner** : retrouver dans le fichier la cause d'un défaut (une température, une vitesse, un trajet inattendu).
+- **Optimiser** : ajuster une commande pour gagner en qualité ou en vitesse.
+- **Personnaliser** : modifier le G-code de démarrage (purge, calibration), insérer une pause à une hauteur donnée pour changer de couleur ou placer un écrou dans la pièce.
+- **Aller plus loin** : générer ses trajets soi-même, comme avec FullControl.
+
+## Pour aller plus loin
+
+- [Les technologies d'impression](/docs/concepts/3d-printing-technologies/)
+- [Impression 3D avec OrcaSlicer](/docs/tutorials/production/imprimer-une-piece/)
+- [Règles de conception et conseils](/docs/how-to-guides/3d-printing-design-rules/)
+- [Résoudre les problèmes de qualité d'impression](/docs/how-to-guides/3d-printing-troubleshooting/)
+- [Les bases de l'impression 3D (Prusa Research)](/docs/references/others/bases-de-limpression-prusa/)
+- [FullControl](https://fullcontrol.xyz)
 
 ---
 
-{%
-  include card_collections.html
-  title="Pour aller plus loin"
-  description="Explorez d'autres formations pour approfondir vos connaissances"
-  type="courses"
-%}
+Illustrations reprises du support de cours Fabrication additive du MakerSpace (captures de slicers, de logiciels et de sites) ; sources détaillées à compléter.
+{: .is-size-7 .has-text-grey }

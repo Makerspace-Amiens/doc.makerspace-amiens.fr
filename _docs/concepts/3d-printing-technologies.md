@@ -10,272 +10,361 @@ type: concept
 tag: additive-manufacturing
 
 title: Les technologies d'impression
-subtitle: 
-description: 
+subtitle: Fil fondu, résine, poudre et matériaux
+description: Comment fonctionnent les procédés d'impression 3D (FDM, SLA, SLS et les autres), ce qui les distingue, et quels matériaux leur correspondent.
 author: Adrien Bracq
 
 time: 2
-difficulty: 1
+difficulty: 2
 
 prerequisites:
-  - label: Aucun pré-requis nécessaire
-    link: ""
+  - label: Introduction à l'impression 3D
+    link: /docs/concepts/3d-print-introduction/
 
-todo: 10
+todo: 90
 ---
 
-{% include message.html title="Attention" message="La page est en cours de rédaction. C'est pour l'instant un extrait brut des slides [du cours d'introduction à l'impression 3D.](/assets/pdf/initiation-fabrication-additive.pdf)"
-status="is-warning" dismissable="false" icon="fas fa-exclamation-triangle" %}
+{% include message.html title="Information" message="Cette page est la version rédigée et approfondie du cours. Les slides correspondantes : [Partie 2 : technologies et matériaux](/workshops/fab-additive/slides/technologies-materiaux/)." status="is-info" icon="fas fa-info-circle" %}
 
-<!-- markdownlint-disable MD024 -- extrait brut de slides, titres dupliqués d'une diapo à l'autre ; à réécrire avec la page (cf. todo: 10) -->
+## Trois grandes familles
 
-## II - Les technologies
+Toutes les imprimantes 3D construisent un objet couche par couche, mais elles ne le font pas avec la même matière ni avec la même source d'énergie. Trois familles couvrent l'essentiel des usages :
 
-II - Les technologies Sources illustrations : « Les bases de l’imrpession 3D » - Prusa Research
+| | Fil fondu (FDM) | Résine (SLA, DLP, MSLA) | Poudre (SLS) |
+|---|---|---|---|
+| **Matière** | Filament thermoplastique | Résine photosensible liquide | Poudre fine (polymère, métal) |
+| **Solidifiée par** | Fusion puis refroidissement | Lumière UV | Laser (frittage ou fusion) |
+| **Pour** | Prototypes, pièces fonctionnelles | Détails fins, bijoux, dentaire | Pièces industrielles, petites séries |
+| **Atout** | Abordable, simple, sûr | Précision, surface lisse | Pas de supports, pièces solides |
+| **Limite** | Couches visibles, pièce anisotrope | Résine toxique, post-traitement | Machines coûteuses, dépoudrage |
 
-## Les différentes technologies
+La norme ISO/ASTM 52900 range les procédés en sept catégories : extrusion de matière (le FDM), photopolymérisation en cuve (la résine), fusion sur lit de poudre (SLS, DMLS), projection de liant (Binder Jetting), projection de matière (PolyJet), dépôt sous énergie concentrée (DED, pour réparer ou recharger des pièces métalliques) et stratification de feuilles. Les trois premières représentent l'immense majorité des machines que vous croiserez.
 
-FFF/FDM (Fused Filament Fabrication/Modeling) : Processus : Filament plastique fondu et déposé par une buse. Applications : Prototypage rapide, objets du quotidien. Avantages : Abordable et facile à utiliser.  SLA (Stéréolithographie) : Processus : Résine liquide solidifiée par lumière UV ou LED (laser ou DLP). Applications : Modèles détaillés, prothèses, bijoux. Avantages : Haute précision et finition.  SLS (Selective Laser Sintering) : Processus : Poudre fine compactée par laser. Applications : Pièces fonctionnelles, prototypes industriels. Avantages : Pas besoin de structures de support, matériaux variés.     Les différentes technologies 65
+Aucune technologie n'est universelle : chacune a ses avantages, ses limites et ses façons d'échouer. On choisit le procédé selon la pièce, pas l'inverse.
 
-## Les différentes technologies
+![Impression FDM ratée : la pièce s'est décollée et la buse a déposé un enchevêtrement de filament](/workshops/fab-additive/slides/technologies-materiaux/impression-ratee.jpg)
 
-Les différentes technologies 66 Pas de technologie universelle.  Chaque méthode a ses avantages et limites.  Choisissez en fonction de vos besoins.
+## Le dépôt de fil fondu (FDM / FFF)
 
-## FDM / FFF
+### Principe
 
-FDM / FFF Fused Deposition Modeling / Fused Filament Fabrication 67
+Un filament thermoplastique, le plus souvent de **1,75 mm** de diamètre (parfois 2,85 mm), est poussé dans une **buse chauffée** où il fond. La tête dépose un cordon de plastique fondu qui suit le contour et le remplissage de chaque couche, puis le plateau descend (ou la tête monte) d'une hauteur de couche et l'opération recommence.
 
-## FFF / FDM
+![Dépôt de filament fondu couche par couche](slide_68_image_4.png)
 
-FFF / FDM Fused Deposition Modeling / Fused Filament Fabrication 68 La plus répandue et abordable Adaptée aux pièces fonctionnelles, mécaniques et aux prototypes.  Matériau utilisé : Filament plastique Diamètre standard : 1,75 mm. Facile à utiliser. Plus sûr que la résine liquide ou la poudre.  Caractéristiques d’impression Hauteur de couche : 0,05 à 0,3 mm avec une buse de 0,4 mm. Limite : Couches visibles à l'œil nu.  Idéal pour des projets accessibles et pratiques, avec un excellent rapport qualité-prix.
+- **Hauteur de couche** : de 0,05 à 0,3 mm avec une buse de 0,4 mm. Les couches restent visibles à l'œil nu.
+- **Pièce anisotrope** : les cordons d'une même couche sont bien soudés entre eux, mais deux couches successives n'adhèrent que par une fine zone refondue. Une pièce FDM est donc nettement moins résistante dans la direction verticale (Z) que dans le plan de la couche. Cette propriété guide toute la conception (voir [Le workflow logiciel](/docs/concepts/3d-printing-workflow/#orienter-les-couches-selon-leffort)).
+- **FDM ou FFF** : *Fused Deposition Modeling* est une marque déposée de Stratasys, qui a breveté le procédé en 1989. Le projet RepRap a popularisé le terme libre *Fused Filament Fabrication*. Les deux désignent la même chose.
 
-![Slide 68 Image](slide_68_image_4.png)
+C'est la technologie la plus répandue et la plus abordable, et celle de la plupart des imprimantes du MakerSpace.
 
-## FFF / FDM – Types de machines
+### Les architectures de machine
 
-FFF / FDM – Types de machines Cartésienne – “Bed slinger” 69 Principe de Fonctionnement Les imprimantes cartésiennes utilisent des axes orthogonaux (X, Y, Z) pour les déplacements. Dans une configuration bed slinger, le plateau (bed) se déplace.  Avantages : Conception simple et économique. Idéal pour les imprimantes FDM grand public  Limites : Déplacements rapides limités par l’inertie du plateau. Peut affecter la qualité d’impression sur de grands volumes.
+Une imprimante FDM doit déplacer la buse par rapport au plateau selon trois axes. Il existe plusieurs façons de répartir ces mouvements.
 
-![Slide 69 Image](slide_69_image_4.png)
+| Architecture | Ce qui bouge | Atout | Limite | Au MakerSpace |
+|---|---|---|---|---|
+| Bed slinger | Plateau en Y, tête en X, portique en Z | Simple, économique | Inertie du plateau | [Artillery Sidewinder X2](/docs/references/machines/artillery_sidewinder_x2/), [Genius Pro](/docs/references/machines/artillery_genius/) |
+| Cantilever | Tête sur un bras porté d'un seul côté | Compacte, légère | Flexion du bras | [Bambu Lab A1 Mini](/docs/references/machines/bambulab_a1_mini/) |
+| CoreXY | Tête en X et Y, plateau en Z | Rapide, précise | Courroies à régler, plus chère | [Bambu Lab P1P](/docs/references/machines/bambulab_p1p/), [X1C](/docs/references/machines/bambulab_x1c/) |
+| Delta | Trois bras articulés sur trois colonnes | Rapide, grande hauteur | Calibration délicate, plateau rond | |
 
-![Slide 69 Image](slide_69_image_5.png)
+#### Bed slinger
 
-## FFF / FDM – Types de machines
+Les trois axes sont orthogonaux (cartésiens) et le **plateau se déplace en Y**. La conception est simple et peu coûteuse, ce qui en a fait le standard des imprimantes grand public (Prusa i3, Ender-3). Mais le plateau et la pièce en cours d'impression sont lourds : à chaque changement de direction, leur inertie limite les accélérations et peut faire osciller une pièce haute.
 
-FFF / FDM – Types de machines Cartésienne – “Cantilever” 70 Principe de Fonctionnement Une imprimante cantilever utilise également une architecture cartésienne, mais avec une structure simplifiée. La tête d'impression se déplace sur un bras unique, sans support symétrique.  Avantages : Conception légère et compacte. Idéale pour les imprimantes de petit format. Réduction des coûts de fabrication grâce à une structure minimaliste.  Limites : Moins stable que d'autres architectures, surtout pour de grands volumes. Peut être affectée par des vibrations ou une flexion du bras.
+{% include image-row.html image_1="slide_69_image_4.png" image_2="slide_69_image_5.png" %}
 
-![Slide 70 Image](slide_70_image_4.jpg)
+#### Cantilever
 
-![Slide 70 Image](slide_70_image_5.jpg)
+Variante cartésienne où la tête circule sur un **bras tenu d'un seul côté**. La structure est minimaliste, légère et compacte, idéale pour les petits formats. Sur un grand volume, le bras fléchit et vibre : c'est pourquoi cette architecture reste réservée aux petites machines.
 
-## FFF / FDM – Types de machines
+{% include image-row.html image_1="slide_70_image_4.jpg" image_2="slide_70_image_5.jpg" %}
 
-FFF / FDM – Types de machines Cartésienne – “Core XY” 71 Principe de Fonctionnement Une architecture CoreXY utilise un système de poulies et courroies pour coordonner les déplacements sur les axes X et Y. La tête d’impression est suspendue et se déplace indépendamment du plateau.  Avantages : Vitesse élevée : Mouvement plus léger et rapide, car seule la tête d’impression se déplace sur X et Y. Précision accrue : Réduction des vibrations par rapport aux architectures de type bed slinger. Idéal pour les grands volumes : Stabilité optimale sur de grandes dimension  Limites : Nécessite un alignement précis des courroies. Coût plus élevé que les architectures simples comme les bed slingers ou cantilever. <https://corexy.com/theory.html>
+#### CoreXY
 
-![Slide 71 Image](slide_71_image_4.png)
+Deux moteurs fixes entraînent **deux courroies croisées** qui déplacent ensemble la tête en X et en Y. Le plateau ne bouge qu'en Z, lentement. Comme seuls la tête et le chariot sont en mouvement rapide, les masses en mouvement sont faibles : la machine peut accélérer fort sans vibrer, ce qui explique la vitesse des imprimantes récentes.
 
-![Slide 71 Image](slide_71_image_5.jpg)
+Le déplacement de la tête se déduit des rotations $\Delta A$ et $\Delta B$ des deux moteurs (exprimées en longueur de courroie) :
 
-![Slide 71 Image](slide_71_image_7.png)
+$$\Delta X = \frac{\Delta A + \Delta B}{2} \qquad \Delta Y = \frac{\Delta A - \Delta B}{2}$$
 
-## FFF / FDM – Types de machines
+Les deux moteurs tournent dans le même sens : la tête part en X. Ils tournent en sens opposés : elle part en Y. Pour un mouvement en diagonale, un seul moteur tourne.
 
-FFF / FDM – Types de machines Cartésienne – “Core XY” 72
+{% include image-row.html image_1="slide_71_image_7.png" image_2="slide_72_image_3.gif" image_3="slide_72_image_4.gif" %}
 
-![Slide 72 Image](slide_72_image_3.gif)
+En contrepartie, les deux courroies doivent avoir exactement la même tension, sinon la machine imprime des carrés en losange. Les machines CoreXY sont en général fermées, ce qui aide aussi pour les matériaux sensibles au refroidissement (ABS, ASA).
 
-![Slide 72 Image](slide_72_image_4.gif)
+{% include image-row.html image_1="slide_71_image_4.jpg" image_2="slide_71_image_5.jpg" %}
 
-## FFF / FDM – Types de machines
+Pour aller plus loin : [la théorie du CoreXY](https://corexy.com/theory.html).
 
-FFF / FDM – Types de machines Delta 73 Principe de Fonctionnement Une imprimante Delta repose sur une structure composée de trois bras attachés à des colonnes verticales. La tête d’impression est déplacée par la coordination simultanée des trois bras.  Avantages : Vitesse élevée : Déplacement rapide et fluide grâce à la légèreté de la tête. Structure compacte : Idéale pour des formes cylindriques ou circulaires. Grande hauteur d’impression : Permet de produire des objets allongés.  Limites : Complexité de calibration : Nécessite une calibration précise pour éviter des erreurs de positionnement. Forme du plateau : Habituellement circulaire, limitant certains designs. Moins adapté pour les petites impressions : Risque de surcoût ou de surdimensionnement.
+#### Delta
 
-![Slide 73 Image](slide_73_image_4.png)
+Trois chariots montent et descendent sur trois colonnes verticales, reliés à la tête par des bras articulés. La position de la tête résulte de la combinaison des trois hauteurs : le firmware calcule en permanence cette cinématique inverse. La tête, très légère, se déplace vite, et la machine peut être haute. En revanche, le plateau est rond, la zone utile se réduit vers le haut, et la moindre erreur de longueur de bras ou d'alignement des colonnes déforme toute la pièce : la calibration est délicate.
 
-![Slide 73 Image](slide_73_image_5.png)
+{% include image-row.html image_1="slide_73_image_4.png" image_2="slide_73_image_5.png" %}
 
-## FFF / FDM – Les composants
+### L'ensemble d'extrusion
 
-FFF / FDM – Les composants L’ensemble d’extrusion 74 Rôle de l’ensemble d’extrusion Acheminer et contrôler le filament plastique vers la buse d’impression. Responsable du dépôt précis de matière couche par couche. La qualité et la fiabilité de l’extrudeur impactent directement la précision et l’uniformité des impressions.  Composants Moteur : Permet le déplacement précis du filament. Roues d’entraînement : Saisissent et poussent le filament dans le tube de guidage. Hotend (partie chaude) : Chauffe le filament pour le rendre liquide avant extrusion.
+L'ensemble d'extrusion achemine le filament jusqu'à la buse et dose la matière déposée. Il comprend un **moteur pas à pas**, des **roues d'entraînement** qui saisissent le filament, et la **hotend** qui le fond.
 
-## FFF / FDM – Les composants
+#### Direct drive ou Bowden
 
-FFF / FDM – Les composants Deux principaux types d’ensemble 75 Direct Drive : L’extrudeur est directement monté sur la tête d’impression. Avantages : Meilleur contrôle pour les matériaux flexibles. Limites : Plus lourd, pouvant réduire la vitesse.     Bowden : L’extrudeur est séparé de la tête et pousse le filament via un tube. Avantages : Structure plus légère, permettant des impressions rapides. Limites : Moins adapté aux matériaux flexibles.  
+![Direct drive et Bowden](slide_75_image_4.png)
 
-![Slide 75 Image](slide_75_image_4.png)
+- **Direct drive** : l'extrudeur est monté sur la tête, juste au-dessus de la hotend. Le filament parcourt quelques centimètres seulement entre les roues et la buse : le contrôle est précis, les rétractions courtes (de l'ordre de 0,5 à 2 mm), et les filaments souples (TPU) passent sans problème. La tête est en revanche plus lourde.
+- **Bowden** : l'extrudeur est fixé sur le châssis et pousse le filament dans un tube PTFE jusqu'à la tête. La tête est légère et rapide, mais le tube introduit du jeu et de l'élasticité : les rétractions doivent être plus longues (souvent 4 à 6 mm) et un filament souple se tasse dans le tube au lieu d'avancer.
 
-## FFF / FDM – Les composants
+#### L'extrudeur
 
-FFF / FDM – Les composants L’extrudeur 76 Fonction principale : Mouvements du filament L’extrudeur pousse le filament plastique dans la buse d’impression pour qu’il soit fondu et extrudé.  Il contrôle : La vitesse d’alimentation. La précision du débit de filament  Importance pour les matériaux complexes Les matériaux comme les TPU ou TPE sont flexibles et difficiles à extruder sans un contrôle précis.  Un extrudeur performant : Évite les bourrages. Maintient une extrusion fluide et homogène. Assure une qualité d’impression optimale, même avec des filaments exigeants.
+L'extrudeur pousse le filament dans la hotend et règle le **débit**. Les modèles simples ont une seule roue dentée motrice et un roulement presseur ; les extrudeurs à **double entraînement** pincent le filament entre deux roues motrices, ce qui limite le patinage. Beaucoup intègrent une **réduction** par engrenages (de l'ordre de 3:1) : le moteur fait plus de tours pour la même longueur de filament, d'où plus de couple et une meilleure résolution de dosage.
 
-![Slide 76 Image](slide_76_image_4.png)
+{% include image-row.html image_1="slide_76_image_4.jpg" image_2="slide_76_image_5.jpg" image_3="slide_76_image_6.jpg" %}
 
-![Slide 76 Image](slide_76_image_5.jpg)
+Un extrudeur performant évite les bourrages et garde un débit régulier, surtout avec les filaments exigeants comme le TPU.
 
-![Slide 76 Image](slide_76_image_6.jpg)
+#### La hotend
 
-## FFF / FDM – Les composants
+![Vue en coupe d'une hotend](slide_77_image_4.png)
 
-FFF / FDM – Les composants La Hotend 77    1 - Tube PTFE 2 - Dissipateur thermique 3 - Ventilateur d’impression 4 - Barrière thermique 5 - Bloc de chauffe 6 - Buse Fonction principale : Chauffe et dépose du filament Chauffer le filament plastique pour le rendre liquide et extrudable. Solidifier rapidement le filament déposé pour former des couches précises.  Bloc chauffant : Contient une cartouche chauffante et un thermistor. Températures courantes : 180°C à 260°C (selon le matériau).  Heat break (zone froide) : Transition entre la partie chauffante et le système de guidage. Réduit la conduction thermique pour éviter un ramollissement prématuré du filament.  Dissipateur thermique (radiateur) : Aide à refroidir le filament au-dessus du heat break. Souvent accompagné d’un ventilateur dédié
+1. **Tube PTFE** : guide le filament jusqu'à la zone chaude.
+2. **Dissipateur thermique** (radiateur) : évacue la chaleur qui remonte.
+3. **Ventilateur** de hotend : refroidit le radiateur en permanence.
+4. **Barrière thermique** (*heat break*) : tube étroit et peu conducteur qui sépare la zone froide de la zone chaude.
+5. **Bloc de chauffe** : contient la **cartouche chauffante** et la **thermistance** qui mesure la température, de 180 à 260 °C selon le matériau, régulée par le firmware.
+6. **Buse** : calibre le cordon de sortie.
 
-![Slide 77 Image](slide_77_image_4.png)
+Le filament doit rester solide jusqu'à la barrière thermique, puis fondre d'un coup dans le bloc. Si la chaleur remonte trop haut (*heat creep*), le filament ramollit dans la zone froide, gonfle et bouche la tête : c'est l'une des premières causes de bourrage, notamment avec le PLA dans une enceinte chaude.
 
-## FFF / FDM – Les composants
+Sur certaines hotends, le tube PTFE descend jusqu'à la buse. Le PTFE se dégrade au-delà d'environ 250 °C : ces hotends sont limitées aux matériaux courants. Les hotends *all-metal*, sans PTFE dans la zone chaude, sont nécessaires pour les filaments techniques (nylon, PC).
 
-FFF / FDM – Les composants La buse 78 Rôle de la buse Extruder le filament fondu pour créer des couches d’impression. Déterminer la précision et la vitesse de l’impression en limitant le diamètre de sortie du matériau.  Matériaux des buses Laiton (standard) : Idéal pour le PLA, ABS et PETG. Excellente conductivité thermique. S'use rapidement avec des filaments abrasifs (ex. carbone).  Acier trempé : Conçu pour les filaments abrasifs comme le carbone ou le métal. Grande durabilité. Conductivité thermique inférieure au laiton.  Revêtements spéciaux : Buses plaquées (nickel, cuivre) pour une meilleure résistance et moins d’adhérence.
+#### La buse
 
-![Slide 78 Image](slide_78_image_4.jpg)
+![Buses en laiton](slide_78_image_4.jpg)
 
-## FFF / FDM – Les composants
+| Matériau | Pour | Limite |
+|---|---|---|
+| **Laiton** | Le standard : PLA, PETG, ABS, TPU | S'use vite avec les filaments chargés |
+| **Acier trempé** | Filaments abrasifs (fibre de carbone, verre, métal, bois) | Conduit moins bien la chaleur |
+| **Laiton plaqué** (nickel, cuivre) | Moins d'accroche du plastique, meilleure tenue | Plus chère |
 
-FFF / FDM – Les composants Taille des buses 79  0,4 mm (standard) : Équilibre entre précision et vitesse. Idéal pour la majorité des projets.  Petites tailles (ex. 0,2 mm) : Avantages : Plus de détails pour des impressions précises. Limites : Impression plus lente.  Grandes tailles (ex. 0,6 à 1,0 mm) : Avantages : Impression plus rapide pour les grandes pièces. Limites : Moins de finesse dans les détails.  Le choix de la buse impacte : La résolution (précision des détails). La vitesse d’impression. La compatibilité avec les matériaux spécifiques.
+![Buses de matériaux différents](slide_79_image_4.jpg)
 
-![Slide 79 Image](slide_79_image_4.jpg)
+Le **diamètre** fixe le compromis entre finesse et vitesse :
 
-## SLA
+| Diamètre | Avantage | Limite |
+|---|---|---|
+| 0,2 mm | Détails fins | Impression lente, bouchage facile |
+| **0,4 mm** | **Le standard : bon compromis** | |
+| 0,6 à 1 mm | Grandes pièces, rapide, pièces plus solides | Moins de finesse |
 
-SLA Stéréolithographie 80
+Deux règles pratiques relient la buse aux réglages :
 
-## SLA
+- la **largeur du cordon** vaut en général 100 à 120 % du diamètre de buse (environ 0,45 mm pour une buse de 0,4 mm) ;
+- la **hauteur de couche** ne doit pas dépasser environ 75 % du diamètre de buse (0,3 mm pour une buse de 0,4 mm), sinon les couches adhèrent mal.
 
-SLA Stéréolithographie 81 Principe de Fonctionnement Utilisation de résines liquides photosensibles, solidifiées par la lumière UV. Une plateforme descend après chaque couche solidifiée, permettant à une nouvelle couche d’adhérer.  Caractéristiques Précision élevée : Objets détaillés avec des couches quasiment invisibles. Finitions lisses, idéales pour les bijoux et les applications médicales.  Limitations : Surface d’impression réduite. Temps d’impression plus long que les imprimantes FFF. Résines liquides toxiques : manipulation et ventilation nécessaires.  Avantages Détails incroyables et surface lisse, impossible à atteindre avec les imprimantes FFF. Applications professionnelles : prototypes complexes, modélisation médicale, et bijoux.
+La vitesse maximale est limitée par le **débit volumique** que la hotend peut fondre :
 
-![Slide 81 Image](slide_81_image_4.jpg)
+$$Q = \text{largeur} \times \text{hauteur} \times \text{vitesse}$$
 
-## Slide 82
+Un cordon de 0,45 × 0,2 mm à 100 mm/s demande $Q = 9\ \text{mm}^3/\text{s}$. Une hotend classique plafonne autour de 10 à 15 mm³/s ; au-delà, le filament n'a pas le temps de fondre et la pièce manque de matière (sous-extrusion). Les hotends dites *high flow*, au bloc de chauffe allongé, repoussent cette limite.
 
-82 Pourquoi le post-traitement est nécessaire ? Les objets imprimés en SLA ne sont pas prêts à l’usage immédiatement. Ils peuvent être mous ou collants à cause de résidus de résine non solidifiée à leur surface.  Étapes de post-traitement : Nettoyage : Laver l’objet dans de l’alcool isopropylique pour enlever la résine restante. Durcissement UV : Exposer l’objet à une lumière UV pour le solidifier davantage.  Précautions : Toujours porter des gants pour manipuler les objets et éviter le contact avec la résine. Veiller à bien ventiler l’espace pour éviter l’inhalation des vapeurs.  Outils complémentaires : Machines automatiques de lavage et de durcissement, simplifiant le processus et garantissant des résultats homogènes.  SLA Post-traitement
+## La photopolymérisation en cuve (SLA, DLP, MSLA)
 
-## Slide 83
+### Principe
 
-83 Eléments constitutifs : 1 - Plateforme d‘impression 2 - Tige trapézoïdale 3 - Axe Z 4 - Réservoir de résine 5 - Photopolymère (résine liquide) 6 - Moteur pas à pas 7 - Objet imprimé  Processus : La plateforme d’impression descend dans la résine, laissant une fine couche entre l’objet et le fond du réservoir. La lumière UV solidifie la résine selon la forme de la couche. Une fois la couche terminée, la plateforme monte légèrement, permettant la formation de la couche suivante. Ce processus se répète jusqu’à ce que l’objet soit terminé. SLA Processus & fonctionnement général
+Une **résine liquide photosensible** durcit quand elle reçoit de la lumière ultraviolette (le plus souvent à 405 nm). La résine contient des monomères et des **photo-initiateurs** : sous la lumière, ces derniers déclenchent une polymérisation qui transforme le liquide en solide, uniquement là où la lumière a frappé.
 
-## Slide 84
+![Pièce en résine sortant d'une imprimante MSLA](slide_81_image_4.jpg)
 
-84 Principe de Fonctionnement Un rayon laser UV solidifie la résine couche par couche. Deux miroirs (galvanomètres) dirigent le laser pour « dessiner » la forme de chaque couche. Caractéristiques Temps d’impression : Dépend de la surface à solidifier. Plus il y a d’objets, plus l’impression est longue. Précision : Très élevée grâce à la finesse du rayon laser. SLA Laser Avantages Idéal pour des objets très détaillés. Adapté aux applications nécessitant une précision extrême (ex. bijoux, dentaire). Limites Temps d’impression peut augmenter significativement avec la complexité ou la taille de la plateforme.
+![Schéma d'une imprimante SLA](/workshops/fab-additive/slides/technologies-materiaux/schema-sla.png)
 
-![Slide 84 Image](slide_84_image_4.png)
+1. Plateforme d'impression
+2. Tige trapézoïdale
+3. Axe Z
+4. Réservoir de résine (cuve)
+5. Photopolymère (résine liquide)
+6. Moteur pas à pas
+7. Objet imprimé
 
-## Slide 85
+Sur les imprimantes de bureau, l'impression se fait **à l'envers** (*bottom-up*) :
 
-85 Principe de Fonctionnement Utilise un projecteur numérique pour solidifier toute une couche à la fois. Les zones exposées par le projecteur durcissent simultanément. Caractéristiques Temps d’impression : Constant, quelle que soit la quantité d’objets sur la plateforme. Précision : Dépend de la résolution du projecteur. SLA DLP (Digital Light Processing) Avantages Rapidité accrue pour les impressions multi-objets. Répartition homogène de l’exposition sur toute la plateforme. Limites Résolution XY limitée par la qualité du projecteur.
+1. La plateforme descend dans la cuve et laisse une fine couche de résine entre l'objet et le fond, un film transparent (FEP).
+2. La lumière, envoyée par-dessous, solidifie la forme de la couche.
+3. La plateforme remonte pour **décoller** la couche du film, puis redescend pour la couche suivante.
 
-![Slide 85 Image](slide_85_image_5.png)
+Ce décollement exerce une force de pelage importante. Elle explique trois règles propres à la résine : la pièce est presque toujours inclinée sur ses supports pour réduire la surface de chaque couche, une pièce creuse doit être **évidée et percée** (sinon elle forme une ventouse avec le fond de la cuve et la résine reste piégée à l'intérieur), et la première couche est surexposée pour bien coller à la plateforme.
 
-## Slide 86
+**Atouts** : des couches de 0,01 à 0,05 mm presque invisibles, une surface lisse, des détails impossibles en FDM. **Limites** : un petit volume d'impression, des pièces souvent plus cassantes, et une résine toxique qui impose des précautions.
 
-86 Principe de Fonctionnement Une LED UV haute performance émet de la lumière. Un écran LCD agit comme un masque, ne laissant passer la lumière que sur les zones à solidifier. Caractéristiques Temps d’impression : Constant pour chaque couche, quelle que soit la quantité d’objets. Résolution fixe : Dépend de la résolution de l’écran LCD. SLA MSLA (stéréolithographie masquée) Avantages Rapide et efficace pour des impressions multi-objets. Prix généralement plus abordable que le SLA laser. Limites La résolution dépend uniquement de l’écran LCD (XY). Durabilité limitée des écrans LCD avec le temps.
+### Laser, DLP ou MSLA
 
-![Slide 86 Image](slide_86_image_5.png)
+Les trois procédés diffèrent par la façon d'éclairer chaque couche :
 
-## SLS / DMLS
+| Procédé | Source de lumière | Temps par couche | Résolution XY |
+|---|---|---|---|
+| SLA laser | Laser UV guidé par deux miroirs (galvanomètres) | Proportionnel à la surface à tracer | Finesse du point laser |
+| DLP | Projecteur numérique (matrice de micro-miroirs) | Constant | Résolution du projecteur |
+| MSLA | Matrice de LED UV derrière un écran LCD qui sert de masque | Constant | Taille des pixels de l'écran |
 
-SLS / DMLS Selective Laser Sintering - Frittage 87
+![Principe de la SLA laser](slide_84_image_4.png)
 
-## SLS / DMLS
+En **SLA laser**, le point lumineux « dessine » chaque couche : la précision est très élevée, mais une plateforme pleine de pièces prend plus de temps qu'une seule.
 
-SLS / DMLS Selective Laser Sintering - Frittage 88 Principe de Fonctionnement Le frittage consiste à solidifier une poudre fine avec un laser pour former chaque couche. Étapes : Un cylindre applique une fine couche de poudre sur la plateforme. Le laser fritte la poudre en suivant la forme de la couche. La plateforme descend pour accueillir une nouvelle couche de poudre. Caractéristiques Précision : Couches très fines, quasiment invisibles à l'œil nu. Économie de matériau : La poudre non frittée peut être réutilisée, limitant le gaspillage. Flexibilité : Pas besoin de supports, car la poudre environnante soutient les pièces pendant l'impression. Applications Utilisé principalement dans l’industrie pour des pièces fonctionnelles et des prototypes. Secteurs : automobile, aéronautique, médical, design. Limites Post-traitement : Nécessité de nettoyer les objets imprimés pour retirer la poudre excédentaire. Coût élevé : Machines à partir de 5500 €, principalement utilisées par les professionnels.
+![Principe de la DLP](slide_85_image_5.png)
 
-![Slide 88 Image](slide_88_image_0.jpg)
+En **DLP**, un projecteur expose toute la couche d'un coup : le temps par couche ne dépend plus du nombre de pièces, mais la résolution est celle du projecteur, étalée sur toute la surface.
 
-![Slide 88 Image](slide_88_image_5.jpg)
+![Principe de la MSLA](slide_86_image_5.png)
 
-![Slide 88 Image](slide_88_image_6.jpg)
+En **MSLA**, l'écran LCD ne laisse passer la lumière qu'à travers les pixels de la couche. C'est la technologie la moins chère et aujourd'hui la plus répandue. La résolution XY est la taille d'un pixel : sur la [Phrozen Sonic Mighty 4K](/docs/references/machines/phrozen_mighty_4k/) du MakerSpace, environ 3840 pixels sur 200 mm, soit à peu près 52 µm. L'écran LCD est un consommable : les UV le dégradent au fil des heures d'impression.
 
-## SLS / DMLS
+### Post-traitement et sécurité
 
-SLS / DMLS Selective Laser Sintering - Frittage 89 Eléments constitutifs : 1 - Laser 2 - Système de balayage 3 - Récipient de poudre 4 - Cylindre 5 - Mécanisme de chargement de poudre 6 - Lit de poudre 7 - Objet imprimé 8 - Plateforme motorisée   Principe de fonctionnement : 1 - Faisceau laser 2 - Particule de poudre frittée 3 - Frittage laser 4 - Lit de poudre 5 - Matériau non fritté dans les couches précédentes
+Une pièce qui sort de l'imprimante est couverte de résine liquide et n'est pas complètement polymérisée.
 
-![Slide 89 Image](slide_89_image_4.png)
+1. **Laver** la pièce dans l'alcool isopropylique (IPA) pour retirer la résine non durcie.
+2. **Retirer les supports**, de préférence avant le durcissement, quand la pièce est encore un peu souple.
+3. **Durcir** la pièce sous UV pour achever la polymérisation et atteindre ses propriétés mécaniques finales.
 
-## Les autres technologies
+![Station de lavage et station de polymérisation UV](/workshops/fab-additive/slides/technologies-materiaux/lavage-polymerisation-uv.jpg)
 
-Les autres technologies 90 Binder Jetting, Polyjet
+La résine liquide est irritante et **sensibilisante** : les réactions cutanées peuvent apparaître après des expositions répétées, même sans gêne au départ. Les gants nitrile sont donc obligatoires dès qu'on touche la résine ou une pièce non durcie, et la zone doit être ventilée. L'IPA est inflammable. La résine liquide ne va jamais à l'évier : les restes et les papiers souillés se durcissent aux UV avant d'être jetés.
 
-## Binder Jetting
+Au MakerSpace, la résine est un module de sécurité de niveau 2, en sessions accompagnées : voir le [module Résine](/workshops/certification-securite/modules/resine/) et la [station de lavage et polymérisation UV](/docs/references/machines/station-lavage-polymerisation-uv/).
 
-Binder Jetting Principe et Applications 91 Définition Le Binder Jetting est une technologie d’impression 3D qui utilise un liant liquide pour agglomérer une poudre fine et former un objet couche par couche. Contrairement au SLS, la poudre n'est pas fondue mais collée par le liant.  Principe de Fonctionnement Application de la poudre : Une fine couche de poudre (métal, sable, céramique). Projection de liant : Une tête d’impression dépose un liant liquide sur les zones définies. Formation couche par couche : La plateforme descend pour accueillir de nouvelles couches. Post-traitement : Nécessaire pour renforcer les pièces (sintering, infiltration).  Caractéristiques Matériaux : Métaux, sable, céramiques. Vitesse : Rapide, couche entière solidifiée en une fois. Précision : Surfaces lisses et détails fins.
+## La fusion sur lit de poudre (SLS, DMLS)
 
-![Slide 91 Image](slide_91_image_4.jpg)
+### Le frittage laser (SLS)
 
-![Slide 91 Image](slide_91_image_5.jpg)
+![Pièce frittée dans son lit de poudre](slide_88_image_0.jpg)
 
-## PolyJet
+1. Un rouleau ou une racle étale une fine couche de poudre (environ 0,1 mm) sur le plateau.
+2. Un laser balaie la section de la couche et fritte la poudre : les grains fondent en surface et se soudent entre eux.
+3. Le plateau descend d'une couche, une nouvelle couche de poudre est étalée, et on recommence.
 
-PolyJet Principe et Applications 92 Définition Le PolyJet est une technologie d'impression 3D par jet de matériau, qui projette des gouttelettes de résine photopolymère liquide sur une plateforme d'impression, couche par couche. Chaque couche est immédiatement solidifiée par une lumière UV, permettant une grande précision et des détails fins.  Principe de Fonctionnement Projection de matériau : Des gouttelettes de résine photopolymère liquide sont projetées sur la plateforme. Solidification par lumière UV : Chaque couche est durcie instantanément par une lumière UV. Formation couche par couche : La tête d’impression dépose et durcit le matériau simultanément, avec une précision élevée.  Caractéristiques Matériaux : Résines photopolymères, avec possibilité de combiner plusieurs couleurs ou textures. Précision : Très élevée, avec des couches fines (jusqu’à 16 microns). Supports : Structures solubles pour faciliter le post-traitement.
+![Schéma d'une machine SLS](slide_89_image_4.png)
 
-![Slide 92 Image](slide_92_image_4.png)
+La chambre est chauffée juste sous la température de fusion du polymère (le plus souvent du **nylon PA12**) : le laser n'apporte que le complément d'énergie, ce qui limite les déformations. La **poudre non frittée soutient la pièce** : aucun support n'est nécessaire, et l'on peut empiler des dizaines de pièces dans tout le volume de la chambre (*nesting*). C'est ce qui rend le SLS rentable pour les petites séries.
 
-![Slide 92 Image](slide_92_image_5.jpg)
+En fin d'impression, le bloc refroidit lentement, puis chaque pièce est extraite et **dépoudrée**. La poudre non frittée est tamisée et réutilisée, mélangée à une part de poudre neuve car elle vieillit à chaque cycle de chauffe.
+
+{% include image-row.html image_1="slide_88_image_5.jpg" image_2="slide_88_image_6.jpg" %}
+
+Les pièces SLS sont solides, presque isotropes, avec une surface légèrement granuleuse. Les machines restent chères (plusieurs milliers d'euros pour les plus petites) et réservées à l'industrie : automobile, aéronautique, médical. La technologie *Multi Jet Fusion* de HP vise le même usage avec un procédé voisin : un agent liquide projeté sur la poudre, puis une lampe infrarouge qui fond la couche entière.
+
+### Les métaux (DMLS, SLM)
+
+Le même principe s'applique aux poudres métalliques (acier, titane, aluminium) avec un laser beaucoup plus puissant qui fond complètement le métal, sous atmosphère inerte (argon) pour éviter l'oxydation. Contrairement au SLS polymère, les pièces métalliques ont besoin de **supports** : ils les ancrent au plateau et évacuent la chaleur pour limiter les déformations. Les supports se retirent ensuite par usinage.
+
+## Les autres procédés
+
+### Binder Jetting
+
+![Tête d'impression Binder Jetting déposant le liant sur la poudre](slide_91_image_4.jpg)
+
+Une tête d'impression, comparable à celle d'une imprimante jet d'encre, dépose un **liant liquide** sur une couche de poudre (métal, sable, céramique). Contrairement au SLS, la poudre n'est pas fondue mais **collée**. Le procédé est rapide, car toute la couche est traitée d'un passage de tête, et ne demande pas de supports. La pièce « verte » qui sort de la machine est fragile : elle est ensuite frittée au four (avec un retrait d'environ 20 % à anticiper dans le modèle) ou infiltrée par un autre matériau. Le Binder Jetting sable sert aussi à fabriquer des moules de fonderie.
+
+![Pièces en Binder Jetting dépoudrées](slide_91_image_5.jpg)
+
+### PolyJet
+
+![Imprimante PolyJet en cours d'impression](slide_92_image_5.jpg)
+
+Le PolyJet (projection de matière) projette des **gouttelettes de résine photopolymère**, durcies aussitôt par une lampe UV qui suit la tête. Les couches descendent jusqu'à 16 µm. Comme plusieurs têtes travaillent en parallèle, une même pièce peut mélanger **plusieurs couleurs et plusieurs duretés** (rigide et souple), avec un matériau de support soluble. Le procédé est idéal pour des prototypes réalistes et des maquettes médicales, mais les machines et les résines sont très coûteuses.
+
+![Pièces multicolores en PolyJet](slide_92_image_4.jpg)
+
+## Choisir une technologie
+
+```mermaid!
+flowchart TD
+    A{La pièce doit-elle<br/>être très détaillée ?} -->|Oui, petite pièce| R[Résine MSLA]
+    A -->|Non| B{Série de dizaines<br/>de pièces solides ?}
+    B -->|Oui| S[SLS, en sous-traitance]
+    B -->|Non| C{Couleurs ou duretés<br/>mélangées ?}
+    C -->|Oui| P[PolyJet, en sous-traitance]
+    C -->|Non| F[FDM au MakerSpace]
+```
+
+| Besoin | Technologie conseillée |
+|---|---|
+| Une figurine de 3 cm très détaillée | Résine (MSLA) |
+| Un support de capteur fixé sur un châssis | Fil fondu (PETG) |
+| 50 engrenages en nylon pour une petite série | Frittage (SLS) |
+| Une maquette multicolore réaliste pour un salon | PolyJet |
 
 ## Les matériaux
 
-Les matériaux
+### Les familles de matériaux
 
-## Les matériaux
+| Technologie | Matière | Exemples |
+|---|---|---|
+| FDM | Filaments thermoplastiques | PLA, PETG, TPU, ABS, ASA, nylon |
+| SLA, DLP, MSLA | Résines photopolymères | Standard, ABS-like, flexibles, haute température, calcinables (bijouterie) |
+| SLS, Binder Jetting, DMLS | Poudres | Nylon PA12, métaux, sable, céramiques |
+| PolyJet | Photopolymères | Multimatériaux, couleurs |
 
-Les matériaux Les familles de matériaux selon les technologies 94 Filaments (FDM/FFF) : Exemples : PLA, ABS, PETG, TPU. Applications : Prototypes, pièces fonctionnelles.  Résines (SLA/DLP/MSLA) : Exemples : Résines standard, flexibles, haute résistance. Applications : Bijoux, médical, maquettes détaillées.  Poudres (SLS/Binder Jetting) : Exemples : Nylon, métaux, céramiques. Applications : Pièces fonctionnelles, prototypage industriel.  Photopolymères (PolyJet) : Exemples : Résines multi-matériaux et couleurs. Applications : Prototypes réalistes, design, médical.  Pour la suite, on se concentrera sur les filaments pour les technologies FDM/FF
+{% include image-row.html image_1="slide_94_image_4.jpg" image_2="slide_94_image_5.jpg" image_3="slide_94_image_6.jpg" %}
 
-![Slide 94 Image](slide_94_image_4.jpg)
+La suite de cette page se concentre sur les **filaments**, ceux des imprimantes FDM du MakerSpace.
 
-![Slide 94 Image](slide_94_image_5.jpg)
+### Comprendre un filament : la température de transition vitreuse
 
-![Slide 94 Image](slide_94_image_6.jpg)
+Un thermoplastique ne fond pas d'un coup : au-dessus de sa **température de transition vitreuse** ($T_g$), il passe de l'état rigide à un état caoutchouteux. C'est elle qui fixe la température maximale d'usage d'une pièce, bien plus que la température d'impression. Une pièce en PLA ($T_g \approx 60\ °\text{C}$) se déforme sur une plage arrière de voiture en été ; une pièce en PETG ($T_g \approx 80\ °\text{C}$) ou en ABS ($T_g \approx 105\ °\text{C}$) tient.
 
-## Les filaments
+Un matériau qui rétracte beaucoup en refroidissant (ABS, ASA, nylon) a tendance à **gauchir** (*warping*) : les premières couches, déjà froides, se contractent et tirent sur les coins, qui se décollent du plateau. Un plateau chauffé et une enceinte fermée réduisent l'écart de température et donc ce phénomène.
 
-Les filaments 95 PLA, PETG, TPU, ABS, PVA
+### Les filaments courants
 
-## PLA
+| Filament | Buse | Plateau | Atouts | Limites |
+|---|---|---|---|---|
+| **PLA** | 190-220 °C | 50-60 °C | Facile, peu de déformation, rigide | Fragile aux chocs, ramollit vers 60 °C |
+| **PETG** | 220-250 °C | 70-85 °C | Résistant, peu cassant, tient l'humidité et les produits chimiques | Fils (*stringing*), colle trop fort à certains plateaux |
+| **TPU** | 200-250 °C | 30-60 °C | Souple, élastique, très résistant à l'usure | Lent, demande un extrudeur direct drive |
+| **ABS** | 220-250 °C | 90-110 °C | Résiste aux chocs et à la chaleur, se ponce et se colle | Warping, vapeurs : enceinte fermée et ventilation |
+| **PVA** | 180-210 °C | 45-60 °C | Support soluble dans l'eau | Très sensible à l'humidité |
 
-PLA Acide Polylactique 96 Caractéristiques: Biodégradable, facile à imprimer. Faible résistance à la chaleur et aux chocs. Température d’impression: 190-220°C. Applications: Objets décoratifs, prototypes non fonctionnels. Avantages: Peu de déformation, compatible avec les imprimantes débutantes. Limites: Fragilité, sensibilité à la chaleur.
+{% include image-row.html image_1="slide_96_image_4.jpg" image_2="slide_97_image_4.jpg" image_3="slide_98_image_4.jpg" %}
 
-![Slide 96 Image](slide_96_image_4.jpg)
+- **PLA** (acide polylactique) : biosourcé, compostable seulement en conditions industrielles. Le matériau par défaut pour débuter, pour les prototypes et les objets décoratifs.
+- **PETG** : le choix dès que la pièce doit travailler (supports, boîtiers, pièces de robot). Il demande un peu plus de réglages : rétraction et refroidissement modéré contre les fils.
+- **TPU** : joints, semelles, amortisseurs, pare-chocs. On l'imprime lentement pour que le filament souple ne flambe pas entre les roues de l'extrudeur et la buse.
+- **ABS** : le plastique des briques LEGO. Robuste et facile à poncer ou à lisser aux vapeurs d'acétone, mais il émet des vapeurs (styrène) et gauchit sans enceinte fermée.
+- **PVA** : en double extrusion, il sert de support soluble pour des géométries impossibles à supporter autrement.
 
-## PETG
+{% include image-row.html image_1="slide_99_image_4.jpg" image_2="slide_99_image_5.jpg" %}
 
-PETG Polyéthylène Téréphtalate Glycol 97 Caractéristiques: Résistant, flexible, bonne adhérence entre les couches. Léger effet brillant. Température d’impression: 220-250°C. Applications: Pièces fonctionnelles, contenants alimentaires (sous conditions). Avantages: Résistant à l’humidité et aux produits chimiques. Limites: Sensible à l’humidité pendant l’impression, risque de fils ('stringing').
+{% include image-row.html image_1="slide_100_image_4.jpg" image_2="slide_100_image_5.jpg" %}
 
-![Slide 97 Image](slide_97_image_4.jpg)
+### Les filaments techniques
 
-## TPU
+| Filament | Usage | Exigences |
+|---|---|---|
+| **ASA** | Un ABS qui résiste aux UV : pièces d'extérieur | Comme l'ABS : enceinte fermée, ventilation |
+| **Nylon** (polyamide, PA) | Engrenages, pièces mécaniques, glissement | Très hygroscopique : séchage obligatoire, hotend all-metal |
+| **PC** (polycarbonate) | Très résistant aux chocs et à la chaleur | 260-300 °C, enceinte chaude |
+| **PP** (polypropylène) | Souple, résiste aux produits chimiques, charnières | N'adhère presque à rien : plateau spécifique |
+| **HIPS** | Support pour l'ABS, soluble dans le limonène | Enceinte fermée |
+| **Composites** | PLA, PETG ou nylon chargés de fibres de carbone, de verre, de bois ou de métal | Abrasifs : buse en acier trempé |
+| **PEEK, PEI** (Ultem) | Hautes performances : aéronautique, médical | Buse vers 360-400 °C, chambre chauffée : imprimantes industrielles |
 
-TPU Polyuréthane Thermoplastique 98 Caractéristiques: Flexible et élastique, très résistant. Température d’impression: 200-250°C. Applications: Joints, semelles, objets nécessitant de la souplesse. Avantages: Grande résistance mécanique, flexible. Limites: Plus difficile à imprimer, nécessite un extrudeur adapté.
+### Stocker et sécher les filaments
 
-![Slide 98 Image](slide_98_image_4.jpg)
+La plupart des filaments absorbent l'humidité de l'air (ils sont **hygroscopiques**). À l'impression, l'eau contenue se vaporise dans la buse : on entend des crépitements, la surface devient rugueuse et bulleuse, la pièce est plus fragile et les fils se multiplient. Le nylon, le PVA et le TPU y sont très sensibles, le PETG un peu moins, le PLA peu.
 
-## ABS
+Les bobines se stockent dans un sac ou une boîte étanche avec du dessiccant. Une bobine humide se sèche quelques heures dans un séchoir à filament, à une température adaptée au matériau et toujours inférieure à sa $T_g$. Voir aussi [Résoudre les problèmes de qualité d'impression](/docs/how-to-guides/3d-printing-troubleshooting/#filament-humide-mauvaises-surfaces-bruits-de-crépitement-bourrage).
 
-ABS Acrylonitrile Butadiène Styrène 99 Caractéristiques: Résistant à la chaleur et aux chocs. Nécessite un plateau chauffant et une enceinte fermée pour éviter le warping. Température d’impression: 220-250°C. Applications: Pièces mécaniques, prototypes industriels. Avantages: Durable et robuste. Limites: Émissions de vapeurs, nécessite une bonne ventilation.
+## Pour aller plus loin
 
-![Slide 99 Image](slide_99_image_4.jpg)
-
-![Slide 99 Image](slide_99_image_5.jpg)
-
-## PVA
-
-PVA Alcool Polyvinylique 100 Caractéristiques: Soluble dans l’eau, utilisé comme support d’impression. Température d’impression: 180-210°C. Applications: Supports pour pièces complexes en double extrusion. Avantages: Facile à retirer, idéal pour des géométries complexes. Limites: Sensible à l’humidité, stockage délicat.
-
-![Slide 100 Image](slide_100_image_4.png)
-
-![Slide 100 Image](slide_100_image_5.jpg)
-
-## Les filaments
-
-Les filaments 101 Les filaments spécifiques
-
-## HIPS
-
-HIPS Polystyrène à impact élevé 102 Caractéristiques: Léger et facile à imprimer. Utilisé comme matériau de support soluble (dissout dans le limonène). Applications: Support pour ABS, prototypage. Polyamide NYLON Caractéristiques: Résistant, flexible, durable, mais nécessite un environnement contrôlé. Applications: Pièces fonctionnelles, engrenages, prototypes mécaniques. Note : Sensible à l'humidité. Polypropylène PP Caractéristiques: Flexible, résistant aux produits chimiques et aux impacts. Applications: Contenants alimentaires, pièces nécessitant flexibilité et durabilité. PC Polycarbonate Caractéristiques: Très résistant à la chaleur et aux chocs, mais nécessite des températures élevées. Applications: Pièces nécessitant une résistance mécanique et thermique.
-
-## Composites
-
-Composites Filaments mélangés 103 Caractéristiques: PLA ou ABS mélangés avec du bois, du métal ou de la fibre de carbone. Applications: Design, prototypage, pièces nécessitant résistance. Polyétheréthercétone/Ultem PEEK/PEI Caractéristiques: Haute résistance mécanique, thermique et chimique. Utilisé pour des applications industrielles et médicales Applications: Aéronautique, médical, automobile. Nécessite des imprimantes haut de gamme. ASA Acrylonitrile Styrène Acrylate Caractéristiques: Alternative à l’ABS, résistant aux UV et intempéries. Applications: Pièces extérieures ou d’usage prolongé en extérieur.
+- [Les bases de l'impression 3D (Prusa Research)](/docs/references/others/bases-de-limpression-prusa/), dont sont tirés plusieurs schémas de cette page
+- [Le workflow logiciel](/docs/concepts/3d-printing-workflow/) : du modèle 3D au G-code
+- [Règles de conception et conseils](/docs/how-to-guides/3d-printing-design-rules/)
+- [Impression 3D avec OrcaSlicer](/docs/tutorials/production/imprimer-une-piece/)
+- [La théorie du CoreXY](https://corexy.com/theory.html)
 
 ---
 
-{%
-  include card_collections.html
-  title="Pour aller plus loin"
-  description="Explorez d'autres formations pour approfondir vos connaissances"
-  type="courses"
-%}
+Schémas des procédés : « Les bases de l'impression 3D », Prusa Research. Autres illustrations reprises du support de cours Fabrication additive du MakerSpace ; sources détaillées à compléter.
+{: .is-size-7 .has-text-grey }

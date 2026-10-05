@@ -1,9 +1,9 @@
 ---
 layout: documentation
 hide_hero: false
-hero_image: "slide_17_image_2.png"
+hero_image: "slide_17_image_2.jpg"
 hero_darken: true
-image: "slide_17_image_2.png"
+image: "slide_17_image_2.jpg"
 component_toc: true
 doc_header: true
 type: concept
@@ -24,7 +24,7 @@ prerequisites:
 todo: 90
 ---
 
-{% include message.html title="Information" message="Cette page est une version rédigée du cours sur la fabricaiton additive. Vous pouvez retrouver les slides du cours [sur le lien.](https://makerspace-amiens.fr/fab-additive/assets/pdf/initiation-fabrication-additive.pdf)" status="is-info" icon="fas fa-info-circle" %}
+{% include message.html title="Information" message="Cette page est la version rédigée du cours sur la fabrication additive. Les slides correspondantes : [Partie 1 : introduction à l'impression 3D](/workshops/fab-additive/slides/introduction-impression-3d/)." status="is-info" icon="fas fa-info-circle" %}
 
 ## Qu'est-ce que l'impression 3D ?
 
@@ -156,8 +156,8 @@ En **2005**, **Adrian Bowyer**, professeur à l’Université de Bath au Royaume
 Le premier modèle issu de ce projet, nommé **Darwin**, voit le jour en **2007**. Le projet RepRap marque un tournant dans l’histoire de l’impression 3D en rendant cette technologie **plus abordable et accessible** à tous. En libérant les plans et les codes sources, il devient le catalyseur d’une véritable révolution technologique, ouvrant la voie à une fabrication plus démocratisée.
 
 {% include image-row.html
-image_1 = "slide_17_image_2.png"
-image_2 = "image.png"
+image_1 = "slide_17_image_2.jpg"
+image_2 = "image.jpg"
 %}
 
 ### Un message Politique
@@ -207,7 +207,7 @@ Ces forks incarnent l’esprit **open source** et collaboratif de RepRap, permet
 Aujourd’hui, le RepRap Family Tree continue de croître, avec des imprimantes dérivées adaptées à des besoins variés : des machines spécialisées pour des impressions haute précision, comme les modèles delta, aux imprimantes robustes pour des environnements industriels. Ce foisonnement témoigne de l’impact durable du projet RepRap, qui a su transformer l’impression 3D en une technologie accessible, collaborative et en constante évolution.
 
 {% include image-row.html
-image_1 = "slide_21_image_1.png"
+image_1 = "slide_21_image_1.jpg"
 image_2 = "slide_21_image_3.png"
 %}
 
@@ -220,35 +220,35 @@ greyBackground = true
 content="**Darwin (2007)**  
 
 Le modèle Darwin, développé par Adrian Bowyer, est la première imprimante 3D open source et auto-réplicante du projet RepRap. Elle concrétise la vision d’une machine capable de fabriquer une partie de ses propres composants, ouvrant ainsi la voie à de nombreux forks et innovations."
-image="image-1.png" %}
+image="image-1.jpg" %}
 
 {% include step-tuto.html
 greyBackground = true
 content="**Mendel (2009)**  
 
 Le modèle Mendel apporte une structure plus compacte et stable, facilitant l’assemblage et améliorant la qualité d’impression. Ce design devient rapidement un standard dans la communauté RepRap, grâce à son équilibre entre performance et simplicité."
-image="image-2.png" %}
+image="image-2.jpg" %}
 
 {% include step-tuto.html
 greyBackground = true
 content="**Prusa Mendel (2011)**  
 
 Conçue par Josef Prusa, cette version simplifie la conception en réduisant le nombre de pièces et le coût de fabrication, rendant l’impression 3D encore plus accessible. Elle devient une base pour de nombreuses déclinaisons ultérieures."
-image="image-3.png" %}
+image="image-3.jpg" %}
 
 {% include step-tuto.html
 greyBackground = true
 content="**Rostock (2012)**  
 
 La Rostock est la première imprimante RepRap de type delta. Elle utilise trois bras pour déplacer la tête d’impression, offrant une grande vitesse et précision, particulièrement adaptée aux objets hauts et cylindriques."
-image="image-4.png" %}
+image="image-4.jpg" %}
 
 {% include step-tuto.html
 greyBackground = true
 content="**Prusa I3 (2017)**  
 
 Cette version introduit un cadre en une seule pièce, augmentant la rigidité et simplifiant l’assemblage. La Prusa I3 devient l’un des modèles les plus populaires, reconnue pour sa fiabilité et sa qualité d’impression."
-image="image-5.png" %}
+image="image-5.jpg" %}
 
 ### Les imprimantes oubliées
 
