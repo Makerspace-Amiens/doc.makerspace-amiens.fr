@@ -12,11 +12,19 @@ project_tags:
   - Impression 3D
 description: "Découvrez les ressources, tutoriels et supports de cours pour comprendre et pratiquer la fabrication additive au MakerSpace."
 
+special_sections:
+  - label: Slides
+    icon: fas fa-chalkboard-teacher
+    desc: "Les supports du cours, à projeter en plein écran."
+    items:
+      - /workshops/fab-additive/slides/introduction-impression-3d/
+      - /workshops/fab-additive/slides/technologies-materiaux/
+      - /workshops/fab-additive/slides/workflow-impression-3d/
+
 prerequisites:
   - /workshops/cao/
 concepts:
   - /docs/concepts/3d-print-introduction/
-  - /docs/concepts/3d-print-introduction-slides/
   - /docs/concepts/3d-printing-technologies/
   - /docs/concepts/3d-printing-workflow/
 tutorials:
