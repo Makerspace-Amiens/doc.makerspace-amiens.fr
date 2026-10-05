@@ -139,8 +139,15 @@ body {
 
   /* Illustration à laisser respirer : le plafond de 440px ne laisse pas la place
      au titre, à la légende de crédit et aux liens dans les 560px utiles d'une
-     slide. Poser {: .img-md} après l'image pour la ramener à 320px. */
-  img.img-md { max-height: 320px; }
+     slide. Poser {: .img-md} après l'image pour la ramener à 320px : collé à
+     l'image, la classe va sur <img> ; à la ligne suivante, sur le <p> parent. */
+  .columns img { max-height: 400px; }
+  img.img-md, .img-md img { max-height: 320px; }
+  /* Grille d'images (4 images dans .columns, ou 3 dans .columns.is-3) : 200px */
+  img.img-sm, .img-sm img { max-height: 200px; }
+  /* Logo de marque, sans cadre, posé en ligne : ![Logo](src){: .logo} */
+  img.logo { display: inline-block; max-height: 64px; margin: 0 0.6em; border: none; border-radius: 0; vertical-align: middle; }
+  p:has(> img.logo) { text-align: center; }
 
   /* Légende sous une image : paragraphe suivi de {: .caption} */
   .caption {
@@ -150,7 +157,6 @@ body {
     margin-top: 0.5em;
   }
 
-  .columns img { max-height: 400px; }
   .columns blockquote { font-size: 0.75em; margin-top: 0; }
 
   /* Lien vers la page du site qui approfondit la slide :
@@ -278,6 +284,8 @@ body {
     grid-template-columns: 1fr 1fr;
     gap: 1.5em;
     align-items: start;
+
+    &.is-3 { grid-template-columns: 1fr 1fr 1fr; }
   }
 
   /* Include message.html (styles Bulma absents ici) */

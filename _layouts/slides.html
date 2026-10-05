@@ -11,8 +11,10 @@
   end_slide: false masque la slide de fin (logo UniLaSalle).
   Dans une slide : `<!-- .slide: attributs -->` pose des attributs sur la
   <section> ; `<!-- .down -->` crée une slide verticale sous la courante.
+  Les images Markdown passent en data-src : reveal.js ne les charge qu'à
+  l'approche de leur slide, au lieu de tout télécharger à l'ouverture.
 {% endcomment -%}
-{%- assign slides = content | split: '<hr />' -%}
+{%- assign slides = content | replace: '<img src=', '<img data-src=' | split: '<hr />' -%}
 <!DOCTYPE html>
 <html lang="{{ page.lang | default: site.lang | default: 'fr' }}">
 <head>
