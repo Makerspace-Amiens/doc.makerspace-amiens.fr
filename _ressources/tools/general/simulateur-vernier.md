@@ -37,5 +37,5 @@ La [pièce de test de l'atelier Métrologie](/workshops/metrologie/) (trou et pl
 
 ## Liens utiles
 
-- [Utiliser un pied à coulisse](/workshops/metrologie/tutorials/pied-a-coulisse/)
+- [Pied à coulisse](https://fr.wikipedia.org/wiki/Pied_%C3%A0_coulisse) sur Wikipédia
 - [Précision, justesse et bonnes pratiques de mesure](/docs/concepts/precision-justesse-mesure/)

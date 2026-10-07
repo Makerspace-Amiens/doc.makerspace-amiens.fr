@@ -74,10 +74,12 @@ Pour ce niveau, retenez surtout ceci : **une seule mesure ne prouve rien**. Si u
 
 Sur le [gabarit de contrôle](/workshops/metrologie/) utilisé dans cet atelier, mesurer le même trou Ø10 mm à trois endroits différents de son pourtour donne rarement exactement la même valeur : c'est normal, et c'est justement ce que ces bonnes pratiques permettent de repérer plutôt que de prendre la première lecture pour argent comptant.
 
-Ces notions sont reprises directement dans les guides [Vérifier la précision dimensionnelle d'une pièce imprimée en 3D](/docs/how-to-guides/controle-dimensionnel-impression-3d/) et [Compenser le jeu de coupe d'une découpe laser](/docs/how-to-guides/compenser-jeu-coupe-laser/).
+Ces notions servent directement à quantifier les écarts entre une pièce et sa conception : [le retrait en impression 3D](/docs/concepts/tolerances-fabrication/#retrait-et-sur-largeur-en-impression-3d-fdm) et [le jeu de coupe en découpe laser](/docs/concepts/tolerances-fabrication/#jeu-de-coupe-kerf-en-découpe-laser).
 
 ## Pour aller plus loin
 
-- [Utiliser un pied à coulisse](/workshops/metrologie/tutorials/pied-a-coulisse/)
-- [Utiliser un rapporteur d'angle](/workshops/metrologie/tutorials/rapporteur-angle/)
-- [Utiliser un réglet](/workshops/metrologie/tutorials/reglet/)
+- [Simulateur de lecture au vernier](/ressources/tools/general/simulateur-vernier/) : s'entraîner à lire un pied à coulisse
+- [Pourquoi une pièce fabriquée n'est jamais exactement à la cote](/docs/concepts/tolerances-fabrication/)
+- [Pied à coulisse](https://fr.wikipedia.org/wiki/Pied_%C3%A0_coulisse), [rapporteur](https://fr.wikipedia.org/wiki/Rapporteur) et [règle graduée](https://fr.wikipedia.org/wiki/R%C3%A8gle_gradu%C3%A9e) sur Wikipédia
+- [Exactitude et précision](https://fr.wikipedia.org/wiki/Exactitude_et_pr%C3%A9cision) sur Wikipédia
+- [Vocabulaire international de métrologie (VIM)](https://www.bipm.org/documents/20126/2071204/JCGM_200_2012.pdf), la référence du BIPM pour les définitions de justesse, fidélité et incertitude
