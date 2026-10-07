@@ -19,6 +19,10 @@ todo: 20
 
 Un pied à coulisse à vernier permet de lire une cote au dixième de millimètre sans afficheur digital, grâce à une seconde graduation mobile (le **vernier**) placée à côté de la règle fixe. Comprendre comment ces deux graduations s'articulent est plus facile à voir qu'à expliquer : c'est l'objet de cet outil.
 
+![Mesure d'un diamètre extérieur au pied à coulisse à vernier](pied-a-coulisse-vernier.jpg)
+
+Sur ce pied à coulisse, la règle fixe est graduée en millimètres (en haut) et le vernier, en bas, porte la mention **0.02mm** : il lit au cinquantième de millimètre. Le principe est le même qu'au dixième, avec 50 divisions au lieu de 10. Le simulateur ci-dessous utilise le vernier au 1/10 mm, plus simple pour comprendre.
+
 Le principe : le vernier comporte 10 divisions qui couvrent 9 mm de la règle fixe, donc chaque division du vernier vaut 0,9 mm, 0,1 mm de moins qu'une division de la règle. C'est ce léger décalage qui fait qu'une seule ligne du vernier s'aligne exactement avec une ligne de la règle fixe à chaque position, et c'est cette ligne qui donne le chiffre après la virgule.
 
 ## 2. Simulateur
@@ -39,3 +43,8 @@ La [pièce de test de l'atelier Métrologie](/workshops/metrologie/) (trou et pl
 
 - [Pied à coulisse](https://fr.wikipedia.org/wiki/Pied_%C3%A0_coulisse) sur Wikipédia
 - [Précision, justesse et bonnes pratiques de mesure](/docs/concepts/precision-justesse-mesure/)
+
+---
+
+Photo du pied à coulisse : source et licence à compléter.
+{: .is-size-7 .has-text-grey }
