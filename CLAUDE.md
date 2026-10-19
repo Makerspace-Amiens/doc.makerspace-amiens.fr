@@ -194,6 +194,16 @@ Un deck est un `.md` avec `layout: slides` (ex. `_workshops/<slug>/slides/<deck>
 - Images : le layout réécrit `<img src=` en `<img data-src=` pour que reveal.js ne charge chaque image qu'à l'approche de sa slide (les `<img>` écrites en HTML brut restent chargées d'emblée). Garder les photos en JPG, 1600 px de large au plus : un PNG de photo pèse vite plusieurs Mo.
 - Thème autonome dans `assets/css/slides.scss` (Bulma n'est pas chargé : hormis `message.html`, les includes stylés par Bulma s'affichent bruts). Export PDF : ajouter `?print-pdf` à l'URL puis imprimer depuis Chrome.
 
+## Widget « Besoin d'aide ? » (assistant IA)
+
+Otto (frame 1 de l'animation de la home, recadrée dans `assets/img/otto-help.webp`) et une bulle en bas à droite de toutes les pages, lien vers l'assistant IA (nouvel onglet). URL et libellé dans `_config.yml` (`help_bot.url`, `help_bot.label`), markup dans `_includes/help-bot.html`, style dans `assets/css/_help-bot.scss`.
+
+- Injecté via `_includes/footer-scripts.html`, qui surcharge l'include vide du thème : il est inclus par tous les layouts sauf `slides.html` (pas de widget sur les decks). Tout script ou widget global au site va dans ce fichier.
+- Masquer sur une page : `help_bot: false` dans son front matter. Sur mobile, seule la mascotte s'affiche (pas de bulle).
+- `_includes/chatbot.html` (ancien iframe Copilot Studio) n'est inclus nulle part.
+
+---
+
 ## Navbar — dropdown Ateliers
 
 Le dropdown est **généré dynamiquement** depuis `site.workshops | where: "layout", "project-home"`, trié alphabétiquement et **scindé en deux groupes** (Projets / Thématiques) selon le champ `kind`. Ne pas modifier la liste dans `_data/navigation.yml` — tout atelier avec `layout: project-home` apparaît automatiquement dans le groupe correspondant à son `kind`.
