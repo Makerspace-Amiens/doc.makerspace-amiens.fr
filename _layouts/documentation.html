@@ -642,3 +642,17 @@ layout: default
 })();
 </script>
 {% endif %}
+
+{% if content contains 'data-project-hide' %}
+<script>
+// Page partagée entre ateliers : <div data-project-hide="slug1 slug2"> masque un
+// bloc quand on arrive depuis l'un de ces ateliers (?project=).
+(function () {
+  var slug = new URLSearchParams(window.location.search).get('project');
+  if (!slug) return;
+  document.querySelectorAll('[data-project-hide]').forEach(function (el) {
+    if (el.dataset.projectHide.split(/\s+/).indexOf(slug) !== -1) el.style.display = 'none';
+  });
+})();
+</script>
+{% endif %}
