@@ -12,6 +12,13 @@ project_tags:
   - Impression 3D
 description: "Débutez la conception 2D & 3D et initiez-vous au prototypage rapide"
 
+special_sections:
+  - label: Évaluation
+    icon: fas fa-clipboard-check
+    desc: "Les pièces à modéliser sur OnShape et ce sur quoi vous êtes évalués."
+    items:
+      - /workshops/cao/evaluation/
+
 concepts:
   - 
 tutorials:
