@@ -44,12 +44,12 @@ concepts:
 
 tutorials:
   - /workshops/methodologie-de-projet/tutorials/creer-repo-template/
+  - /workshops/methodologie-de-projet/tutorials/publier-son-site/
   - /workshops/methodologie-de-projet/tutorials/git-github-desktop-vscode/
   - /workshops/methodologie-de-projet/tutorials/personnaliser-template/
   - /workshops/methodologie-de-projet/tutorials/syntaxe-markdown/
   - /workshops/methodologie-de-projet/tutorials/readme-efficace/
   - /workshops/methodologie-de-projet/tutorials/gerer-projet-github/
-  - /workshops/methodologie-de-projet/tutorials/modifier-site-github/
   - /workshops/methodologie-de-projet/tutorials/construire-site-local/
   - /workshops/methodologie-de-projet/tutorials/journal-de-bord/
   - /workshops/methodologie-de-projet/tutorials/documenter-carte-electronique/

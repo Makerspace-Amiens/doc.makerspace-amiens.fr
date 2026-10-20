@@ -58,20 +58,19 @@ Dossier cible : `_workshops/methodologie-de-projet/tutorials/journal-de-bord/`
 
  1. **(optionnel)** Fichier `docs/journal.md` ouvert dans VSCode avec une entrée remplie → `step1-journal-vscode.png`
 
-## 5. Modifier son site Jekyll depuis l'interface GitHub
+## 5. Publier son site avec GitHub Pages
 
-Dossier cible : `_workshops/methodologie-de-projet/tutorials/modifier-site-github/`
+Dossier cible : `_workshops/methodologie-de-projet/tutorials/publier-son-site/`
+(ex-`modifier-site-github`, renommé le 2026-10-20 ; la partie « éditer
+depuis l'interface GitHub » a été supprimée, ses captures ne sont plus à faire).
 
-**Section "Activer la publication" ✅ FAIT (2026-08-20)** : 4 captures
-intégrées : `activer-pages-settings.png` (Settings > Pages), `about-vide.png`
+**Captures déjà intégrées (2026-08-20)** : `activer-pages-settings.png`
+(Settings > Pages), `about-vide.png` + `edit-repository-details.png` (carte
+About), `social-preview.png`.
 
-+ `edit-repository-details.png` (carte About), `social-preview.png`.
-
- 1. Fichier `.md` affiché sur GitHub avec l'icône crayon (✏️) visible en haut à droite → `step1-icone-crayon.png`
- 2. Éditeur Markdown de GitHub ouvert, en train de modifier du texte → `step2-editeur-github.png`
- 3. Onglet **Preview** de l'éditeur GitHub montrant le rendu → `step3-preview-github.png`
- 4. Bas de page : champ message de commit + choix **Commit directly to main** vs **Create a new branch** → `step4-commit-github.png`
- 5. **(optionnel)** Onglet **Actions** du repo montrant un build en cours/terminé → `step5-actions-build.png`
+ 1. Onglet **Actions** avec un build en cours puis terminé (coche verte) → `step2-actions-build.png`
+ 2. **Settings > Pages** avec la ligne « Your site is live at » → `step3-site-live.png`
+ 3. Portfolio : **Settings > Pages** réglé sur « Deploy from a branch », `main`, `/ (root)` → `step1-pages-portfolio.png`
 
 ## 6. Construire son site Jekyll en local
 

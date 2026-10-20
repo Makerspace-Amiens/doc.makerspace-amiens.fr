@@ -72,7 +72,7 @@ graph LR
 | Une image ne s'affiche pas | Chemin faux, ou majuscules : `Photo.JPG` ≠ `photo.jpg` | Nom en minuscules, chemin vérifié |
 {: .table-dense}
 
-[Résoudre un conflit Git](/docs/how-to-guides/pull-requests-et-conflits-git/){: .doc-link} [Modifier son site depuis GitHub](/workshops/methodologie-de-projet/tutorials/modifier-site-github/){: .doc-link}
+[Résoudre un conflit Git](/docs/how-to-guides/pull-requests-et-conflits-git/){: .doc-link} [Publier son site avec GitHub Pages](/workshops/methodologie-de-projet/tutorials/publier-son-site/){: .doc-link}
 
 ---
 

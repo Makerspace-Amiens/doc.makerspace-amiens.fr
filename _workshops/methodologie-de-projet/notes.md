@@ -540,3 +540,19 @@ comparaison avec le template).
 
 Voir aussi la mémoire projet Claude (`workshop-methodologie-de-projet.md`
 dans le dossier mémoire) qui résume ce même plan pour les sessions futures.
+
+## 2026-10-20 : début du parcours réordonné, pages partagées avec le portfolio
+
+Les tutoriels de gestion de dépôt servent aussi à l'atelier
+`portfolio-ingenieur` (onglets « Repo de projet » / « Portfolio », voir la
+section « Page partagée entre plusieurs ateliers » de `CLAUDE.md`). Nouvel
+ordre du début du parcours, choisi par l'utilisateur :
+
+1. `creer-repo-template` : tout dans le navigateur, plus de clonage.
+2. `publier-son-site` (ex-`modifier-site-github`, renommé : aucun dépôt
+   étudiant ne le référençait) : activer Pages, suivre Actions, ouvrir le
+   site pour vérifier que tout fonctionne avant de modifier quoi que ce soit.
+   **L'édition directe sur github.com est retirée** : l'utilisateur estime
+   qu'elle donne de mauvaises habitudes (les étudiants oublient ensuite VSCode).
+3. `git-github-desktop-vscode` : installation de GitHub Desktop, clonage,
+   ouverture dans VSCode, puis cycle commit/push (à faire).

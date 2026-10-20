@@ -85,9 +85,9 @@ publié, puis supprimez le bloc **À modifier** en haut. La méthode complète
 est dans [Rédiger un README de projet efficace](/workshops/methodologie-de-projet/tutorials/readme-efficace/).
 
 L'adresse de votre site publié est de la forme
-`https://votre-compte.github.io/nom-du-repo/` (voir
-[Modifier son site Jekyll depuis l'interface GitHub](/workshops/methodologie-de-projet/tutorials/modifier-site-github/)
-pour l'activer).
+`https://votre-compte.github.io/nom-du-repo/` : c'est celle affichée dans
+**Settings > Pages** (voir
+[Publier son site avec GitHub Pages](/workshops/methodologie-de-projet/tutorials/publier-son-site/)).
 
 ## 3. Personnaliser la page d'accueil (`docs/index.md`)
 
