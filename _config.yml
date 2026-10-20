@@ -59,6 +59,7 @@ exclude:
   - _workshops/methodologie-de-projet/notes.md
   - _workshops/methodologie-de-projet/screenshots-checklist.md
   - _workshops/certification-securite/notes.md
+  - _workshops/portfolio-ingenieur/notes.md
 
 # Assistant IA (widget Otto en bas à droite, _includes/help-bot.html)
 help_bot:
