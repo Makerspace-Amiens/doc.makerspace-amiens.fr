@@ -441,7 +441,12 @@ layout: default
         <div class="column is-12-desktop is-12-tablet doc-content">
         {% endif %}
             <div class="content{% if _in_project %} tuto-step-content{% endif %}">
+                {% if page.disabled %}
+                {%- comment %} disabled: true : page fermée (ex. évaluation hors période), contenu masqué {% endcomment -%}
+                {% include message.html title=_i18n.unavailable message=_i18n.unavailable_message status="is-info" icon="fas fa-lock" %}
+                {% else %}
                 {{ content }}
+                {% endif %}
             </div>
 
             {% comment %} Prev / next navigation for project tutorials {% endcomment %}
@@ -618,7 +623,7 @@ layout: default
 
         </div>
 
-        {% if page.component_toc %}
+        {% if page.component_toc and page.disabled != true %}
             <div class="column is-3-desktop is-3-tablet is-hidden-mobile toc-column{% if page.doc_header %} doc-header-toc-column{% endif %}">
                 {% assign contentsTitle = page.toc_title | default: 'Contents' %}
                 {% include toc.html html=content class='menu-list' h_min=2 h_max=4 contents_title=contentsTitle %}

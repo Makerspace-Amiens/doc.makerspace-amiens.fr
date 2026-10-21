@@ -177,6 +177,8 @@ special_sections:
       - /workshops/methodologie-de-projet/evaluation/
 ```
 
+**Désactiver une carte sans la retirer** : `disabled: true` dans le front matter de la page listée (ex. `_workshops/cao/evaluation.md`, évaluation fermée en dehors de la période). Dans `special_sections:`, sa carte reste affichée mais grisée, avec un cadenas, le libellé `unavailable` de `_data/i18n.yml` et aucun lien. La page elle-même affiche seulement un message « Indisponible » (contenu et table des matières masqués, layout `documentation`) et sort de la recherche. Ses fichiers (images) restent servis à leur URL. Retirer le champ pour la rouvrir.
+
 ### Slides (reveal.js)
 
 Les decks d'un atelier sont listés dans une section de cartes du haut de page (`special_sections:`, voir ci-dessus), comme dans `methodologie-de-projet`.
