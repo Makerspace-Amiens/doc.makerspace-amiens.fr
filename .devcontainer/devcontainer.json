@@ -5,8 +5,12 @@
     "ghcr.io/devcontainers/features/node:1": {
       "version": "lts"
     },
-    "ghcr.io/anthropics/devcontainer-features/claude-code:1.0": {}
+    "ghcr.io/anthropics/devcontainer-features/claude-code:1": {}
   },
+  "overrideFeatureInstallOrder": [
+    "ghcr.io/devcontainers/features/node",
+    "ghcr.io/anthropics/devcontainer-features/claude-code"
+  ],
   "postCreateCommand": "bundle install && npm install -g decap-server",
   "forwardPorts": [4000, 8081],
   "portsAttributes": {
