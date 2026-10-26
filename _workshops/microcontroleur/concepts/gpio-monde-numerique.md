@@ -167,7 +167,7 @@ flowchart TD
   C -->|"Oui - via une résistance de rappel"| F["Tension définie et stable\nLOW ou HIGH garanti au repos"]
 ```
 
-Une broche en [**haute impédance**](https://fr.wikipedia.org/wiki/Haute_imp%C3%A9dance) n'a presque aucune résistance interne : la moindre interférence électromagnétique environnante (un câble voisin, le secteur 50 Hz, ta propre main qui s'approche) suffit à faire basculer sa lecture d'où le terme « flottant » : rien ne fixe sa tension à une valeur précise.
+Une broche en [**haute impédance**](https://fr.wikipedia.org/wiki/Haute_imp%C3%A9dance) présente une résistance d'entrée **très élevée** (plusieurs mégaohms) : elle n'absorbe quasiment aucun courant, donc rien ne la ramène vers 0 V ou 3,3 V. La moindre interférence électromagnétique environnante (un câble voisin, le secteur 50 Hz, ta propre main qui s'approche) suffit alors à déplacer sa tension et à faire basculer sa lecture. D'où le terme « flottant » : rien ne fixe sa tension à une valeur précise.
 
 ### La solution : résistance de rappel
 
@@ -256,7 +256,7 @@ Au-delà de `digitalRead()`/`digitalWrite()`, une broche peut être prise en cha
 L'ESP32-S3 est plus flexible : une **GPIO matrix** interne permet de router presque n'importe quel signal numérique de périphérique vers presque n'importe quelle broche, par logiciel.
 
 ```cpp
-Serial1.begin(115200, SERIAL_8N1, 16, 17);  // UART1 routé sur GPIO16 (RX) / GPIO17 (TX)
+Serial1.begin(115200, SERIAL_8N1, D2, D3);  // UART1 routé sur D2 (RX) / D3 (TX) de la XIAO
 // une autre paire de broches fonctionnerait tout aussi bien
 ```
 
@@ -275,6 +275,11 @@ Malgré la souplesse de la GPIO matrix, certaines broches ont un **rôle réserv
 | **GPIO 33–37** | Utilisées par la PSRAM sur les modules « octal » | Éviter sur les modules équipés de PSRAM |
 
 {% include message.html title="En cas de doute, consulte le brochage de ta carte" message="Le nombre exact de broches libres dépend du module ESP32-S3 précis (avec ou sans PSRAM octal). Le *pinout* officiel de ta carte indique quelles broches sont réellement disponibles." status="is-warning" icon="fas fa-exclamation-triangle" %}
+
+Sur la [XIAO ESP32S3](/docs/references/hardware/xiao-esp32s3/) de l'atelier, ce tri est déjà fait par la carte : seules 11 broches sont sorties (D0 à D10) et aucune broche critique n'en fait partie. GPIO0 est relié au bouton BOOT, GPIO19/20 au connecteur USB-C, la Flash et la PSRAM restent internes. Deux cas particuliers :
+
+- **D2 (GPIO3)** est une broche de *strapping*, mais elle ne choisit que la source du JTAG, et seulement si les eFuses de la puce ont été programmés pour : elle s'utilise comme une broche ordinaire.
+- **D6/D7 (GPIO43/44)** portent l'UART0, mais le moniteur série de la XIAO passe par l'USB natif : ces deux broches restent utilisables. Au démarrage, la puce **émet** toutefois ses messages de boot sur D6 : un bouton qui la relie à GND doit passer par une résistance série (1 kΩ sur le PCB du projet) pour ne pas court-circuiter cette sortie.
 
 ## Courant maximum et protection des broches
 
@@ -316,7 +321,7 @@ Les GPIO de l'ESP32-S3 sont en logique 3,3 V : appliquer 5 V sur une entrée peu
 ## Résumé
 
 - GPIO = broche configurable en entrée (`INPUT`) ou sortie (`OUTPUT`).
-- Sortie : produit `0 V` (LOW) ou `3,3 V` (HIGH) - maximum ~12 mA.
+- Sortie : produit `0 V` (LOW) ou `3,3 V` (HIGH) ; ~40 mA au maximum absolu, 12 mA au plus en pratique.
 - Sortie **push-pull** (défaut) tire activement vers HIGH et LOW ; **open-drain** ne tire que vers LOW (utile pour un bus partagé comme l'I2C).
 - Entrée sans résistance de rappel → **état flottant** (lectures aléatoires).
 - `INPUT_PULLUP` / `INPUT_PULLDOWN` activent la résistance interne de l'ESP32-S3.

@@ -10,7 +10,7 @@ doc_header: true
 
 title: Vérification de la toolchain
 subtitle: Installer la chaîne ESP32-S3 et valider ton premier flashage
-description: Configurer PlatformIO pour l'ESP32-S3 et faire clignoter la LED embarquée, avant d'ajouter une LED externe.
+description: Configurer PlatformIO pour la XIAO ESP32S3 et faire clignoter la LED embarquée, avant d'ajouter une LED externe.
 author: Alban Petit
 
 time: 2
@@ -28,8 +28,8 @@ softwares:
     link: /docs/references/software/platformIO/
 
 hardwares:
-  - label: Carte ESP32-S3 (breadboard)
-    link: ""
+  - label: Carte Seeed Studio XIAO ESP32S3 (barrettes soudées)
+    link: /docs/references/hardware/xiao-esp32s3/
   - label: Câble USB-C data (pas uniquement charge)
     link: ""
 
@@ -48,28 +48,33 @@ content="Dans VSCode, ouvre l'onglet **PlatformIO** (icône fourmi dans la barre
 Configure :
 
 - **Name** : `pong-esp32`
-- **Board** : `Espressif ESP32-S3-DevKitC-1 (N16R8)` (ou la référence exacte de ta carte)
+- **Board** : `Seeed Studio XIAO ESP32S3`
 - **Framework** : `Arduino`
 
-PlatformIO génère un dossier avec un fichier `platformio.ini` et un dossier `src/` contenant `main.cpp`."
+PlatformIO génère un dossier avec un fichier `platformio.ini` et un dossier `src/` contenant `main.cpp`. Ajoute la ligne `monitor_speed` à la main."
 %}
 
 ```ini
-; platformio.ini généré
-[env:esp32-s3-devkitc-1]
+; platformio.ini
+[env:seeed_xiao_esp32s3]
 platform = espressif32
-board = esp32-s3-devkitc-1
+board = seeed_xiao_esp32s3
 framework = arduino
 monitor_speed = 115200
 ```
 
+{% include message.html title="Garde la ligne #include" message="Le `main.cpp` généré commence par `#include <Arduino.h>`. Contrairement à un `.ino` de l'Arduino IDE, un fichier `.cpp` ne l'ajoute pas tout seul : sans cette ligne, `pinMode`, `digitalWrite` ou `Serial` sont inconnus et la compilation échoue (`'pinMode' was not declared in this scope`). Tous les programmes de l'atelier commencent donc par elle." status="is-warning" icon="fas fa-exclamation-triangle" %}
+
 {% include step-tuto.html
 greyBackground=true
-title="2 - Installer les drivers USB-série"
-content="La carte communique avec l'ordinateur via une puce USB-série (CP2102 ou CH340 selon le modèle). Sans le bon driver, le port ne s'affiche pas dans la liste des ports disponibles.
+title="2 - Brancher la carte"
+content="Le connecteur USB-C de la XIAO est relié directement à l'**USB natif** de l'ESP32-S3 : il n'y a pas de puce USB-série, donc **aucun driver à installer**. Branche la carte avec un câble USB-C qui transporte des données (beaucoup de câbles ne font que charger).
 
-- **Windows** : installer le driver du fabricant (Silicon Labs CP210x ou WCH CH340) si le **Gestionnaire de périphériques** affiche un point d'exclamation.
-- **macOS / Linux** : généralement reconnu nativement ; sur Linux, ton utilisateur doit appartenir au groupe `dialout` pour accéder au port sans `sudo`."
+- **Windows** : un nouveau port `COM` apparaît dans le **Gestionnaire de périphériques** (« Périphérique série USB »).
+- **macOS** : le port apparaît sous la forme `/dev/cu.usbmodem…`.
+- **Linux** : le port apparaît sous la forme `/dev/ttyACM0` ; ton utilisateur doit appartenir au groupe `dialout` pour y accéder sans `sudo`.
+
+PlatformIO détecte le port tout seul au moment de l'upload."
 %}
 
 {% include step-tuto.html
@@ -78,38 +83,44 @@ title="3 - Flasher le blink de base"
 content="Remplace le contenu de `src/main.cpp` par le code ci-dessous, puis clique sur **Upload** (flèche →) dans la barre bleue PlatformIO en bas de VSCode.
 
 ```cpp
+#include <Arduino.h>
+
 void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
 }
 
 void loop() {
-  digitalWrite(LED_BUILTIN, HIGH);
+  digitalWrite(LED_BUILTIN, LOW);   // LOW allume la LED de la XIAO
   delay(500);
-  digitalWrite(LED_BUILTIN, LOW);
+  digitalWrite(LED_BUILTIN, HIGH);  // HIGH l'éteint
   delay(500);
 }
 ```" %}
 
-{% include message.html title="Ça ne flashe pas ?" message="Si l'upload échoue avec une erreur de timeout, maintiens le bouton **BOOT** de la carte appuyé pendant les 2 premières secondes de l'upload (jusqu'à ce que la ligne `Writing at...` apparaisse), puis relâche." status="is-info" icon="fas fa-info-circle" %}
+{% include message.html title="Ça ne flashe pas ?" message="Si l'upload échoue (`Failed to connect` ou port introuvable), force le mode téléversement : débranche la carte, **maintiens le bouton BOOT** (marqué `B`), rebranche le câble USB, puis relâche BOOT et relance l'upload. Une fois l'upload terminé, appuie sur **RESET** (marqué `R`) pour lancer le programme." status="is-info" icon="fas fa-info-circle" %}
 
-{% include message.html title="La LED n'est pas une simple LED" message="Sur l'ESP32-S3-DevKitC-1, la LED embarquée est une **RGB adressable** (WS2812), pas une LED monochrome. Si `digitalWrite(LED_BUILTIN, ...)` ne produit aucun clignotement, remplace le corps de `loop()` par `rgbLedWrite(RGB_BUILTIN, 40, 0, 0);` puis `rgbLedWrite(RGB_BUILTIN, 0, 0, 0);` (en gardant les `delay(500)`). Sur une carte à LED monochrome, le code d'origine fonctionne tel quel." status="is-warning" icon="fas fa-lightbulb" %}
+{% include message.html title="Une LED en logique inversée" message="La LED utilisateur de la XIAO (orange, à côté du connecteur USB-C, sur GPIO21) est câblée vers le 3,3 V : elle s'allume quand la broche est à `LOW` et s'éteint à `HIGH`. Le clignotement est le même, seul le sens est inversé. La LED rouge voisine indique la charge de la batterie et ne se pilote pas." status="is-info" icon="fas fa-lightbulb" %}
 
 {% include step-tuto.html
 greyBackground=true
 title="4 - Validation individuelle"
-content="La LED intégrée (`LED_BUILTIN`) doit clignoter à 1 Hz. **Montre ta carte qui clignote** avant de passer à la suite : c'est la seule sortie attendue de ce TD1."
+content="La LED orange intégrée (`LED_BUILTIN`) doit clignoter à 1 Hz. **Montre ta carte qui clignote** avant de passer à la suite : c'est la seule sortie attendue de ce TD1."
 %}
 
 ## Bonus - LED externe sur breadboard
 
-S'il te reste du temps, câble une LED externe avec sa résistance série. C'est la première brique **physique** du montage qui restera figée jusqu'au projet.
+S'il te reste du temps, câble une LED externe avec sa résistance série entre la broche **D3** (GPIO4) et GND. C'est ta première sortie **physique** : un montage d'essai, à retirer ensuite, car sur le PCB du projet D3 sert au connecteur I2C.
 
 ![BreadBoard](esp32-s3-blink.png)
+
+La photo montre une autre carte ESP32-S3 : le principe est le même, seule la broche change (D3 sur la XIAO). Cette LED externe est câblée de façon classique (anode côté broche) : `HIGH` l'allume.
 
 Voici le code nécessaire au fonctionnement de cette démonstration.
 
 ```cpp
-#define LED_PIN 4
+#include <Arduino.h>
+
+#define LED_PIN D3   // GPIO4
 
 void setup() {
   pinMode(LED_PIN, OUTPUT);
@@ -125,4 +136,4 @@ void loop() {
 
 Le calcul de la résistance série est détaillé dans le concept [GPIO & monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/).
 
-{% include message.html title="Rendez-vous au tutoriel suivant" message="Le prochain tutoriel réutilise cette même carte et ce même projet PlatformIO : garde ton câblage tel quel, tu ajouteras boutons et joystick sans rien démonter." status="is-success" icon="fas fa-check-circle" %}
+{% include message.html title="Rendez-vous au tutoriel suivant" message="Le prochain tutoriel réutilise cette même carte et ce même projet PlatformIO : retire la LED externe, puis tu câbleras boutons et joystick selon le câblage du PCB du projet." status="is-success" icon="fas fa-check-circle" %}

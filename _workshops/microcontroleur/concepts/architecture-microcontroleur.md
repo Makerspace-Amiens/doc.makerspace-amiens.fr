@@ -64,9 +64,9 @@ Le CPU exécute un **cycle fetch–decode–execute** en continu :
 2. **Decode** - la décoder
 3. **Execute** - l'exécuter (calcul, accès mémoire, écriture registre)
 
-Ce cycle est cadencé par l'**horloge** : l'ESP32-S3 tourne à **240 MHz**, soit 240 millions de cycles par seconde. Un `digitalWrite()` prend quelques cycles, une multiplication quelques dizaines, et établir une connexion Wi-Fi en réclame plusieurs centaines de millions.
+Ce cycle est cadencé par l'**horloge** : l'ESP32-S3 tourne à **240 MHz**, soit 240 millions de cycles par seconde. Une addition ou une multiplication entière prend un ou deux cycles, un `digitalWrite()` (qui traverse plusieurs couches du core Arduino avant d'atteindre le registre) quelques dizaines, et établir une connexion Wi-Fi en réclame plusieurs centaines de millions.
 
-L'ESP32-S3 possède **deux cœurs** (deux unités de calcul quasi indépendantes, capables de travailler en parallèle) Xtensa LX7. Dans le cadre Arduino-ESP32, le code principal `setup()`/`loop()` tourne sur le cœur 1 ; le cœur 0 gère le Wi-Fi en arrière-plan.
+L'ESP32-S3 possède **deux cœurs** (deux unités de calcul quasi indépendantes, capables de travailler en parallèle) Xtensa LX7. Dans le cadre Arduino-ESP32, le petit noyau temps réel FreeRTOS répartit le travail : le code principal `setup()`/`loop()` tourne sur le cœur 1, et le cœur 0 gère le Wi-Fi en arrière-plan.
 
 ### Ce que fait vraiment le CPU : calculer ou transférer
 
@@ -105,7 +105,7 @@ C'est ce qui permet à un capteur sans fil de tenir des mois, voire des années,
 | **Contenu** | Programme compilé, constantes | Variables, pile (mémoire des appels de fonctions) et heap (allocation dynamique) |
 | **Persistance** | Oui (survit à un reset) | Non (perdu à l'extinction) |
 | **Vitesse** | Plus lente | Très rapide |
-| **Taille ESP32-S3** | 16 Mo (externe) | 512 Ko interne |
+| **Taille (XIAO ESP32S3)** | 8 Mo (externe) | 512 Ko interne + 8 Mo de PSRAM externe |
 
 ```cpp
 // En Flash (programme + constantes)
@@ -137,8 +137,8 @@ Les périphériques ci-dessus (GPIO, ADC, timers, DMA…) se retrouvent sur pres
 
 | Périphérique spécialisé | Rôle | Exemples de puces |
 |---|---|---|
-| **Wi-Fi / Bluetooth** | Radio 2,4 GHz intégrée pour le sans-fil et l'IoT | ESP32, ESP32-S3, RP2040-W |
-| **Interface caméra** (DVP / LCD_CAM) | Capture d'un flux vidéo depuis un capteur d'image | ESP32-S3, ESP32-CAM |
+| **Wi-Fi / Bluetooth** | Radio 2,4 GHz intégrée pour le sans-fil et l'IoT | ESP32, ESP32-S3 (le Raspberry Pi Pico W passe, lui, par une puce radio séparée) |
+| **Interface caméra** (DVP / LCD_CAM) | Capture d'un flux vidéo depuis un capteur d'image | ESP32-S3 (carte XIAO ESP32S3 Sense), ESP32 (carte ESP32-CAM) |
 | **Codec vidéo matériel** | Décodage/encodage accéléré (JPEG, H.264) | SoC applicatifs (ESP32-P4, i.MX…) |
 | **Audio** (I2S, codec) | Entrée/sortie de son numérique (micro, haut-parleur) | ESP32-S3, STM32 audio |
 | **USB natif** (OTG) | Jouer le rôle de périphérique ou d'hôte USB | ESP32-S3, RP2040, STM32 |
@@ -218,6 +218,8 @@ C'est précisément cette limite que lèvent les interruptions. (Le trajet compl
 Le CPU exécute `loop()` en continu, mais certains événements ne peuvent pas attendre le prochain passage dans la boucle - un bouton pressé pendant une longue routine, par exemple. Une **interruption** suspend momentanément l'exécution normale pour exécuter une petite fonction dédiée, puis reprend exactement où elle s'était arrêtée.
 
 ```cpp
+volatile int compteurAppuis = 0;  // volatile : modifiée hors du déroulement normal
+
 void IRAM_ATTR surAppui() {
   compteurAppuis++;  // aussi court et rapide que possible
 }
@@ -233,12 +235,14 @@ Le mot-clé **`IRAM_ATTR`** demande au compilateur de placer la fonction d'inter
 
 ## L'ESP32-S3 en bref
 
+Dans l'atelier, la puce est montée sur une carte [XIAO ESP32S3](/docs/references/hardware/xiao-esp32s3/) de Seeed Studio.
+
 | Caractéristique | Valeur |
 |---|---|
 | CPU | Xtensa LX7 dual-core **32 bits**, 240 MHz |
-| RAM | 512 Ko SRAM + 8 Mo PSRAM (RAM externe supplémentaire) en option |
-| Flash | 16 Mo (externe via SPI) |
-| GPIO | 45 broches (dont 20 ADC-capable) |
+| RAM | 512 Ko SRAM + 8 Mo PSRAM (RAM externe supplémentaire, présente sur la XIAO) |
+| Flash | 8 Mo (externe via SPI) sur la XIAO ESP32S3 |
+| GPIO | 45 sur la puce (dont 20 ADC), 11 sorties sur la XIAO (D0 à D10) |
 | Tension logique | **3,3 V** (≠ 5 V des Arduino classiques) |
 | Connectivité | Wi-Fi 802.11 b/g/n + Bluetooth 5 |
 

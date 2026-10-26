@@ -90,11 +90,13 @@ C'est ce que résume la notation **`8N1`** : 8 bits de données, `N`o parité, 1
 - Communication entre deux µC
 
 ```cpp
-Serial.begin(115200);        // initialise UART0 (USB)
+Serial.begin(115200);        // ouvre le port série du moniteur
 Serial.println("Hello !");   // envoie une ligne
 int v = analogRead(A0);
 Serial.println(v);           // affiche la valeur dans le moniteur série
 ```
+
+{% include message.html title="Sur la XIAO, Serial passe par l'USB natif" message="Sur beaucoup de cartes, `Serial` est un vrai UART, converti en USB par une puce dédiée (CP2102, CH340). La XIAO ESP32S3 n'en a pas : `Serial` y passe par l'**USB natif** de l'ESP32-S3 (USB CDC). Côté code, rien ne change : même `Serial.begin()`, mêmes `print`. L'UART0 matériel reste disponible sur D6 (TX) / D7 (RX) sous le nom `Serial0`, par exemple pour dialoguer avec un module GPS (sur le PCB du Pong, ces deux broches servent à un bouton et au reset de l'écran)." status="is-info" icon="fas fa-info-circle" %}
 
 ## I2C - Inter-Integrated Circuit
 
@@ -228,7 +230,7 @@ En pratique, la bibliothèque **TFT_eSPI** gère entièrement SPI pour l'écran 
 | Fils | 2 | 2 | 4+ |
 | Vitesse | ~1 Mbit/s | 100 k–1 Mbit/s | 10–80 Mbit/s |
 | Multi-périphériques | Non (point à point) | Oui (adressage) | Oui (CS par esclave) |
-| Full-duplex | Non | Non | Oui |
+| Full-duplex | Oui (TX et RX séparés) | Non | Oui |
 | Complexité | Faible | Moyenne | Moyenne |
 | Usage type | Debug, modules | Capteurs, OLED | Écrans, SD |
 
@@ -269,4 +271,4 @@ flowchart TD
 - **I2C** : 2 fils, multi-esclaves par adressage, vitesse modérée - exige deux **pull-ups** (~4,7 kΩ) sur SDA/SCL ; un **scanner** révèle les adresses présentes.
 - **SPI** : 4 fils, rapide, full-duplex - indispensable pour les écrans TFT.
 - Bas niveau : une trame UART encadre chaque octet (start / données / stop, `8N1`) ; un échange I2C = start → adresse+R/W → ACK → données → stop.
-- Dans ce projet : **UART** pour le moniteur série (debug), **SPI** pour l'écran.
+- Dans ce projet : un **port série** pour le moniteur (transporté par l'USB natif sur la XIAO), **SPI** pour l'écran.

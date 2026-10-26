@@ -77,7 +77,7 @@ C'est cette **sobriété** qui le rend si présent : on peut en mettre partout, 
 
 ## Le microcontrôleur de cet atelier : l'ESP32-S3
 
-Dans cet atelier, on utilise un microcontrôleur moderne et populaire : l'**ESP32-S3**. En plus de percevoir et d'agir, il sait aussi communiquer sans fil (Wi-Fi et Bluetooth) de quoi imaginer des objets connectés. Pas d'inquiétude si le nom ne te dit rien : on part de zéro.
+Dans cet atelier, on utilise un microcontrôleur moderne et populaire : l'**ESP32-S3**, monté sur une carte grande comme un timbre-poste, la [XIAO ESP32S3](/docs/references/hardware/xiao-esp32s3/). En plus de percevoir et d'agir, il sait aussi communiquer sans fil (Wi-Fi et Bluetooth) : de quoi imaginer des objets connectés. Pas d'inquiétude si le nom ne te dit rien : on part de zéro.
 
 {% include message.html title="Pas besoin de tout retenir maintenant" message="« ESP32-S3 », « capteur », « actionneur »… ces mots vont vite devenir familiers en manipulant. L'objectif de cette page est juste de te donner la vue d'ensemble avant d'entrer dans le détail." status="is-success" icon="fas fa-check" %}
 

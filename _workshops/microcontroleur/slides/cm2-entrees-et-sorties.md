@@ -17,7 +17,7 @@ back_link: /workshops/microcontroleur/
 5. Simuler une tension
 
 <aside class="notes" markdown="1">
-1 h 30 de cours, sans manipulation. Le câblage du Pong est figé (boutons sur GPIO5/6, joystick sur GPIO1/2 en ADC1 et GPIO7) : le montrer tôt, tout le cours y renvoie.
+1 h 30 de cours, sans manipulation. Le câblage du Pong est figé (boutons sur D5/D6, joystick sur D0/D1 en ADC1 et D2, comme sur le PCB du projet) : le montrer tôt, tout le cours y renvoie.
 Rappel du CM1 à faire en ouverture : percevoir → décider → agir, et `millis()` plutôt que `delay()`.
 </aside>
 
@@ -82,7 +82,7 @@ Cette zone grise au milieu explique tout ce qui suit sur les entrées flottantes
 
 {% include message.html title="3,3 V, pas 5 V" message="Une broche mise en sortie produit 3,3 V, pas 5 V comme sur un Arduino Uno. Et un signal 5 V appliqué en entrée peut endommager la puce. Avant de brancher un module trouvé dans un tiroir, cherchez sa tension d'alimentation." status="is-danger" icon="fas fa-exclamation-triangle" %}
 
-[GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link} [ESP32-S3-DevKitC-1](/docs/references/hardware/esp32-s3-devkitc-1/){: .doc-link}
+[GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link} [XIAO ESP32S3](/docs/references/hardware/xiao-esp32s3/){: .doc-link}
 
 ---
 
@@ -386,7 +386,7 @@ Deux exceptions à connaître :
 Vérifiez le brochage de la carte avant de câbler, pas après.
 {: .fragment .caption}
 
-[GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link} [ESP32-S3-DevKitC-1](/docs/references/hardware/esp32-s3-devkitc-1/){: .doc-link}
+[GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link} [XIAO ESP32S3](/docs/references/hardware/xiao-esp32s3/){: .doc-link}
 
 ---
 
@@ -394,14 +394,14 @@ Vérifiez le brochage de la carte avant de câbler, pas après.
 
 | Rôle | Broche | Mode |
 |---|---|---|
-| Bouton joueur 1 : HAUT | GPIO5 | `INPUT_PULLUP` |
-| Bouton joueur 1 : BAS | GPIO6 | `INPUT_PULLUP` |
-| Joystick joueur 2 : axe X | GPIO1 (**ADC1**) | `analogRead` |
-| Joystick joueur 2 : axe Y | GPIO2 (**ADC1**) | `analogRead` |
-| Bouton du joystick (START / RETRY) | GPIO7 | `INPUT_PULLUP` |
+| Bouton joueur 1 : HAUT | D6 (GPIO43), via 1 kΩ | `INPUT_PULLUP` |
+| Bouton joueur 1 : BAS | D5 (GPIO6) | `INPUT_PULLUP` |
+| Joystick joueur 2 : axe X | D0 (GPIO1, **ADC1**) | `analogRead` |
+| Joystick joueur 2 : axe Y | D1 (GPIO2, **ADC1**) | `analogRead` |
+| Bouton du joystick (START / RETRY) | D2 (GPIO3) | `INPUT_PULLUP` |
 {: .table-dense}
 
-Ce câblage ne change plus jusqu'au projet : l'écran viendra s'y ajouter sur d'autres broches, sans rien défaire.
+C'est le câblage du PCB du projet : l'écran viendra occuper D7 à D10 ; D3/D4 vont à un connecteur d'extension.
 {: .caption}
 
 [Boutons, joystick et moniteur série](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/){: .doc-link}
@@ -412,10 +412,10 @@ Ce câblage ne change plus jusqu'au projet : l'écran viendra s'y ajouter sur d'
 
 - {: .fragment} **Signal 5 V vers le µC** : un pont diviseur de deux résistances ramène le niveau sous 3,3 V
 - {: .fragment} **Bus bidirectionnel** (I2C par exemple) : un *level shifter* dédié
-- {: .fragment} **Alimentation** : un module 5 V peut souvent être alimenté en 5 V tant que ses **signaux** restent en 3,3 V
+- {: .fragment} **Module alimenté en 5 V** : vérifier la tension de ses **sorties** ; si elles montent à 5 V, pont diviseur ou *level shifter*
 - {: .fragment .highlight-red} Jamais 5 V directement sur un GPIO
 
-Le sens inverse pose rarement problème : un 5 V lit un 3,3 V comme un `HIGH`.
+Le sens inverse est sans danger pour la puce : un composant 5 V lit souvent 3,3 V comme un `HIGH`, mais pas toujours (vérifier son seuil $V_{IH}$).
 {: .fragment .caption}
 
 [GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link}
@@ -465,7 +465,7 @@ L'ADC de l'ESP32 n'est pas parfaitement linéaire, surtout près des extrémité
 
 ---
 
-{% include message.html title="ADC2 est inutilisable avec le Wi-Fi" message="Sur ESP32, le bloc ADC2 partage du matériel avec la radio : dès que le Wi-Fi est actif, ses lectures échouent. Utilisez uniquement les broches ADC1, GPIO1 à GPIO10. Le symptôme est déroutant : le montage marche parfaitement pendant des semaines, jusqu'au jour où vous activez le Wi-Fi pour le projet." status="is-warning" icon="fas fa-exclamation-triangle" %}
+{% include message.html title="ADC2 est inutilisable avec le Wi-Fi" message="Sur ESP32, le bloc ADC2 partage du matériel avec la radio : dès que le Wi-Fi est actif, ses lectures échouent. Utilisez uniquement les broches ADC1, GPIO1 à GPIO10 : sur la XIAO, toutes les broches analogiques le sont. Le symptôme est déroutant : le montage marche parfaitement pendant des semaines, jusqu'au jour où vous activez le Wi-Fi pour le projet." status="is-warning" icon="fas fa-exclamation-triangle" %}
 
 [ADC et PWM](/workshops/microcontroleur/concepts/adc-pwm/){: .doc-link} [Boutons, joystick et moniteur série](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/){: .doc-link}
 
@@ -478,7 +478,7 @@ L'ADC de l'ESP32 n'est pas parfaitement linéaire, surtout près des extrémité
 
 ![Carte ESP32-S3 sur breadboard, reliée par des fils de couleur à un module joystick](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/hero.webp){: .img-md}
 
-Le montage du Pong
+Le montage du Pong, ici sur une autre carte ESP32-S3
 {: .caption}
 
 </div>
@@ -551,7 +551,7 @@ for (int i = 0; i < 16; i++) somme += analogRead(PIN);
 int lisse = somme / 16;
 ```
 
-Seize lectures coûtent quelques dizaines de microsecondes : négligeable dans une boucle à 60 images par seconde, et l'affichage arrête de sautiller.
+Seize lectures coûtent quelques centaines de microsecondes : négligeable face aux 16 ms d'une image, et l'affichage arrête de sautiller.
 {: .fragment .caption}
 
 [ADC et PWM](/workshops/microcontroleur/concepts/adc-pwm/){: .doc-link}
@@ -612,7 +612,7 @@ analogWrite(LED_PIN, 128);   // ~50 % : demi-luminosité
 analogWrite(LED_PIN, 255);   // plein éclat
 ```
 
-Derrière, Arduino-ESP32 utilise le périphérique **LEDC** : 8 canaux matériels indépendants, fréquence et résolution configurables jusqu'à 16 bits.
+Derrière, Arduino-ESP32 utilise le périphérique **LEDC** : 8 canaux matériels indépendants, fréquence et résolution configurables (jusqu'à 14 bits).
 
 Le CPU n'intervient pas. Une fois le canal réglé, le signal est généré par le matériel, même si la `loop()` est occupée ailleurs. C'est tout l'intérêt d'un périphérique dédié.
 {: .fragment .caption}

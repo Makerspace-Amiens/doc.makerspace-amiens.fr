@@ -36,24 +36,29 @@ Ce tutoriel ajoute la dernière brique matérielle du montage : l'**écran**. Le
 
 ### Câblage additionnel de l'atelier
 
-| Signal | Broche | Rôle |
+| Signal | Broche XIAO | Rôle |
 |---|---|---|
-| CS | GPIO10 | Sélection de l'écran sur le bus SPI |
-| DC | GPIO11 | Bascule commande / donnée |
-| RST | GPIO12 | Reset matériel de l'écran |
-| SCLK | GPIO13 | Horloge SPI |
-| MOSI | GPIO14 | Données CPU → écran |
-| BLK (rétroéclairage) | GPIO15 ou 3,3 V direct | Allumage du rétroéclairage |
+| SCK | D9 (GPIO8) | Horloge SPI |
+| MOSI | D10 (GPIO9) | Données CPU → écran |
+| DC | D8 (GPIO7) | Bascule commande / donnée |
+| RESET | D7 (GPIO44) | Reset matériel de l'écran |
+| CS | GND | Écran sélectionné en permanence |
+| LED (rétroéclairage) | 3V3 | Rétroéclairage toujours allumé |
+| VCC / GND | 3V3 / GND | Alimentation de l'écran |
 
 ```mermaid
 graph LR
-  CS --> GPIO10["GPIO10"]
-  DC --> GPIO11["GPIO11"]
-  RST --> GPIO12["GPIO12"]
-  SCLK --> GPIO13["GPIO13"]
-  MOSI --> GPIO14["GPIO14"]
-  BLK --> GPIO15["GPIO15 (ou 3,3 V)"]
+  SCK --> D9["D9"]
+  MOSI --> D10["D10"]
+  DC --> D8["D8"]
+  RESET --> D7["D7"]
+  CS --> GND["GND"]
+  LED --> V33["3V3"]
 ```
+
+C'est le câblage du PCB du projet. Il économise deux broches : le **CS** est relié à GND, car l'écran est le seul composant du bus SPI et peut donc rester sélectionné en permanence ; le **rétroéclairage** est branché directement sur 3V3. Avec les boutons, le joystick et le connecteur I2C, les 11 broches de la XIAO sont ainsi toutes utilisées.
+
+{% include message.html title="L'horloge SPI n'est pas sur D8" message="Le SCK par défaut de la XIAO est D8, mais le PCB l'a placé sur **D9** (et DC sur D8). L'ESP32-S3 route le SPI vers n'importe quelle broche grâce à sa GPIO matrix : il suffit de déclarer les bons numéros dans `User_Setup.h`. Ne recopie donc pas un `User_Setup.h` trouvé en ligne pour la XIAO : ses broches ne correspondraient pas." status="is-warning" icon="fas fa-exclamation-triangle" %}
 
 {% include message.html title="MISO non utilisé" message="L'écran ne renvoie jamais de données utiles à l'ESP32 : seul le sens CPU → écran (MOSI) est câblé. C'est la différence entre un bus SPI complet et cet usage en écriture seule - voir le concept [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/)." status="is-info" icon="fas fa-info-circle" %}
 
@@ -64,9 +69,9 @@ content="Ajoute la bibliothèque **TFT_eSPI** à ton `platformio.ini`, puis copi
 %}
 
 ```ini
-[env:esp32-s3-devkitc-1]
+[env:seeed_xiao_esp32s3]
 platform = espressif32
-board = esp32-s3-devkitc-1
+board = seeed_xiao_esp32s3
 framework = arduino
 monitor_speed = 115200
 lib_deps =
@@ -80,16 +85,18 @@ build_flags =
 // User_Setup.h (extrait clé en main - pins figées de l'atelier)
 #define ST7789_DRIVER      // adapter selon le contrôleur de ton écran
 
-#define TFT_CS   10
-#define TFT_DC   11
-#define TFT_RST  12
-#define TFT_SCLK 13
-#define TFT_MOSI 14
+// Numéros de GPIO obligatoires ici (pas D7, D6...) : la bibliothèque les teste avec #if
+#define TFT_MISO -1   // non câblé
+#define TFT_SCLK  8   // D9
+#define TFT_MOSI  9   // D10
+#define TFT_CS   -1   // relié à GND sur le PCB
+#define TFT_DC    7   // D8
+#define TFT_RST  44   // D7
 
 #define SPI_FREQUENCY  40000000
 ```
 
-{% include message.html title="Écran noir après flashage ?" message="Vérifie dans l'ordre : le rétroéclairage (BLK) est-il alimenté ? Le driver (`ST7789_DRIVER` / `ILI9341_DRIVER`) correspond-il à ton écran ? Les pins du `User_Setup.h` correspondent-elles au câblage réel ? Ces trois points couvrent la quasi-totalité des écrans noirs." status="is-warning" icon="fas fa-exclamation-triangle" %}
+{% include message.html title="Écran noir après flashage ?" message="Vérifie dans l'ordre : le rétroéclairage (LED/BLK) est-il alimenté ? Le driver (`ST7789_DRIVER` / `ILI9341_DRIVER`) correspond-il à ton écran ? Les pins du `User_Setup.h` correspondent-elles au câblage réel ? Ces trois points couvrent la quasi-totalité des écrans noirs." status="is-warning" icon="fas fa-exclamation-triangle" %}
 
 {% include message.html title="Checkpoint" message="À ce stade, le projet doit compiler et se flasher sans erreur - même si l'écran reste noir : aucun dessin n'a encore été envoyé. Une erreur de compilation ici vient presque toujours d'un chemin ou d'un nom de fichier incorrect pour User_Setup.h." status="is-success" icon="fas fa-check-circle" %}
 
@@ -100,6 +107,7 @@ content="`TFT_eSPI` expose un système de coordonnées `(0,0)` en haut à gauche
 %}
 
 ```cpp
+#include <Arduino.h>
 #include <TFT_eSPI.h>
 
 TFT_eSPI tft = TFT_eSPI();
@@ -130,7 +138,7 @@ content="Réutilise la lecture ADC du tutoriel précédent pour déplacer un rec
 %}
 
 ```cpp
-#define JOY_Y 2
+#define JOY_Y D1   // GPIO2
 
 int raquetteY = 60;
 

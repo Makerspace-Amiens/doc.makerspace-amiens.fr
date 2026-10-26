@@ -50,7 +50,7 @@ Faire dialoguer les composants
 
 ## Un fil par information ?
 
-Un écran couleur 240×240 reçoit **plus de 100 000 pixels par image**. Un capteur renvoie une température sur 16 bits. Une carte SD, des blocs de 512 octets.
+Un écran couleur 240×240 reçoit **57 600 pixels par image**, soit plus de 115 000 octets en couleur 16 bits. Un capteur renvoie une température sur 16 bits. Une carte SD, des blocs de 512 octets.
 
 Câbler un fil par bit serait impraticable : plus aucune broche disponible, une carte illisible, et des perturbations entre pistes.
 
@@ -140,13 +140,13 @@ Les curseurs mesurent **103,6 µs** par bit, soit 9600 bauds. Copie d'écran : H
 ## Là où vous l'utilisez déjà
 
 ```cpp
-Serial.begin(115200);                 // UART0, via l'USB
+Serial.begin(115200);                 // le port série du moniteur
 Serial.printf("x=%d y=%d\n", x, y);
 ```
 
-Le moniteur série est un UART. C'est aussi le bus des modules GPS, Bluetooth ou GSM, et le moyen le plus simple de faire dialoguer deux microcontrôleurs.
+Le moniteur série se manie comme un UART. L'UART est aussi le bus des modules GPS, Bluetooth ou GSM, et le moyen le plus simple de faire dialoguer deux microcontrôleurs.
 
-Sur la carte, une puce USB-série (CP2102 ou CH340) fait la traduction entre l'UART de l'ESP32 et le port USB du PC. C'est elle qui a besoin d'un driver sous Windows.
+Sur beaucoup de cartes, une puce USB-série (CP2102, CH340) traduit l'UART en USB et réclame un driver sous Windows. La XIAO n'en a pas : `Serial` passe directement par l'USB natif de l'ESP32-S3, et l'UART0 reste libre sur D6/D7.
 {: .fragment .caption}
 
 [Le port série sous VSCode](/docs/tutorials/electronics/vscode-port-serie/){: .doc-link} [Vérification de la toolchain](/workshops/microcontroleur/tutorials/toolchain-blink/){: .doc-link}
@@ -273,15 +273,15 @@ De quelques MHz à **80 MHz** sur ESP32-S3 : c'est ce qui rend un écran TFT flu
 
 | Signal | Broche | Rôle |
 |---|---|---|
-| CS | GPIO10 | Sélection de l'écran sur le bus |
-| DC | GPIO11 | Bascule commande / donnée |
-| RST | GPIO12 | Reset matériel de l'écran |
-| SCLK | GPIO13 | Horloge SPI |
-| MOSI | GPIO14 | Données CPU vers écran |
-| BLK | GPIO15 ou 3,3 V | Rétroéclairage |
+| SCK | D9 (GPIO8) | Horloge SPI |
+| MOSI | D10 (GPIO9) | Données CPU vers écran |
+| DC | D8 (GPIO7) | Bascule commande / donnée |
+| RESET | D7 (GPIO44) | Reset matériel de l'écran |
+| CS | GND | Écran toujours sélectionné |
+| LED | 3V3 | Rétroéclairage, toujours allumé |
 {: .table-dense}
 
-**MISO n'est pas câblé** : un bus full-duplex utilisé en écriture seule.
+**MISO n'est pas câblé** (écriture seule) et **CS est à GND** : un seul esclave, toujours sélectionné.
 {: .fragment .caption}
 
 [Écran TFT SPI ST7789](/docs/references/hardware/ecran-tft-spi-st7789/){: .doc-link}
@@ -323,7 +323,7 @@ tft.fillScreen(TFT_BLACK);
 | Fils | 2 | 2 | 4 et plus |
 | Vitesse | ~1 Mbit/s | 100 k à 1 Mbit/s | 10 à 80 Mbit/s |
 | Plusieurs composants | non | oui, par adresse | oui, un CS chacun |
-| Full-duplex | non | non | oui |
+| Full-duplex | oui | non | oui |
 | Horloge partagée | non | oui | oui |
 | Complexité | faible | moyenne | moyenne |
 | Usage type | debug, modules | capteurs, OLED | écrans, carte SD |
@@ -343,7 +343,7 @@ flowchart LR
   D -->|Non| F["UART<br/>debug, GPS, BT"]
 ```
 
-Notre projet : **UART** pour le moniteur série, **SPI** pour l'écran. **↓** pour la page.
+Notre projet : un **port série** pour le moniteur, **SPI** pour l'écran. **↓** pour la page.
 {: .fragment .caption}
 
 [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link}

@@ -119,7 +119,7 @@ Le microcontrôleur ne sait rien faire tout seul. Sans programme, c'est une puce
 |---|---|---|
 | **Capteur** | Traduit une grandeur physique en signal électrique | bouton, joystick, potentiomètre |
 | **Actionneur** | Transforme un signal électrique en action | LED, écran, moteur, buzzer |
-| **Broche** (*pin*) | Une patte de la puce, reliée au monde extérieur | GPIO5, GPIO1 |
+| **Broche** (*pin*) | Une patte de la puce, reliée au monde extérieur | D5, D0 (GPIO6, GPIO1) |
 | **Programme** | La suite d'instructions que vous écrivez | `main.cpp` |
 {: .table-dense}
 
@@ -143,7 +143,7 @@ Un microcontrôleur est jugé sur sa **ponctualité**, pas sur sa puissance.
 {: .fragment .caption}
 
 <aside class="notes" markdown="1">
-La slide qui prépare toute la suite : c'est parce que la puce est branchée sur le monde physique qu'elle doit être prévisible, et c'est ce déterminisme qui explique l'absence de système d'exploitation (partie 3) et la chasse aux `delay()`.
+La slide qui prépare toute la suite : c'est parce que la puce est branchée sur le monde physique qu'elle doit être prévisible, et c'est ce déterminisme qui explique qu'on n'y fasse pas tourner un système d'exploitation de PC (partie 3) et la chasse aux `delay()`.
 Contre-exemple utile : sur un PC, un antivirus qui se réveille vole 300 ms au programme. Personne ne s'en plaint. Un servomoteur, lui, tremble.
 </aside>
 
@@ -204,24 +204,24 @@ La question à se poser n'est pas « lequel est le plus puissant » mais « de q
 | Caractéristique | Valeur |
 |---|---|
 | CPU | Xtensa LX7 **dual-core** 32 bits, 240 MHz |
-| RAM | 512 Ko SRAM (+ 8 Mo PSRAM en option) |
-| Flash | 16 Mo, externe via SPI |
-| GPIO | 45 broches, dont 20 capables d'ADC |
+| RAM | 512 Ko SRAM + 8 Mo PSRAM |
+| Flash | 8 Mo, externe via SPI |
+| GPIO | 45 sur la puce, 11 sorties sur la XIAO |
 | Tension logique | **3,3 V** |
 | Connectivité | Wi-Fi 802.11 b/g/n + Bluetooth 5 |
-| Prix | ~8 € la carte de développement |
+| Prix | ~8 € la carte XIAO ESP32S3 |
 {: .table-dense}
 
-Le sans-fil servira au projet Snake. **↓** pour le brochage de la carte.
+Montée sur une carte XIAO de 21 × 18 mm. Le sans-fil servira au projet Snake. **↓** pour le brochage.
 {: .caption}
 
-[ESP32-S3-DevKitC-1](/docs/references/hardware/esp32-s3-devkitc-1/){: .doc-link}
+[XIAO ESP32S3](/docs/references/hardware/xiao-esp32s3/){: .doc-link}
 
 <!-- .down -->
 
 ## La fiche de la carte
 
-<iframe class="page-preview" data-src="/docs/references/hardware/esp32-s3-devkitc-1/#broches-à-connaître" title="Fiche de référence ESP32-S3-DevKitC-1"></iframe>
+<iframe class="page-preview" data-src="/docs/references/hardware/xiao-esp32s3/#brochage" title="Fiche de référence XIAO ESP32S3"></iframe>
 
 ---
 
@@ -319,8 +319,8 @@ Au fond, un CPU ne fait que deux choses : calculer, et déplacer des octets d'un
 
 | Opération | Ordre de grandeur |
 |---|---|
-| Un `digitalWrite()` | quelques cycles |
-| Une multiplication entière | quelques dizaines de cycles |
+| Une multiplication entière | un ou deux cycles |
+| Un `digitalWrite()` | quelques dizaines de cycles |
 | Redessiner un écran 240×240 en SPI | quelques millions de cycles |
 | Établir une connexion Wi-Fi | plusieurs centaines de millions |
 {: .table-dense}
@@ -334,7 +334,7 @@ Au fond, un CPU ne fait que deux choses : calculer, et déplacer des octets d'un
 
 ## Deux cœurs, et le droit de dormir
 
-- L'ESP32-S3 a **deux cœurs** Xtensa LX7 : sous Arduino, `setup()`/`loop()` tournent sur le cœur 1, le Wi-Fi occupe le cœur 0 en arrière-plan
+- L'ESP32-S3 a **deux cœurs** Xtensa LX7 : sous Arduino, `setup()`/`loop()` tournent sur le cœur 1, le Wi-Fi occupe le cœur 0 en arrière-plan, sous la conduite d'un petit noyau (FreeRTOS)
 - Couper l'horloge d'un périphérique inutilisé économise de l'énergie
 - Les **modes veille** (*light sleep*, *deep sleep*) éteignent tout ou partie de la puce
 - Le **RTC** continue de tourner en veille profonde pour réveiller la carte à l'heure dite
@@ -353,7 +353,7 @@ C'est ce qui permet à un capteur sur pile de tenir des mois : il dort 99,9 % du
 | **Contenu** | Programme compilé, constantes | Variables, pile, heap |
 | **Persistance** | Survit au reset | Perdue à l'extinction |
 | **Vitesse** | Plus lente | Très rapide |
-| **Taille** | 16 Mo | 512 Ko |
+| **Taille** | 8 Mo | 512 Ko (+ 8 Mo PSRAM) |
 {: .table-dense}
 
 Deux espaces d'adressage séparés : une architecture **Harvard modifiée**.
@@ -544,7 +544,7 @@ C'est exactement ce que force le bouton **BOOT** maintenu au reset : il bloque l
 
 ---
 
-{% include message.html title="Le flashage échoue systématiquement ?" message="Dans l'ordre : vérifiez que le câble USB-C transporte des données (beaucoup de câbles ne font que charger), que le bon port est sélectionné, puis maintenez le bouton **BOOT** pendant les 2 premières secondes de l'upload, jusqu'à ce que `Writing at...` apparaisse." status="is-warning" icon="fas fa-exclamation-triangle" %}
+{% include message.html title="Le flashage échoue systématiquement ?" message="Dans l'ordre : vérifiez que le câble USB-C transporte des données (beaucoup de câbles ne font que charger), que le bon port est sélectionné, puis forcez le mode téléversement : débranchez la XIAO, maintenez **BOOT** en rebranchant le câble, relâchez et relancez l'upload. Appuyez ensuite sur **RESET** pour lancer le programme." status="is-warning" icon="fas fa-exclamation-triangle" %}
 
 [Vérification de la toolchain](/workshops/microcontroleur/tutorials/toolchain-blink/){: .doc-link}
 
@@ -566,22 +566,22 @@ void loop() {                       // en boucle, jusqu'à la coupure
 }
 ```
 
-Pas de `main()` : le core Arduino l'écrit, et appelle `setup()` puis `loop()`.
+Pas de `main()` : le core Arduino l'écrit, et appelle `setup()` puis `loop()`. Sous PlatformIO, `main.cpp` commence par `#include <Arduino.h>` : sans elle, aucune de ces fonctions n'existe.
 {: .caption}
 
 [Du matériel au logiciel](/workshops/microcontroleur/concepts/du-materiel-au-logiciel/){: .doc-link}
 
 ---
 
-## Pas de système d'exploitation
+## Pas de système d'exploitation de PC
 
-Sur un ordinateur, votre programme est un processus parmi d'autres. Ici, il n'y a **rien** autour de lui :
+Sur un ordinateur, votre programme est un processus parmi des centaines. Ici, c'est **le seul** programme de la puce :
 
-- {: .fragment} pas de multitâche : `loop()` tourne seul
-- {: .fragment} pas de `sleep()` : un `delay()` bloque **tout**, boutons compris
+- {: .fragment} un petit noyau (FreeRTOS) fait tourner Wi-Fi et USB à côté, mais tout votre code vit dans **une seule tâche** : `loop()`
+- {: .fragment} un `delay()` met cette tâche en pause : **rien** de votre programme n'avance, boutons compris
 - {: .fragment} pas d'arrêt propre : couper le courant coupe le programme net
 
-En contrepartie, le comportement est **prévisible à la milliseconde près**.
+En contrepartie, votre code est seul maître de son temps : son comportement est **prévisible**.
 {: .fragment .caption}
 
 [Du matériel au logiciel](/workshops/microcontroleur/concepts/du-materiel-au-logiciel/){: .doc-link}
@@ -699,22 +699,22 @@ void setup() {
 
 void loop() {
   digitalWrite(LED_BUILTIN, HIGH);  // 3,3 V sur la broche
-  delay(500);                       // bloque le CPU : il n'y a pas d'OS
+  delay(500);                       // met loop() en pause
   digitalWrite(LED_BUILTIN, LOW);   // 0 V
   delay(500);
 }
 </code></pre>
 
-Architecture, registres, GPIO et absence de système d'exploitation, réunis en quatre lignes. Compilé et flashé, ce code tourne tant que la carte est alimentée.
+Architecture, registres, GPIO et `loop()`, réunis en quatre lignes. Sur la XIAO, la LED orange est en logique inversée : `LOW` l'allume, `HIGH` l'éteint.
 {: .caption}
 
 [Vérification de la toolchain](/workshops/microcontroleur/tutorials/toolchain-blink/){: .doc-link}
 
 ---
 
-{% include message.html title="La LED embarquée n'est pas une simple LED" message="Sur l'ESP32-S3-DevKitC-1, la LED intégrée est une **RGB adressable** (WS2812), pas une LED monochrome. Si `digitalWrite(LED_BUILTIN, ...)` ne produit rien, utilisez `rgbLedWrite(RGB_BUILTIN, 40, 0, 0);` puis `rgbLedWrite(RGB_BUILTIN, 0, 0, 0);` en gardant les `delay(500)`." status="is-warning" icon="fas fa-lightbulb" %}
+{% include message.html title="La LED de la XIAO est inversée" message="La LED orange de la XIAO ESP32S3 (`LED_BUILTIN`, GPIO21) est câblée vers le 3,3 V : elle s'allume quand la broche est à `LOW` et s'éteint à `HIGH`. Le Blink clignote quand même, simplement en opposition de phase. La LED rouge voisine indique la charge de la batterie et ne se pilote pas." status="is-info" icon="fas fa-lightbulb" %}
 
-[Vérification de la toolchain](/workshops/microcontroleur/tutorials/toolchain-blink/){: .doc-link} [ESP32-S3-DevKitC-1](/docs/references/hardware/esp32-s3-devkitc-1/){: .doc-link}
+[Vérification de la toolchain](/workshops/microcontroleur/tutorials/toolchain-blink/){: .doc-link} [XIAO ESP32S3](/docs/references/hardware/xiao-esp32s3/){: .doc-link}
 
 ---
 
@@ -722,7 +722,7 @@ Architecture, registres, GPIO et absence de système d'exploitation, réunis en 
 
 ![LED rouge et résistance série sur breadboard, reliées à une carte ESP32-S3](/workshops/microcontroleur/tutorials/toolchain-blink/esp32-s3-blink.png){: .img-md}
 
-La base du montage du Pong : boutons, joystick et écran viendront s'y ajouter.
+La base du montage du Pong (photo prise avec une autre carte ESP32-S3 : sur la XIAO, la LED se branche sur D3). Boutons, joystick et écran viendront s'y ajouter.
 {: .caption}
 
 [Vérification de la toolchain](/workshops/microcontroleur/tutorials/toolchain-blink/){: .doc-link}
@@ -732,9 +732,9 @@ La base du montage du Pong : boutons, joystick et écran viendront s'y ajouter.
 ## Le fichier `platformio.ini`
 
 ```ini
-[env:esp32-s3-devkitc-1]
+[env:seeed_xiao_esp32s3]
 platform = espressif32        ; la famille de puces
-board = esp32-s3-devkitc-1    ; la carte exacte
+board = seeed_xiao_esp32s3    ; la carte exacte
 framework = arduino           ; le core utilisé
 monitor_speed = 115200        ; la vitesse du moniteur série
 lib_deps =                    ; les bibliothèques, téléchargées seules
@@ -795,7 +795,7 @@ Tant qu'il n'y a pas d'écran, c'est votre seul retour visuel. Afficher une vari
 - {: .fragment} Flash = le programme (persistant), RAM = les données (volatile)
 - {: .fragment} Les périphériques se pilotent par des **registres**
 - {: .fragment} Code → compilation → édition de liens → flashage → exécution
-- {: .fragment} **Pas d'OS** : `delay()` bloque tout, `millis()` ne bloque rien
+- {: .fragment} Une seule tâche, `loop()` : `delay()` la fige, `millis()` ne bloque rien
 - {: .fragment .highlight-red} Tension logique : **3,3 V**
 
 [Architecture d'un microcontrôleur](/workshops/microcontroleur/concepts/architecture-microcontroleur/){: .doc-link} [Du matériel au logiciel](/workshops/microcontroleur/concepts/du-materiel-au-logiciel/){: .doc-link}

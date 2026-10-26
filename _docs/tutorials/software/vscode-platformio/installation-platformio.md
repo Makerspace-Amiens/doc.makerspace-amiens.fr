@@ -257,7 +257,7 @@ title = "Étape 2 : Configuration du projet"
 content="Remplissez les champs suivants :
 
 - **Name** : `test_blink`
-- **Board** : Sélectionnez votre carte (par exemple : `Arduino Uno`, `ESP32 Dev Module`, `NodeMCU 1.0`...)
+- **Board** : Sélectionnez votre carte (par exemple : `Arduino Uno`, `Seeed Studio XIAO ESP32S3`, `ESP32 Dev Module`...)
 - **Framework** : Laissez `Arduino` par défaut
 - **Location** : Laissez le chemin par défaut ou choisissez un dossier
 

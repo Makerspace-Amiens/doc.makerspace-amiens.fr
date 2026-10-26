@@ -46,7 +46,7 @@ tutorials:
 how_to_guides:
 
 hardware:
-  - /docs/references/hardware/esp32-s3-devkitc-1/
+  - /docs/references/hardware/xiao-esp32s3/
   - /docs/references/hardware/ecran-tft-spi-st7789/
 
 software:
@@ -58,7 +58,7 @@ ressources:
 
 Bienvenue dans l'atelier **Microcontrôleurs** !
 
-Vous y trouverez les concepts fondamentaux d'un microcontrôleur (architecture d'un µC, GPIO, ADC, bus série) jusqu'à la réalisation d'un mini-jeu embarqué multijoueur sur **ESP32-S3**.
+Vous y trouverez les concepts fondamentaux d'un microcontrôleur (architecture d'un µC, GPIO, ADC, bus série) jusqu'à la réalisation d'un mini-jeu embarqué multijoueur sur **ESP32-S3**, avec la carte [XIAO ESP32S3](/docs/references/hardware/xiao-esp32s3/) de Seeed Studio.
 
 ## Les compétences engagées
 
@@ -73,7 +73,7 @@ Vous y trouverez les concepts fondamentaux d'un microcontrôleur (architecture d
 | Phase | Volume | Résultat |
 |----|---|---|
 | CM | 4,5h | µC : archi, GPIO, ADC/PWM, bus, chaîne de dev |
-| TD | 10,5h | **Pong 2 joueurs** local sur ESP32-S3 + écran SPI |
+| TD | 10,5h | **Pong 2 joueurs** local sur XIAO ESP32S3 + écran SPI |
 | Projet | binômes | **Snake multijoueur** (console + navigateur) + PCB KiCad soudé |
 
 ## Pourquoi ce projet ?

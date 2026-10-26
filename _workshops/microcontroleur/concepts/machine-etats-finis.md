@@ -129,11 +129,11 @@ Chaque `case` gère **un seul état** : ce qu'il affiche, ce qu'il fait, et vers
 
 ## Pourquoi c'est fondamental en embarqué
 
-### Pas d'OS, pas de processus
+### Une seule tâche pour tout le jeu
 
-Sur un µC Arduino, il n'y a **pas de système d'exploitation**. Pas de threads (tâches exécutées en parallèle), pas de `sleep()` bloquant sans conséquence. Le `loop()` s'exécute en boucle infinie - toutes les décisions sur ce qu'il faut faire à chaque instant passent par le code.
+Sur un PC, chaque écran d'une application peut avoir sa fenêtre et ses propres *threads* (tâches exécutées en parallèle), orchestrés par le système d'exploitation. Sur le microcontrôleur, rien de tel pour ton code : sur l'ESP32-S3, le noyau FreeRTOS fait bien tourner le Wi-Fi et l'USB à côté, mais **tout ton jeu vit dans une seule tâche**, `loop()`, qui s'exécute en boucle infinie. Un `delay()` y fige tout le jeu, et toutes les décisions sur ce qu'il faut faire à chaque instant passent par ton code.
 
-La FSM remplace ce qu'un OS ferait autrement : elle décide quel « mode » est actif et ce qu'il faut exécuter.
+La FSM joue ce rôle d'aiguillage : à chaque tour de `loop()`, elle décide quel « mode » est actif et ce qu'il faut exécuter.
 
 ### La FSM prépare le projet réseau
 

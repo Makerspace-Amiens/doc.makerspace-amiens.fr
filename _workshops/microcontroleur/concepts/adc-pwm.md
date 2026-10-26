@@ -58,10 +58,10 @@ int valeur = analogRead(PIN_JOYSTICK_X);  // retourne 0 à 4095
 
 ### La plage de mesure - l'atténuation
 
-Pour couvrir toute la plage 0–3,3 V, Arduino-ESP32 applique par défaut l'**atténuation** maximale à `analogRead()` - c'est pourquoi elle « fonctionne » sans réglage. On peut ajuster ce comportement et, surtout, obtenir directement une valeur en millivolts déjà calibrée :
+Pour couvrir une plage proche de 0–3,3 V, Arduino-ESP32 applique par défaut l'**atténuation** maximale (11 dB) à `analogRead()` : c'est pourquoi elle « fonctionne » sans réglage. Sur l'ESP32-S3, la plage réellement mesurable va alors d'environ 0 à **3,1 V** ; au-delà, la lecture sature à 4095. On peut ajuster ce comportement et, surtout, obtenir directement une valeur en millivolts déjà calibrée :
 
 ```cpp
-analogSetAttenuation(ADC_11db);           // plage étendue (~0–3,3 V) - le défaut
+analogSetAttenuation(ADC_11db);           // plage étendue (~0–3,1 V), le défaut
 int mv = analogReadMilliVolts(POT_PIN);   // tension en mV, corrigée d'usine
 ```
 
@@ -69,7 +69,7 @@ int mv = analogReadMilliVolts(POT_PIN);   // tension en mV, corrigée d'usine
 
 ### Échantillonnage
 
-L'ADC ne lit pas le signal en continu - il le **prélève** à intervalles réguliers (*échantillons*). Entre deux lectures, la valeur entre est ignorée. C'est suffisant pour un joystick (variation lente), mais pas pour un signal audio haute fréquence.
+L'ADC ne lit pas le signal en continu - il le **prélève** à intervalles réguliers (*échantillons*). Entre deux lectures, ce que fait le signal est ignoré. C'est suffisant pour un joystick (variation lente), mais pas pour un signal audio haute fréquence.
 
 ### Lisser une lecture bruitée
 
@@ -92,7 +92,9 @@ L'ESP32 possède deux banques d'ADC :
 | **ADC1** | GPIO 1–10 | Toujours disponible ✅ |
 | **ADC2** | GPIO 11–20 | **Inutilisable quand le Wi-Fi est actif** ⚠️ |
 
-{% include message.html title="Toujours utiliser ADC1 pour le joystick" message="Dans ce projet, le Wi-Fi est utilisé pour le multijoueur. Brancher le joystick sur des broches ADC2 (GPIO 11–20) donnera des lectures erratiques ou bloquera l'ADC. Utilisez impérativement des broches **ADC1** (GPIO 1–10)." status="is-warning" icon="fas fa-exclamation-triangle" %}
+Sur la [XIAO ESP32S3](/docs/references/hardware/xiao-esp32s3/) de l'atelier, toutes les broches analogiques exposées (D0 à D5 et D8 à D10, soit GPIO1 à GPIO9) sont sur l'**ADC1** : le piège ne peut pas se produire avec cette carte, mais il guette dès qu'on passe sur une autre carte ESP32.
+
+{% include message.html title="Toujours utiliser ADC1 pour le joystick" message="Dans ce projet, le Wi-Fi est utilisé pour le multijoueur. Brancher le joystick sur des broches ADC2 (GPIO 11–20) donnera des lectures erratiques ou bloquera l'ADC. Utilisez impérativement des broches **ADC1** (GPIO 1–10) : c'est le cas de D0 et D1 sur la XIAO." status="is-warning" icon="fas fa-exclamation-triangle" %}
 
 ### Lire un joystick
 
@@ -225,7 +227,7 @@ analogWrite(LED_PIN, 0);     // éteint
 analogWrite(LED_PIN, 255);   // plein éclat
 ```
 
-L'ESP32-S3 dispose de **8 canaux LEDC** (*LED Control*, le générateur de PWM matériel de l'ESP32) indépendants avec fréquence et résolution configurables jusqu'à 16 bits. `analogWrite()` utilise la couche LEDC d'Arduino-ESP32 en arrière-plan.
+L'ESP32-S3 dispose de **8 canaux LEDC** (*LED Control*, le générateur de PWM matériel de l'ESP32) indépendants, avec une fréquence et une résolution configurables (jusqu'à 14 bits sur l'ESP32-S3). `analogWrite()` utilise la couche LEDC d'Arduino-ESP32 en arrière-plan.
 
 ### Applications du PWM
 

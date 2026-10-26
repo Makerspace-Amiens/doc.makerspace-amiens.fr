@@ -52,7 +52,7 @@ void loop() {
 {% include step-tuto.html
 greyBackground=true
 title="1 - Ajouter la seconde raquette"
-content="Le joueur 1 (boutons GPIO5/GPIO6) contrôle une raquette à droite ; le joueur 2 (joystick) contrôle celle de gauche, déjà posée au tutoriel précédent."
+content="Le joueur 1 (boutons D5/D6) contrôle une raquette à droite ; le joueur 2 (joystick) contrôle celle de gauche, déjà posée au tutoriel précédent. Ici, on veut que la raquette avance **tant que** le bouton est enfoncé : on lit donc directement le niveau de la broche avec `digitalRead()`, sans détection de front."
 %}
 
 ```cpp
@@ -61,8 +61,11 @@ const int RAQUETTE_H = 30, RAQUETTE_W = 6;
 const int VITESSE_RAQUETTE = 4;
 
 void lireEntrees() {
-  if (boutonPresse(BTN_HAUT) && raquette1Y > 0)                       raquette1Y -= VITESSE_RAQUETTE;
-  if (boutonPresse(BTN_BAS)  && raquette1Y < tft.height() - RAQUETTE_H) raquette1Y += VITESSE_RAQUETTE;
+  bool haut = digitalRead(BTN_HAUT) == LOW;   // INPUT_PULLUP : LOW = enfoncé
+  bool bas  = digitalRead(BTN_BAS)  == LOW;
+
+  if (haut && raquette1Y > 0)                       raquette1Y -= VITESSE_RAQUETTE;
+  if (bas  && raquette1Y < tft.height() - RAQUETTE_H) raquette1Y += VITESSE_RAQUETTE;
 
   raquette2Y = map(analogRead(JOY_Y), 0, 4095, 0, tft.height() - RAQUETTE_H);
 }

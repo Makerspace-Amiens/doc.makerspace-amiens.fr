@@ -9,7 +9,7 @@ doc_header: true
 
 title: Du matériel au logiciel
 subtitle: Toolchain, compilation, flash - et le premier programme
-description: Comprendre le cycle code → compilation → flash → exécution, et pourquoi setup()/loop() n'a pas besoin d'un système d'exploitation.
+description: Comprendre le cycle code → compilation → flash → exécution, et comment setup()/loop() s'exécutent sans système d'exploitation de PC.
 author: Alban Petit
 
 difficulty: 1
@@ -29,16 +29,16 @@ Ce concept suit ce voyage de bout en bout - du texte que tu tapes jusqu'aux éle
 **À la fin de ce concept, tu sauras :**
 
 - suivre le trajet code → compilation → flash → exécution ;
-- comprendre `setup()`/`loop()` et l'absence de système d'exploitation ;
+- comprendre `setup()`/`loop()` et ce qui tourne (ou non) autour de ton programme ;
 - éviter un `delay()` bloquant grâce à `millis()`.
 
 ## Du texte au courant électrique
 
-Un fichier `.ino` n'est que du texte. Pour qu'il fasse clignoter une LED, il doit traverser plusieurs transformations avant d'atteindre la puce :
+Un fichier source (`main.cpp` sous PlatformIO, `.ino` sous l'Arduino IDE) n'est que du texte. Pour qu'il fasse clignoter une LED, il doit traverser plusieurs transformations avant d'atteindre la puce :
 
 ```mermaid
 flowchart LR
-  A["Code source\n(.ino)"] --> B["Compilateur\n(gcc-xtensa)"]
+  A["Code source\n(.cpp)"] --> B["Compilateur\n(gcc-xtensa)"]
   B --> C["Binaire\n(.bin)"]
   C --> D["Flashage\n(USB/UART)"]
   D --> E["Exécution\nsur l'ESP32-S3"]
@@ -62,7 +62,7 @@ L'IDE (Arduino IDE ou PlatformIO) orchestre ces outils en arrière-plan quand tu
 
 « Compiler » recouvre en réalité plusieurs étapes enchaînées :
 
-1. **Préprocesseur** : il traite les `#include` et `#define` - il colle le contenu des bibliothèques et remplace les macros.
+1. **Préprocesseur** : il traite les `#include` et `#define` : il colle le contenu des bibliothèques et remplace les macros. C'est lui qui lit le `#include <Arduino.h>` en tête de `main.cpp` : cette ligne déclare `pinMode()`, `digitalWrite()`, `Serial`… Sous l'Arduino IDE, elle est ajoutée en cachette aux fichiers `.ino` ; sous PlatformIO, un `.cpp` doit l'écrire lui-même, sinon le compilateur ne connaît aucune fonction Arduino.
 2. **Compilation** : chaque fichier C++ est traduit en **code objet** (instructions machine), séparément.
 3. **Édition de liens (*linker*)** : tous les fichiers objets et les bibliothèques sont assemblés en un seul **binaire**, en résolvant les références entre eux.
 
@@ -72,7 +72,7 @@ Distinguer ces étapes aide à lire les erreurs : une **erreur de compilation** 
 
 Flasher, c'est écrire le **binaire** compilé (le programme traduit en instructions machine - des 0 et des 1 exécutables par la puce) dans la **Flash** du microcontrôleur (voir [Architecture d'un microcontrôleur](/workshops/microcontroleur/concepts/architecture-microcontroleur/)). Contrairement à la RAM, la Flash retient son contenu hors tension : le programme redémarre automatiquement à chaque mise sous tension, sans intervention.
 
-{% include message.html title="Bouton BOOT" message="Certaines cartes ESP32-S3 nécessitent de maintenir le bouton BOOT pendant le flashage pour forcer le mode téléversement. Si le flashage échoue systématiquement, c'est souvent la première chose à vérifier." status="is-info" icon="fas fa-info-circle" %}
+{% include message.html title="Bouton BOOT" message="Sur la XIAO ESP32S3, le flashage passe par l'USB natif de la puce. Si le programme en cours plante ou monopolise l'USB, l'upload échoue : on force alors le mode téléversement en **maintenant BOOT** pendant qu'on branche le câble USB, puis on appuie sur **RESET** une fois l'upload terminé. Si le flashage échoue systématiquement, c'est la première chose à essayer." status="is-info" icon="fas fa-info-circle" %}
 
 ## Au reset : la séquence de démarrage
 
@@ -89,6 +89,8 @@ C'est ce mécanisme qui explique le bouton **BOOT** : le maintenir enfoncé au r
 Un programme Arduino tient dans deux fonctions :
 
 ```cpp
+#include <Arduino.h>   // indispensable dans un .cpp : déclare pinMode, Serial...
+
 void setup() {
   // Exécuté une seule fois, au démarrage
   pinMode(LED_PIN, OUTPUT);
@@ -107,19 +109,23 @@ void loop() {
 - `setup()` initialise le matériel (broches, ports série, périphériques) - une seule fois.
 - `loop()` s'exécute en boucle infinie, du démarrage jusqu'à la coupure d'alimentation.
 
-## Pas de système d'exploitation
+## Pas de système d'exploitation… au sens d'un PC
 
-Sur un ordinateur, un programme est un **processus** parmi d'autres, géré par l'OS (ordonnancement, mémoire virtuelle, arrêt propre). Sur un microcontrôleur Arduino, il n'y a **rien de tout ça** :
+Sur un ordinateur, un programme est un **processus** parmi des centaines d'autres, géré par un OS complet (Windows, Linux : fichiers, fenêtres, mémoire virtuelle, arrêt propre). Sur un microcontrôleur, rien de tout ça : ton programme est **le seul** programme de la puce.
 
-- Pas de multitâche par défaut - `loop()` tourne seul, en boucle, sans interruption logicielle.
-- Pas de `sleep()` qui libère le CPU pour un autre programme : un `delay()` bloque **tout**, y compris la lecture des boutons.
+Sur l'ESP32-S3, Arduino-ESP32 s'appuie tout de même sur un tout petit **noyau temps réel**, **FreeRTOS**, qui reste invisible : il fait tourner `loop()` comme une **tâche**, et à côté les tâches du Wi-Fi, du Bluetooth et de l'USB. Ce qui compte pour ton code :
+
+- `loop()` est **une seule tâche** : ce que tu y écris s'exécute ligne après ligne, une chose à la fois.
+- `delay()` met cette tâche en pause : le Wi-Fi continue de tourner en coulisse, mais **rien de ton programme n'avance**, y compris la lecture des boutons.
 - Pas d'arrêt propre : couper l'alimentation coupe le programme instantanément, sans sauvegarde automatique.
+
+{% include message.html title="Et sur un Arduino Uno ?" message="Sur un ATmega328 (Arduino Uno), il n'y a vraiment aucun noyau : `loop()` est appelée en boucle par un simple `main()` écrit par le core Arduino, et `delay()` fait tourner le CPU à vide. Pour ton code, le résultat est le même : pendant un `delay()`, ton programme ne fait rien d'autre." status="is-info" icon="fas fa-info-circle" %}
 
 C'est pour cette raison que la structuration du code (game loop non bloquante, [machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/)) devient essentielle dès que le programme gère plusieurs tâches à la fois.
 
 ## Faire plusieurs choses à la fois - `millis()`
 
-Le défaut de `delay()` : pendant qu'il attend, **rien d'autre ne s'exécute**. Impossible de lire un bouton, rafraîchir un écran et faire clignoter une LED « en même temps » avec des `delay()`.
+Le défaut de `delay()` : pendant qu'il attend, **rien d'autre de ton programme ne s'exécute**. Impossible de lire un bouton, rafraîchir un écran et faire clignoter une LED « en même temps » avec des `delay()`.
 
 La solution est de ne jamais bloquer : au lieu d'attendre, on **regarde l'heure**. `millis()` renvoie le nombre de millisecondes écoulées depuis le démarrage. En mémorisant la date de la dernière action, on décide s'il est temps d'agir - sans jamais figer le programme.
 
@@ -148,13 +154,15 @@ Ce motif - comparer `millis()` à une date mémorisée - est le fondement de la 
 Le programme le plus simple relie tous les concepts vus jusqu'ici :
 
 ```cpp
+#include <Arduino.h>
+
 void setup() {
   pinMode(LED_BUILTIN, OUTPUT);  // configure la broche en sortie (GPIO, registre)
 }
 
 void loop() {
   digitalWrite(LED_BUILTIN, HIGH);  // écrit 3,3 V sur la broche (registre)
-  delay(500);                       // bloque le CPU 500 ms (pas d'OS pour faire autre chose)
+  delay(500);                       // met loop() en pause 500 ms : rien d'autre n'avance
   digitalWrite(LED_BUILTIN, LOW);   // écrit 0 V sur la broche
   delay(500);
 }
@@ -162,7 +170,8 @@ void loop() {
 
 - `pinMode` et `digitalWrite` écrivent dans des **registres** ([Architecture d'un microcontrôleur](/workshops/microcontroleur/concepts/architecture-microcontroleur/)).
 - La broche bascule entre deux **niveaux logiques** ([GPIO & monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/)).
-- `delay()` bloque le CPU car il n'y a **pas d'OS** pour exécuter autre chose pendant ce temps.
+- `delay()` suspend `loop()` : ton programme ne fait **rien d'autre** pendant ce temps.
+- Sur la XIAO, la LED orange est en logique inversée : `HIGH` l'éteint et `LOW` l'allume, mais elle clignote de la même façon.
 - Ce même code, une fois compilé et flashé, tourne en **boucle infinie** tant que la carte est alimentée.
 
 ## Ajouter une bibliothèque
@@ -188,7 +197,7 @@ Le moniteur série est l'outil de débogage n°1 : `Serial.println()` affiche l'
 
 ## Quiz express
 
-**1. Quelles étapes transforment un `.ino` en programme qui s'exécute sur la puce ?**
+**1. Quelles étapes transforment un fichier source en programme qui s'exécute sur la puce ?**
 
 <details><summary>Voir la réponse</summary>Compilation (toolchain) → binaire → flashage dans la Flash → exécution.</details>
 
@@ -208,12 +217,12 @@ Le moniteur série est l'outil de débogage n°1 : `Serial.println()` affiche l'
 ## Résumé
 
 - Chaîne complète : code source → compilation (toolchain) → flashage (Flash) → exécution.
-- Arduino-ESP32 fournit le compilateur, le core (`pinMode`, `digitalWrite`…) et l'uploader.
+- Arduino-ESP32 fournit le compilateur, le core (`pinMode`, `digitalWrite`…, déclarés par `#include <Arduino.h>`) et l'uploader.
 - Compiler = préprocesseur → compilation (code objet) → édition de liens (binaire) ; une erreur de link = fonction ou bibliothèque manquante.
 - `setup()` s'exécute une fois ; `loop()` tourne en boucle infinie jusqu'à la coupure d'alimentation.
 - Au reset : ROM bootloader (lit le strapping) → bootloader de second niveau → application (`setup`/`loop`).
-- Pas de système d'exploitation : pas de multitâche, `delay()` bloque tout le programme.
+- Pas d'OS au sens d'un PC : `loop()` est une seule tâche (sous FreeRTOS sur l'ESP32-S3), et `delay()` la met en pause.
 - Pour faire avancer plusieurs tâches en parallèle : comparer `millis()` à une date mémorisée plutôt qu'utiliser `delay()`.
-- Le Blink relie architecture, GPIO et absence d'OS en quatre lignes de code.
+- Le Blink relie architecture, GPIO et fonctionnement de `loop()` en quatre lignes de code.
 - On ajoute une **bibliothèque** via le gestionnaire (Arduino IDE) ou `lib_deps` (PlatformIO), puis un `#include`.
 - Débogage : `Serial.println()` + un moniteur série au **même baud** que `Serial.begin()`.
