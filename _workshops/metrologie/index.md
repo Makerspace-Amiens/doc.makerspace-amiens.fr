@@ -3,6 +3,7 @@ title: Métrologie
 layout: project-home
 permalink: /workshops/metrologie/
 type: workshop
+kind: course
 image: /workshops/metrologie/hero.jpg
 project_slug: metrologie
 project_image: /workshops/metrologie/hero.jpg
