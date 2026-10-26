@@ -22,9 +22,9 @@ prerequisites:
   - label: Notions de base en C++ (framework Arduino pour ESP32)
     link: ""
   - label: VSCode et PlatformIO installés
-    link: "/docs/tutorial/installation-vscode-platformio"
+    link: "/docs/tutorials/software/vscode-platformio/installation-platformio/"
   - label: Notions de base en conception PCB (KiCad)
-    link: "/docs/tutorial/kicad-eeschema-bases"
+    link: "/docs/tutorials/software/kicad/kicad-eeschema-bases/"
 
 softwares:
   - label: Visual Studio Code (dernière version)
@@ -89,6 +89,12 @@ title="Broches I2C personnalisables"
 message="Sur ESP32-S3, le bus I2C peut être assigné à n'importe quelles broches via `Wire.begin(SDA, SCL)`. Les broches GPIO 8 et 9 sont celles utilisées dans ce tutoriel et correspondent au câblage de la carte ESP32 S3 UNO."
 status="is-info"
 icon="fas fa-microchip" %}
+
+{% include message.html
+title="Avec une XIAO ESP32S3"
+message="Sur la [XIAO ESP32S3](/docs/references/hardware/xiao-esp32s3/) de l'atelier Microcontrôleurs, le PCB du projet sort le bus I2C sur un connecteur 4 broches (3V3, SDA, SCL, GND), avec SDA sur **D3 (GPIO4)** et SCL sur **D4 (GPIO5)** et des pull-ups de 4,7 kΩ déjà soudées : écrire `Wire.begin(D3, D4);` et choisir `board = seeed_xiao_esp32s3` dans `platformio.ini`. Ce ne sont pas les broches I2C par défaut de la XIAO (D4/D5), d'où l'appel explicite à `Wire.begin()`."
+status="is-info"
+icon="fas fa-info-circle" %}
 
 ### Caractéristiques du SSD1306
 
@@ -177,9 +183,9 @@ content="Avant d'alimenter votre PCB pour la première fois :
 La bibliothèque **Adafruit_SSD1306** est la plus répandue. Ajoutez-la dans `platformio.ini` :
 
 ```ini
-[env:esp32dev]
+[env:esp32-s3-devkitc-1]
 platform = espressif32
-board = esp32dev
+board = esp32-s3-devkitc-1
 framework = arduino
 monitor_speed = 115200
 lib_deps =
