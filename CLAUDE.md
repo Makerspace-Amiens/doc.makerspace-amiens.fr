@@ -129,6 +129,14 @@ ressources:
 
 Toutes les listes acceptent des URLs internes d'autres collections (cross-referencing autorisé). Le layout `project-home` cherche les pages dans `site.docs | concat: site.workshops` — l'URL doit correspondre exactement au `url` généré par Jekyll (tester avec trailing slash).
 
+### Page partagée entre plusieurs ateliers
+
+Une même page peut figurer dans les listes de plusieurs ateliers (ex. `creer-repo-template` de Méthodologie, aussi utilisé par `portfolio-ingenieur`). Le lien d'une carte porte `?project=<slug>` : la page affiche alors la navigation de l'atelier d'origine. Pour adapter le contenu :
+
+- **Onglets par atelier** : `content-tabs.html` avec `tab_project1="methodologie-de-projet"`, `tab_project2="portfolio-ingenieur"`... L'onglet de l'atelier d'origine s'ouvre seul ; sans `?project=`, le premier onglet reste affiché (le mettre pour l'atelier historique). Un onglet peut être placé dans le `content=` d'un `step-tuto` via `{% capture %}`.
+- **Bloc masqué pour un atelier** : `<div data-project-hide="portfolio-ingenieur" markdown="1">...</div>` (script dans `documentation.html`, chargé seulement si la page contient `data-project-hide`).
+- Dans un `{% capture %}` qui commence par une liste, mettre une ligne vide après la balise (sinon MD032).
+
 `prerequisites:` (optionnel) liste les **autres ateliers à suivre avant celui-ci** (URLs `/workshops/<slug>/`). Ils s'affichent dans une section **Prérequis** en haut de la page (juste avant Concepts). Utile pour chaîner un atelier thématique (`kind: course`) en amont d'un projet, ex. « Conception assistée par ordinateur » avant « Machine That Draws ».
 
 ### Champ `kind` — projet vs thématique

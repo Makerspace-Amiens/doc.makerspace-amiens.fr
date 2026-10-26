@@ -8,9 +8,9 @@ image: hero.jpg
 component_toc: true
 doc_header: true
 
-title: Créer son repo depuis le template et le cloner
-subtitle: Le point de départ technique de tout le projet
-description: Créer votre repo de projet à partir du template MakerSpace, puis le récupérer sur votre ordinateur pour commencer à travailler.
+title: Créer son repo depuis le template
+subtitle: Le point de départ technique, avant tout le reste
+description: Créer votre propre repo sur GitHub à partir d'un template MakerSpace (projet ou portfolio), directement depuis votre navigateur.
 author: Adrien Bracq
 
 time: 1
@@ -21,61 +21,82 @@ prerequisites:
   - label: Un compte GitHub
     link: "https://github.com/signup"
 softwares:
-  - label: GitHub Desktop (recommandé pour débuter)
-    link: "https://desktop.github.com"
+  - label: Un navigateur web
+    link: ""
 hardwares:
   - label: Aucune machine requise
     link: ""
 ---
 
-{% include message.html title="Le repo existe peut-être déjà" message="Souvent, votre encadrant a déjà créé le repo de votre équipe depuis le template. Dans ce cas, la partie « Créer le repo » ci-dessous ne vous concerne pas : passez directement à [Récupérer le repo sur votre ordinateur](#récupérer-le-repo-sur-votre-ordinateur)." status="is-warning" icon="fas fa-exclamation-triangle" %}
+<div data-project-hide="portfolio-ingenieur" markdown="1">
+
+{% include message.html title="Le repo existe peut-être déjà" message="Pour un repo de projet, votre encadrant a souvent déjà créé le repo de votre équipe depuis le template. Dans ce cas, ce tutoriel ne vous concerne pas : passez directement à [Publier son site avec GitHub Pages](/workshops/methodologie-de-projet/tutorials/publier-son-site/)." status="is-warning" icon="fas fa-exclamation-triangle" %}
+
+</div>
 
 ## Le vocabulaire, avant de commencer
 
-Si c'est la première fois que vous touchez à GitHub, quatre mots reviennent
+Si c'est la première fois que vous touchez à GitHub, deux mots reviennent
 sans arrêt dans ce tutoriel :
 
-- **Repo** (repository, "dépôt" en français) : un dossier de projet suivi
-  par Git, hébergé sur GitHub. C'est l'équivalent d'un dossier partagé,
-  mais qui garde l'historique de chaque modification.
-- **Template** : un repo qui sert de point de départ. Le cliquer sur
+- **Repo** (repository, "dépôt" en français) : un dossier suivi par Git,
+  hébergé sur GitHub. C'est l'équivalent d'un dossier partagé, mais qui
+  garde l'historique de chaque modification.
+- **Template** : un repo qui sert de point de départ. Le bouton
   "Use this template" crée une copie indépendante pour vous, pas un lien
   vers l'original.
-- **Cloner** : télécharger une copie de travail du repo sur votre
-  ordinateur, pour pouvoir modifier les fichiers avec vos outils habituels
-  (VSCode, etc.). Ce que vous voyez sur GitHub.com est une copie en ligne ;
-  cloner vous en donne une copie locale, synchronisable ensuite.
-- **GitHub Desktop** : une application avec des boutons, qui évite de
-  taper des commandes dans un terminal. C'est l'option recommandée pour
-  débuter. La ligne de commande (`git`) fait la même chose mais demande
-  d'apprendre sa syntaxe en plus.
+
+Tout ce tutoriel se fait dans votre navigateur, sur github.com : rien à
+installer. Récupérer le repo sur votre ordinateur et le modifier avec
+VSCode viendra juste après, une fois le site publié.
 
 ## Ce que vous allez faire
 
-Le repo [template-project](https://github.com/Makerspace-Amiens/template-project)
+{% capture tab_projet %}Le repo [template-project](https://github.com/Makerspace-Amiens/template-project)
 du MakerSpace contient déjà la structure de base d'un projet : un dossier
 `docs/` pour le site de documentation et un dossier `project/` pour vos
-fichiers de projet. Vous n'allez pas cloner ce template directement : vous
-allez créer **votre propre repo**, une copie indépendante que vous pourrez
+fichiers de projet. Vous n'allez pas modifier ce template : vous allez créer
+**le repo de votre équipe**, une copie indépendante que vous pourrez
 modifier librement, sans jamais affecter l'original.
 
 Ce template n'est pas un squelette vide : c'est un projet **d'exemple**
 complet, à remplacer par le vôtre. Ce remplacement fait l'objet du tutoriel
-suivant, [Personnaliser le template de son projet](/workshops/methodologie-de-projet/tutorials/personnaliser-template/).
+[Personnaliser le template de son projet](/workshops/methodologie-de-projet/tutorials/personnaliser-template/).{% endcapture %}
+{% capture tab_portfolio %}Le repo [portfolio-template](https://github.com/Makerspace-Amiens/portfolio-template)
+du MakerSpace contient un site personnel déjà prêt : accueil, page « Qui
+suis-je » et CV, projets, journal de bord, documentation et radar de
+compétences. Vous n'allez pas modifier ce template : vous allez créer
+**votre propre repo**, une copie indépendante qui deviendra votre site.
 
-## Étape 0 : Installer GitHub Desktop (si ce n'est pas déjà fait)
-
-{% include step-tuto.html
-  greyBackground=true
-  title="Installer GitHub Desktop"
-  content="Téléchargez et installez [GitHub Desktop](https://desktop.github.com). À l'ouverture, l'application vous demande de vous connecter avec votre compte GitHub (**Sign in to GitHub.com**) : utilisez les identifiants créés dans les prérequis. Si vous préférez la ligne de commande, passez cette étape et voir la note en fin de tutoriel." %}
+Ce site est rempli d'un contenu **d'exemple** (un projet, un article et une
+page de documentation), que vous remplacerez par le vôtre au fil de l'atelier.{% endcapture %}
+{% include content-tabs.html
+  id="ce-que-vous-allez-faire"
+  tab_title1="Repo de projet"
+  tab_project1="methodologie-de-projet"
+  tab1=tab_projet
+  tab_title2="Portfolio"
+  tab_project2="portfolio-ingenieur"
+  tab2=tab_portfolio
+%}
 
 ## Créer le repo
 
+{% capture step1_projet %}Rendez-vous sur [github.com/Makerspace-Amiens/template-project](https://github.com/Makerspace-Amiens/template-project) dans votre navigateur. Vous arrivez sur une page qui liste les fichiers du repo (dossiers `docs/`, `project/`, fichier `README.md`...) : c'est le contenu que vous allez copier.{% endcapture %}
+{% capture step1_portfolio %}Rendez-vous sur [github.com/Makerspace-Amiens/portfolio-template](https://github.com/Makerspace-Amiens/portfolio-template) dans votre navigateur. Vous arrivez sur une page qui liste les fichiers du repo (`_config.yml`, `about.md`, dossiers `_projets/`, `_posts/`...) : c'est le contenu que vous allez copier.{% endcapture %}
+{% capture step1 %}{% include content-tabs.html
+  id="etape-1"
+  tab_title1="Repo de projet"
+  tab_project1="methodologie-de-projet"
+  tab1=step1_projet
+  tab_title2="Portfolio"
+  tab_project2="portfolio-ingenieur"
+  tab2=step1_portfolio
+%}{% endcapture %}
 {% include step-tuto.html
   greyBackground=true
   title="Étape 1 : Ouvrir le template"
-  content="Rendez-vous sur [github.com/Makerspace-Amiens/template-project](https://github.com/Makerspace-Amiens/template-project) dans votre navigateur. Vous arrivez sur une page qui liste les fichiers du repo (dossiers `docs/`, `project/`, fichier `README.md`...) : c'est le contenu que vous allez copier."
+  content=step1
   image="step1-use-this-template.png" %}
 
 {% include step-tuto.html
@@ -84,91 +105,97 @@ suivant, [Personnaliser le template de son projet](/workshops/methodologie-de-pr
   content="En haut de la page, à droite, un bouton vert **Use this template**. Cliquez dessus, puis choisissez **Create a new repository** dans le petit menu qui apparaît (pas les autres options)."
   image="step1b-menu-use-this-template.png" %}
 
-{% include step-tuto.html
-  greyBackground=true
-  title="Étape 3 : Remplir le formulaire"
-  content="Un formulaire s'affiche, avec plusieurs champs à remplir :
+{% capture step3_projet %}
 
 - **Owner** : votre compte personnel (déjà sélectionné par défaut), ou l'organisation du MakerSpace si votre référent vous l'a demandé.
 - **Repository name** : le nom de votre projet, en minuscules, mots séparés par des tirets, sans espace ni accent : par exemple `robot-tri-dechets`, pas `Robot de Tri des Déchets`.
 - **Description** (optionnel) : une phrase résumant le projet.
-- **Public / Private** : laissez **Public**, sélectionné par défaut, sauf si votre référent vous demande explicitement le contraire.
+- **Public / Private** : laissez **Public**, sélectionné par défaut, sauf si votre référent vous demande explicitement le contraire.{% endcapture %}
+{% capture step3_portfolio %}
 
-Une fois rempli, cliquez sur le bouton vert **Create repository** en bas de la page."
+- **Owner** : votre compte personnel, déjà sélectionné par défaut. Jamais une organisation : ce site est le vôtre.
+- **Repository name** : **obligatoirement** `pseudo.github.io`, où `pseudo` est exactement votre nom de compte GitHub, celui affiché dans **Owner**. Si votre compte s'appelle `prenom-nom`, le repo s'appelle `prenom-nom.github.io`, et votre site sera en ligne à l'adresse `https://prenom-nom.github.io`.
+- **Description** (optionnel) : par exemple « Portfolio de Prénom Nom, élève ingénieur à UniLaSalle Amiens ».
+- **Public / Private** : **Public**, obligatoirement. Un portfolio est fait pour être vu, et GitHub Pages ne publie gratuitement que les repos publics.
+
+{% include message.html title="Votre adresse, c'est votre carte de visite" message="Elle figurera sur votre CV, votre profil LinkedIn et vos candidatures de stage. Si votre pseudo GitHub n'est pas présentable (`xXdarkgamerXx`), changez-le **avant** de créer le repo : sur GitHub, votre photo de profil en haut à droite, **Settings**, **Account**, **Change username**. Un nom simple comme `prenom-nom` est idéal." status="is-info" icon="fas fa-id-card" %}{% endcapture %}
+{% capture step3 %}Un formulaire s'affiche, avec plusieurs champs à remplir :
+
+{% include content-tabs.html
+  id="etape-3"
+  tab_title1="Repo de projet"
+  tab_project1="methodologie-de-projet"
+  tab1=step3_projet
+  tab_title2="Portfolio"
+  tab_project2="portfolio-ingenieur"
+  tab2=step3_portfolio
+%}
+
+Une fois rempli, cliquez sur le bouton vert **Create repository** en bas de la page.{% endcapture %}
+{% include step-tuto.html
+  greyBackground=true
+  title="Étape 3 : Remplir le formulaire"
+  content=step3
   image="step2-formulaire-creation.png" %}
 
 {% include step-tuto.html
   greyBackground=true
   title="Étape 4 : Vérifier"
-  content="Vous êtes redirigé vers votre nouveau repo : l'URL dans la barre d'adresse contient maintenant votre compte et le nom que vous avez choisi, pas « Makerspace-Amiens/template-project ». Les mêmes fichiers que le template y apparaissent (`docs/`, `project/`, `README.md`)."
+  content="Vous êtes redirigé vers votre nouveau repo : l'URL dans la barre d'adresse contient maintenant votre compte et le nom que vous avez choisi, et non plus `Makerspace-Amiens/...`. Les mêmes fichiers que le template y apparaissent."
   image="step3-repo-cree.png" %}
-
-## Récupérer le repo sur votre ordinateur
-
-{% capture step_clone %}Dans GitHub Desktop, menu **File** (en haut à gauche) puis **Clone repository...**. Une fenêtre s'ouvre avec un champ de recherche : tapez le nom de votre repo, il devrait apparaître dans la liste (onglet **GitHub.com**).
-
-Cliquez dessus pour le sélectionner. En bas de la fenêtre, un champ **Local path** indique où le dossier sera enregistré sur votre ordinateur. Vous pouvez changer l'emplacement avec le bouton **Choose...**, ou laisser la valeur par défaut.
-
-Cliquez sur le bouton bleu **Clone**. Une barre de progression s'affiche, puis GitHub Desktop ouvre automatiquement votre repo une fois terminé.
-
-Vous ne trouvez pas votre repo dans la liste ? Sur la page de votre repo sur GitHub.com, le bouton vert **Code** ouvre un panneau avec l'URL à copier (onglet **Local**), utile aussi si vous clonez en ligne de commande.{% endcapture %}
-{% include step-tuto.html
-  greyBackground=true
-  title="Étape 5 : Cloner avec GitHub Desktop"
-  content=step_clone
-  image="step4-clone-github-desktop.png"
-  image_2="step3b-code-clone-url.png" %}
-
-{% include message.html title="Vous préférez la ligne de commande ?" message="Ouvrez un terminal, placez-vous dans le dossier où vous voulez travailler, puis :
-
-```bash
-git clone https://github.com/<votre-compte>/<nom-du-repo>.git
-cd <nom-du-repo>
-```
-
-L'URL exacte se trouve sur la page de votre repo, bouton vert **Code**, onglet **HTTPS**." status="is-info" icon="fas fa-terminal" %}
-
-## Ouvrir le dossier dans VSCode
-
-{% capture step_open_editor %}Dans GitHub Desktop, menu **Repository** puis **Open in Visual Studio Code** (si VSCode n'apparaît pas, installez-le d'abord depuis [code.visualstudio.com](https://code.visualstudio.com), puis relancez GitHub Desktop). Juste après le clone, GitHub Desktop s'ouvre directement sur votre repo, sans modification locale : c'est normal.
-
-Sans passer par GitHub Desktop : ouvrez VSCode, `File > Open Folder`, et sélectionnez le dossier que vous venez de cloner.
-
-Vous devriez voir, dans l'explorateur de fichiers à gauche : un dossier `docs/` (le site de documentation) et un dossier `project/` (vos futurs fichiers de projet).{% endcapture %}
-{% include step-tuto.html
-  greyBackground=true
-  title="Étape 6 : Ouvrir dans un éditeur"
-  content=step_open_editor
-  image="step5-github-desktop-post-clone.png"
-  image_2="step6-dossier-ouvert-vscode.png" %}
 
 ## Vérifier que tout est en ordre
 
+{% capture verif_projet %}
+
 - Le dossier `docs/` contient bien `index.md`, `_config.yml`, les pages `objectifs.md`, `equipe.md`, `etudes.md` et `tests.md`, ainsi que les dossiers `conception/`, `fabrication/` et `journal/`.
 - Le dossier `project/` contient les sous-dossiers `mcad/`, `ecad/`, `firmware/` et `software/`.
-- Dans GitHub Desktop, le nom de votre repo s'affiche en haut à gauche, pas "template-project".
+- En haut de la page, le nom de votre repo s'affiche, pas "template-project".{% endcapture %}
+{% capture verif_portfolio %}
 
-{% include message.html title="Ne modifiez jamais directement le template" message="Le repo que vous venez de créer est totalement indépendant du template. Toute modification que vous ferez dans votre repo n'affecte jamais le template-project original, et inversement." status="is-success" icon="fas fa-check-circle" %}
+- À la racine : `_config.yml`, `index.md`, `about.md`, `projets.md`, `blog.md`, `docs.md` et `competences.md`.
+- Les dossiers `_projets/`, `_posts/`, `_docs/`, `_data/` et `assets/`.
+- En haut de la page, le nom du repo est exactement `pseudo.github.io`, avec **votre** pseudo, le même que celui affiché juste avant la barre oblique.{% endcapture %}
+{% include content-tabs.html
+  id="verifier"
+  tab_title1="Repo de projet"
+  tab_project1="methodologie-de-projet"
+  tab1=verif_projet
+  tab_title2="Portfolio"
+  tab_project2="portfolio-ingenieur"
+  tab2=verif_portfolio
+%}
+
+{% include message.html title="Votre repo est indépendant du template" message="Le repo que vous venez de créer est une copie totalement indépendante. Toute modification que vous ferez dans votre repo n'affecte jamais le template original, et inversement." status="is-success" icon="fas fa-check-circle" %}
 
 ## Résolution de problèmes
 
 | Symptôme | Cause probable | Solution |
 |---|---|---|
-| Pas de bouton "Use this template" visible | Vous êtes peut-être déjà sur un fork ou un autre repo | Vérifiez que vous êtes bien sur `github.com/Makerspace-Amiens/template-project` |
-| Votre repo n'apparaît pas dans GitHub Desktop lors du clone | L'application n'est pas connectée au bon compte | Menu **File > Options** (Windows) ou **GitHub Desktop > Settings** (Mac), vérifiez le compte connecté |
-| `git clone` (ligne de commande) demande un mot de passe et échoue | GitHub n'accepte plus l'authentification par mot de passe en ligne de commande depuis 2021 | Utilisez GitHub Desktop à la place : c'est justement pour éviter ce problème |
-| Le dossier cloné semble vide dans VSCode | Vous avez peut-être ouvert le dossier parent, pas le repo lui-même | Vérifiez le nom du dossier ouvert en haut de l'explorateur de fichiers VSCode |
+| Pas de bouton "Use this template" visible | Vous n'êtes pas sur le repo du template, mais sur une copie | Vérifiez l'adresse : `github.com/Makerspace-Amiens/template-project` ou `github.com/Makerspace-Amiens/portfolio-template` |
+| Portfolio : « The repository already exists » | Vous avez déjà un repo `pseudo.github.io` sur votre compte | Supprimez-le s'il est vide ou inutile (**Settings**, tout en bas, **Delete this repository**), ou demandez conseil à votre encadrant |
+| Portfolio : le nom du repo ne correspond pas à votre pseudo | Faute de frappe, ou pseudo modifié après la création | **Settings**, **General**, champ **Repository name** : renommez le repo en `pseudo.github.io`, avec votre pseudo exact |
 
 ## Exercice
 
-En équipe : créez le repo de votre projet dès maintenant si ce n'est pas
-déjà fait, clonez-le chacun sur votre machine, et vérifiez ensemble que
-vous voyez tous la même structure de dossiers.
+{% capture exo_projet %}En équipe : créez le repo de votre projet dès maintenant si ce n'est pas
+déjà fait, et vérifiez que chaque membre de l'équipe peut l'ouvrir sur
+GitHub.{% endcapture %}
+{% capture exo_portfolio %}Créez votre repo `pseudo.github.io` dès maintenant, et notez son
+adresse : vous la déposerez avec celle de votre site à la fin du tutoriel
+suivant.{% endcapture %}
+{% include content-tabs.html
+  id="exercice"
+  tab_title1="Repo de projet"
+  tab_project1="methodologie-de-projet"
+  tab1=exo_projet
+  tab_title2="Portfolio"
+  tab_project2="portfolio-ingenieur"
+  tab2=exo_portfolio
+%}
 
-Étape suivante : apprendre les gestes de base de Git avec
-[Git, GitHub Desktop et VSCode](/workshops/methodologie-de-projet/tutorials/git-github-desktop-vscode/),
-puis remplacer le contenu d'exemple avec
-[Personnaliser le template de son projet](/workshops/methodologie-de-projet/tutorials/personnaliser-template/).
+Étape suivante : mettre votre site en ligne avec
+[Publier son site avec GitHub Pages](/workshops/methodologie-de-projet/tutorials/publier-son-site/).
 
 ---
 

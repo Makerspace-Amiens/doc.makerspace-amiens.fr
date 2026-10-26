@@ -9,7 +9,8 @@
   <div class="tabs">
     <ul>
       {% for title in tab_titles %}
-        <li class="{% if forloop.first %}is-active{% endif %}" data-tab-index="{{ forloop.index0 }}">
+        {% assign project_var = 'tab_project' | append: forloop.index %}
+        <li class="{% if forloop.first %}is-active{% endif %}" data-tab-index="{{ forloop.index0 }}"{% if include[project_var] %} data-project="{{ include[project_var] }}"{% endif %}>
           <a>{{ title }}</a>
         </li>
       {% endfor %}
@@ -41,6 +42,10 @@ document.addEventListener("DOMContentLoaded", () => {
         group.querySelector(`.tab-content[data-tab-index="${index}"]`).classList.add("is-active");
       });
     });
+    // Page partagée entre ateliers : ouvrir l'onglet de l'atelier d'origine (?project=)
+    const project = new URLSearchParams(window.location.search).get("project");
+    const match = project && group.querySelector(`.tabs li[data-project="${project}"]`);
+    if (match) match.click();
   });
 });
 </script>
