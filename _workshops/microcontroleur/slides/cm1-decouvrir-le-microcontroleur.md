@@ -51,24 +51,26 @@ Percevoir, décider, agir
 
 <p class="activity-meta"><span><i class="fas fa-users"></i>Toute la classe</span><span><i class="far fa-clock"></i>3 min</span><span><i class="fas fa-pen"></i>Sans PC</span></p>
 
-### Combien d'ordinateurs y a-t-il dans cette pièce ?
+### Combien d'ordinateurs y a-t-il à cet étage ?
 
 - Une réponse par personne, à voix haute
 - On note les chiffres au tableau, du plus petit au plus grand
 
 <aside class="notes" markdown="1">
-Les réponses tournent en général autour du nombre de PC portables. Dévoiler ensuite la slide suivante : on est deux ordres de grandeur en dessous.
+Les réponses tournent en général autour du nombre de PC portables : c'est le but, on compte ce qu'on appelle « ordinateur » dans la vie courante. Si quelqu'un a lu le titre de la partie et annonce un très grand nombre, lui demander de citer trois objets : il ouvre la slide suivante à votre place.
+Dévoiler ensuite la slide suivante : on est deux ordres de grandeur en dessous.
 </aside>
 
 ---
 
-## Il y en a des centaines
+## Il y en a des centaines, à cet étage
 
-- {: .fragment} Le **micro-ondes** qui compte les secondes et fait tourner le plateau
-- {: .fragment} La **machine à laver** qui enchaîne lavage, rinçage, essorage
-- {: .fragment} La **télécommande**, les **écouteurs sans fil**, la **manette** de jeu
-- {: .fragment} La **trottinette**, le **thermostat**, le **détecteur de fumée**
-- {: .fragment} Et **50 à 150** dans une voiture récente : vitres, clignotants, airbags, injection
+- {: .fragment} Chaque **téléphone** en contient plusieurs : tactile, batterie, radio
+- {: .fragment} Les **écouteurs sans fil**, les **montres**, les **badges** d'accès
+- {: .fragment} Dans chaque salle : **vidéoprojecteur**, **détecteur de fumée**, **thermostat**
+- {: .fragment} Dans le couloir : l'**imprimante**, le **distributeur**, les **lecteurs de badge**
+- {: .fragment} Chez vous : le **micro-ondes**, la **machine à laver**, la **télécommande**
+- {: .fragment} Et **50 à 150** dans une voiture récente : vitres, airbags, injection
 
 Aucun n'a besoin d'un « vrai » ordinateur. Ils ont besoin d'une puce à quelques euros, qui démarre instantanément et fait sa tâche en boucle.
 {: .fragment .caption}
@@ -97,7 +99,16 @@ Cette boucle, vous la retrouverez telle quelle dans votre Pong : lire le joystic
 
 ## Le « décider », c'est vous.
 
-Le microcontrôleur ne sait rien faire tout seul. Sans programme, c'est une puce inerte : tout l'atelier consiste à écrire ce comportement.
+<pre><code class="language-cpp" data-trim data-line-numbers="2|3|4">
+void loop() {
+  int temperature = lireCapteur();   // percevoir
+  if (temperature &lt; 19) {           // décider
+    allumerChauffage();              // agir
+  }
+}
+</code></pre>
+
+Le microcontrôleur ne sait rien faire tout seul. Sans programme, c'est une puce inerte : le seuil de 19 °C et ce qu'on en fait, personne ne les écrira pour vous.
 {: .fragment .caption}
 
 ---
@@ -116,6 +127,27 @@ Un bouton est un capteur, une LED est un actionneur.
 {: .caption}
 
 [Les capteurs](/docs/concepts/capteurs/){: .doc-link}
+
+---
+
+## Le monde physique n'attend pas
+
+Un microcontrôleur est jugé sur sa **ponctualité**, pas sur sa puissance.
+
+- {: .fragment} Un **airbag** doit se déclencher 20 ms après le choc, jamais 100
+- {: .fragment} L'écran du **Pong** se redessine toutes les 16 ms, sinon ça saccade
+- {: .fragment} Un **servomoteur** attend une impulsion toutes les 20 ms, à 10 µs près
+- {: .fragment .highlight-red} Tenir le délai **à chaque tour** compte plus qu'aller vite une fois
+
+**Déterministe** : les mêmes entrées produisent les mêmes actions, dans le même temps, à chaque tour. Sur un PC un retard de 200 ms passe inaperçu, ici il casse le système. Le **temps réel**, ce n'est pas « vite », c'est « à l'heure ».
+{: .fragment .caption}
+
+<aside class="notes" markdown="1">
+La slide qui prépare toute la suite : c'est parce que la puce est branchée sur le monde physique qu'elle doit être prévisible, et c'est ce déterminisme qui explique l'absence de système d'exploitation (partie 3) et la chasse aux `delay()`.
+Contre-exemple utile : sur un PC, un antivirus qui se réveille vole 300 ms au programme. Personne ne s'en plaint. Un servomoteur, lui, tremble.
+</aside>
+
+[Qu'est-ce qu'un microcontrôleur ?](/workshops/microcontroleur/concepts/qu-est-ce-qu-un-microcontroleur/){: .doc-link}
 
 ---
 
@@ -411,23 +443,18 @@ Ranger une variable et allumer une LED : la même opération, poser une valeur �
 
 ## Réagir sans attendre : l'interruption
 
-<pre><code class="language-cpp" data-trim data-line-numbers="1|2|6">
-void IRAM_ATTR surAppui() {
-  compteurAppuis++;   // aussi court et rapide que possible
-}
+Votre programme tourne dans sa boucle. Un joueur appuie sur un bouton pendant 20 ms. Comment être certain de ne pas le manquer ?
 
-void setup() {
-  attachInterrupt(digitalPinToInterrupt(BTN_PIN), surAppui, FALLING);
-}
-</code></pre>
+- {: .fragment} Le matériel **arrête le CPU** en pleine boucle
+- {: .fragment} Il lui fait exécuter une petite fonction dédiée, très courte
+- {: .fragment} Puis la boucle reprend exactement là où elle s'était arrêtée
 
-Le CPU suspend `loop()`, exécute la petite fonction, puis reprend exactement où il s'était arrêté.
-
-`IRAM_ATTR` la place en RAM interne : sans ce mot-clé, la puce finit par planter.
-{: .caption}
+Les registres, c'est le logiciel qui parle au matériel. L'interruption, c'est le matériel qui parle au logiciel. Le code arrive en partie 3.
+{: .fragment .caption}
 
 <aside class="notes" markdown="1">
-Insister : tant que l'ISR s'exécute, tout le reste est suspendu, y compris les autres interruptions. Une ISR ne fait jamais de `Serial.println()`, jamais de `delay()`, jamais d'appel à une bibliothèque. Elle positionne un drapeau, et la `loop()` fait le travail.
+Rester au niveau du mécanisme : aucune ligne de code ici, `setup()` et `loop()` ne sont présentés qu'en partie 3, où l'interruption revient en code juste après la slide sur `millis()`.
+Si la question vient tout de suite : tant que cette fonction s'exécute, tout le reste est suspendu, y compris les autres interruptions. Elle lève un drapeau, et la `loop()` fait le travail.
 </aside>
 
 [Architecture d'un microcontrôleur](/workshops/microcontroleur/concepts/architecture-microcontroleur/){: .doc-link} [GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link}
@@ -623,6 +650,35 @@ On compare l'heure à une date mémorisée : rien n'est jamais figé.
 {% include message.html title="delay() reste utile" message="Pour une pause courte et unique (initialiser un composant, attendre au démarrage), `delay()` est parfaitement acceptable. C'est dans la `loop()`, quand plusieurs tâches doivent avancer en parallèle, qu'il faut l'éviter." status="is-info" icon="fas fa-info-circle" %}
 
 [Du matériel au logiciel](/workshops/microcontroleur/concepts/du-materiel-au-logiciel/){: .doc-link}
+
+---
+
+## Ou se faire prévenir : l'interruption
+
+<pre><code class="language-cpp" data-trim data-line-numbers="1|3-5|9">
+volatile bool appuiDetecte = false;
+
+void IRAM_ATTR surAppui() {
+  appuiDetecte = true;    // aussi court que possible
+}
+
+void setup() {
+  pinMode(BTN_PIN, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(BTN_PIN), surAppui, FALLING);
+}
+</code></pre>
+
+Le CPU suspend `loop()`, exécute la fonction, puis reprend son cours.
+
+`IRAM_ATTR` la place en RAM interne : sans ce mot-clé, la puce finit par planter.
+{: .caption}
+
+<aside class="notes" markdown="1">
+Le mécanisme a été vu en partie 2 : voici sa syntaxe, maintenant que `setup()` et `loop()` sont connus.
+Insister : tant que cette fonction s'exécute, tout le reste est suspendu, y compris les autres interruptions. Jamais de `Serial.println()`, jamais de `delay()`, jamais d'appel à une bibliothèque dedans. Elle lève un drapeau, la `loop()` fait le travail. Le CM2 y revient sur les rebonds du bouton, avec le rôle de `volatile`.
+</aside>
+
+[Architecture d'un microcontrôleur](/workshops/microcontroleur/concepts/architecture-microcontroleur/){: .doc-link} [GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link}
 
 ---
 
