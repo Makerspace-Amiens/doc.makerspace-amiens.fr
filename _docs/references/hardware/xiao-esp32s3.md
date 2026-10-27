@@ -42,13 +42,13 @@ Sur la carte, les broches sont sérigraphiées `D0` à `D10`. Dans le code, Ardu
 
 | Broche | GPIO | Fonctions | Rôle dans l'atelier (PCB du projet) |
 |---|---|---|---|
-| D0 | GPIO1 | ADC1, tactile | Joystick : axe X (gauche/droite) |
-| D1 | GPIO2 | ADC1, tactile | Joystick : axe Y (haut/bas) |
-| D2 | GPIO3 | ADC1, tactile, *strapping* | Bouton du joystick (START / RETRY) |
+| D0 | GPIO1 | ADC1, tactile | Joystick : axe X (raquette du joueur 1) |
+| D1 | GPIO2 | ADC1, tactile | Joystick : axe Y (inutilisé par le Pong) |
+| D2 | GPIO3 | ADC1, tactile, *strapping* | Bouton du joystick (START) |
 | D3 | GPIO4 | ADC1, tactile | Connecteur I2C : SDA |
 | D4 | GPIO5 | ADC1, I2C SDA par défaut | Connecteur I2C : SCL |
-| D5 | GPIO6 | ADC1, I2C SCL par défaut | Bouton joueur 1 : BAS (SW1) |
-| D6 | GPIO43 | UART0 TX | Bouton joueur 1 : HAUT (SW2, via 1 kΩ) |
+| D5 | GPIO6 | ADC1, I2C SCL par défaut | Bouton joueur 2 : GAUCHE (SW1) |
+| D6 | GPIO43 | UART0 TX | Bouton joueur 2 : DROITE (SW2, via 1 kΩ) |
 | D7 | GPIO44 | UART0 RX | Écran : RESET |
 | D8 | GPIO7 | ADC1, SPI SCK par défaut | Écran : DC |
 | D9 | GPIO8 | ADC1, SPI MISO par défaut | Écran : SCK |
@@ -56,7 +56,7 @@ Sur la carte, les broches sont sérigraphiées `D0` à `D10`. Dans le code, Ardu
 
 Les 11 broches sont toutes utilisées par le PCB du projet. Pour économiser des broches, le *Chip Select* (CS) de l'écran est relié en permanence à GND (l'écran est le seul composant du bus SPI) et son rétroéclairage (LED/BLK) directement au 3V3. Le bus I2C (D3/D4) est sorti sur un connecteur d'extension 4 broches (avec ses résistances de pull-up de 4,7 kΩ), qui n'est pas utilisé par le Pong : il reste disponible pour ajouter un module plus tard.
 
-{% include message.html title="Le SPI n'est pas sur les broches par défaut" message="Sur le PCB, l'horloge SPI est sur **D9** et la sélection commande/donnée (DC) sur **D8**, alors que le SCK par défaut de la XIAO est D8. Ce n'est pas un problème sur l'ESP32-S3 : la GPIO matrix route le SPI vers n'importe quelle broche. Il faut simplement déclarer les bons numéros de GPIO dans la configuration de la bibliothèque de l'écran (voir le tutoriel [Écran SPI et game loop](/docs/tutorials/electronics/ecran-spi-game-loop/))." status="is-info" icon="fas fa-info-circle" %}
+{% include message.html title="Le SPI n'est pas sur les broches par défaut" message="Sur le PCB, l'horloge SPI est sur **D9** et la sélection commande/donnée (DC) sur **D8**, alors que le SCK par défaut de la XIAO est D8. Ce n'est pas un problème sur l'ESP32-S3 : la GPIO matrix route le SPI vers n'importe quelle broche. Il faut simplement passer les bonnes broches à `SPI.begin()` (voir le tutoriel [Écran SPI et game loop](/docs/tutorials/electronics/ecran-spi-game-loop/))." status="is-info" icon="fas fa-info-circle" %}
 
 {% include message.html title="Pas de piège ADC2 sur la XIAO" message="Toutes les broches analogiques exposées (GPIO1 à GPIO9) appartiennent à l'**ADC1**, qui reste utilisable Wi-Fi activé. Le piège de l'ADC2 (voir le concept [ADC & PWM](/workshops/microcontroleur/concepts/adc-pwm/)) ne concerne que les GPIO11 à 20, non sortis sur cette carte." status="is-info" icon="fas fa-info-circle" %}
 

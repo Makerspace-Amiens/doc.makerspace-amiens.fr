@@ -252,6 +252,19 @@ Les étudiants de I2 ont dupliqué le template le 2026-09-25 (commit `f258512`).
 
 ---
 
+## Atelier `microcontroleur` et firmware de référence
+
+Le **firmware de référence** du Pong (PlatformIO, XIAO ESP32S3, écran ST7789) est dans le dossier `fw/` du repo [Makerspace-Amiens/workshop-microcontroller](https://github.com/Makerspace-Amiens/workshop-microcontroller), avec le reste du projet (PCB...). Les tutoriels `entrees-boutons-joystick`, `ecran-spi-game-loop` (dans `_docs/tutorials/electronics/`) et `collisions-fsm-pong` le construisent pas à pas : chaque TD produit un de ses modules (`config.h`, `input`, `renderer`, `game`, `main.cpp`). Le relire avant de modifier ces tutoriels, et garder le code des tutoriels aligné dessus (noms, constantes, structure).
+
+- **Ce code n'est pas fourni aux étudiants** (ils le recopieraient) : il sert à guider l'écriture des tutoriels et à fixer le niveau attendu. Ne jamais le lier depuis le site, ni le recopier en entier dans une page ; ne pas le remettre dans ce dépôt.
+- Le projet Snake n'a pas de tutoriel pas à pas, volontairement : les étudiants se forment et conçoivent leur propre solution (voir `projet-snake.md`).
+
+- Bibliothèque écran : **Adafruit ST7735 and ST7789** (pas TFT_eSPI), `SPI.begin(D9, -1, D10, -1)` puis `tft.init(240, 320, SPI_MODE3)` (CS relié à GND).
+- Écran en **portrait** (`setRotation(2)`), raquettes horizontales. Joueur 1 = joystick (axe X, raquette du bas) ; joueur 2 = SW1 (D5, gauche) / SW2 (D6, droite), raquette du haut. Partie en 7 points.
+- Identifiants de code en anglais (`InputState`, `gameUpdate`), commentaires en français.
+
+---
+
 ## Includes Liquid disponibles
 
 **Message d'alerte** (`is-info`, `is-warning`, `is-danger`, `is-success`) :

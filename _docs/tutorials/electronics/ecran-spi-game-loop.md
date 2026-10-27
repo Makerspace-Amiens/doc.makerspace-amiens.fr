@@ -11,7 +11,7 @@ type: tutorial
 
 title: Écran SPI et game loop
 subtitle: Câbler l'écran, dessiner les premières formes et faire rebondir une balle
-description: Câbler un écran TFT en SPI avec TFT_eSPI, dessiner du texte et des formes, puis construire une game loop non bloquante avec une balle qui rebondit.
+description: Piloter un écran TFT ST7789 en SPI avec la bibliothèque Adafruit, puis construire une game loop non bloquante avec une raquette et une balle.
 author: Alban Petit
 
 time: 3
@@ -23,16 +23,22 @@ prerequisites:
   - label: "Concept : Les bus de communication"
     link: /workshops/microcontroleur/concepts/bus-communication/
 
-hardwares:
-  - label: Écran TFT SPI (ST7789 ou ILI9341)
-    link: ""
+softwares:
+  - label: PlatformIO IDE (extension VSCode)
+    link: /docs/references/software/platformIO/
 
-todo: 10
+hardwares:
+  - label: Carte Seeed Studio XIAO ESP32S3
+    link: /docs/references/hardware/xiao-esp32s3/
+  - label: Écran TFT SPI ST7789 240 × 320
+    link: /docs/references/hardware/ecran-tft-spi-st7789/
+
+todo: 90
 ---
 
 ## Écran SPI et game loop
 
-Ce tutoriel ajoute la dernière brique matérielle du montage : l'**écran**. Le câblage des boutons et du joystick posé au tutoriel [Boutons, joystick et moniteur série](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/) ne bouge pas. À la fin, une balle rebondit sur l'écran - la première brique visuelle du Pong.
+Ce tutoriel ajoute la dernière brique matérielle du montage : l'**écran**. Le câblage des boutons et du joystick posé au tutoriel [Boutons, joystick et moniteur série](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/) ne bouge pas, et son module `input` sert tel quel. À la fin, la raquette du joueur 1 suit le joystick et une balle rebondit sur les bords de l'écran : les premières briques visuelles du Pong.
 
 ### Câblage additionnel de l'atelier
 
@@ -58,14 +64,14 @@ graph LR
 
 C'est le câblage du PCB du projet. Il économise deux broches : le **CS** est relié à GND, car l'écran est le seul composant du bus SPI et peut donc rester sélectionné en permanence ; le **rétroéclairage** est branché directement sur 3V3. Avec les boutons, le joystick et le connecteur I2C, les 11 broches de la XIAO sont ainsi toutes utilisées.
 
-{% include message.html title="L'horloge SPI n'est pas sur D8" message="Le SCK par défaut de la XIAO est D8, mais le PCB l'a placé sur **D9** (et DC sur D8). L'ESP32-S3 route le SPI vers n'importe quelle broche grâce à sa GPIO matrix : il suffit de déclarer les bons numéros dans `User_Setup.h`. Ne recopie donc pas un `User_Setup.h` trouvé en ligne pour la XIAO : ses broches ne correspondraient pas." status="is-warning" icon="fas fa-exclamation-triangle" %}
+{% include message.html title="L'horloge SPI n'est pas sur D8" message="Le SCK par défaut de la XIAO est D8, mais le PCB l'a placé sur **D9** (et DC sur D8). L'ESP32-S3 route le SPI vers n'importe quelle broche grâce à sa GPIO matrix : il suffit de passer les bonnes broches à `SPI.begin()` (étape 2). Un exemple trouvé en ligne pour la XIAO utiliserait les broches par défaut et laisserait l'écran noir." status="is-warning" icon="fas fa-exclamation-triangle" %}
 
-{% include message.html title="MISO non utilisé" message="L'écran ne renvoie jamais de données utiles à l'ESP32 : seul le sens CPU → écran (MOSI) est câblé. C'est la différence entre un bus SPI complet et cet usage en écriture seule - voir le concept [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/)." status="is-info" icon="fas fa-info-circle" %}
+{% include message.html title="MISO non utilisé" message="L'écran ne renvoie jamais de données utiles à l'ESP32 : seul le sens CPU → écran (MOSI) est câblé. C'est la différence entre un bus SPI complet et cet usage en écriture seule : voir le concept [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/)." status="is-info" icon="fas fa-info-circle" %}
 
 {% include step-tuto.html
 greyBackground=true
-title="1 - Installer TFT_eSPI et configurer User_Setup"
-content="Ajoute la bibliothèque **TFT_eSPI** à ton `platformio.ini`, puis copie le fichier `User_Setup.h` fourni (identique pour tout le groupe) dans le dossier de la librairie. C'est **le** point de blocage classique de cette étape : un `User_Setup` mal configuré donne un écran noir, pas une erreur de compilation."
+title="Étape 1 : Ajouter la bibliothèque de l'écran"
+content="On ne réécrit pas le protocole du contrôleur ST7789 : la bibliothèque **Adafruit ST7735 and ST7789** s'en charge. Ajoute-la à ton `platformio.ini` ; PlatformIO télécharge aussi sa dépendance **Adafruit GFX**, qui fournit les fonctions de dessin (rectangles, cercles, texte)."
 %}
 
 ```ini
@@ -75,148 +81,230 @@ board = seeed_xiao_esp32s3
 framework = arduino
 monitor_speed = 115200
 lib_deps =
-    bodmer/TFT_eSPI@^2.5.0
-build_flags =
-    -DUSER_SETUP_LOADED=1
-    -include User_Setup.h
+    adafruit/Adafruit ST7735 and ST7789 Library@^1.11.0
 ```
+
+Ajoute ensuite à la fin de `include/config.h` le brochage de l'écran et ses dimensions. Le mode portrait est retenu : l'écran mesure 240 pixels de large et 320 de haut.
 
 ```cpp
-// User_Setup.h (extrait clé en main - pins figées de l'atelier)
-#define ST7789_DRIVER      // adapter selon le contrôleur de ton écran
+// Ecran TFT ST7789 240x320 (connecteur J1)
+constexpr int PIN_TFT_RESET = D7;
+constexpr int PIN_TFT_DC    = D8;   // Data/Command : 0 = commande, 1 = donnée
+constexpr int PIN_TFT_SCK   = D9;   // Horloge SPI
+constexpr int PIN_TFT_MOSI  = D10;  // Données SPI (microcontrôleur -> écran)
+constexpr int PIN_TFT_CS    = -1;   // CS est relié à GND sur la carte : l'écran
+                                    // est toujours sélectionné (-1 = pas de broche)
 
-// Numéros de GPIO obligatoires ici (pas D7, D6...) : la bibliothèque les teste avec #if
-#define TFT_MISO -1   // non câblé
-#define TFT_SCLK  8   // D9
-#define TFT_MOSI  9   // D10
-#define TFT_CS   -1   // relié à GND sur le PCB
-#define TFT_DC    7   // D8
-#define TFT_RST  44   // D7
+constexpr uint32_t TFT_SPI_FREQUENCY = 40000000;  // 40 MHz
 
-#define SPI_FREQUENCY  40000000
+// Rotation 0 = portrait, 2 = portrait retourné de 180 degrés
+constexpr int SCREEN_ROTATION = 2;
+constexpr int SCREEN_WIDTH    = 240;
+constexpr int SCREEN_HEIGHT   = 320;
 ```
-
-{% include message.html title="Écran noir après flashage ?" message="Vérifie dans l'ordre : le rétroéclairage (LED/BLK) est-il alimenté ? Le driver (`ST7789_DRIVER` / `ILI9341_DRIVER`) correspond-il à ton écran ? Les pins du `User_Setup.h` correspondent-elles au câblage réel ? Ces trois points couvrent la quasi-totalité des écrans noirs." status="is-warning" icon="fas fa-exclamation-triangle" %}
-
-{% include message.html title="Checkpoint" message="À ce stade, le projet doit compiler et se flasher sans erreur - même si l'écran reste noir : aucun dessin n'a encore été envoyé. Une erreur de compilation ici vient presque toujours d'un chemin ou d'un nom de fichier incorrect pour User_Setup.h." status="is-success" icon="fas fa-check-circle" %}
 
 {% include step-tuto.html
 greyBackground=true
-title="2 - Premières primitives"
-content="`TFT_eSPI` expose un système de coordonnées `(0,0)` en haut à gauche. Teste les formes et le texte de base avant de construire quoi que ce soit d'animé."
+title="Étape 2 : Initialiser l'écran et dessiner"
+content="L'objet `tft` représente l'écran. Avant de dessiner, on démarre le bus SPI **sur les broches du PCB**, puis on initialise l'écran. Le repère a son origine `(0, 0)` en **haut à gauche** : x augmente vers la droite, y vers le **bas**."
 %}
 
 ```cpp
 #include <Arduino.h>
-#include <TFT_eSPI.h>
+#include <SPI.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
 
-TFT_eSPI tft = TFT_eSPI();
+#include "config.h"
+
+Adafruit_ST7789 tft(&SPI, PIN_TFT_CS, PIN_TFT_DC, PIN_TFT_RESET);
 
 void setup() {
-  tft.init();
-  tft.setRotation(1);              // paysage
-  tft.fillScreen(TFT_BLACK);
+    // Broches SPI du PCB (pas de MISO : l'écran ne renvoie rien)
+    SPI.begin(PIN_TFT_SCK, -1, PIN_TFT_MOSI, PIN_TFT_CS);
 
-  tft.setTextColor(TFT_WHITE, TFT_BLACK);
-  tft.setTextSize(2);
-  tft.setCursor(10, 10);
-  tft.print("PONG");
+    tft.init(SCREEN_WIDTH, SCREEN_HEIGHT, SPI_MODE3);
+    tft.setSPISpeed(TFT_SPI_FREQUENCY);
+    tft.setRotation(SCREEN_ROTATION);
+    tft.fillScreen(ST77XX_BLACK);
 
-  tft.drawRect(20, 40, 60, 20, TFT_WHITE);   // rectangle contour
-  tft.fillCircle(160, 60, 8, TFT_WHITE);     // cercle plein
+    tft.setTextSize(4);                 // police de 6 x 8 pixels, multipliée par 4
+    tft.setTextColor(ST77XX_WHITE);
+    tft.setCursor(72, 40);              // (240 - 4 lettres x 6 x 4) / 2 = 72 : centré
+    tft.print("PONG");
+
+    tft.drawRect(20, 120, 200, 60, ST77XX_WHITE);   // rectangle (contour)
+    tft.fillCircle(120, 250, 20, ST77XX_YELLOW);    // disque (plein)
 }
 
 void loop() {}
 ```
 
-{% include message.html title="Checkpoint" message="Tu dois voir le texte « PONG », un rectangle et un cercle blancs à l'écran. Si l'écran reste noir, reviens à la configuration de l'étape précédente avant d'aller plus loin." status="is-success" icon="fas fa-check-circle" %}
+{% include message.html title="Pourquoi SPI_MODE3 ?" message="Le SPI a quatre modes, selon l'état de l'horloge au repos et le front sur lequel la donnée est lue. Avec un CS actif, l'écran sait quand une trame commence. Ici, CS est relié à GND en permanence : le ST7789 se repère alors sur l'horloge, qui doit être **à l'état haut au repos**. C'est le **mode 3**. Avec le mode par défaut, un écran sans CS reste souvent noir alors que tout compile." status="is-warning" icon="fas fa-exclamation-triangle" %}
+
+{% include message.html title="Écran noir après flashage ?" message="Vérifie dans l'ordre : le rétroéclairage (LED/BLK) est-il alimenté en 3V3 ? `SPI.begin()` reçoit-il bien D9 et D10 ? `tft.init()` est-il appelé avec `SPI_MODE3` ? Le câblage de DC (D8) et RESET (D7) est-il inversé ? Ces points couvrent la quasi-totalité des écrans noirs." status="is-warning" icon="fas fa-exclamation-triangle" %}
+
+{% include message.html title="Checkpoint" message="Tu dois voir le texte « PONG » en haut, centré, un rectangle blanc et un disque jaune. Si l'image est à l'envers, essaie `SCREEN_ROTATION = 0`." status="is-success" icon="fas fa-check-circle" %}
 
 {% include step-tuto.html
 greyBackground=true
-title="3 - Une raquette qui suit le joystick"
-content="Réutilise la lecture ADC du tutoriel précédent pour déplacer un rectangle (la raquette) verticalement. On **efface l'ancienne position avant de redessiner** - sans ça, la raquette laisse une traînée à l'écran."
+title="Étape 3 : La game loop non bloquante"
+content="Un jeu avance **image par image**. On veut une image toutes les 16 ms (environ 60 images par seconde), et à chaque image toujours les trois mêmes actions : **lire** les commandes, **calculer** la nouvelle position des objets, **afficher** le résultat.
+
+`delay(16)` bloquerait toute la carte pendant l'attente. On compare plutôt `millis()` à l'instant de la dernière image : tant que 16 ms ne sont pas écoulées, `loop()` repart aussitôt sans rien faire."
 %}
 
+Ajoute la durée d'une image dans `include/config.h` :
+
 ```cpp
-#define JOY_Y D1   // GPIO2
+constexpr uint32_t FRAME_TIME_MS = 16;  // Durée d'une image : ~60 images/s
+```
 
-int raquetteY = 60;
+Puis donne à `src/main.cpp` sa structure définitive :
 
-void dessinerRaquette(int y, uint16_t couleur) {
-  tft.fillRect(10, y, 6, 30, couleur);
+```cpp
+#include "input.h"
+
+void update(const InputState& input) {
+    // 2. Calculer la nouvelle image (étapes 4 et 5)
+}
+
+void draw() {
+    // 3. L'afficher (étapes 4 et 5)
 }
 
 void loop() {
-  int y = map(analogRead(JOY_Y), 0, 4095, 0, tft.height() - 30);
+    static uint32_t lastFrameMs = 0;   // static : garde sa valeur d'un tour à l'autre
+    uint32_t nowMs = millis();
+    if (nowMs - lastFrameMs < FRAME_TIME_MS) {
+        return;
+    }
+    lastFrameMs = nowMs;
 
-  if (y != raquetteY) {
-    dessinerRaquette(raquetteY, TFT_BLACK);  // efface l'ancienne position
-    dessinerRaquette(y, TFT_WHITE);          // dessine la nouvelle
-    raquetteY = y;
-  }
+    InputState input = inputRead();    // 1. Lire les commandes
+    update(input);                     // 2. Calculer
+    draw();                            // 3. Afficher
 }
 ```
 
-{% include message.html title="Checkpoint" message="La raquette doit suivre le joystick sans à-coups, et sans laisser de traînée blanche derrière elle en se déplaçant." status="is-success" icon="fas fa-check-circle" %}
+N'oublie pas d'appeler `inputBegin()` au début de `setup()`, avant l'initialisation de l'écran (le joystick ne doit pas être touché pendant sa calibration). Tu peux retirer le texte et les formes de l'étape 2.
+
+Cette structure **lire → calculer → afficher** est la charpente de toute la suite : le tutoriel [Collisions, score et machine à états](/workshops/microcontroleur/tutorials/collisions-fsm-pong/) et le projet Snake ne feront qu'enrichir `update()` et `draw()`.
 
 {% include step-tuto.html
 greyBackground=true
-title="4 - La game loop non bloquante"
-content="`delay()` bloquerait toute lecture d'entrée pendant l'attente - inacceptable pour un jeu. `millis()` permet de cadencer les mises à jour **sans jamais bloquer** le CPU, en comparant le temps écoulé à chaque passage de `loop()`."
+title="Étape 4 : Une raquette qui suit le joystick"
+content="La raquette du joueur 1 est en bas de l'écran. Elle n'est pas placée à l'endroit où pointe le joystick : elle se déplace **à une vitesse proportionnelle** à son inclinaison. `inputRead()` renvoie déjà une valeur entre -1 et +1 : il suffit de la multiplier par une vitesse maximale, en pixels par image.
+
+La position est un `float` : à mi-course, la raquette avance de 2,5 pixels par image, et les demi-pixels s'accumulent au lieu d'être perdus. On ne convertit en `int` qu'au moment de dessiner.
+
+Pour l'affichage, on **efface l'ancienne raquette avant de dessiner la nouvelle**, et seulement si elle a bougé : sans effacement, elle laisserait une traînée blanche ; sans le test, on enverrait des pixels inutiles à chaque image."
 %}
 
 ```cpp
-unsigned long dernierUpdate = 0;
-const unsigned long INTERVALLE = 16;  // ~60 images/seconde
+// include/config.h
+constexpr int   PADDLE_WIDTH     = 40;
+constexpr int   PADDLE_HEIGHT    = 6;
+constexpr int   PADDLE_MARGIN    = 10;    // Distance entre la raquette et le bord
+constexpr float PADDLE_MAX_SPEED = 5.0f;  // En pixels par image
+```
 
-void loop() {
-  unsigned long maintenant = millis();
+```cpp
+// src/main.cpp
+constexpr int PADDLE_Y = SCREEN_HEIGHT - PADDLE_MARGIN - PADDLE_HEIGHT;
 
-  if (maintenant - dernierUpdate >= INTERVALLE) {
-    dernierUpdate = maintenant;
+float paddleX = (SCREEN_WIDTH - PADDLE_WIDTH) / 2.0f;  // position calculée
+int   drawnPaddleX = (int)paddleX;                     // position affichée
 
-    lireEntrees();
-    mettreAJourJeu();
-    redessiner();
-  }
+void update(const InputState& input) {
+    paddleX += input.joystickX * PADDLE_MAX_SPEED;
+    paddleX = constrain(paddleX, 0.0f, (float)(SCREEN_WIDTH - PADDLE_WIDTH));
+}
+
+void draw() {
+    int x = (int)paddleX;
+    if (x != drawnPaddleX) {
+        tft.fillRect(drawnPaddleX, PADDLE_Y, PADDLE_WIDTH, PADDLE_HEIGHT, ST77XX_BLACK);  // effacer
+        tft.fillRect(x, PADDLE_Y, PADDLE_WIDTH, PADDLE_HEIGHT, ST77XX_WHITE);             // dessiner
+        drawnPaddleX = x;
+    }
 }
 ```
 
-Cette structure **lire → mettre à jour → redessiner** est la charpente de toute la suite du projet : le tutoriel [Collisions, score et machine à états](/workshops/microcontroleur/tutorials/collisions-fsm-pong/) et le projet Snake ne feront qu'enrichir `mettreAJourJeu()` et `redessiner()`.
+Dessine aussi la raquette une première fois à la fin de `setup()`, après le `fillScreen` : `draw()` ne la redessine que si elle bouge.
+
+{% include message.html title="Deux variables pour une raquette" message="`paddleX` est la position **calculée** par le jeu, `drawnPaddleX` celle qui est **réellement affichée**. Garder les deux séparées est ce qui permet de savoir quoi effacer. Le Pong final généralise cette idée : le module de rendu mémorise tout ce qui est à l'écran." status="is-info" icon="fas fa-info-circle" %}
+
+{% include message.html title="Checkpoint" message="La raquette se déplace d'autant plus vite que le joystick est incliné, s'arrête quand il est relâché et ne sort pas de l'écran, sans laisser de traînée. Si elle part dans le mauvais sens, change `JOYSTICK_INVERT_X` dans `config.h`." status="is-success" icon="fas fa-check-circle" %}
 
 {% include step-tuto.html
 greyBackground=true
-title="5 - Une balle qui rebondit"
-content="Assemble les deux étapes précédentes : une balle en mouvement constant, qui rebondit sur les bords haut/bas et droit de l'écran (le bord gauche sera la raquette, gérée à l'étape suivante)."
+title="Étape 5 : Une balle qui rebondit"
+content="La balle est un carré de 6 pixels, repéré par son coin supérieur gauche `(ballX, ballY)` et par sa **vitesse** `(ballVX, ballVY)` en pixels par image. À chaque image, la vitesse s'ajoute à la position.
+
+Quand la balle dépasse un bord, on inverse la composante de vitesse concernée **et on la replace contre le bord**. Sans ce replacement, une balle qui a dépassé de 2 pixels pourrait encore être dehors à l'image suivante : sa vitesse s'inverserait une deuxième fois et elle resterait collée au bord."
 %}
 
 ```cpp
-int balleX = 160, balleY = 60;
-int balleVX = 3, balleVY = 2;
+// include/config.h
+constexpr int BALL_SIZE = 6;
+```
 
-void mettreAJourJeu() {
-  balleX += balleVX;
-  balleY += balleVY;
+```cpp
+// src/main.cpp
+float ballX  = (SCREEN_WIDTH - BALL_SIZE) / 2.0f;
+float ballY  = (SCREEN_HEIGHT - BALL_SIZE) / 2.0f;
+float ballVX = 2.0f;  // pixels par image
+float ballVY = 3.0f;
 
-  if (balleY <= 0 || balleY >= tft.height())  balleVY = -balleVY;
-  if (balleX >= tft.width())                  balleVX = -balleVX;
+int drawnBallX = (int)ballX;
+int drawnBallY = (int)ballY;
+
+void moveBall() {
+    ballX += ballVX;
+    ballY += ballVY;
+
+    if (ballX < 0) {
+        ballX = 0;
+        ballVX = -ballVX;
+    } else if (ballX + BALL_SIZE > SCREEN_WIDTH) {
+        ballX = SCREEN_WIDTH - BALL_SIZE;
+        ballVX = -ballVX;
+    }
+
+    if (ballY < 0) {
+        ballY = 0;
+        ballVY = -ballVY;
+    } else if (ballY + BALL_SIZE > SCREEN_HEIGHT) {
+        ballY = SCREEN_HEIGHT - BALL_SIZE;
+        ballVY = -ballVY;
+    }
 }
 
-void redessiner() {
-  static int ancienX = balleX, ancienY = balleY;
-
-  tft.fillCircle(ancienX, ancienY, 4, TFT_BLACK);  // efface l'ancienne position
-  tft.fillCircle(balleX, balleY, 4, TFT_WHITE);    // dessine la nouvelle
-
-  ancienX = balleX;
-  ancienY = balleY;
+void drawBall() {
+    int x = (int)ballX;
+    int y = (int)ballY;
+    if (x == drawnBallX && y == drawnBallY) {
+        return;
+    }
+    tft.fillRect(drawnBallX, drawnBallY, BALL_SIZE, BALL_SIZE, ST77XX_BLACK);  // effacer
+    tft.fillRect(x, y, BALL_SIZE, BALL_SIZE, ST77XX_WHITE);                    // dessiner
+    drawnBallX = x;
+    drawnBallY = y;
 }
 ```
 
-{% include message.html title="Checkpoint" message="Une balle blanche doit se déplacer en continu et rebondir sur les bords haut, bas et droit, sans clignotement ni traînée visible." status="is-success" icon="fas fa-check-circle" %}
+Appelle `moveBall()` à la fin de `update()`, et `drawBall()` à la fin de `draw()`.
+
+{% include message.html title="Checkpoint" message="La balle se déplace en continu et rebondit sur les quatre bords, sans clignotement ni traînée, pendant que la raquette suit le joystick. Observe ce qui se passe quand elle passe sur la raquette : elle la **traverse** et y laisse un **trou** noir. C'est normal, et c'est le point de départ du tutoriel suivant." status="is-success" icon="fas fa-check-circle" %}
 
 ## Résultat attendu
 
-Une balle blanche se déplace en continu sur l'écran et rebondit sur les bords, sans clignotement ni traînée visible, pendant que la raquette du joueur 2 suit le joystick.
+Le projet contient `include/config.h`, `include/input.h`, `src/input.cpp` et un `src/main.cpp` organisé en game loop : la raquette du joueur 1 suit le joystick en bas de l'écran, et une balle rebondit sur les quatre bords.
 
-{% include message.html title="Étape suivante" message="Le tutoriel [Collisions, score et machine à états](/workshops/microcontroleur/tutorials/collisions-fsm-pong/) ajoute la seconde raquette, la détection de collision balle/raquette, le score et la machine à états (menu / partie / game over) - sans rien changer au câblage." status="is-success" icon="fas fa-check-circle" %}
+Deux défauts restent visibles, volontairement :
+
+- la balle traverse la raquette au lieu de rebondir dessus (il manque la **collision**) ;
+- en passant, elle efface une partie de la raquette (l'effacement ne tient pas compte de ce qu'il y a dessous).
+
+{% include message.html title="Étape suivante" message="Le tutoriel [Collisions, score et machine à états](/workshops/microcontroleur/tutorials/collisions-fsm-pong/) corrige ces deux défauts, ajoute la raquette du joueur 2, le score et les écrans menu / partie / fin, puis découpe le programme en modules, sans rien changer au câblage." status="is-success" icon="fas fa-check-circle" %}

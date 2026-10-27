@@ -50,11 +50,21 @@ Sur l'écran, les broches SPI sont souvent sérigraphiées `SCL` et `SDA` comme 
 
 ## Bibliothèque
 
-L'écran se pilote avec la bibliothèque **TFT_eSPI**, configurée via un fichier `User_Setup.h` (driver, broches, fréquence SPI). La mise en place complète est détaillée dans le tutoriel [Écran SPI et game loop](/docs/tutorials/electronics/ecran-spi-game-loop/).
+L'écran se pilote avec la bibliothèque **Adafruit ST7735 and ST7789** (`adafruit/Adafruit ST7735 and ST7789 Library` dans PlatformIO), qui s'appuie sur **Adafruit GFX** pour le dessin. Aucun fichier de configuration : les broches sont passées dans le code.
 
-{% include message.html title="Écran noir : les trois vérifications" message="Un écran qui reste noir vient presque toujours de l'une de ces trois causes : rétroéclairage (BLK) non alimenté, driver déclaré (`ST7789_DRIVER` / `ILI9341_DRIVER`) qui ne correspond pas à l'écran, ou broches du `User_Setup.h` différentes du câblage réel." status="is-warning" icon="fas fa-exclamation-triangle" %}
+```cpp
+Adafruit_ST7789 tft(&SPI, -1, D8, D7);      // CS (aucun), DC, RESET
+
+SPI.begin(D9, -1, D10, -1);                 // SCK, MISO (aucun), MOSI, CS
+tft.init(240, 320, SPI_MODE3);              // mode 3 : CS relié à GND
+```
+
+Le CS étant relié en permanence à GND, l'écran doit être initialisé en **SPI mode 3** (horloge à l'état haut au repos). La mise en place complète est détaillée dans le tutoriel [Écran SPI et game loop](/docs/tutorials/electronics/ecran-spi-game-loop/).
+
+{% include message.html title="Écran noir : les trois vérifications" message="Un écran qui reste noir vient presque toujours de l'une de ces trois causes : rétroéclairage (BLK) non alimenté, broches passées à `SPI.begin()` différentes du câblage réel (SCK sur D9, pas sur D8), ou `tft.init()` appelé sans `SPI_MODE3` alors que CS est relié à GND. Un écran ILI9341 se pilote avec la bibliothèque `Adafruit ILI9341`, pas avec celle du ST7789." status="is-warning" icon="fas fa-exclamation-triangle" %}
 
 ## Sources
 
-- [Bibliothèque TFT_eSPI (Bodmer)](https://github.com/Bodmer/TFT_eSPI)
+- [Bibliothèque Adafruit ST7735 and ST7789](https://github.com/adafruit/Adafruit-ST7735-Library)
+- [Bibliothèque Adafruit GFX](https://github.com/adafruit/Adafruit-GFX-Library)
 - [Datasheet ST7789](https://www.rhydolabz.com/documents/33/ST7789.pdf)
