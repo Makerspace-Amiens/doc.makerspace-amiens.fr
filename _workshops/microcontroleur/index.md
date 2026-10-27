@@ -48,6 +48,12 @@ tutorials:
   - /docs/tutorials/electronics/ecran-spi-game-loop/
   - /workshops/microcontroleur/tutorials/collisions-fsm-pong/
   - /docs/tutorials/electronics/esp32-wifi-websocket/
+  - /docs/tutorials/software/kicad/installation-kicad/
+  - /docs/tutorials/software/kicad/kicad-import-librairies/
+  - /docs/tutorials/software/kicad/kicad-eeschema-bases/
+  - /docs/tutorials/software/kicad/kicad-pcbnew-bases/
+  - /workshops/microcontroleur/tutorials/conception-carte-kicad/
+  - /workshops/microcontroleur/tutorials/souder-tester-carte/
   - /docs/tutorials/electronics/esp32-ssd1306-oled/
 
 how_to_guides:
@@ -55,6 +61,7 @@ how_to_guides:
 hardware:
   - /docs/references/hardware/xiao-esp32s3/
   - /docs/references/hardware/ecran-tft-spi-st7789/
+  - /docs/references/machines/weller-wt-1010/
 
 software:
   - /docs/references/software/arduino-ide/

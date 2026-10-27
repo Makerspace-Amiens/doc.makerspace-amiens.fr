@@ -17,7 +17,7 @@ todo: 80
 | | |
 |---|---|
 | **Équipe** | En binôme |
-| **Matériel** | La console de l'atelier : XIAO ESP32S3, écran TFT, joystick, deux boutons, sur le PCB du projet |
+| **Matériel** | La console de l'atelier : XIAO ESP32S3, écran TFT, joystick, deux boutons, sur un PCB que vous concevez, puis que vous soudez |
 | **Point de départ** | Votre Pong des TD, et tout ce qu'il vous a appris : game loop, modules, machine à états |
 | **Nouveauté** | Une nouvelle mécanique de jeu (Snake), et un second joueur **dans un navigateur**, relié en Wi-Fi |
 | **Rendu** | Un repo créé depuis le template du MakerSpace, et une démonstration en direct |
@@ -74,6 +74,29 @@ Pour vous lancer, quelques rôles possibles. Vous pouvez en reprendre un, les co
 
 Un bon rôle asymétrique se reconnaît à deux questions : **chaque joueur peut-il gagner ?** et **les deux joueurs ont-ils quelque chose à faire à chaque instant ?** Testez votre idée sur papier, en jouant les deux rôles à la main, avant d'écrire la moindre ligne de code.
 
+## La carte de la console
+
+Le projet **commence par la carte**. Chaque binôme conçoit le PCB de la console sous KiCad, en deux étapes validées par l'encadrant : d'abord le schéma, puis le routage. Pour éviter les délais de fabrication, l'encadrant vous remet ensuite **sa** carte finale, déjà fabriquée, que vous soudez et testez. C'est sur cette carte que vous écrivez ensuite le code du Snake. Son brochage est celui des TD : votre Pong y tourne sans modification.
+
+```mermaid
+flowchart LR
+  S["Votre schéma"] --> V1{"Validation 1"}
+  V1 --> R["Votre routage"]
+  R --> V2{"Validation 2"}
+  V2 --> F["Carte finale fournie
+par l'encadrant"]
+  F --> SO["Soudure et tests"]
+  SO --> C["Code du Snake
+sur la carte"]
+```
+
+| Étape | Guide |
+|---|---|
+| Cahier des charges, schéma (validation 1), routage (validation 2) | [Concevoir la carte de la console](/workshops/microcontroleur/tutorials/conception-carte-kicad/) |
+| Soudure au fer et tests | [Souder et tester la carte](/workshops/microcontroleur/tutorials/souder-tester-carte/) |
+
+Rien ne vous empêche de réfléchir au jeu (sur papier) et à votre rôle asymétrique pendant que vous concevez la carte : c'est même conseillé. Mais le code du projet s'écrit et se teste sur la carte soudée.
+
 ## Se former : la transition est à vous
 
 Contrairement au Pong, **aucun tutoriel pas à pas ne vous mène au Snake**. C'est volontaire : passer d'un jeu que l'on vous a guidé à construire à un jeu que vous concevez vous-mêmes est le cœur du projet. Cherchez, essayez, comparez des solutions, et gardez trace de vos choix.
@@ -116,11 +139,13 @@ Un découpage indicatif, à transformer en jalons et en issues dans votre repo :
 
 | Jalon | Résultat attendu |
 |---|---|
-| 1. Snake en solo | Le Snake se joue entièrement sur la console, sans réseau (C1 à C7) |
-| 2. Squelette réseau | Point d'accès, page servie, WebSocket ouvert dans les deux sens ; protocole écrit (N1, N2, N7) |
-| 3. Le joueur 2 | Le rôle asymétrique est jouable de bout en bout (N3, N4, N5) |
-| 4. Robustesse et PCB | Déconnexions gérées, messages invalides ignorés, tout tourne sur le PCB soudé (N6, C8) |
-| 5. Documentation et démo | Le repo est complet, la démonstration est répétée |
+| 1. Schéma | Le schéma de votre carte est validé par l'encadrant ; le jeu et le rôle du joueur 2 sont imaginés sur papier |
+| 2. Routage | Le routage de votre carte est validé par l'encadrant |
+| 3. Carte soudée | La carte fournie est soudée et testée, et votre Pong y tourne (C8) |
+| 4. Snake en solo | Le Snake se joue entièrement sur la console, sans réseau (C1 à C7) |
+| 5. Squelette réseau | Point d'accès, page servie, WebSocket ouvert dans les deux sens ; protocole écrit (N1, N2, N7) |
+| 6. Le joueur 2 | Le rôle asymétrique est jouable de bout en bout, déconnexions comprises (N3 à N6) |
+| 7. Documentation et démo | Le repo est complet, la démonstration est répétée |
 
 {% include message.html title="Un jeu jouable à chaque jalon" message="Gardez toujours une version qui fonctionne (une branche ou un tag par jalon). Une démonstration se fait avec ce qui marche, pas avec ce qui marchera." status="is-info" icon="fas fa-code-branch" %}
 
@@ -132,7 +157,7 @@ Le projet se rend dans un **repo créé depuis le template du MakerSpace**, suiv
 |---|---|---|
 | Le repo | Créé depuis le template, organisé en issues et jalons | [Créer son repo depuis le template](/workshops/methodologie-de-projet/tutorials/creer-repo-template/), [Gérer son projet avec GitHub](/workshops/methodologie-de-projet/tutorials/gerer-projet-github/) |
 | Le firmware | Le code source, découpé en modules, avec la machine à états (diagramme) et le **protocole réseau** (tableau des messages) | [Documenter son code et son firmware](/workshops/methodologie-de-projet/tutorials/documenter-code-firmware/) |
-| La carte | Le schéma du PCB, son brochage et les étapes de soudure et de test | [Documenter une carte électronique](/workshops/methodologie-de-projet/tutorials/documenter-carte-electronique/) |
+| La carte | Votre schéma et votre routage validés, la justification de vos choix de conception, les photos et les tests de la carte soudée | [Documenter une carte électronique](/workshops/methodologie-de-projet/tutorials/documenter-carte-electronique/) |
 | Les tests | Les exigences C1 à C8 et N1 à N7 vérifiées une par une, avec les résultats | [Documenter les tests et résultats](/workshops/methodologie-de-projet/tutorials/documenter-tests-resultats/) |
 | Le journal de bord | Vos recherches, vos essais, vos choix, et les sources de ce que vous avez repris | [Tenir un journal de bord](/workshops/methodologie-de-projet/tutorials/journal-de-bord/) |
 | La présentation | Une courte vidéo de démonstration, ou un poster | [Créer le poster et la vidéo de présentation](/workshops/methodologie-de-projet/tutorials/poster-video-presentation/) |
@@ -147,7 +172,7 @@ L'évaluation porte sur :
 - **Le rôle du joueur 2** : son originalité, l'équilibre entre les deux joueurs, et l'intérêt réel de l'interaction ;
 - **La robustesse** : déconnexions, messages invalides, parties qui s'enchaînent sans redémarrer la carte ;
 - **La qualité du code** : modules, machine à états, absence de `delay()`, lisibilité ;
-- **Le PCB** : soudure propre, carte fonctionnelle et testée ;
+- **La carte** : la conception (schéma et routage validés, choix justifiés), puis la soudure et les tests de la carte fournie ;
 - **Le repo** : documentation, protocole, tests, journal de bord ;
 - **L'oral** : chacun des deux membres du binôme sait expliquer l'ensemble du projet, y compris la partie qu'il n'a pas codée.
 

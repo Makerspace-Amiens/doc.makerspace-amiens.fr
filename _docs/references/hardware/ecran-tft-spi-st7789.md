@@ -46,6 +46,8 @@ Le SPI est choisi ici pour sa **vitesse** : dessiner une image à ~60 images/sec
 
 Sur l'écran, les broches SPI sont souvent sérigraphiées `SCL` et `SDA` comme un bus I2C : il s'agit bien de l'horloge et des données SPI.
 
+Le module de l'atelier a un connecteur de **14 broches**, dans l'ordre : VCC, GND, CS, RESET, DC, SDI (MOSI), SCK, LED, SDO (MISO), puis les cinq broches de la dalle tactile (T_CLK, T_CS, T_DIN, T_DO, T_IRQ), non utilisées. Vérifiez toujours cet ordre sur la sérigraphie de votre module : il varie d'un fabricant à l'autre.
+
 {% include message.html title="MISO non câblé" message="L'écran ne renvoie pas de données utiles : seul le sens ESP32 vers écran (MOSI) est utilisé. La broche MISO du SPI reste libre." status="is-info" icon="fas fa-info-circle" %}
 
 ## Bibliothèque
