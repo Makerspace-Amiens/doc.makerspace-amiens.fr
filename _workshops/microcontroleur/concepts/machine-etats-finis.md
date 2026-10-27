@@ -24,7 +24,7 @@ prerequisites:
 
 ## Quand le code devient un plat de spaghettis
 
-Ton programme grossit. Une LED qui clignote tient en quatre lignes ; mais un jeu, lui, a plusieurs moments de vie - un menu d'accueil, une partie en cours, un écran de fin. Gérer ces phases « à la main » transforme vite le code en plat de spaghettis : des variables un peu partout, des `if/else` qui s'emmêlent, et des bugs difficiles à traquer.
+Ton programme grossit. Une LED qui clignote tient en quatre lignes ; mais un jeu, lui, a plusieurs moments de vie : un menu d'accueil, une partie en cours, un écran de fin. Gérer ces phases « à la main » transforme vite le code en plat de spaghettis : des variables un peu partout, des `if/else` qui s'emmêlent, et des bugs difficiles à traquer.
 
 La **machine à états finis** (FSM) est l'outil classique de l'embarqué pour garder les idées claires. Commençons par voir ce qui se passe sans elle.
 
@@ -45,7 +45,7 @@ bool menuActif = true;
 // ...et ça empire à chaque nouvelle phase
 ```
 
-La **machine à états finis** (FSM - *Finite State Machine*) est la solution classique de l'embarqué pour ce problème.
+La **machine à états finis** (FSM, *Finite State Machine*) est la solution classique de l'embarqué pour ce problème.
 
 ## Principe d'une FSM
 
@@ -77,7 +77,7 @@ Une case « - » signifie « l'événement est ignoré dans cet état ». Ce tab
 
 ## Implémentation avec un `enum` + `switch`
 
-### 1 - Déclarer les états
+### Étape 1 : Déclarer les états
 
 ```cpp
 enum EtatJeu {
@@ -89,7 +89,7 @@ enum EtatJeu {
 EtatJeu etat = MENU;  // état initial
 ```
 
-### 2 - La game loop avec `switch`
+### Étape 2 : La game loop avec `switch`
 
 ```cpp
 void loop() {
@@ -98,34 +98,40 @@ void loop() {
   switch (etat) {
 
     case MENU:
-      afficherMenu();
-      if (boutonStart()) {
+      if (appuiStart()) {
         initialiserPartie();
-        etat = PARTIE;  // transition
+        afficherJeu();        // écran dessiné une fois, à la transition
+        etat = PARTIE;        // transition
       }
       break;
 
     case PARTIE:
       mettreAJourJeu();
-      afficherJeu();
+      redessinerCeQuiABouge();
       if (vieJoueur == 0) {
-        etat = GAME_OVER;  // transition
+        afficherGameOver();
+        etat = GAME_OVER;     // transition
       }
       break;
 
     case GAME_OVER:
-      afficherGameOver();
-      if (boutonRetry()) {
-        etat = MENU;  // transition
+      if (appuiRetry()) {
+        afficherMenu();
+        etat = MENU;          // transition
       }
       break;
   }
 }
 ```
 
-Chaque `case` gère **un seul état** : ce qu'il affiche, ce qu'il fait, et vers quel état il peut basculer.
+Chaque `case` gère **un seul état** : ce qu'il fait à chaque tour, et vers quel état il peut basculer. L'écran d'accueil est dessiné une première fois dans `setup()`.
 
-{% include message.html title="Deux sens du mot « état »" message="Dans une même séance, le mot **état** désigne deux choses différentes : les **données du jeu** (position de la balle, score - des variables) et la **phase du jeu** (MENU / PARTIE / GAME_OVER - la FSM). Garde cette distinction en tête pour ne pas mélanger les deux." status="is-info" icon="fas fa-info-circle" %}
+Deux règles évitent les bugs les plus fréquents :
+
+- **Dessiner un écran complet une seule fois**, au moment de la transition. Appeler `afficherMenu()` à chaque tour de `loop()` effacerait et réécrirait l'écran des dizaines de fois par seconde : il clignoterait.
+- **Déclencher une transition sur un appui, pas sur un bouton enfoncé.** `appuiStart()` et `appuiRetry()` ne doivent renvoyer `true` qu'**une seule fois par appui** (détection de front, voir [GPIO & monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/)). Avec un simple `digitalRead() == LOW`, un appui un peu long sur l'écran GAME_OVER renverrait au MENU puis lancerait aussitôt une nouvelle PARTIE.
+
+{% include message.html title="Deux sens du mot « état »" message="Dans une même séance, le mot **état** désigne deux choses différentes : les **données du jeu** (position de la balle, score : des variables) et la **phase du jeu** (MENU / PARTIE / GAME_OVER : la FSM). Garde cette distinction en tête pour ne pas mélanger les deux." status="is-info" icon="fas fa-info-circle" %}
 
 ## Pourquoi c'est fondamental en embarqué
 
@@ -148,7 +154,7 @@ stateDiagram-v2
   GAME_OVER --> ATTENTE_JOUEUR : rejouer
 ```
 
-La structure `switch(etat)` est la même - on ajoute juste des états.
+La structure `switch(etat)` est la même : on ajoute juste des états.
 
 ## FSM vs variables booléennes
 
@@ -172,7 +178,7 @@ void allerVers(EtatJeu nouvel) {
 }
 ```
 
-**Transition temporisée.** Un état peut basculer tout seul après un certain temps - un écran « GAME OVER » qui revient au menu après 3 secondes. On combine la FSM avec `millis()` (voir [Du matériel au logiciel](/workshops/microcontroleur/concepts/du-materiel-au-logiciel/)) : on compare l'heure actuelle à la date d'entrée dans l'état.
+**Transition temporisée.** Un état peut basculer tout seul après un certain temps, comme un écran « GAME OVER » qui revient au menu après 3 secondes. On combine la FSM avec `millis()` (voir [Du matériel au logiciel](/workshops/microcontroleur/concepts/du-materiel-au-logiciel/)) : on compare l'heure actuelle à la date d'entrée dans l'état.
 
 ```cpp
 case GAME_OVER:
@@ -218,7 +224,7 @@ void loop() {
 
 La `loop()` ne bloque jamais (aucun `delay()`) : le programme pourrait donc, en même temps, lire un bouton piéton ou animer un afficheur. C'est tout l'intérêt de coupler FSM et `millis()`.
 
-## Exercice - dessiner la FSM du Pong
+## Exercice : dessiner la FSM du Pong
 
 Avant de coder le TD4, dessine sur papier la FSM du Pong :
 
@@ -226,11 +232,11 @@ Avant de coder le TD4, dessine sur papier la FSM du Pong :
 - Quels événements déclenchent les transitions ?
 - Quel est l'état initial ?
 
-Compare ensuite ta FSM avec celle du groupe - les différences de conception sont souvent révélatrices.
+Compare ensuite ta FSM avec celle du groupe : les différences de conception sont souvent révélatrices.
 
 ## Pour aller plus loin
 
-- [Collisions & FSM : le Pong](/workshops/microcontroleur/tutorials/collisions-fsm-pong/) - mettre la FSM en œuvre dans un jeu
+- [Collisions, score et machine à états](/workshops/microcontroleur/tutorials/collisions-fsm-pong/) : mettre la FSM en œuvre dans le Pong (où les états s'appellent `Title`, `Playing` et `GameOver`)
 
 ## Résumé
 

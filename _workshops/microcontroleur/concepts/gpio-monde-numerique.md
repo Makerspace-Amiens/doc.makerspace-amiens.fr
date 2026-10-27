@@ -8,8 +8,8 @@ component_toc: true
 doc_header: true
 
 title: GPIO & monde numérique
-subtitle: Entrées et sorties tout-ou-rien - piloter une LED, lire un bouton
-description: Comprendre les GPIO numériques de l'ESP32-S3 - niveaux logiques, pull-up/pull-down et état flottant.
+subtitle: "Entrées et sorties tout-ou-rien : piloter une LED, lire un bouton"
+description: "Comprendre les GPIO numériques de l'ESP32-S3 : niveaux logiques, pull-up/pull-down et état flottant."
 author: Alban Petit
 
 difficulty: 2
@@ -24,7 +24,7 @@ prerequisites:
 
 Jusqu'ici, le microcontrôleur réfléchissait dans son coin. Mais une puce qui ne fait que calculer ne sert à rien : pour être utile, elle doit **agir** sur le monde (allumer une LED, faire tourner un moteur) et le **percevoir** (savoir si tu appuies sur un bouton).
 
-Ce contact avec le monde physique passe par les **broches** de la puce - ces petites pattes métalliques alignées sur les bords de la carte. Les plus polyvalentes s'appellent les **GPIO**, et ce concept est consacré aux plus simples d'entre elles : celles qui ne manipulent que du **tout-ou-rien**, comme un interrupteur mural qu'on bascule entre allumé et éteint. Pas de demi-mesure - et c'est justement ce qui rend le numérique si fiable.
+Ce contact avec le monde physique passe par les **broches** de la puce, ces petites pattes métalliques alignées sur les bords de la carte. Les plus polyvalentes s'appellent les **GPIO**, et ce concept est consacré aux plus simples d'entre elles : celles qui ne manipulent que du **tout-ou-rien**, comme un interrupteur mural qu'on bascule entre allumé et éteint. Pas de demi-mesure, et c'est justement ce qui rend le numérique si fiable.
 
 **À la fin de ce concept, tu sauras :**
 
@@ -57,9 +57,9 @@ Tout ce qui est sous ~0,8 V vaut `0`, tout ce qui dépasse ~2,5 V vaut `1`. Cett
 
 En **sortie**, la puce garantit à l'inverse des niveaux francs : proche de 0 V pour `LOW` ($V_{OL}$) et proche de 3,3 V pour `HIGH` ($V_{OH}$).
 
-{% include message.html title="Attention : 3,3 V, pas 5 V" message="Les GPIO de l'ESP32-S3 supportent **3,3 V maximum**. Une broche mise en sortie produit 3,3 V - pas 5 V comme sur Arduino Uno. Un signal 5 V appliqué en entrée peut endommager la puce." status="is-danger" icon="fas fa-exclamation-triangle" %}
+{% include message.html title="Attention : 3,3 V, pas 5 V" message="Les GPIO de l'ESP32-S3 supportent **3,3 V maximum**. Une broche mise en sortie produit 3,3 V, pas 5 V comme sur Arduino Uno. Un signal 5 V appliqué en entrée peut endommager la puce." status="is-danger" icon="fas fa-exclamation-triangle" %}
 
-## GPIO - General Purpose Input/Output
+## GPIO : General Purpose Input/Output
 
 Chaque broche GPIO (*General Purpose Input/Output*, broche d'entrée/sortie à usage général) peut être configurée en **entrée** ou en **sortie** par le logiciel.
 
@@ -68,7 +68,7 @@ pinMode(LED_PIN, OUTPUT);   // broche configurée en sortie
 pinMode(BTN_PIN, INPUT);    // broche configurée en entrée
 ```
 
-### Sortie - piloter une LED
+### Sortie : piloter une LED
 
 Une broche en sortie peut **sourcer ou drainer** du courant (le fournir ou l'absorber) pour piloter un composant.
 
@@ -124,7 +124,7 @@ function calcLedResistor() {
 
 {% include message.html title="Calculateur en ligne" message="Pour une version en ligne (et d'autres calculs d'électronique), voir le [calculateur de résistance série pour LED de DigiKey](https://www.digikey.fr/fr/resources/conversion-calculators/conversion-calculator-led-series-resistor)." status="is-info" icon="fas fa-calculator" %}
 
-### Push-pull vs open-drain - deux façons de piloter une sortie
+### Push-pull vs open-drain : deux façons de piloter une sortie
 
 Par défaut, `OUTPUT` configure la broche en **push-pull** : deux transistors internes permettent de tirer activement la broche à `HIGH` ou à `LOW`. C'est le mode utilisé jusqu'ici.
 
@@ -138,13 +138,13 @@ digitalWrite(PIN, HIGH);          // relâche la broche (haute impédance)
 
 | | Push-pull (`OUTPUT`) | Open-drain (`OUTPUT_OPEN_DRAIN`) |
 |---|---|---|
-| Peut tirer vers HIGH | Oui, activement | Non - nécessite un pull-up |
+| Peut tirer vers HIGH | Oui, activement | Non, nécessite un pull-up |
 | Peut tirer vers LOW | Oui, activement | Oui, activement |
 | Usage typique | LED, moteur, sortie numérique classique | Bus partagé (I2C), interfaçage avec un niveau logique différent |
 
-{% include message.html title="Pourquoi l'I2C utilise l'open-drain" message="Sur un bus I2C, plusieurs périphériques partagent les mêmes fils SDA/SCL. Si un seul poussait activement vers HIGH pendant qu'un autre tire vers LOW, ce serait un court-circuit. En open-drain, chacun ne peut que tirer vers LOW ou relâcher - jamais imposer un HIGH - d'où la résistance de pull-up partagée sur le bus (voir le concept [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/))." status="is-info" icon="fas fa-info-circle" %}
+{% include message.html title="Pourquoi l'I2C utilise l'open-drain" message="Sur un bus I2C, plusieurs périphériques partagent les mêmes fils SDA/SCL. Si un seul poussait activement vers HIGH pendant qu'un autre tire vers LOW, ce serait un court-circuit. En open-drain, chacun ne peut que tirer vers LOW ou relâcher, jamais imposer un HIGH : d'où la résistance de pull-up partagée sur le bus (voir le concept [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/))." status="is-info" icon="fas fa-info-circle" %}
 
-### Entrée - lire un bouton
+### Entrée : lire un bouton
 
 Une broche en entrée mesure le niveau de tension présent sur la broche.
 
@@ -173,7 +173,7 @@ Une broche en [**haute impédance**](https://fr.wikipedia.org/wiki/Haute_imp%C3%
 
 Une résistance de rappel (**pull**) force la broche à un niveau défini quand aucun signal n'est appliqué.
 
-#### Pull-up - repos à HIGH
+#### Pull-up : repos à HIGH
 
 La résistance relie la broche au **+3,3 V**. Au repos, la broche lit `HIGH`. Quand le bouton est pressé (connexion à GND), elle passe à `LOW`.
 
@@ -183,7 +183,7 @@ graph LR
   NODE -->|"Bouton"| GND["GND"]
 ```
 
-#### Pull-down - repos à LOW
+#### Pull-down : repos à LOW
 
 La résistance relie la broche au **GND**. Au repos, la broche lit `LOW`. Quand le bouton est pressé (connexion à +3,3 V), elle passe à `HIGH`.
 
@@ -195,7 +195,7 @@ graph LR
 
 ### Pull-up interne de l'ESP32-S3
 
-L'ESP32-S3 intègre des résistances de pull-up (et pull-down) **en interne**, activables par logiciel - pas besoin de résistance externe dans la plupart des cas.
+L'ESP32-S3 intègre des résistances de pull-up (et pull-down) **en interne**, activables par logiciel : pas besoin de résistance externe dans la plupart des cas.
 
 ```cpp
 pinMode(BTN_PIN, INPUT_PULLUP);    // pull-up interne activé (~45 kΩ)
@@ -205,7 +205,7 @@ pinMode(BTN_PIN, INPUT_PULLDOWN);  // pull-down interne activé
 
 Avec `INPUT_PULLUP` : le bouton doit connecter la broche à **GND** pour être détecté (logique inversée : `LOW` = pressé).
 
-## Lire un bouton de façon fiable - l'anti-rebond
+## Lire un bouton de façon fiable : l'anti-rebond
 
 Quand tu presses un bouton mécanique, le contact ne s'établit pas net : les lamelles métalliques **rebondissent** pendant quelques millisecondes, générant une rafale de `HIGH`/`LOW` avant de se stabiliser. Un `digitalRead()` naïf voit alors *plusieurs* appuis là où tu n'en as fait qu'un.
 
@@ -225,16 +225,17 @@ void loop() {
   }
 
   if (millis() - dernierChangement > ANTIREBOND && etat == LOW) {
-    // appui confirmé : stable depuis 30 ms
+    // bouton enfoncé de façon stable depuis 30 ms
+    // (vrai à chaque tour tant que le bouton reste enfoncé)
   }
 }
 ```
 
 {% include message.html title="Anti-rebond matériel" message="On peut aussi filtrer le rebond côté électronique (condensateur ~100 nF en parallèle du bouton, ou trigger de Schmitt). Sur un microcontrôleur, l'anti-rebond logiciel suffit néanmoins dans l'immense majorité des cas." status="is-info" icon="fas fa-info-circle" %}
 
-## Réagir sans scruter - l'interruption
+## Réagir sans scruter : l'interruption
 
-Scruter un bouton à chaque tour de `loop()` fonctionne, mais peut **rater** un appui si la boucle est occupée ailleurs. Une **interruption** exécute une petite fonction dès que la broche change, sans attendre (voir [Architecture - interruptions](/workshops/microcontroleur/concepts/architecture-microcontroleur/)).
+Scruter un bouton à chaque tour de `loop()` fonctionne, mais peut **rater** un appui si la boucle est occupée ailleurs. Une **interruption** exécute une petite fonction dès que la broche change, sans attendre (voir [Architecture d'un microcontrôleur](/workshops/microcontroleur/concepts/architecture-microcontroleur/)).
 
 ```cpp
 volatile bool appui = false;
@@ -247,11 +248,11 @@ void setup() {
 }
 ```
 
-L'ISR (*Interrupt Service Routine*) se contente de lever un drapeau ; le vrai traitement - et l'anti-rebond - se fait ensuite tranquillement dans `loop()`.
+L'ISR (*Interrupt Service Routine*) se contente de lever un drapeau ; le vrai traitement (et l'anti-rebond) se fait ensuite tranquillement dans `loop()`.
 
-## GPIO matrix - une broche n'est pas toujours un simple GPIO
+## GPIO matrix : une broche n'est pas toujours un simple GPIO
 
-Au-delà de `digitalRead()`/`digitalWrite()`, une broche peut être prise en charge par un périphérique - UART, SPI, I2C, PWM (LEDC)... Sur beaucoup de microcontrôleurs, chaque fonction est câblée en dur sur des broches précises (« fonction alternative » fixe).
+Au-delà de `digitalRead()`/`digitalWrite()`, une broche peut être prise en charge par un périphérique : UART, SPI, I2C, PWM (LEDC)... Sur beaucoup de microcontrôleurs, chaque fonction est câblée en dur sur des broches précises (« fonction alternative » fixe).
 
 L'ESP32-S3 est plus flexible : une **GPIO matrix** interne permet de router presque n'importe quel signal numérique de périphérique vers presque n'importe quelle broche, par logiciel.
 
@@ -260,7 +261,7 @@ Serial1.begin(115200, SERIAL_8N1, D2, D3);  // UART1 routé sur D2 (RX) / D3 (TX
 // une autre paire de broches fonctionnerait tout aussi bien
 ```
 
-{% include message.html title="L'ADC échappe à la règle" message="Contrairement aux périphériques numériques (UART, SPI, I2C, PWM), l'ADC n'est pas routable via la GPIO matrix : chaque canal ADC1/ADC2 est câblé en dur sur des broches fixes - voir le concept [ADC & PWM](/workshops/microcontroleur/concepts/adc-pwm/)." status="is-info" icon="fas fa-info-circle" %}
+{% include message.html title="L'ADC échappe à la règle" message="Contrairement aux périphériques numériques (UART, SPI, I2C, PWM), l'ADC n'est pas routable via la GPIO matrix : chaque canal ADC1/ADC2 est câblé en dur sur des broches fixes (voir le concept [ADC & PWM](/workshops/microcontroleur/concepts/adc-pwm/))." status="is-info" icon="fas fa-info-circle" %}
 
 ## Toutes les broches ne se valent pas
 
@@ -268,7 +269,7 @@ Malgré la souplesse de la GPIO matrix, certaines broches ont un **rôle réserv
 
 | Broches | Rôle réservé | Précaution |
 |---|---|---|
-| **GPIO 0, 3, 45, 46** | *Strapping* - lues au reset pour choisir le mode de boot | Éviter, ou ne rien y imposer comme niveau au démarrage |
+| **GPIO 0, 3, 45, 46** | *Strapping* : lues au reset pour choisir le mode de boot | Éviter, ou ne rien y imposer comme niveau au démarrage |
 | **GPIO 19, 20** | USB natif (D− / D+) | Éviter si tu utilises l'USB (flash, port série) |
 | **GPIO 43, 44** | UART0 par défaut (TX / RX du moniteur série) | Libres si le port série n'est pas utilisé, sinon à éviter |
 | **GPIO 26–32** | Reliées à la Flash SPI interne | **Ne jamais utiliser** |
@@ -288,9 +289,9 @@ Sur la [XIAO ESP32S3](/docs/references/hardware/xiao-esp32s3/) de l'atelier, ce 
 | Courant max par broche | 40 mA (recommandé : ≤ 12 mA) |
 | Tension max en entrée | **3,3 V** |
 
-{% include message.html title="Ne jamais connecter une charge inductive" message="Ne jamais connecter une charge inductive (moteur, relais - une charge qui stocke de l'énergie magnétique et renvoie des pics de tension à la coupure) directement sur un GPIO : toujours utiliser un transistor ou un **driver** (circuit de puissance intermédiaire)." status="is-warning" icon="fas fa-exclamation-triangle" %}
+{% include message.html title="Ne jamais connecter une charge inductive" message="Ne jamais connecter une charge inductive (moteur, relais : une charge qui stocke de l'énergie magnétique et renvoie des pics de tension à la coupure) directement sur un GPIO : toujours utiliser un transistor ou un **driver** (circuit de puissance intermédiaire)." status="is-warning" icon="fas fa-exclamation-triangle" %}
 
-## Connecter un composant 5 V - l'adaptation de niveau
+## Connecter un composant 5 V : l'adaptation de niveau
 
 Les GPIO de l'ESP32-S3 sont en logique 3,3 V : appliquer 5 V sur une entrée peut endommager la puce (voir l'avertissement plus haut). Pour dialoguer avec un composant 5 V, il faut **adapter le niveau** :
 
@@ -316,7 +317,7 @@ Les GPIO de l'ESP32-S3 sont en logique 3,3 V : appliquer 5 V sur une entrée peu
 
 ## Pour aller plus loin
 
-- [Entrées : boutons & joystick](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/)
+- [Boutons, joystick et moniteur série](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/) : un anti-rebond qui ne signale chaque appui qu'une seule fois
 
 ## Résumé
 
@@ -326,8 +327,8 @@ Les GPIO de l'ESP32-S3 sont en logique 3,3 V : appliquer 5 V sur une entrée peu
 - Entrée sans résistance de rappel → **état flottant** (lectures aléatoires).
 - `INPUT_PULLUP` / `INPUT_PULLDOWN` activent la résistance interne de l'ESP32-S3.
 - Avec pull-up : bouton branché entre GPIO et GND → `LOW` quand pressé.
-- La **GPIO matrix** route les périphériques numériques (UART, SPI, I2C, PWM) vers presque n'importe quelle broche - sauf l'ADC, câblé en dur.
+- La **GPIO matrix** route les périphériques numériques (UART, SPI, I2C, PWM) vers presque n'importe quelle broche, sauf l'ADC, câblé en dur.
 - Un bouton mécanique **rebondit** : filtrer avec un anti-rebond logiciel (`millis()`) pour ne pas compter plusieurs appuis.
-- Certaines broches sont **réservées** (strapping, Flash SPI, USB) - vérifier le brochage de la carte avant de câbler.
+- Certaines broches sont **réservées** (strapping, Flash SPI, USB) : vérifier le brochage de la carte avant de câbler.
 - Une **interruption** (`attachInterrupt`) réagit à un changement de broche sans scruter ; l'ISR reste minimale.
-- Pour connecter du 5 V : **pont diviseur** (entrée) ou **level shifter** (bus) - jamais 5 V directement sur un GPIO.
+- Pour connecter du 5 V : **pont diviseur** (entrée) ou **level shifter** (bus), jamais 5 V directement sur un GPIO.

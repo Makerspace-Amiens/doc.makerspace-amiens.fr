@@ -738,7 +738,7 @@ board = seeed_xiao_esp32s3    ; la carte exacte
 framework = arduino           ; le core utilisé
 monitor_speed = 115200        ; la vitesse du moniteur série
 lib_deps =                    ; les bibliothèques, téléchargées seules
-    bodmer/TFT_eSPI@^2.5.0
+    adafruit/Adafruit ST7735 and ST7789 Library@^1.11.0
 ```
 
 Tout le projet est décrit ici. C'est ce fichier, versionné dans votre repo, qui permet à quelqu'un d'autre de recompiler votre code à l'identique.

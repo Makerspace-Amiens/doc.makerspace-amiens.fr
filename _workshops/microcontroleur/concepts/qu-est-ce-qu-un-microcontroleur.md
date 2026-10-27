@@ -9,7 +9,7 @@ doc_header: true
 
 title: Qu'est-ce qu'un microcontrôleur ?
 subtitle: Un ordinateur miniature complet, caché dans les objets du quotidien
-description: Découvrir sans jargon ce qu'est un microcontrôleur un mini-ordinateur sur une puce qui perçoit, décide et agit.
+description: "Découvrir sans jargon ce qu'est un microcontrôleur : un mini-ordinateur sur une puce qui perçoit, décide et agit."
 author: Alban Petit
 
 difficulty: 0
@@ -22,7 +22,7 @@ prerequisites:
 
 ## Tu en côtoies des dizaines sans le savoir
 
-Un **microcontrôleur**, c'est un ordinateur complet réduit à la taille d'un ongle, posé sur une seule petite puce. Pas d'écran, pas de clavier, pas de ventilateur qui ronronne juste l'essentiel pour faire *une* chose, et la faire bien.
+Un **microcontrôleur**, c'est un ordinateur complet réduit à la taille d'un ongle, posé sur une seule petite puce. Pas d'écran, pas de clavier, pas de ventilateur qui ronronne : juste l'essentiel pour faire *une* chose, et la faire bien.
 
 Tu en as sûrement une dizaine à portée de main en ce moment :
 
@@ -51,9 +51,9 @@ flowchart LR
   C -.-> A
 ```
 
-1. **Percevoir** - il lit des **capteurs** : un bouton pressé, une température, une distance, la lumière ambiante…
-2. **Décider** - il exécute son **programme** : une suite d'instructions que tu écris, qui dit quoi faire selon ce qui a été perçu.
-3. **Agir** - il commande des **actionneurs** : allumer une LED, faire tourner un moteur, émettre un son, afficher un texte…
+1. **Percevoir** : il lit des **capteurs** : un bouton pressé, une température, une distance, la lumière ambiante…
+2. **Décider** : il exécute son **programme** : une suite d'instructions que tu écris, qui dit quoi faire selon ce qui a été perçu.
+3. **Agir** : il commande des **actionneurs** : allumer une LED, faire tourner un moteur, émettre un son, afficher un texte…
 
 Un exemple concret : un **thermostat** *perçoit* la température, *décide* « il fait trop froid », puis *agit* en allumant le chauffage. Puis il recommence, indéfiniment. Tout l'atelier consiste à écrire la partie « décider ».
 
@@ -83,13 +83,13 @@ Dans cet atelier, on utilise un microcontrôleur moderne et populaire : l'**ESP3
 
 ## Et sous le capot ?
 
-Tu sais maintenant *à quoi sert* un microcontrôleur et *ce qu'il fait*. La prochaine étape est d'ouvrir le capot pour voir *comment* il est fait à l'intérieur le processeur, les mémoires, les broches dans le concept [Architecture d'un microcontrôleur](/workshops/microcontroleur/concepts/architecture-microcontroleur/).
+Tu sais maintenant *à quoi sert* un microcontrôleur et *ce qu'il fait*. La prochaine étape est d'ouvrir le capot pour voir *comment* il est fait à l'intérieur (le processeur, les mémoires, les broches) dans le concept [Architecture d'un microcontrôleur](/workshops/microcontroleur/concepts/architecture-microcontroleur/).
 
 ## Quiz express
 
 **1. Un microcontrôleur peut-il faire tourner plusieurs applications comme un ordinateur ?**
 
-<details><summary>Voir la réponse</summary>Non : il est conçu pour une seule tâche, répétée en boucle c'est ce qui le rend simple, bon marché et économe.</details>
+<details><summary>Voir la réponse</summary>Non : il est conçu pour une seule tâche, répétée en boucle : c'est ce qui le rend simple, bon marché et économe.</details>
 
 **2. Quelles sont les trois étapes de sa boucle de fonctionnement ?**
 
@@ -103,7 +103,7 @@ Tu sais maintenant *à quoi sert* un microcontrôleur et *ce qu'il fait*. La pro
 
 Prêt à passer à la pratique ? Le premier tutoriel installe les outils et flashe ton tout premier programme :
 
-- [Chaîne d'outils & premier Blink](/workshops/microcontroleur/tutorials/toolchain-blink/)
+- [Vérification de la toolchain](/workshops/microcontroleur/tutorials/toolchain-blink/)
 
 ## Résumé
 

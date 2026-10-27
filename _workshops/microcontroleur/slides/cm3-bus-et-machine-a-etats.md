@@ -292,19 +292,17 @@ De quelques MHz à **80 MHz** sur ESP32-S3 : c'est ce qui rend un écran TFT flu
 
 ```ini
 lib_deps =
-    bodmer/TFT_eSPI@^2.5.0
-build_flags =
-    -DUSER_SETUP_LOADED=1
-    -include User_Setup.h
+    adafruit/Adafruit ST7735 and ST7789 Library@^1.11.0
 ```
 
 ```cpp
-TFT_eSPI tft = TFT_eSPI();
-tft.init();
-tft.fillScreen(TFT_BLACK);
+Adafruit_ST7789 tft(&SPI, -1, D8, D7);  // CS (aucun), DC, RESET
+SPI.begin(D9, -1, D10, -1);             // SCK, MISO, MOSI, CS
+tft.init(240, 320, SPI_MODE3);
+tft.fillScreen(ST77XX_BLACK);
 ```
 
-{% include message.html title="Le point de blocage classique" message="Un `User_Setup.h` mal configuré donne un écran **noir**, pas une erreur de compilation. Si l'écran reste éteint alors que tout compile, c'est là qu'il faut regarder en premier : le pilote déclaré et les numéros de broches." status="is-warning" icon="fas fa-exclamation-triangle" %}
+{% include message.html title="Le point de blocage classique" message="De mauvaises broches donnent un écran **noir**, pas une erreur de compilation. Si l'écran reste éteint alors que tout compile, vérifier en premier les broches passées à `SPI.begin()` (SCK sur D9) et le `SPI_MODE3`, obligatoire quand CS est relié à GND." status="is-warning" icon="fas fa-exclamation-triangle" %}
 
 [Écran SPI et game loop](/docs/tutorials/electronics/ecran-spi-game-loop/){: .doc-link}
 
@@ -364,24 +362,24 @@ Ne jamais bloquer
 
 ---
 
-## Lire, mettre à jour, redessiner
+## Lire, calculer, afficher
 
-<pre><code class="language-cpp" data-trim data-line-numbers="1-2|5|6-7|8-10">
-unsigned long dernierUpdate = 0;
-const unsigned long INTERVALLE = 16;   // ~60 images par seconde
-
+<pre><code class="language-cpp" data-trim data-line-numbers="2-7|9|10-11">
 void loop() {
-  unsigned long maintenant = millis();
-  if (maintenant - dernierUpdate >= INTERVALLE) {
-    dernierUpdate = maintenant;
-    lireEntrees();
-    mettreAJourJeu();
-    redessiner();
+  static uint32_t lastFrameMs = 0;
+  uint32_t nowMs = millis();
+  if (nowMs - lastFrameMs < FRAME_TIME_MS) {   // 16 ms
+    return;                                    // pas encore l'heure
   }
+  lastFrameMs = nowMs;
+
+  InputState input = inputRead();              // 1. lire
+  update(input);                               // 2. calculer
+  draw();                                      // 3. afficher
 }
 </code></pre>
 
-Cette charpente ne changera plus : le Pong puis le Snake enrichiront ces trois fonctions.
+Cette charpente ne changera plus : le Pong puis le Snake enrichiront `update()` et `draw()`.
 {: .caption}
 
 [Écran SPI et game loop](/docs/tutorials/electronics/ecran-spi-game-loop/){: .doc-link}
@@ -497,22 +495,20 @@ Un `enum` nomme les états, une variable retient celui qui est actif. Le `switch
 
 ## Un `case` par état
 
-<pre><code class="language-cpp" data-trim data-line-numbers="1-4|5-9|10-12">
+<pre><code class="language-cpp" data-trim data-line-numbers="1-3|4-7|8-10">
 case MENU:
-  afficherMenu();
-  if (boutonStart()) { initialiserPartie(); etat = PARTIE; }
+  if (appuiStart()) { afficherJeu(); etat = PARTIE; }
   break;
 case PARTIE:
-  mettreAJourJeu();
-  afficherJeu();
-  if (vieJoueur == 0) etat = GAME_OVER;
+  mettreAJourJeu();          // et redessine ce qui a bougé
+  if (vieJoueur == 0) { afficherGameOver(); etat = GAME_OVER; }
   break;
 case GAME_OVER:
-  afficherGameOver();
-  if (boutonRetry()) etat = MENU;
+  if (appuiRetry()) { afficherMenu(); etat = MENU; }
+  break;
 </code></pre>
 
-Un seul état par `case` : ce qu'il affiche, et vers où il bascule.
+Un écran complet se dessine **une fois, à la transition**, jamais à chaque tour. Et `appuiStart()` ne vaut `true` qu'une fois par appui (front).
 {: .caption}
 
 [Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/){: .doc-link}

@@ -13,7 +13,7 @@ subtitle: Installer la chaîne ESP32-S3 et valider ton premier flashage
 description: Configurer PlatformIO pour la XIAO ESP32S3 et faire clignoter la LED embarquée, avant d'ajouter une LED externe.
 author: Alban Petit
 
-time: 2
+time: 1
 difficulty: 1
 compatibilities-os: win, mac, lin
 
@@ -42,7 +42,7 @@ Ce tutoriel a pour but de vérifier que **chacun** a une chaîne de développeme
 
 {% include step-tuto.html
 greyBackground=true
-title="1 - Créer le projet PlatformIO"
+title="Étape 1 : Créer le projet PlatformIO"
 content="Dans VSCode, ouvre l'onglet **PlatformIO** (icône fourmi dans la barre latérale) puis **New Project**.
 
 Configure :
@@ -67,7 +67,7 @@ monitor_speed = 115200
 
 {% include step-tuto.html
 greyBackground=true
-title="2 - Brancher la carte"
+title="Étape 2 : Brancher la carte"
 content="Le connecteur USB-C de la XIAO est relié directement à l'**USB natif** de l'ESP32-S3 : il n'y a pas de puce USB-série, donc **aucun driver à installer**. Branche la carte avec un câble USB-C qui transporte des données (beaucoup de câbles ne font que charger).
 
 - **Windows** : un nouveau port `COM` apparaît dans le **Gestionnaire de périphériques** (« Périphérique série USB »).
@@ -79,7 +79,7 @@ PlatformIO détecte le port tout seul au moment de l'upload."
 
 {% include step-tuto.html
 greyBackground=true
-title="3 - Flasher le blink de base"
+title="Étape 3 : Flasher le blink de base"
 content="Remplace le contenu de `src/main.cpp` par le code ci-dessous, puis clique sur **Upload** (flèche →) dans la barre bleue PlatformIO en bas de VSCode.
 
 ```cpp
@@ -103,11 +103,11 @@ void loop() {
 
 {% include step-tuto.html
 greyBackground=true
-title="4 - Validation individuelle"
+title="Étape 4 : Validation individuelle"
 content="La LED orange intégrée (`LED_BUILTIN`) doit clignoter à 1 Hz. **Montre ta carte qui clignote** avant de passer à la suite : c'est la seule sortie attendue de ce TD1."
 %}
 
-## Bonus - LED externe sur breadboard
+## Bonus : LED externe sur breadboard
 
 S'il te reste du temps, câble une LED externe avec sa résistance série entre la broche **D3** (GPIO4) et GND. C'est ta première sortie **physique** : un montage d'essai, à retirer ensuite, car sur le PCB du projet D3 sert au connecteur I2C.
 

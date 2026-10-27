@@ -129,7 +129,7 @@ Courant maximal par broche : ~40 mA. En pratique, rester sous **12 mA**. **↓**
 
 ## Le calculateur de résistance
 
-<iframe class="page-preview" data-src="/workshops/microcontroleur/concepts/gpio-monde-numerique/#sortie---piloter-une-led" title="Calculateur de résistance série pour LED"></iframe>
+<iframe class="page-preview" data-src="/workshops/microcontroleur/concepts/gpio-monde-numerique/#sortie--piloter-une-led" title="Calculateur de résistance série pour LED"></iframe>
 
 ---
 
@@ -335,7 +335,7 @@ void loop() {
     dernierEtat = etat;
   }
   if (millis() - dernierChangement > ANTIREBOND && etat == LOW) {
-    // appui confirmé : stable depuis 30 ms
+    // enfoncé et stable depuis 30 ms (vrai tant qu'il reste enfoncé)
   }
 }
 </code></pre>
@@ -347,7 +347,7 @@ Même motif qu'au CM1 : comparer `millis()` à une date mémorisée.
 
 ---
 
-{% include message.html title="Un delay(20) peut dépanner" message="Tant qu'il n'y a pas d'écran à rafraîchir, un `delay(20)` dans la fonction de lecture du bouton est acceptable, et beaucoup plus court à écrire. Dès qu'il faut dessiner à 60 images par seconde, il faut passer à la version `millis()` ci-dessus : retenez que c'est une solution provisoire, pas la bonne pratique." status="is-info" icon="fas fa-info-circle" %}
+{% include message.html title="Et un simple delay(20) ?" message="On le voit souvent : attendre 20 ms après la première lecture. Il fige tout le programme pendant 20 ms à chaque appui, et ne règle pas la répétition quand le bouton reste enfoncé. Avec un écran à rafraîchir 60 fois par seconde, ces 20 ms se voient : prenez tout de suite l'habitude de la version `millis()`." status="is-warning" icon="fas fa-exclamation-triangle" %}
 
 [Boutons, joystick et moniteur série](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/){: .doc-link}
 
@@ -394,11 +394,11 @@ Vérifiez le brochage de la carte avant de câbler, pas après.
 
 | Rôle | Broche | Mode |
 |---|---|---|
-| Bouton joueur 1 : HAUT | D6 (GPIO43), via 1 kΩ | `INPUT_PULLUP` |
-| Bouton joueur 1 : BAS | D5 (GPIO6) | `INPUT_PULLUP` |
-| Joystick joueur 2 : axe X | D0 (GPIO1, **ADC1**) | `analogRead` |
-| Joystick joueur 2 : axe Y | D1 (GPIO2, **ADC1**) | `analogRead` |
-| Bouton du joystick (START / RETRY) | D2 (GPIO3) | `INPUT_PULLUP` |
+| Joystick joueur 1 : axe X | D0 (GPIO1, **ADC1**) | `analogRead` |
+| Joystick : axe Y (Snake) | D1 (GPIO2, **ADC1**) | `analogRead` |
+| Bouton du joystick (START) | D2 (GPIO3) | `INPUT_PULLUP` |
+| Bouton joueur 2 : GAUCHE | D5 (GPIO6) | `INPUT_PULLUP` |
+| Bouton joueur 2 : DROITE | D6 (GPIO43), via 1 kΩ | `INPUT_PULLUP` |
 {: .table-dense}
 
 C'est le câblage du PCB du projet : l'écran viendra occuper D7 à D10 ; D3/D4 vont à un connecteur d'extension.
@@ -523,6 +523,26 @@ Le centre n'est jamais à 2048 : sans **zone morte**, la raquette dérive.
 
 ---
 
+## Calibrer et normaliser
+
+```cpp
+int centre = moyenneDe16Lectures();      // au démarrage, stick relâché
+
+float normaliser(int brut, int centre) {
+  int ecart = brut - centre;
+  if (abs(ecart) < 300) return 0.0f;     // zone morte
+  int course = (ecart > 0) ? (4095 - centre) : centre;
+  return constrain((float)ecart / course, -1.0f, 1.0f);
+}
+```
+
+De **-1** à **+1**, **0** au repos : la raquette avance d'autant plus vite que le stick est incliné.
+{: .caption}
+
+[ADC et PWM](/workshops/microcontroleur/concepts/adc-pwm/){: .doc-link} [Boutons, joystick et moniteur série](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/){: .doc-link}
+
+---
+
 ## Changer d'échelle : `map()`
 
 ```cpp
@@ -600,7 +620,7 @@ $$V_{moyen} = V_{max} \times \frac{\text{duty cycle}}{100}$$
 
 ## Le démonstrateur PWM
 
-<iframe class="page-preview" data-src="/workshops/microcontroleur/concepts/adc-pwm/#du-numérique-vers-lanalogique---le-pwm" title="Démonstrateur PWM interactif"></iframe>
+<iframe class="page-preview" data-src="/workshops/microcontroleur/concepts/adc-pwm/#du-numérique-vers-lanalogique--le-pwm" title="Démonstrateur PWM interactif"></iframe>
 
 ---
 
