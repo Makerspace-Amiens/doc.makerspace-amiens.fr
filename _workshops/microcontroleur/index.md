@@ -15,6 +15,11 @@ description: "Découvrir les microcontrôleurs de l'architecture jusqu'au projet
 subtitle: De l'architecture au jeu embarqué
 
 special_sections:
+  - label: Le projet
+    icon: fas fa-gamepad
+    desc: "L'énoncé du projet Snake multijoueur : exigences, livrables et évaluation."
+    items:
+      - /workshops/microcontroleur/projet-snake/
   - label: Slides
     icon: fas fa-chalkboard-teacher
     desc: "Les supports des trois cours magistraux, à projeter en plein écran."
@@ -31,16 +36,18 @@ concepts:
   - /workshops/microcontroleur/concepts/adc-pwm/
   - /workshops/microcontroleur/concepts/bus-communication/
   - /workshops/microcontroleur/concepts/machine-etats-finis/
+  - /docs/concepts/reseau-wifi-websocket/
   - /docs/concepts/capteurs/
 
 tutorials:
   - /docs/tutorials/software/vscode-platformio/installation-vscode/
   - /docs/tutorials/software/vscode-platformio/installation-platformio/
   - /workshops/microcontroleur/tutorials/toolchain-blink/
+  - /docs/tutorials/electronics/vscode-port-serie/
   - /workshops/microcontroleur/tutorials/entrees-boutons-joystick/
   - /docs/tutorials/electronics/ecran-spi-game-loop/
   - /workshops/microcontroleur/tutorials/collisions-fsm-pong/
-  - /docs/tutorials/electronics/vscode-port-serie/
+  - /docs/tutorials/electronics/esp32-wifi-websocket/
   - /docs/tutorials/electronics/esp32-ssd1306-oled/
 
 how_to_guides:
@@ -73,9 +80,9 @@ Vous y trouverez les concepts fondamentaux d'un microcontrôleur (architecture d
 | Phase | Volume | Résultat |
 |----|---|---|
 | CM | 4,5h | µC : archi, GPIO, ADC/PWM, bus, chaîne de dev |
-| TD | 10,5h | **Pong 2 joueurs** local sur XIAO ESP32S3 + écran SPI |
-| Projet | binômes | **Snake multijoueur** (console + navigateur) + PCB KiCad soudé |
+| TD | 10,5h | **Pong 2 joueurs** local sur XIAO ESP32S3 + écran SPI (TD1 : 1h30, TD2 à TD4 : 3h chacun) |
+| Projet | binômes | **Snake multijoueur** (console + navigateur) + PCB KiCad soudé : voir [l'énoncé](/workshops/microcontroleur/projet-snake/) |
 
 ## Pourquoi ce projet ?
 
-Le mini-jeu type Gameboy est le fil rouge de l'atelier : simple à comprendre, riche à implémenter. Les TD construisent progressivement **Pong** (un périphérique ajouté par séance) le projet introduit **Snake** sur une mécanique neuve, et ajoute le multijoueur asymétrique dans le navigateur. La machine à états finis (FSM), pour gérer les écrans menu/partie/fin, prépare directement les états réseau du projet.
+Le mini-jeu façon Game Boy est le fil rouge de l'atelier : simple à comprendre, riche à implémenter. Les TD construisent progressivement **Pong** (un périphérique ajouté par séance) ; le projet introduit **Snake** sur une mécanique neuve, et ajoute le multijoueur asymétrique dans le navigateur. La machine à états finis (FSM), pour gérer les écrans menu/partie/fin, prépare directement les états réseau du projet.
