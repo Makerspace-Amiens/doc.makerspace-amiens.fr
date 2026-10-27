@@ -73,7 +73,7 @@ Le connecteur USB-C est relié directement à l'USB natif de l'ESP32-S3 : il n'y
 
 Le moniteur série (`Serial`) passe par cet USB natif : c'est l'option `ARDUINO_USB_CDC_ON_BOOT=1` de la configuration PlatformIO `seeed_xiao_esp32s3`. Conséquence pratique : le port série disparaît et réapparaît à chaque reset, et les messages envoyés dans les toutes premières millisecondes de `setup()` peuvent être perdus avant que l'ordinateur ait rouvert le port.
 
-{% include message.html title="La carte n'apparaît plus ?" message="Un programme qui plante en boucle peut empêcher l'USB natif de démarrer : le port disparaît. Maintenir **BOOT** enfoncé en branchant le câble USB force le mode téléversement ; on peut alors reflasher, puis appuyer sur **RESET** pour relancer le programme." status="is-warning" icon="fas fa-exclamation-triangle" %}
+{% include message.html title="La carte n'apparaît plus ?" message="Un programme qui plante en boucle peut empêcher l'USB natif de démarrer : le port disparaît. Maintenir **BOOT** enfoncé en branchant le câble USB force le mode téléversement ; on peut alors reflasher, puis appuyer sur **RESET** pour relancer le programme. Toute la procédure : [Récupérer une carte ESP32-S3 qui n'apparaît plus](/docs/how-to-guides/esp32-s3-carte-introuvable/)." status="is-warning" icon="fas fa-exclamation-triangle" %}
 
 ## Alimentation
 

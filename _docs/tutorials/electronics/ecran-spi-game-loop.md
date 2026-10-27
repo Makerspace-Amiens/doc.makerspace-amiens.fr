@@ -142,7 +142,7 @@ void loop() {}
 
 {% include message.html title="Pourquoi SPI_MODE3 ?" message="Le SPI a quatre modes, selon l'état de l'horloge au repos et le front sur lequel la donnée est lue. Avec un CS actif, l'écran sait quand une trame commence. Ici, CS est relié à GND en permanence : le ST7789 se repère alors sur l'horloge, qui doit être **à l'état haut au repos**. C'est le **mode 3**. Avec le mode par défaut, un écran sans CS reste souvent noir alors que tout compile." status="is-warning" icon="fas fa-exclamation-triangle" %}
 
-{% include message.html title="Écran noir après flashage ?" message="Vérifie dans l'ordre : le rétroéclairage (LED/BLK) est-il alimenté en 3V3 ? `SPI.begin()` reçoit-il bien D9 et D10 ? `tft.init()` est-il appelé avec `SPI_MODE3` ? Le câblage de DC (D8) et RESET (D7) est-il inversé ? Ces points couvrent la quasi-totalité des écrans noirs." status="is-warning" icon="fas fa-exclamation-triangle" %}
+{% include message.html title="Écran noir après flashage ?" message="Vérifie dans l'ordre : le rétroéclairage (LED/BLK) est-il alimenté en 3V3 ? `SPI.begin()` reçoit-il bien D9 et D10 ? `tft.init()` est-il appelé avec `SPI_MODE3` ? Le câblage de DC (D8) et RESET (D7) est-il inversé ? Ces points couvrent la quasi-totalité des écrans noirs. Diagnostic complet : [Dépanner un écran TFT SPI qui n'affiche rien](/docs/how-to-guides/ecran-tft-noir/)." status="is-warning" icon="fas fa-exclamation-triangle" %}
 
 {% include message.html title="Checkpoint" message="Tu dois voir le texte « PONG » en haut, centré, un rectangle blanc et un disque jaune. Si l'image est à l'envers, essaie `SCREEN_ROTATION = 0`." status="is-success" icon="fas fa-check-circle" %}
 

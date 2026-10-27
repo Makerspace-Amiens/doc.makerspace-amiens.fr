@@ -63,7 +63,7 @@ tft.init(240, 320, SPI_MODE3);              // mode 3 : CS relié à GND
 
 Le CS étant relié en permanence à GND, l'écran doit être initialisé en **SPI mode 3** (horloge à l'état haut au repos). La mise en place complète est détaillée dans le tutoriel [Écran SPI et game loop](/docs/tutorials/electronics/ecran-spi-game-loop/).
 
-{% include message.html title="Écran noir : les trois vérifications" message="Un écran qui reste noir vient presque toujours de l'une de ces trois causes : rétroéclairage (BLK) non alimenté, broches passées à `SPI.begin()` différentes du câblage réel (SCK sur D9, pas sur D8), ou `tft.init()` appelé sans `SPI_MODE3` alors que CS est relié à GND. Un écran ILI9341 se pilote avec la bibliothèque `Adafruit ILI9341`, pas avec celle du ST7789." status="is-warning" icon="fas fa-exclamation-triangle" %}
+{% include message.html title="Écran noir : les trois vérifications" message="Un écran qui reste noir vient presque toujours de l'une de ces trois causes : rétroéclairage (BLK) non alimenté, broches passées à `SPI.begin()` différentes du câblage réel (SCK sur D9, pas sur D8), ou `tft.init()` appelé sans `SPI_MODE3` alors que CS est relié à GND. Un écran ILI9341 se pilote avec la bibliothèque `Adafruit ILI9341`, pas avec celle du ST7789. Diagnostic complet : [Dépanner un écran TFT SPI qui n'affiche rien](/docs/how-to-guides/ecran-tft-noir/)." status="is-warning" icon="fas fa-exclamation-triangle" %}
 
 ## Sources
 

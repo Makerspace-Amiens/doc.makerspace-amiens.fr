@@ -97,7 +97,7 @@ void loop() {
 }
 ```" %}
 
-{% include message.html title="Ça ne flashe pas ?" message="Si l'upload échoue (`Failed to connect` ou port introuvable), force le mode téléversement : débranche la carte, **maintiens le bouton BOOT** (marqué `B`), rebranche le câble USB, puis relâche BOOT et relance l'upload. Une fois l'upload terminé, appuie sur **RESET** (marqué `R`) pour lancer le programme." status="is-info" icon="fas fa-info-circle" %}
+{% include message.html title="Ça ne flashe pas ?" message="Si l'upload échoue (`Failed to connect` ou port introuvable), force le mode téléversement : débranche la carte, **maintiens le bouton BOOT** (marqué `B`), rebranche le câble USB, puis relâche BOOT et relance l'upload. Une fois l'upload terminé, appuie sur **RESET** (marqué `R`) pour lancer le programme. Si ça ne suffit pas : [Récupérer une carte ESP32-S3 qui n'apparaît plus](/docs/how-to-guides/esp32-s3-carte-introuvable/)." status="is-info" icon="fas fa-info-circle" %}
 
 {% include message.html title="Une LED en logique inversée" message="La LED utilisateur de la XIAO (orange, à côté du connecteur USB-C, sur GPIO21) est câblée vers le 3,3 V : elle s'allume quand la broche est à `LOW` et s'éteint à `HIGH`. Le clignotement est le même, seul le sens est inversé. La LED rouge voisine indique la charge de la batterie et ne se pilote pas." status="is-info" icon="fas fa-lightbulb" %}
 

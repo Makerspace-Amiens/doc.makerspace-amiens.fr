@@ -148,6 +148,8 @@ La carte est prête : c'est sur elle que vous écrivez maintenant le code du Sna
 
 ## Dépannage
 
+Pour la carte qui n'apparaît pas sur l'ordinateur et pour l'écran, les guides [Récupérer une carte ESP32-S3 qui n'apparaît plus](/docs/how-to-guides/esp32-s3-carte-introuvable/) et [Dépanner un écran TFT SPI qui n'affiche rien](/docs/how-to-guides/ecran-tft-noir/) détaillent la marche à suivre.
+
 | Symptôme | Causes probables | À vérifier |
 |---|---|---|
 | Bip continu entre 3V3 et GND | Pont d'étain, condensateur mal placé | Inspecter à la loupe autour des condensateurs et des barrettes de la XIAO |

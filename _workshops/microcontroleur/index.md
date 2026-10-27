@@ -57,6 +57,8 @@ tutorials:
   - /docs/tutorials/electronics/esp32-ssd1306-oled/
 
 how_to_guides:
+  - /docs/how-to-guides/esp32-s3-carte-introuvable/
+  - /docs/how-to-guides/ecran-tft-noir/
 
 hardware:
   - /docs/references/hardware/xiao-esp32s3/
