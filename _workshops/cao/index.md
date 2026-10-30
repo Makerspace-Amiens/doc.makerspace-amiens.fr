@@ -18,6 +18,7 @@ tutorials:
   - /docs/tutorials/software/onshape/onshape-installation/
   - /docs/tutorials/software/onshape/onshape-premiere-piece/
   - /docs/tutorials/software/onshape/onshape-premier-mini-projet/
+  - /docs/tutorials/production/drawings/
   - /workshops/cao/tutorials/drawings-training/
   - /workshops/cao/tutorials/kumiko-collaboratif/
   - /docs/tutorials/software/onshape/onshape-premiere-piece-laser/

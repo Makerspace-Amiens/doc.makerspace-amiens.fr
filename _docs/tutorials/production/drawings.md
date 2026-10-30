@@ -13,8 +13,8 @@ description: Cette page vous explique comment fonctionne un dessin de définitio
 author: Camille Chaud
 type: tutorial
 
-time: 4
-difficulty: 2
+time: 1
+difficulty: 1
 compatibilities-os: win,mac,lin
 
 prerequisites:
