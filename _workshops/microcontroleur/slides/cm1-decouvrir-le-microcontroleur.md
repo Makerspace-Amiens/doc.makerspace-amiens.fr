@@ -199,6 +199,74 @@ La question à se poser n'est pas « lequel est le plus puissant » mais « de q
 
 ---
 
+## Qui fabrique les microcontrôleurs ?
+
+| Fabricant | Pays | Familles | Spécialité |
+|---|---|---|---|
+| STMicroelectronics | France / Italie | STM32 | Industrie, gamme immense |
+| NXP | Pays-Bas | LPC, i.MX RT | Automobile, sans contact |
+| Infineon | Allemagne | AURIX, PSoC | Automobile, puissance |
+| Renesas | Japon | RA, RX | Automobile, Arduino Uno R4 |
+| Microchip | États-Unis | PIC, AVR | L'ATmega de l'Arduino Uno |
+| Espressif | Chine | ESP32 | Le Wi-Fi intégré, à bas coût |
+{: .table-dense}
+
+Les cinq premiers se partagent l'essentiel du marché, tiré par l'automobile. D'autres règnent sur un créneau : Nordic pour le Bluetooth, Raspberry Pi pour l'éducation.
+{: .caption}
+
+[Qu'est-ce qu'un microcontrôleur ?](/workshops/microcontroleur/concepts/qu-est-ce-qu-un-microcontroleur/){: .doc-link}
+
+---
+
+## Espressif, le Wi-Fi pour tous
+
+- {: .fragment} **2008** : création à Shanghai
+- {: .fragment} **2014** : l'**ESP8266** met une puce Wi-Fi programmable à quelques euros
+- {: .fragment} **2016** : l'**ESP32** ajoute un second cœur et le Bluetooth
+- {: .fragment} Les makers s'en emparent : Arduino, documentation ouverte, milliers de projets
+- {: .fragment} L'industrie aussi : prises, ampoules, capteurs connectés
+
+Pas le plus gros fabricant, mais la référence de l'objet connecté en Wi-Fi.
+{: .fragment .caption}
+
+[Qu'est-ce qu'un microcontrôleur ?](/workshops/microcontroleur/concepts/qu-est-ce-qu-un-microcontroleur/){: .doc-link}
+
+---
+
+## La famille ESP32
+
+| Puce | Cœurs | Radio | Pour quoi |
+|---|---|---|---|
+| ESP32 | 2 × 240 MHz | Wi-Fi, Bluetooth | L'original, polyvalent |
+| ESP32-S2 | 1 × 240 MHz | Wi-Fi | USB natif |
+| **ESP32-S3** | **2 × 240 MHz** | **Wi-Fi, BLE 5** | **Le plus puissant en Wi-Fi** |
+| ESP32-C3 | 1 × 160 MHz | Wi-Fi, BLE 5 | Petit prix, cœur RISC-V |
+| ESP32-C6 | 1 × 160 MHz | Wi-Fi 6, BLE, Thread | Maison connectée |
+| ESP32-P4 | 2 × 400 MHz | Aucune | Multimédia |
+{: .table-dense}
+
+**S** : performance, **C** : économique (RISC-V), **P** : haute performance sans radio. L'ESP32-S3 est le **haut de la gamme connectée**.
+{: .caption}
+
+[Qu'est-ce qu'un microcontrôleur ?](/workshops/microcontroleur/concepts/qu-est-ce-qu-un-microcontroleur/){: .doc-link}
+
+---
+
+## Pourquoi l'ESP32-S3 ?
+
+- {: .fragment} **Wi-Fi et Bluetooth intégrés** : le joueur 2 joue depuis un navigateur
+- {: .fragment} **De la puissance en réserve** : jeu, écran couleur et réseau en même temps
+- {: .fragment} **USB natif** : on programme sans pilote, sur tous les systèmes
+- {: .fragment} **Un écosystème accessible** : Arduino, PlatformIO, ESP-IDF
+- {: .fragment} **Moins de 10 € la carte**, et la même puce dans de vrais produits
+
+En contrepartie : il consomme plus qu'une puce basse consommation, et il vit en **3,3 V**.
+{: .fragment .caption}
+
+[Qu'est-ce qu'un microcontrôleur ?](/workshops/microcontroleur/concepts/qu-est-ce-qu-un-microcontroleur/){: .doc-link}
+
+---
+
 ## Notre puce : l'ESP32-S3
 
 | Caractéristique | Valeur |
