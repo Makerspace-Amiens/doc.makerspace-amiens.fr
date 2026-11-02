@@ -28,9 +28,40 @@ Ce concept suit ce voyage de bout en bout, du texte que tu tapes jusqu'aux élec
 
 **À la fin de ce concept, tu sauras :**
 
+- expliquer la différence entre un langage **compilé** (C, C++) et un langage **interprété** (Python) ;
 - suivre le trajet code → compilation → flash → exécution ;
 - comprendre `setup()`/`loop()` et ce qui tourne (ou non) autour de ton programme ;
 - éviter un `delay()` bloquant grâce à `millis()`.
+
+## En quel langage ?
+
+Sur un microcontrôleur, on programme presque toujours en **C** ou en **C++**. Le framework **Arduino**, utilisé dans l'atelier, est du **C++** (le C, avec quelques outils en plus, comme les objets : `Serial.println()`). Tu as peut-être appris à programmer en **Python** : la logique reste la même, mais le code n'est pas traduit pour le processeur au même moment.
+
+### Compilé ou interprété
+
+```mermaid
+flowchart LR
+  subgraph C["C / C++ : compilé"]
+    C1["Code source"] --> C2["Compilateur\n(sur ton PC)"] --> C3["Code machine\nexécuté par la puce"]
+  end
+  subgraph P["Python : interprété"]
+    P1["Code source"] --> P2["Interpréteur\n(pendant l'exécution)"] --> P3["Traduit et exécuté\nau fur et à mesure"]
+  end
+```
+
+- **Compilé (C, C++)** : avant l'exécution, un programme appelé **compilateur** traduit tout ton code, une fois pour toutes, en **code machine** : les instructions que le processeur sait exécuter directement. La puce ne reçoit que ce code machine.
+- **Interprété (Python)** : un programme appelé **interpréteur** lit ton code **pendant** l'exécution et le traduit au fur et à mesure. Il doit donc être présent et tourner sur la machine qui exécute le programme.
+
+| | Compilé (C, C++) | Interprété (Python) |
+|---|---|---|
+| **Quand le code est traduit** | Une fois, avant, sur ton PC | À chaque exécution, au fur et à mesure |
+| **Ce qui tourne sur la machine** | Le programme seul | Le programme **et** l'interpréteur |
+| **Vitesse** | Très rapide | Plus lent |
+| **Erreurs de frappe ou de type** | Détectées à la compilation, avant de flasher | Découvertes quand la ligne est exécutée |
+
+### Pourquoi le C/C++ sur un microcontrôleur ?
+
+Un microcontrôleur a peu de mémoire et doit souvent réagir vite. Un langage compilé lui convient parfaitement : pas d'interpréteur à loger en mémoire, un programme rapide, et beaucoup d'erreurs repérées par le compilateur **avant** même d'envoyer le programme sur la carte. C'est pour ça que chaque fabricant fournit un compilateur C/C++ pour ses puces.
 
 ## Du texte au courant électrique
 
@@ -207,7 +238,11 @@ Le moniteur série est l'outil de débogage n°1 : `Serial.println()` affiche l'
 
 <details><summary>Voir la réponse</summary>`delay()` bloque tout le programme pendant l'attente ; on utilise `millis()` pour agir sans bloquer.</details>
 
-**3. Que fait le ROM bootloader au reset ?**
+**3. Pourquoi l'ESP32-S3 n'a-t-il pas besoin d'un interpréteur pour exécuter ton programme ?**
+
+<details><summary>Voir la réponse</summary>Le C++ est un langage compilé : le compilateur a traduit le programme en code machine sur ton ordinateur, avant le flashage. La puce exécute directement ce code machine.</details>
+
+**4. Que fait le ROM bootloader au reset ?**
 
 <details><summary>Voir la réponse</summary>Il lit les broches de strapping (dont GPIO0) pour choisir entre démarrage normal et mode téléversement.</details>
 
@@ -218,6 +253,8 @@ Le moniteur série est l'outil de débogage n°1 : `Serial.println()` affiche l'
 
 ## Résumé
 
+- On programme un microcontrôleur en **C ou C++** (Arduino est du C++) : des langages **compilés**, traduits en code machine une fois pour toutes, avant l'exécution.
+- **Python** est **interprété** : le code est traduit pendant l'exécution, par un interpréteur qui doit tourner sur la machine.
 - Chaîne complète : code source → compilation (toolchain) → flashage (Flash) → exécution.
 - Arduino-ESP32 fournit le compilateur, le core (`pinMode`, `digitalWrite`…, déclarés par `#include <Arduino.h>`) et l'uploader.
 - Compiler = préprocesseur → compilation (code objet) → édition de liens (binaire) ; une erreur de link = fonction ou bibliothèque manquante.

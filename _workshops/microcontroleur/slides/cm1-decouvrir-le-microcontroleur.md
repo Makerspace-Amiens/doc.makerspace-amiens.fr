@@ -18,6 +18,7 @@ back_link: /workshops/microcontroleur/
 <aside class="notes" markdown="1">
 1 h 30 de cours, sans manipulation. Fil rouge de tout l'atelier : un Pong 2 joueurs sur ESP32-S3, puis un Snake multijoueur en projet.
 Parties 1 et 2 : le vocabulaire et la puce. Parties 3 et 4 : la chaîne de développement, plus concrètes, à garder pour la seconde moitié quand l'attention baisse.
+La partie 3 s'ouvre sur compilé / interprété (environ 5 min) : partir de Python, qu'ils connaissent, sans entrer dans la syntaxe.
 </aside>
 
 ---
@@ -29,10 +30,11 @@ Parties 1 et 2 : le vocabulaire et la puce. Parties 3 et 4 : la chaîne de déve
 - dire ce qu'est un microcontrôleur, et ce qui le distingue d'un PC
 - nommer les blocs d'une puce : CPU, Flash, RAM, périphériques, bus
 - expliquer ce qu'est un **registre**, et à quoi sert une **interruption**
+- dire ce qui distingue un langage **compilé** (C/C++) d'un langage **interprété** (Python)
 - suivre le trajet du code source jusqu'à l'exécution sur la puce
 - dire pourquoi `delay()` pose problème dans une `loop()`
 
-Fil rouge de l'atelier : un **Pong 2 joueurs**, puis un **Snake multijoueur**.
+Fil rouge de l'atelier : un **Pong**, puis un **Snake multijoueur**.
 {: .caption}
 
 [L'atelier Microcontrôleurs](/workshops/microcontroleur/){: .doc-link}
@@ -534,6 +536,56 @@ Si la question vient tout de suite : tant que cette fonction s'exécute, tout le
 ## Du code à la puce
 
 Compiler, flasher, exécuter
+
+---
+
+## En quel langage ?
+
+- {: .fragment} Sur un microcontrôleur, on programme en **C** ou en **C++**
+- {: .fragment} **Arduino**, c'est du **C++**
+- {: .fragment} Vous connaissez Python : la logique est la même
+
+Ce qui change, c'est **quand** le code est traduit en instructions pour le processeur.
+{: .fragment .caption}
+
+[Du matériel au logiciel](/workshops/microcontroleur/concepts/du-materiel-au-logiciel/){: .doc-link}
+
+---
+
+## Compilé ou interprété
+
+<div class="columns" markdown="1">
+<div markdown="1">
+
+### C / C++ : compilé
+
+Le **compilateur** traduit tout le programme **avant**, sur votre PC, en **code machine**.
+
+La puce l'exécute directement.
+
+</div>
+<div markdown="1">
+
+### Python : interprété
+
+Un **interpréteur** traduit le code **pendant** l'exécution, au fur et à mesure.
+
+Il doit tourner sur la machine qui exécute.
+
+</div>
+</div>
+
+[Du matériel au logiciel](/workshops/microcontroleur/concepts/du-materiel-au-logiciel/){: .doc-link}
+
+---
+
+## Pourquoi le C/C++ sur un microcontrôleur ?
+
+- {: .fragment} **Pas d'interpréteur** à loger dans la petite mémoire de la puce
+- {: .fragment} **Rapide** : la puce exécute directement le code machine
+- {: .fragment} **Des erreurs repérées tôt** : le compilateur les signale avant de flasher
+
+[Du matériel au logiciel](/workshops/microcontroleur/concepts/du-materiel-au-logiciel/){: .doc-link}
 
 ---
 
