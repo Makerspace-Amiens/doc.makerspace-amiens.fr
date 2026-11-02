@@ -254,7 +254,20 @@ Les étudiants de I2 ont dupliqué le template le 2026-09-25 (commit `f258512`).
 
 ## Atelier `microcontroleur` et firmware de référence
 
-Le **firmware de référence** du Pong (PlatformIO, XIAO ESP32S3, écran ST7789) est dans le dossier `fw/` du repo [Makerspace-Amiens/workshop-microcontroller](https://github.com/Makerspace-Amiens/workshop-microcontroller), avec le reste du projet (PCB...). Les tutoriels `entrees-boutons-joystick`, `ecran-spi-game-loop` (dans `_docs/tutorials/electronics/`) et `collisions-fsm-pong` le construisent pas à pas : chaque TD produit un de ses modules (`config.h`, `input`, `renderer`, `game`, `main.cpp`). Le relire avant de modifier ces tutoriels, et garder le code des tutoriels aligné dessus (noms, constantes, structure).
+Le **firmware de référence** du Pong (PlatformIO, XIAO ESP32S3, écran ST7789) est dans le dossier `fw/` du repo [Makerspace-Amiens/workshop-microcontroller](https://github.com/Makerspace-Amiens/workshop-microcontroller), avec le reste du projet (PCB...). Il fixe les noms, les constantes et le style du code des tutoriels : le relire avant de modifier les TD, et garder leur code aligné dessus. Le Pong des TD est une version **allégée** (un joueur, sans découpage en modules) ; le reste du firmware (second joueur, ordinateur, modules, angle de rebond) figure en « Pour aller plus loin ».
+
+Structure de l'atelier (depuis le 2026-11-02) : les **trois CM d'abord**, puis les **quatre TD**, puis le projet.
+
+| TD | Durée | Contenu | Page |
+|---|---|---|---|
+| TD1 | 1 h 30 | Toolchain, Blink, port série | `toolchain-blink`, `vscode-port-serie` |
+| TD2 | 3 h | Les 4 modules de la malette sur breadboard (bouton, joystick, buzzer, écran) | `entrees-boutons-joystick` (titre « Les modules de la malette ») |
+| TD3 | 3 h | Conception de la carte sous KiCad : schéma, validation 1, routage, validation 2 | `conception-carte-kicad` |
+| TD4 | 3 h | Soudure et tests de la carte finale fournie, puis Pong à un joueur | `souder-tester-carte`, `collisions-fsm-pong` (titre « Le Pong sur la console ») |
+
+- Les étudiants conçoivent leur carte, mais soudent la **carte finale de l'encadrant** (délais de fabrication). Le design de référence n'est jamais publié.
+- La malette : un module écran (TFT 14 broches), un module buzzer, un module bouton, un module joystick, câbles pour breadboard. Le buzzer (sur D3 en TD2) n'est pas sur la carte.
+- Le projet (24 h, en binôme, note commune) démarre sur la carte soudée : Snake + joueur 2 dans un navigateur. `ecran-spi-game-loop` n'est plus dans le parcours (tutoriel général).
 
 - **Ce code n'est pas fourni aux étudiants** (ils le recopieraient) : il sert à guider l'écriture des tutoriels et à fixer le niveau attendu. Ne jamais le lier depuis le site, ni le recopier en entier dans une page ; ne pas le remettre dans ce dépôt.
 - Le projet Snake n'a pas de tutoriel pas à pas, volontairement : les étudiants se forment et conçoivent leur propre solution (voir `projet-snake.md`).
