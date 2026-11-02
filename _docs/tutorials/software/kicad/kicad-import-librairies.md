@@ -20,7 +20,7 @@ compatibilities-os: win, mac, lin
 
 prerequisites:
   - label: KiCAD installé sur votre ordinateur
-    link: "/electronic-design/docs/tutorial/installation-kicad"
+    link: "/docs/tutorials/software/kicad/installation-kicad/"
 
 softwares:
   - label: KiCAD (version 8.0 ou supérieure)

@@ -20,7 +20,7 @@ compatibilities-os: win, mac, lin
 
 prerequisites:
   - label: KiCAD installé sur votre ordinateur
-    link: "/electronic-design/docs/tutorial/installation-kicad"
+    link: "/docs/tutorials/software/kicad/installation-kicad/"
 
 softwares:
   - label: KiCAD (version 8.0 ou supérieure)
@@ -156,7 +156,7 @@ image="placer-composant.png" %}
 
 {% include message.html
 title="Bibliothèques de composants"
-message="Les composants sont organisés en bibliothèques thématiques : Device (composants génériques), Connector (connecteurs), MCU (microcontrôleurs), etc. N'hésitez pas à explorer les différentes bibliothèques. Pour importer des bibliothèques supplémentaires (comme la librairie Makerspace Amiens), consultez notre tutoriel [KiCAD - Importer des librairies](/electronic-design/docs/tutorial/kicad-import-librairies)."
+message="Les composants sont organisés en bibliothèques thématiques : Device (composants génériques), Connector (connecteurs), MCU (microcontrôleurs), etc. N'hésitez pas à explorer les différentes bibliothèques. Pour importer des bibliothèques supplémentaires (comme la librairie Makerspace Amiens), consultez notre tutoriel [KiCAD - Importer des librairies](/docs/tutorials/software/kicad/kicad-import-librairies/)."
 status="is-info"
 icon="fas fa-book" %}
 

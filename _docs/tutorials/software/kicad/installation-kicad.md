@@ -213,7 +213,7 @@ content="KiCAD est livré avec de nombreux composants, mais vous pouvez en ajout
 - En téléchargeant des bibliothèques tierces depuis GitHub
 - En créant vos propres bibliothèques personnalisées
 
-Pour apprendre à importer des bibliothèques supplémentaires dans KiCAD, consultez notre tutoriel [KiCAD - Importer des librairies](/electronic-design/docs/tutorial/kicad-import-librairies)." %}
+Pour apprendre à importer des bibliothèques supplémentaires dans KiCAD, consultez notre tutoriel [KiCAD - Importer des librairies](/docs/tutorials/software/kicad/kicad-import-librairies/)." %}
 
 ---
 

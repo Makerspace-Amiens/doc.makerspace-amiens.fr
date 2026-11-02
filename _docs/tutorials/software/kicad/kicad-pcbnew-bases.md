@@ -20,9 +20,9 @@ compatibilities-os: win, mac, lin
 
 prerequisites:
   - label: KiCAD installé sur votre ordinateur
-    link: "/electronic-design/docs/tutorial/installation-kicad"
+    link: "/docs/tutorials/software/kicad/installation-kicad/"
   - label: Schéma électrique créé avec Eeschema
-    link: "/electronic-design/docs/tutorial/kicad-eeschema-bases"
+    link: "/docs/tutorials/software/kicad/kicad-eeschema-bases/"
 
 softwares:
   - label: KiCAD (version 8.0 ou supérieure)
@@ -193,7 +193,7 @@ Retournez dans Pcbnew et mettez à jour le PCB (F8) pour voir les nouvelles empr
 
 {% include message.html
 title="Bibliothèques d'empreintes"
-message="KiCAD inclut des milliers d'empreintes standards. Pour des composants spécifiques, consultez les sites des fabricants ou utilisez SnapEDA/Ultra Librarian pour télécharger des empreintes toutes faites. Pour importer des bibliothèques d'empreintes supplémentaires, consultez notre tutoriel [KiCAD - Importer des librairies](/electronic-design/docs/tutorial/kicad-import-librairies)."
+message="KiCAD inclut des milliers d'empreintes standards. Pour des composants spécifiques, consultez les sites des fabricants ou utilisez SnapEDA/Ultra Librarian pour télécharger des empreintes toutes faites. Pour importer des bibliothèques d'empreintes supplémentaires, consultez notre tutoriel [KiCAD - Importer des librairies](/docs/tutorials/software/kicad/kicad-import-librairies/)."
 status="is-info"
 icon="fas fa-download" %}
 

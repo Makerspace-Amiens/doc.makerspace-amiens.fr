@@ -20,7 +20,7 @@ compatibilities-os: win, mac, lin
 
 prerequisites:
   - label: PCB terminé et vérifié dans Pcbnew
-    link: "/electronic-design/docs/tutorial/kicad-pcbnew-bases"
+    link: "/docs/tutorials/software/kicad/kicad-pcbnew-bases/"
 
 softwares:
   - label: KiCAD (version 8.0 ou supérieure)
