@@ -236,7 +236,7 @@ Compare ensuite ta FSM avec celle du groupe : les différences de conception son
 
 ## Pour aller plus loin
 
-- [Collisions, score et machine à états](/workshops/microcontroleur/tutorials/collisions-fsm-pong/) : mettre la FSM en œuvre dans le Pong (où les états s'appellent `Title`, `Playing` et `GameOver`)
+- [Le Pong sur la console](/workshops/microcontroleur/tutorials/collisions-fsm-pong/) : mettre la FSM en œuvre dans le Pong (où les états s'appellent `Title`, `Playing` et `GameOver`)
 
 ## Résumé
 

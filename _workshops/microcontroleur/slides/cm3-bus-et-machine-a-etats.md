@@ -660,4 +660,4 @@ Piège classique à relever pendant la mise en commun : oublier de réinitialise
 Tout ce que vous venez de voir se retrouve là. Le projet n'ajoute que le réseau.
 {: .fragment .caption}
 
-[L'atelier Microcontrôleurs](/workshops/microcontroleur/){: .doc-link} [Collisions, score et machine à états](/workshops/microcontroleur/tutorials/collisions-fsm-pong/){: .doc-link}
+[L'atelier Microcontrôleurs](/workshops/microcontroleur/){: .doc-link} [Le Pong sur la console](/workshops/microcontroleur/tutorials/collisions-fsm-pong/){: .doc-link}

@@ -17,7 +17,7 @@ compatibilities-os: win, mac, lin
 prerequisites:
   - label: "Concept : Wi-Fi, HTTP et WebSocket"
     link: /docs/concepts/reseau-wifi-websocket/
-  - label: "Boutons, joystick et moniteur série"
+  - label: "Les modules de la malette"
     link: /workshops/microcontroleur/tutorials/entrees-boutons-joystick/
 
 softwares:

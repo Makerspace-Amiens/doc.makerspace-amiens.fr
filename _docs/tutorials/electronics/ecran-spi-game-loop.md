@@ -18,7 +18,7 @@ time: 3
 difficulty: 3
 
 prerequisites:
-  - label: "Boutons, joystick et moniteur série"
+  - label: "Les modules de la malette"
     link: /workshops/microcontroleur/tutorials/entrees-boutons-joystick/
   - label: "Concept : Les bus de communication"
     link: /workshops/microcontroleur/concepts/bus-communication/
@@ -38,7 +38,7 @@ todo: 90
 
 ## Écran SPI et game loop
 
-Ce tutoriel ajoute la dernière brique matérielle du montage : l'**écran**. Le câblage des boutons et du joystick posé au tutoriel [Boutons, joystick et moniteur série](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/) ne bouge pas, et son module `input` sert tel quel. À la fin, la raquette du joueur 1 suit le joystick et une balle rebondit sur les bords de l'écran : les premières briques visuelles du Pong.
+Ce tutoriel ajoute un **écran** à un montage XIAO ESP32S3 qui a déjà un joystick, câblé et calibré comme dans le tutoriel [Les modules de la malette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/) (dont il reprend les fonctions `calibrateJoystick()` et `normalizeJoystick()`). À la fin, une raquette suit le joystick et une balle rebondit sur les bords de l'écran : les premières briques visuelles d'un jeu.
 
 ### Câblage additionnel de l'atelier
 
@@ -163,9 +163,7 @@ constexpr uint32_t FRAME_TIME_MS = 16;  // Durée d'une image : ~60 images/s
 Puis donne à `src/main.cpp` sa structure définitive :
 
 ```cpp
-#include "input.h"
-
-void update(const InputState& input) {
+void update(float joystickX) {
     // 2. Calculer la nouvelle image (étapes 4 et 5)
 }
 
@@ -181,20 +179,20 @@ void loop() {
     }
     lastFrameMs = nowMs;
 
-    InputState input = inputRead();    // 1. Lire les commandes
-    update(input);                     // 2. Calculer
+    float joystickX = normalizeJoystick(analogRead(PIN_JOYSTICK_X), joystickCenterX);  // 1. Lire
+    update(joystickX);                 // 2. Calculer
     draw();                            // 3. Afficher
 }
 ```
 
-N'oublie pas d'appeler `inputBegin()` au début de `setup()`, avant l'initialisation de l'écran (le joystick ne doit pas être touché pendant sa calibration). Tu peux retirer le texte et les formes de l'étape 2.
+N'oublie pas d'appeler `calibrateJoystick()` dans `setup()` (le joystick ne doit pas être touché pendant sa calibration). Tu peux retirer le texte et les formes de l'étape 2.
 
-Cette structure **lire → calculer → afficher** est la charpente de toute la suite : le tutoriel [Collisions, score et machine à états](/workshops/microcontroleur/tutorials/collisions-fsm-pong/) et le projet Snake ne feront qu'enrichir `update()` et `draw()`.
+Cette structure **lire → calculer → afficher** est la charpente de toute la suite : un jeu complet, comme [Le Pong sur la console](/workshops/microcontroleur/tutorials/collisions-fsm-pong/), ne fait qu'enrichir `update()` et `draw()`.
 
 {% include step-tuto.html
 greyBackground=true
 title="Étape 4 : Une raquette qui suit le joystick"
-content="La raquette du joueur 1 est en bas de l'écran. Elle n'est pas placée à l'endroit où pointe le joystick : elle se déplace **à une vitesse proportionnelle** à son inclinaison. `inputRead()` renvoie déjà une valeur entre -1 et +1 : il suffit de la multiplier par une vitesse maximale, en pixels par image.
+content="La raquette du joueur 1 est en bas de l'écran. Elle n'est pas placée à l'endroit où pointe le joystick : elle se déplace **à une vitesse proportionnelle** à son inclinaison. `normalizeJoystick()` renvoie déjà une valeur entre -1 et +1 : il suffit de la multiplier par une vitesse maximale, en pixels par image.
 
 La position est un `float` : à mi-course, la raquette avance de 2,5 pixels par image, et les demi-pixels s'accumulent au lieu d'être perdus. On ne convertit en `int` qu'au moment de dessiner.
 
@@ -216,8 +214,8 @@ constexpr int PADDLE_Y = SCREEN_HEIGHT - PADDLE_MARGIN - PADDLE_HEIGHT;
 float paddleX = (SCREEN_WIDTH - PADDLE_WIDTH) / 2.0f;  // position calculée
 int   drawnPaddleX = (int)paddleX;                     // position affichée
 
-void update(const InputState& input) {
-    paddleX += input.joystickX * PADDLE_MAX_SPEED;
+void update(float joystickX) {
+    paddleX += joystickX * PADDLE_MAX_SPEED;
     paddleX = constrain(paddleX, 0.0f, (float)(SCREEN_WIDTH - PADDLE_WIDTH));
 }
 
@@ -300,11 +298,11 @@ Appelle `moveBall()` à la fin de `update()`, et `drawBall()` à la fin de `draw
 
 ## Résultat attendu
 
-Le projet contient `include/config.h`, `include/input.h`, `src/input.cpp` et un `src/main.cpp` organisé en game loop : la raquette du joueur 1 suit le joystick en bas de l'écran, et une balle rebondit sur les quatre bords.
+Le projet contient `include/config.h` et un `src/main.cpp` organisé en game loop : la raquette suit le joystick en bas de l'écran, et une balle rebondit sur les quatre bords.
 
 Deux défauts restent visibles, volontairement :
 
 - la balle traverse la raquette au lieu de rebondir dessus (il manque la **collision**) ;
 - en passant, elle efface une partie de la raquette (l'effacement ne tient pas compte de ce qu'il y a dessous).
 
-{% include message.html title="Étape suivante" message="Le tutoriel [Collisions, score et machine à états](/workshops/microcontroleur/tutorials/collisions-fsm-pong/) corrige ces deux défauts, ajoute la raquette du joueur 2, le score et les écrans menu / partie / fin, puis découpe le programme en modules, sans rien changer au câblage." status="is-success" icon="fas fa-check-circle" %}
+{% include message.html title="Étape suivante" message="Le tutoriel [Le Pong sur la console](/workshops/microcontroleur/tutorials/collisions-fsm-pong/) corrige ces deux défauts, et ajoute les vies, le score et les écrans accueil / partie / fin." status="is-success" icon="fas fa-check-circle" %}

@@ -317,7 +317,7 @@ Les GPIO de l'ESP32-S3 sont en logique 3,3 V : appliquer 5 V sur une entrée peu
 
 ## Pour aller plus loin
 
-- [Boutons, joystick et moniteur série](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/) : un anti-rebond qui ne signale chaque appui qu'une seule fois
+- [Les modules de la malette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/) : un anti-rebond qui ne signale chaque appui qu'une seule fois
 
 ## Résumé
 

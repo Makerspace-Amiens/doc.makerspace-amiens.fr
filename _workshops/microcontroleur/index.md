@@ -15,6 +15,12 @@ description: "Découvrir les microcontrôleurs de l'architecture jusqu'au projet
 subtitle: De l'architecture au jeu embarqué
 
 special_sections:
+  - label: L'atelier
+    icon: fas fa-compass
+    desc: "Le programme des séances et ce sur quoi vous êtes évalués."
+    items:
+      - /workshops/microcontroleur/syllabus/
+      - /workshops/microcontroleur/evaluation/
   - label: Le projet
     icon: fas fa-gamepad
     desc: "L'énoncé du projet Snake multijoueur : exigences, livrables et évaluation."
@@ -22,11 +28,12 @@ special_sections:
       - /workshops/microcontroleur/projet-snake/
   - label: Slides
     icon: fas fa-chalkboard-teacher
-    desc: "Les supports des trois cours magistraux, à projeter en plein écran."
+    desc: "Les supports des trois cours magistraux et du lancement du projet, à projeter en plein écran."
     items:
       - /workshops/microcontroleur/slides/cm1-decouvrir-le-microcontroleur/
       - /workshops/microcontroleur/slides/cm2-entrees-et-sorties/
       - /workshops/microcontroleur/slides/cm3-bus-et-machine-a-etats/
+      - /workshops/microcontroleur/slides/lancement-projet-snake/
 
 concepts:
   - /workshops/microcontroleur/concepts/qu-est-ce-qu-un-microcontroleur/
@@ -45,15 +52,14 @@ tutorials:
   - /workshops/microcontroleur/tutorials/toolchain-blink/
   - /docs/tutorials/electronics/vscode-port-serie/
   - /workshops/microcontroleur/tutorials/entrees-boutons-joystick/
-  - /docs/tutorials/electronics/ecran-spi-game-loop/
-  - /workshops/microcontroleur/tutorials/collisions-fsm-pong/
-  - /docs/tutorials/electronics/esp32-wifi-websocket/
   - /docs/tutorials/software/kicad/installation-kicad/
   - /docs/tutorials/software/kicad/kicad-import-librairies/
   - /docs/tutorials/software/kicad/kicad-eeschema-bases/
   - /docs/tutorials/software/kicad/kicad-pcbnew-bases/
   - /workshops/microcontroleur/tutorials/conception-carte-kicad/
   - /workshops/microcontroleur/tutorials/souder-tester-carte/
+  - /workshops/microcontroleur/tutorials/collisions-fsm-pong/
+  - /docs/tutorials/electronics/esp32-wifi-websocket/
   - /docs/tutorials/electronics/esp32-ssd1306-oled/
 
 how_to_guides:
@@ -89,9 +95,9 @@ Vous y trouverez les concepts fondamentaux d'un microcontrôleur (architecture d
 | Phase | Volume | Résultat |
 |----|---|---|
 | CM | 4,5h | µC : archi, GPIO, ADC/PWM, bus, chaîne de dev |
-| TD | 10,5h | **Pong 2 joueurs** local sur XIAO ESP32S3 + écran SPI (TD1 : 1h30, TD2 à TD4 : 3h chacun) |
-| Projet | binômes | **Snake multijoueur** (console + navigateur) + PCB KiCad soudé : voir [l'énoncé](/workshops/microcontroleur/projet-snake/) |
+| TD | 10,5h | Modules de la malette sur breadboard, **carte conçue sous KiCad puis soudée**, **Pong** sur la carte (TD1 : 1h30, TD2 à TD4 : 3h chacun) |
+| Projet | 24h, en binôme | **Snake multijoueur** (console + navigateur) sur la carte soudée : voir [l'énoncé](/workshops/microcontroleur/projet-snake/) |
 
 ## Pourquoi ce projet ?
 
-Le mini-jeu façon Game Boy est le fil rouge de l'atelier : simple à comprendre, riche à implémenter. Les TD construisent progressivement **Pong** (un périphérique ajouté par séance) ; le projet introduit **Snake** sur une mécanique neuve, et ajoute le multijoueur asymétrique dans le navigateur. La machine à états finis (FSM), pour gérer les écrans menu/partie/fin, prépare directement les états réseau du projet.
+Le mini-jeu façon Game Boy est le fil rouge de l'atelier : simple à comprendre, riche à implémenter. Les TD construisent la console elle-même : chaque module de la malette est d'abord testé sur breadboard, puis réuni sur une carte conçue sous KiCad et soudée, sur laquelle tourne un premier **Pong**. Le projet introduit ensuite **Snake** sur une mécanique neuve, et ajoute le multijoueur asymétrique dans le navigateur. La machine à états finis (FSM), pour gérer les écrans menu/partie/fin, prépare directement les états réseau du projet.

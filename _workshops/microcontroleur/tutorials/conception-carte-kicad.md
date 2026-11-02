@@ -9,10 +9,12 @@ subtitle: Du cahier des charges au routage validé, sous KiCad
 description: Concevoir sous KiCad le schéma puis le routage de la carte de la console, en deux étapes validées par l'encadrant.
 author: Alban Petit
 
-time: 5
+time: 3
 difficulty: 3
 
 prerequisites:
+  - label: Les modules de la malette
+    link: /workshops/microcontroleur/tutorials/entrees-boutons-joystick/
   - label: Installation de KiCAD
     link: /docs/tutorials/software/kicad/installation-kicad/
   - label: "KiCAD Eeschema : les bases"
@@ -29,7 +31,7 @@ todo: 80
 
 ## La démarche
 
-Pendant les TD, la console vivait sur une breadboard. Pour le projet, elle passe sur un **circuit imprimé** (PCB) : plus de fils qui se débranchent, une console qui tient dans la main. C'est la **première étape du projet** : chaque binôme conçoit **sa** carte sous KiCad, en deux étapes validées par l'encadrant, puis soude la carte finale fournie avant d'écrire le code du Snake :
+Au TD2, les modules de la malette vivaient sur une breadboard. Au TD3, ils se retrouvent sur un **circuit imprimé** (PCB) : plus de fils qui se débranchent, une console qui tient dans la main. Vous concevez **votre** carte sous KiCad, en deux étapes validées par l'encadrant pendant la séance, puis, au TD4, vous soudez la carte finale fournie et y faites tourner le Pong :
 
 ```mermaid
 flowchart LR
@@ -41,14 +43,14 @@ flowchart LR
   V2 -->|corrections| C
   V2 -->|validé| D["Carte finale fournie\npar l'encadrant"]
   D --> E["Soudure et tests"]
-  E --> F["Code du Snake"]
+  E --> F["Pong sur la carte"]
 ```
 
-{% include message.html title="Pourquoi une carte fournie ?" message="Fabriquer un PCB chez un fournisseur prend une à trois semaines, souvent plus que la durée du projet. Une fois votre routage validé, l'encadrant vous remet donc **sa** carte finale, déjà fabriquée selon le même cahier des charges, que vous souderez avant d'écrire le code du projet. Votre conception reste un livrable à part entière : elle est évaluée, et comparée à la carte finale lors de la revue." status="is-info" icon="fas fa-info-circle" %}
+{% include message.html title="Pourquoi une carte fournie ?" message="Fabriquer un PCB chez un fournisseur prend une à trois semaines, bien plus que l'intervalle entre deux TD. Une fois votre routage validé, l'encadrant vous remet donc **sa** carte finale, déjà fabriquée selon le même cahier des charges, que vous souderez au TD4. Votre conception reste un livrable à part entière : elle est évaluée, et comparée à la carte finale lors de la revue." status="is-info" icon="fas fa-info-circle" %}
 
 ## Le cahier des charges
 
-La carte doit être **compatible avec le code des TD** : un programme qui fonctionne sur la breadboard doit fonctionner tel quel sur la carte. Le brochage est donc imposé ; le reste est à concevoir et à justifier.
+La carte doit être **compatible avec le code du TD2** : un programme qui fonctionne sur la breadboard doit fonctionner tel quel sur la carte. Le brochage est donc imposé ; le reste est à concevoir et à justifier.
 
 ### Les fonctions
 
@@ -64,7 +66,7 @@ La carte doit être **compatible avec le code des TD** : un programme qui foncti
 
 ### Le brochage imposé
 
-C'est le câblage des TD ; il ne doit pas changer.
+C'est le câblage du TD2 (sans le buzzer, qui n'est pas sur la carte) ; il ne doit pas changer.
 
 | Broche XIAO | Signal |
 |---|---|
@@ -100,7 +102,7 @@ Le connecteur de l'écran suit le brochage standard des modules TFT SPI 14 broch
 Chacun de ces choix doit apparaître dans votre schéma, avec sa justification dans la documentation de la carte :
 
 - **La broche D6** est aussi la sortie TX de l'UART0 : la puce y émet des messages au démarrage. Que se passe-t-il si SW2 la relie directement à GND pendant ce temps, et comment l'éviter ? (Voir le concept [GPIO & monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/).)
-- **Les boutons** n'ont pas besoin de résistance de tirage externe : pourquoi ? (Voir le tutoriel [Boutons, joystick et moniteur série](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/).)
+- **Les boutons** n'ont pas besoin de résistance de tirage externe : pourquoi ? (Voir le tutoriel [Les modules de la malette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/).)
 - **Le bus I2C** a besoin de résistances de tirage : où, et de quelle valeur ? (Voir le concept [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/).)
 - **La LED témoin** : quelle résistance pour un courant de quelques mA sous 3,3 V ? (Le calculateur du concept GPIO vous aide.)
 - **Le découplage** : quels condensateurs, et où les placer pour qu'ils soient utiles ?
@@ -129,7 +131,7 @@ content="Créez un projet KiCad dans le dossier de votre repo prévu pour la car
 - **Joystick** : les librairies KiCad de SparkFun, installables depuis le gestionnaire de plugins et contenus de KiCad (*Plugin and Content Manager*) ou depuis leur dépôt GitHub ;
 - **Composants courants** (résistances et condensateurs 1206, boutons) : les librairies standard de KiCad, ou la [librairie du MakerSpace](/docs/tutorials/software/kicad/kicad-import-librairies/).
 
-Ajoutez-les **au projet** (et non à votre installation) : le repo reste alors autonome, et votre binôme l'ouvre sans rien installer. La méthode est détaillée dans [KiCAD : importer des librairies](/docs/tutorials/software/kicad/kicad-import-librairies/)."
+Ajoutez-les **au projet** (et non à votre installation) : le projet reste alors autonome, et s'ouvre sur un autre ordinateur sans rien installer. La méthode est détaillée dans [KiCAD : importer des librairies](/docs/tutorials/software/kicad/kicad-import-librairies/)."
 %}
 
 {% include step-tuto.html
@@ -141,7 +143,7 @@ content="Commencez par un **schéma bloc** sur papier : la XIAO au centre, l'éc
 - reliez les signaux avec des **étiquettes** (`SCK`, `MOSI`, `SDA`...) plutôt qu'avec de longs fils : le schéma reste lisible ;
 - placez les symboles d'alimentation (`+3V3`, `GND`) et les éléments de vos choix de conception (résistances, LED, condensateurs) ;
 - donnez une **valeur** à chaque composant, puis annotez le schéma (R1, C1, SW1...) ;
-- remplissez le **cartouche** : titre, binôme, date, révision.
+- remplissez le **cartouche** : titre, vos noms, date, révision.
 
 Les bases sont dans [KiCAD Eeschema : les bases](/docs/tutorials/software/kicad/kicad-eeschema-bases/)."
 %}
@@ -187,7 +189,7 @@ content="Tracez les pistes en suivant le chevelu :
 - des angles à 45° plutôt qu'à 90° ;
 - un **plan de masse** (zone de cuivre reliée à GND) sur la face arrière, voire sur les deux faces, une fois les pistes posées.
 
-Ajoutez une **sérigraphie** utile : nom des boutons (SW1, SW2), broche 1 de chaque connecteur, nom du binôme et révision de la carte. Les bases sont dans [KiCAD Pcbnew : les bases](/docs/tutorials/software/kicad/kicad-pcbnew-bases/)."
+Ajoutez une **sérigraphie** utile : nom des boutons (SW1, SW2), broche 1 de chaque connecteur, vos noms et la révision de la carte. Les bases sont dans [KiCAD Pcbnew : les bases](/docs/tutorials/software/kicad/kicad-pcbnew-bases/)."
 %}
 
 {% include step-tuto.html
@@ -206,7 +208,7 @@ Présentez ensuite à l'encadrant la carte dans le visualiseur 3D, le résultat 
 - [ ] Les condensateurs de découplage sont au plus près de leurs broches
 - [ ] Les pistes d'alimentation sont plus larges que les pistes de signal
 - [ ] Un plan de masse est en place
-- [ ] La sérigraphie indique SW1, SW2, la broche 1 des connecteurs, le binôme et la révision
+- [ ] La sérigraphie indique SW1, SW2, la broche 1 des connecteurs, vos noms et la révision
 - [ ] Les fichiers KiCad et des captures (2D et 3D) sont dans le repo
 
 ## Documenter la carte

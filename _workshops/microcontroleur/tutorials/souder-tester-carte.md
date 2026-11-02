@@ -9,7 +9,7 @@ subtitle: Assembler la console au fer à souder, puis la valider étape par éta
 description: Souder au fer les composants CMS et traversants de la carte de la console, puis la tester hors tension, sous tension et avec les programmes des TD.
 author: Alban Petit
 
-time: 3
+time: 2
 difficulty: 3
 
 prerequisites:
@@ -133,15 +133,16 @@ Au moindre doute (odeur, LED éteinte, tension anormale), **débranchez immédia
 
 {% include step-tuto.html
 greyBackground=true
-title="Étape 8 : Tester chaque fonction avec les programmes des TD"
-content="La carte suit le brochage des TD : leurs programmes servent de **programmes de test**, sans modification.
+title="Étape 8 : Tester chaque fonction avec les programmes du TD2"
+content="La carte suit le brochage du TD2 : ses programmes servent de **programmes de test**, sans modification.
 
 1. **Flashage** : le Blink de [Vérification de la toolchain](/workshops/microcontroleur/tutorials/toolchain-blink/). La LED orange de la XIAO clignote.
-2. **Entrées** : le programme de l'étape 5 de [Boutons, joystick et moniteur série](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/). Le moniteur série affiche SW1, SW2, chaque direction du joystick et l'appui sur le stick.
-3. **Écran** : carte débranchée, montez l'écran sur son connecteur, puis flashez l'étape 2 de [Écran SPI et game loop](/docs/tutorials/electronics/ecran-spi-game-loop/). Le texte et les formes s'affichent.
-4. **Le Pong** : votre programme du TD4. Une partie complète se joue sur la carte.
+2. **Boutons** : le programme de l'étape 2 de [Les modules de la malette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/), sur D5 (SW1) puis sur D6 (SW2) en changeant `PIN_BUTTON`. Sur la carte, les boutons relient leur broche à GND : `PRESSED_LEVEL` vaut `LOW`.
+3. **Joystick** : les programmes des étapes 3 et 4. Valeurs brutes, appui sur le stick, puis 0 au repos et -1 / +1 aux butées.
+4. **Écran** : carte débranchée, montez l'écran sur son connecteur, puis flashez le programme de l'étape 6. Le texte et les formes s'affichent.
+5. **Tout ensemble** : le programme de l'étape 7, sans le buzzer (absent de la carte). Le point suit le joystick.
 
-La carte est prête : c'est sur elle que vous écrivez maintenant le code du Snake."
+La carte est prête : le Pong peut s'y installer."
 %}
 
 {% include message.html title="Tout fonctionne ?" message="Notez chaque test et son résultat dans votre repo (voir [Documenter les tests et résultats](/workshops/methodologie-de-projet/tutorials/documenter-tests-resultats/)) : c'est la preuve que la carte est saine, et le point de départ si un problème apparaît plus tard dans le projet." status="is-success" icon="fas fa-check-circle" %}
@@ -160,6 +161,8 @@ Pour la carte qui n'apparaît pas sur l'ordinateur et pour l'écran, les guides 
 | Joystick bloqué à 0 ou 4095 | Patte non soudée, alimentation absente | Soudures du joystick, 3,3 V sur sa broche VCC |
 | Écran blanc | Rétroéclairage alimenté, mais pas de données | Continuité SCK, MOSI, DC, RESET ; `SPI_MODE3` dans le code |
 | Écran noir | Rétroéclairage non alimenté | Broche LED du connecteur écran à 3,3 V |
+
+{% include message.html title="Étape suivante" message="La console est prête : écrivez-y votre premier jeu avec [Le Pong sur la console](/workshops/microcontroleur/tutorials/collisions-fsm-pong/)." status="is-success" icon="fas fa-check-circle" %}
 
 ## Documenter
 

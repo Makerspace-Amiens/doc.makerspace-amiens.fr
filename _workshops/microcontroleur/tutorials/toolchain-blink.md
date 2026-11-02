@@ -36,7 +36,7 @@ hardwares:
 todo: 90
 ---
 
-Ce tutoriel a pour but de vérifier que **chacun** a une chaîne de développement fonctionnelle avant d'attaquer la suite des aventures sur les microcontrôleurs. Chaque TD suivant ajoutera un périphérique au même montage : le câblage posé ici ne bougera plus.
+Ce tutoriel a pour but de vérifier que **chacun** a une chaîne de développement fonctionnelle avant d'attaquer la suite des aventures sur les microcontrôleurs. Au TD2, ce même montage accueillera les modules de la malette ; au TD3, vous concevrez la carte qui les réunit.
 
 {% include message.html title="À faire avant la séance" message="L'installation de PlatformIO (voir le prérequis ci-dessus) et du support ESP32 doit être terminée." status="is-warning" icon="fas fa-exclamation-triangle" %}
 
@@ -136,4 +136,4 @@ void loop() {
 
 Le calcul de la résistance série est détaillé dans le concept [GPIO & monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/).
 
-{% include message.html title="Rendez-vous au tutoriel suivant" message="Le prochain tutoriel réutilise cette même carte et ce même projet PlatformIO : retire la LED externe, puis tu câbleras boutons et joystick selon le câblage du PCB du projet." status="is-success" icon="fas fa-check-circle" %}
+{% include message.html title="Rendez-vous au tutoriel suivant" message="Le TD2 réutilise cette même carte et ce même projet PlatformIO : retire la LED externe, puis tu brancheras un à un les modules de la malette, selon le câblage de la future carte : voir [Les modules de la malette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/)." status="is-success" icon="fas fa-check-circle" %}
