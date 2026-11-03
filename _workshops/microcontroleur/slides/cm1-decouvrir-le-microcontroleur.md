@@ -739,6 +739,35 @@ C'est la langue des fiches techniques : le manuel de référence décrit chaque 
 
 ---
 
+## Décomposer `reg |= (1 << n)`
+
+L'instruction combine trois opérations :
+
+1. **Le décalage `1 << n`** : la valeur 1 (`00000001`) décalée de *n* positions vers la gauche. Pour *n* = 3 : `00001000`. C'est un **masque** : seul le bit visé vaut 1.
+2. **Le OU bit à bit `|`** : 1 OU x donne 1, donc le bit visé passe à 1 ; 0 OU x donne x, donc les autres ne changent pas.
+3. **L'affectation `|=`** : le raccourci de `reg = reg | (1 << n);`.
+
+[Architecture d'un microcontrôleur](/workshops/microcontroleur/concepts/architecture-microcontroleur/){: .doc-link}
+
+---
+
+## Un exemple, bit par bit
+
+On veut mettre le bit 3 à 1, sans toucher aux autres :
+
+```text
+reg            1010 0001
+1 << 3         0000 1000   le masque
+reg | masque   1010 1001   seul le bit 3 a changé
+```
+
+Les bits se numérotent **de droite à gauche**, en partant de 0. La même idée sert pour les autres lignes : `& ~masque` met le bit à 0, `^ masque` l'inverse, `& masque` le teste.
+{: .caption}
+
+[Architecture d'un microcontrôleur](/workshops/microcontroleur/concepts/architecture-microcontroleur/){: .doc-link}
+
+---
+
 ## Sous `digitalWrite()`, une écriture
 
 ```cpp
