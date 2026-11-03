@@ -431,6 +431,45 @@ En contrepartie : il consomme plus qu'une puce basse consommation, et il vit en 
 
 ---
 
+## Puce, module ou carte de développement ?
+
+<div class="columns is-3" markdown="1">
+<div markdown="1">
+
+### La puce
+
+- Le microcontrôleur seul
+- Un boîtier de 7 × 7 mm
+- Inutilisable sans rien autour
+
+</div>
+<div markdown="1">
+
+### Le module
+
+- Puce, Flash, quartz
+- Antenne et blindage
+- Certifié pour la radio
+
+</div>
+<div markdown="1">
+
+### La carte de dev
+
+- Un module ou une puce
+- USB, régulateur 3,3 V
+- Boutons, broches au pas
+
+</div>
+</div>
+
+Vous programmez **la puce**. La **carte de dev** (XIAO) ajoute ce qu'il faut pour la brancher au PC. Dans un produit, on soude le module ou la puce sur sa propre carte.
+{: .caption}
+
+[XIAO ESP32S3](/docs/references/hardware/xiao-esp32s3/){: .doc-link}
+
+---
+
 ## Notre puce : l'ESP32-S3
 
 | Caractéristique | Valeur |
