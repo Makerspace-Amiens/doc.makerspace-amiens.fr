@@ -10,15 +10,17 @@ back_link: /workshops/microcontroleur/
 
 ## Au programme
 
-1. Un ordinateur sur une puce
-2. Sous le capot
-3. Du code à la puce
-4. Votre premier programme
+1. L'atelier
+2. Un ordinateur sur une puce
+3. Sous le capot
+4. Du code à la puce
+5. Votre premier programme
 
 <aside class="notes" markdown="1">
-1 h 30 de cours, sans manipulation. Fil rouge de tout l'atelier : un Pong 2 joueurs sur ESP32-S3, puis un Snake multijoueur en projet.
-Parties 1 et 2 : le vocabulaire et la puce. Parties 3 et 4 : la chaîne de développement, plus concrètes, à garder pour la seconde moitié quand l'attention baisse.
-La partie 3 s'ouvre sur compilé / interprété (environ 5 min) : partir de Python, qu'ils connaissent, sans entrer dans la syntaxe.
+1 h 30 de cours, sans manipulation. Fil rouge de tout l'atelier : la console de jeu (Pong en TD, Snake multijoueur en projet).
+Partie 1 (environ 10 min) : où trouver la documentation, le déroulé du module, ce qu'ils vont y apprendre et à quoi ça leur servira.
+Parties 2 et 3 : le vocabulaire et la puce. Parties 4 et 5 : la chaîne de développement, plus concrètes, à garder pour la seconde moitié quand l'attention baisse.
+La partie 4 s'ouvre sur compilé / interprété (environ 5 min) : partir de Python, qu'ils connaissent, sans entrer dans la syntaxe.
 </aside>
 
 ---
@@ -36,6 +38,166 @@ La partie 3 s'ouvre sur compilé / interprété (environ 5 min) : partir de Pyth
 
 Fil rouge de l'atelier : un **Pong**, puis un **Snake multijoueur**.
 {: .caption}
+
+[L'atelier Microcontrôleurs](/workshops/microcontroleur/){: .doc-link}
+
+---
+
+<!-- .slide: class="slide-section" -->
+
+## L'atelier
+
+Où trouver l'aide, ce qui vous attend, et pourquoi
+
+---
+
+## Tout est sur le site
+
+**doc.makerspace-amiens.fr**, rubrique **Ateliers**, puis **Microcontrôleurs**.
+
+- {: .fragment} Le **syllabus** et l'**évaluation**
+- {: .fragment} Les **slides** de chaque cours, dont celles-ci
+- {: .fragment} Les **concepts** : la théorie, à relire avant chaque TD
+- {: .fragment} Les **tutoriels** : chaque TD, pas à pas
+- {: .fragment} Les **guides** : quand quelque chose ne marche pas
+
+Chaque slide se termine par une pastille qui ouvre la page correspondante. **↓** pour la page de l'atelier.
+{: .caption}
+
+[L'atelier Microcontrôleurs](/workshops/microcontroleur/){: .doc-link}
+
+<!-- .down -->
+
+## La page de l'atelier
+
+<iframe class="page-preview" data-src="/workshops/microcontroleur/" title="Page de l'atelier Microcontrôleurs"></iframe>
+
+---
+
+## Trouver la bonne page
+
+| Vous voulez... | Allez voir |
+|---|---|
+| Comprendre une notion | Un **concept** (GPIO, bus, machine à états...) |
+| Faire, étape par étape | Le **tutoriel** du TD |
+| Débloquer un problème | Un **guide** (carte introuvable, écran noir) |
+| Une caractéristique d'un composant | Sa **fiche de référence** (XIAO, écran) |
+| Le détail complet d'une puce | Sa **datasheet**, sur le site du fabricant |
+{: .table-dense}
+
+La barre de **recherche** du site trouve une page par mot-clé. Le bouton **Besoin d'aide ?**, en bas à droite, ouvre l'assistant IA du MakerSpace.
+{: .caption}
+
+[Syllabus de l'atelier](/workshops/microcontroleur/syllabus/){: .doc-link} [Récupérer une carte ESP32-S3](/docs/how-to-guides/esp32-s3-carte-introuvable/){: .doc-link}
+
+---
+
+## Hors du site : les sources officielles
+
+- {: .fragment} **Espressif** : la datasheet de l'ESP32-S3, la documentation Arduino-ESP32
+- {: .fragment} **Seeed Studio** : le wiki de la carte XIAO ESP32S3
+- {: .fragment} **Les bibliothèques** : leur page GitHub, son README et ses exemples
+- {: .fragment} **PlatformIO** : sa documentation, pour la configuration du projet
+
+Un forum ou un assistant IA aide à chercher. Mais quand deux sources se contredisent, c'est la **documentation du fabricant** qui tranche.
+{: .fragment .highlight-red}
+
+[XIAO ESP32S3](/docs/references/hardware/xiao-esp32s3/){: .doc-link}
+
+---
+
+## Le déroulé du module
+
+| Séance | Durée | Ce que vous faites |
+|---|---|---|
+| CM1, CM2, CM3 | 3 × 1 h 30 | Les concepts, en cours |
+| TD1 | 1 h 30 | Installer, flasher un premier programme |
+| TD2 | 3 h | Tester les modules de la malette |
+| TD3 | 3 h | Concevoir votre carte sous KiCad |
+| TD4 | 3 h | Souder la carte, y faire tourner un Pong |
+| Projet | 24 h | Un Snake multijoueur, en binôme |
+{: .table-dense}
+
+Les trois cours d'abord, puis les TD, puis le projet. Chaque étape s'appuie sur la précédente.
+{: .caption}
+
+[Syllabus de l'atelier](/workshops/microcontroleur/syllabus/){: .doc-link}
+
+---
+
+## Comment vous êtes évalués
+
+<div class="columns" markdown="1">
+<div markdown="1">
+
+<p class="big-number">30 %</p>
+
+**Les TD** : chaque checkpoint validé en séance, dont les deux validations de votre carte
+
+</div>
+<div markdown="1">
+
+<p class="big-number">70 %</p>
+
+**Le projet** : le jeu, le joueur du navigateur, le code, le repo et la démonstration
+
+</div>
+</div>
+
+Un checkpoint se valide **en séance**, sur votre montage : venir avec un travail qui marche.
+{: .caption}
+
+[Évaluation de l'atelier](/workshops/microcontroleur/evaluation/){: .doc-link}
+
+---
+
+## Ce que vous allez aborder
+
+<div class="columns" markdown="1">
+<div markdown="1">
+
+### Électronique
+
+- Lire et tester un composant
+- Câbler sur breadboard
+- Concevoir une carte, la souder
+
+### Informatique embarquée
+
+- Programmer en C/C++
+- Ne jamais bloquer le programme
+- Structurer avec une machine à états
+
+</div>
+<div markdown="1">
+
+### Réseau
+
+- Wi-Fi, page web, WebSocket
+- Concevoir un protocole
+
+### Méthode
+
+- Tester, valider, documenter
+- Mener un projet en binôme
+
+</div>
+</div>
+
+[Syllabus de l'atelier](/workshops/microcontroleur/syllabus/){: .doc-link}
+
+---
+
+## Et dans votre vie d'ingénieur ?
+
+- {: .fragment} Les microcontrôleurs sont **partout** : voiture, médical, industrie, énergie
+- {: .fragment} Vous en **choisirez**, en **spécifierez**, en **intégrerez** dans vos produits
+- {: .fragment} Vous **parlerez la même langue** que les électroniciens
+- {: .fragment} Vous saurez **prototyper** seul un capteur, un banc de test, un démonstrateur
+- {: .fragment} Tester, concevoir, documenter : des réflexes pour tout projet
+
+Même sans programmer de microcontrôleur au quotidien, vous travaillerez avec ceux qui le font.
+{: .fragment .caption}
 
 [L'atelier Microcontrôleurs](/workshops/microcontroleur/){: .doc-link}
 
@@ -511,26 +673,6 @@ Ranger une variable et allumer une LED : la même opération, poser une valeur �
 
 ---
 
-## Réagir sans attendre : l'interruption
-
-Votre programme tourne dans sa boucle. Un joueur appuie sur un bouton pendant 20 ms. Comment être certain de ne pas le manquer ?
-
-- {: .fragment} Le matériel **arrête le CPU** en pleine boucle
-- {: .fragment} Il lui fait exécuter une petite fonction dédiée, très courte
-- {: .fragment} Puis la boucle reprend exactement là où elle s'était arrêtée
-
-Les registres, c'est le logiciel qui parle au matériel. L'interruption, c'est le matériel qui parle au logiciel. Le code arrive en partie 3.
-{: .fragment .caption}
-
-<aside class="notes" markdown="1">
-Rester au niveau du mécanisme : aucune ligne de code ici, `setup()` et `loop()` ne sont présentés qu'en partie 3, où l'interruption revient en code juste après la slide sur `millis()`.
-Si la question vient tout de suite : tant que cette fonction s'exécute, tout le reste est suspendu, y compris les autres interruptions. Elle lève un drapeau, et la `loop()` fait le travail.
-</aside>
-
-[Architecture d'un microcontrôleur](/workshops/microcontroleur/concepts/architecture-microcontroleur/){: .doc-link} [GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link}
-
----
-
 <!-- .slide: class="slide-section" -->
 
 ## Du code à la puce
@@ -788,13 +930,11 @@ void setup() {
 }
 </code></pre>
 
-Le CPU suspend `loop()`, exécute la fonction, puis reprend son cours.
-
-`IRAM_ATTR` la place en RAM interne : sans ce mot-clé, la puce finit par planter.
+Sur un front du bouton, le matériel **suspend** `loop()`, exécute cette fonction très courte, puis **reprend** exactement où il s'était arrêté. `IRAM_ATTR` la place en RAM interne : sans lui, la puce finit par planter.
 {: .caption}
 
 <aside class="notes" markdown="1">
-Le mécanisme a été vu en partie 2 : voici sa syntaxe, maintenant que `setup()` et `loop()` sont connus.
+Le mécanisme d'abord : les registres, c'est le logiciel qui parle au matériel ; l'interruption, c'est le matériel qui parle au logiciel. Puis la syntaxe, maintenant que `setup()` et `loop()` sont connus.
 Insister : tant que cette fonction s'exécute, tout le reste est suspendu, y compris les autres interruptions. Jamais de `Serial.println()`, jamais de `delay()`, jamais d'appel à une bibliothèque dedans. Elle lève un drapeau, la `loop()` fait le travail. Le CM2 y revient sur les rebonds du bouton, avec le rôle de `volatile`.
 </aside>
 
