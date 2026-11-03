@@ -44,6 +44,12 @@ body {
     text-align: left;
   }
 
+  /* Sans ligatures : JetBrains Mono dessinerait |= en ⊨ et != en ≠,
+     des symboles qu'on ne peut pas taper au clavier. */
+  code {
+    font-variant-ligatures: none;
+  }
+
   /* margin: 0 dans Reveal.initialize : la slide occupe tout le cadre 1280x720,
      les marges intérieures sont portées par les sections. */
   .slides > section,
