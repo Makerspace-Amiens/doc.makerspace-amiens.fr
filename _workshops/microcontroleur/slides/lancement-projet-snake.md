@@ -57,7 +57,7 @@ Le **joueur 1** joue au Snake sur la console. Le **joueur 2** rejoint la partie 
 {: .caption}
 
 Les deux ne jouent **pas** au même jeu : c'est un multijoueur **asymétrique**.
-{: .fragment .highlight-red}
+{: .highlight-red}
 
 [Énoncé du projet](/workshops/microcontroleur/projet-snake/){: .doc-link}
 
@@ -65,12 +65,12 @@ Les deux ne jouent **pas** au même jeu : c'est un multijoueur **asymétrique**.
 
 ## Le joueur 1 : un vrai Snake
 
-- {: .fragment} Le serpent avance **case par case**, à sa propre cadence
-- {: .fragment} Quatre directions au joystick, **jamais** de demi-tour
-- {: .fragment} Il mange, il grandit, le score monte
-- {: .fragment} Un mur ou son propre corps : la partie s'arrête
-- {: .fragment} Accueil, partie, fin : une **machine à états**
-- {: .fragment} Pas de scintillement, aucun `delay()`
+- Le serpent avance **case par case**, à sa propre cadence
+- Quatre directions au joystick, **jamais** de demi-tour
+- Il mange, il grandit, le score monte
+- Un mur ou son propre corps : la partie s'arrête
+- Accueil, partie, fin : une **machine à états**
+- Pas de scintillement, aucun `delay()`
 
 [Énoncé du projet](/workshops/microcontroleur/projet-snake/){: .doc-link}
 
@@ -139,7 +139,7 @@ Faire présenter deux ou trois idées à la classe. Relever les rôles où le jo
 </div>
 
 Deux « oui », et votre idée tient. Gardez la trace de vos essais : ils justifient votre choix.
-{: .fragment .caption}
+{: .caption}
 
 [Énoncé du projet](/workshops/microcontroleur/projet-snake/){: .doc-link}
 
@@ -203,7 +203,7 @@ En **point d'accès**, la console crée son réseau : pas besoin du Wi-Fi de l'�
 {: .caption}
 
 Donnez à votre réseau un nom **unique** dans la salle.
-{: .fragment .highlight-red}
+{: .highlight-red}
 
 [Wi-Fi, HTTP et WebSocket](/docs/concepts/reseau-wifi-websocket/){: .doc-link}
 
@@ -245,9 +245,9 @@ La ligne reste ouverte : chacun parle quand il veut.
 | Navigateur → console | `FOOD:12,7` | Demande : une pomme en (12, 7) |
 {: .table-dense}
 
-- {: .fragment} Écrit **avant** le code, dans votre repo
-- {: .fragment} La **console est l'arbitre** : le navigateur propose, la console décide
-- {: .fragment} Un message invalide est ignoré, jamais un plantage
+- Écrit **avant** le code, dans votre repo
+- La **console est l'arbitre** : le navigateur propose, la console décide
+- Un message invalide est ignoré, jamais un plantage
 
 [Wi-Fi, HTTP et WebSocket](/docs/concepts/reseau-wifi-websocket/){: .doc-link}
 
@@ -302,12 +302,12 @@ Huit séances, cinq jalons
 
 Pour le Snake, **aucun tutoriel** ne vous guide ligne à ligne. C'est le cœur du projet : chercher, essayer, comparer, choisir.
 
-- {: .fragment} Comment mémoriser un corps qui **grandit** ?
-- {: .fragment} Comment avancer à **sa** cadence dans une game loop à 16 ms ?
-- {: .fragment} Que **redessiner** quand le serpent avance d'une case ?
+- Comment mémoriser un corps qui **grandit** ?
+- Comment avancer à **sa** cadence dans une game loop à 16 ms ?
+- Que **redessiner** quand le serpent avance d'une case ?
 
 Du code trouvé ailleurs (en ligne, assistant IA) ? Permis, s'il est **compris** et **cité** dans votre journal de bord.
-{: .fragment .caption}
+{: .caption}
 
 [Énoncé du projet](/workshops/microcontroleur/projet-snake/){: .doc-link}
 
@@ -351,7 +351,7 @@ Et une **démonstration** en direct : une partie complète, déconnexion du navi
 </div>
 
 Une note **commune au binôme** : chacun doit savoir expliquer tout le projet, y compris ce qu'il n'a pas codé.
-{: .fragment .highlight-red}
+{: .highlight-red}
 
 [Évaluation de l'atelier](/workshops/microcontroleur/evaluation/){: .doc-link}
 
@@ -359,11 +359,11 @@ Une note **commune au binôme** : chacun doit savoir expliquer tout le projet, y
 
 ## À retenir
 
-- {: .fragment} Le projet démarre sur **votre console** soudée, avec le Pong comme base
-- {: .fragment} Le joueur 2 joue un **autre jeu**, depuis un navigateur
-- {: .fragment} Console en point d'accès, WebSocket, protocole écrit d'abord
-- {: .fragment} La console est l'**arbitre**, la déconnexion est prévue
-- {: .fragment .highlight-red} Pas de pas à pas : vous concevez, vous justifiez, vous documentez
+- Le projet démarre sur **votre console** soudée, avec le Pong comme base
+- Le joueur 2 joue un **autre jeu**, depuis un navigateur
+- Console en point d'accès, WebSocket, protocole écrit d'abord
+- La console est l'**arbitre**, la déconnexion est prévue
+- {: .highlight-red} Pas de pas à pas : vous concevez, vous justifiez, vous documentez
 
 [Énoncé du projet](/workshops/microcontroleur/projet-snake/){: .doc-link}
 

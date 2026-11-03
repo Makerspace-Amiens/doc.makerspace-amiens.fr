@@ -55,7 +55,7 @@ Un écran couleur 240×240 reçoit **57 600 pixels par image**, soit plus de 115
 Câbler un fil par bit serait impraticable : plus aucune broche disponible, une carte illisible, et des perturbations entre pistes.
 
 Un **bus série** envoie les bits **les uns après les autres**, sur deux à quatre fils. On échange de la largeur contre du temps, et la puce est assez rapide pour que ça ne se voie pas.
-{: .fragment .highlight-red}
+{: .highlight-red}
 
 [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link}
 
@@ -63,12 +63,12 @@ Un **bus série** envoie les bits **les uns après les autres**, sur deux à qua
 
 ## Trois bus, trois compromis
 
-- {: .fragment} **UART** : le plus simple. Deux fils, un seul interlocuteur, pas d'horloge partagée
-- {: .fragment} **I2C** : deux fils, plusieurs composants distingués par une **adresse**
-- {: .fragment} **SPI** : quatre fils, une horloge, le plus rapide des trois
+- **UART** : le plus simple. Deux fils, un seul interlocuteur, pas d'horloge partagée
+- **I2C** : deux fils, plusieurs composants distingués par une **adresse**
+- **SPI** : quatre fils, une horloge, le plus rapide des trois
 
 Aucun n'est meilleur dans l'absolu : chacun échange de la vitesse contre des fils, ou des fils contre de la complexité. Le choix se fait par le besoin.
-{: .fragment .caption}
+{: .caption}
 
 [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link}
 
@@ -120,7 +120,7 @@ Sans horloge partagée, comment le récepteur sait-il quand lire ? La ligne est 
 - un ou deux **bits de stop** (retour à `HIGH`)
 
 D'où la notation **`8N1`**. Format ou vitesse qui diffèrent : c'est le charabia du moniteur série.
-{: .fragment .caption}
+{: .caption}
 
 [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link}
 
@@ -147,7 +147,7 @@ Serial.printf("x=%d y=%d\n", x, y);
 Le moniteur série se manie comme un UART. L'UART est aussi le bus des modules GPS, Bluetooth ou GSM, et le moyen le plus simple de faire dialoguer deux microcontrôleurs.
 
 Sur beaucoup de cartes, une puce USB-série (CP2102, CH340) traduit l'UART en USB et réclame un driver sous Windows. La XIAO n'en a pas : `Serial` passe directement par l'USB natif de l'ESP32-S3, et l'UART0 reste libre sur D6/D7.
-{: .fragment .caption}
+{: .caption}
 
 [Le port série sous VSCode](/docs/tutorials/electronics/vscode-port-serie/){: .doc-link} [Vérification de la toolchain](/workshops/microcontroleur/tutorials/toolchain-blink/){: .doc-link}
 
@@ -182,7 +182,7 @@ SDA et SCL sont en **open-drain**, comme au CM2 : les composants ne peuvent que 
 Il faut donc deux résistances de **pull-up** (~4,7 kΩ) vers le 3,3 V. Sans elles, la ligne ne remonte jamais et **rien ne communique**.
 
 La plupart des modules du commerce les intègrent déjà. Si vous en chaînez plusieurs, une seule paire suffit sur tout le bus : inutile de les cumuler.
-{: .fragment .caption}
+{: .caption}
 
 [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link} [GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link}
 
@@ -202,7 +202,7 @@ for (byte adr = 1; adr < 127; adr++) {
 ```
 
 Absent du scan ? Le problème est le câblage ou les pull-ups.
-{: .fragment .highlight-red}
+{: .highlight-red}
 
 [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link}
 
@@ -218,7 +218,7 @@ Absent du scan ? Le problème est le câblage ou les pull-ups.
 {: .table-dense}
 
 Largement suffisant pour des capteurs ou un petit écran OLED monochrome. Bien trop lent pour un écran TFT couleur : à 400 kHz, une image de 240×240 pixels demanderait plus de deux secondes.
-{: .fragment .highlight-red}
+{: .highlight-red}
 
 [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link}
 
@@ -263,7 +263,7 @@ graph LR
 Les trois premiers fils sont partagés ; seul le **CS** distingue les esclaves. Un seul CS actif à la fois, les autres composants se mettent en haute impédance.
 
 De quelques MHz à **80 MHz** sur ESP32-S3 : c'est ce qui rend un écran TFT fluide.
-{: .fragment .caption}
+{: .caption}
 
 [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link}
 
@@ -282,7 +282,7 @@ De quelques MHz à **80 MHz** sur ESP32-S3 : c'est ce qui rend un écran TFT flu
 {: .table-dense}
 
 **MISO n'est pas câblé** (écriture seule) et **CS est à GND** : un seul esclave, toujours sélectionné.
-{: .fragment .caption}
+{: .caption}
 
 [Écran TFT SPI ST7789](/docs/references/hardware/ecran-tft-spi-st7789/){: .doc-link}
 
@@ -342,7 +342,7 @@ flowchart LR
 ```
 
 Notre projet : un **port série** pour le moniteur, **SPI** pour l'écran. **↓** pour la page.
-{: .fragment .caption}
+{: .caption}
 
 [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link}
 
@@ -432,7 +432,7 @@ bool menuActif = true;
 ```
 
 Que veut dire `enPartie && gameOver` ? Rien. Et pourtant rien ne l'empêche.
-{: .fragment .highlight-red}
+{: .highlight-red}
 
 [Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/){: .doc-link}
 
@@ -466,7 +466,7 @@ stateDiagram-v2
 Une case « - » veut dire « événement ignoré dans cet état ». Le tableau se traduit ligne à ligne en `switch/case`, et révèle les cas oubliés.
 
 Le dessiner avant de coder prend cinq minutes, et en fait gagner deux heures.
-{: .fragment .caption}
+{: .caption}
 
 [Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/){: .doc-link}
 
@@ -554,7 +554,7 @@ case GAME_OVER:
 ```
 
 FSM et `millis()` se combinent naturellement : c'est la **transition temporisée**. La date d'entrée dans l'état, mémorisée par `allerVers()`, sert de référence.
-{: .fragment .caption}
+{: .caption}
 
 [Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/){: .doc-link} [Du matériel au logiciel](/workshops/microcontroleur/concepts/du-materiel-au-logiciel/){: .doc-link}
 
@@ -592,7 +592,7 @@ void loop() {
 ```
 
 Aucun `delay()` : le programme pourrait aussi lire un bouton piéton.
-{: .fragment .caption}
+{: .caption}
 
 [Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/){: .doc-link}
 
@@ -606,7 +606,7 @@ Aucun `delay()` : le programme pourrait aussi lire un bouton piéton.
 | **FSM `enum`** | élevée | un `case` de plus | aucun |
 
 Au projet, cette FSM s'étendra aux **états réseau** du Snake multijoueur.
-{: .fragment .highlight-red}
+{: .highlight-red}
 
 [Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/){: .doc-link}
 
@@ -636,13 +636,13 @@ Piège classique à relever pendant la mise en commun : oublier de réinitialise
 
 ## À retenir
 
-- {: .fragment} Un bus série envoie les bits l'un après l'autre
-- {: .fragment} **UART** : 2 fils, croisement TX/RX, même baud des deux côtés
-- {: .fragment} **I2C** : 2 fils, adressage, pull-ups ~4,7 kΩ obligatoires
-- {: .fragment} **SPI** : 4 fils, un CS par esclave, le seul rapide pour un TFT
-- {: .fragment} La game loop cadence à 16 ms avec `millis()`, sans jamais bloquer
-- {: .fragment} Une FSM = états + transitions + un seul état actif
-- {: .fragment .highlight-red} Action d'entrée à la transition, jamais dans le `case`
+- Un bus série envoie les bits l'un après l'autre
+- **UART** : 2 fils, croisement TX/RX, même baud des deux côtés
+- **I2C** : 2 fils, adressage, pull-ups ~4,7 kΩ obligatoires
+- **SPI** : 4 fils, un CS par esclave, le seul rapide pour un TFT
+- La game loop cadence à 16 ms avec `millis()`, sans jamais bloquer
+- Une FSM = états + transitions + un seul état actif
+- {: .highlight-red} Action d'entrée à la transition, jamais dans le `case`
 
 [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link} [Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/){: .doc-link}
 
@@ -658,6 +658,6 @@ Piège classique à relever pendant la mise en commun : oublier de réinitialise
 - Un **PCB conçu sous KiCad** et soudé, pour remplacer la breadboard
 
 Tout ce que vous venez de voir se retrouve là. Le projet n'ajoute que le réseau.
-{: .fragment .caption}
+{: .caption}
 
 [L'atelier Microcontrôleurs](/workshops/microcontroleur/){: .doc-link} [Le Pong sur la console](/workshops/microcontroleur/tutorials/collisions-fsm-pong/){: .doc-link}

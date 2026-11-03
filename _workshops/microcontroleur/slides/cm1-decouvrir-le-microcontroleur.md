@@ -29,7 +29,7 @@ La partie 4 s'ouvre sur compilé / interprété (environ 5 min) : partir de Pyth
 
 ### À la fin de ce cours, vous saurez :
 
-- dire ce qu'est un microcontrôleur, et ce qui le distingue d'un PC
+- comprendre ce qu'est un microcontrôleur, et ce qui le distingue d'un PC
 - nommer les blocs d'une puce : CPU, Flash, RAM, périphériques, bus
 - expliquer ce qu'est un **registre**, et à quoi sert une **interruption**
 - dire ce qui distingue un langage **compilé** (C/C++) d'un langage **interprété** (Python)
@@ -55,11 +55,11 @@ Où trouver l'aide, ce qui vous attend, et pourquoi
 
 **doc.makerspace-amiens.fr**, rubrique **Ateliers**, puis **Microcontrôleurs**.
 
-- {: .fragment} Le **syllabus** et l'**évaluation**
-- {: .fragment} Les **slides** de chaque cours, dont celles-ci
-- {: .fragment} Les **concepts** : la théorie, à relire avant chaque TD
-- {: .fragment} Les **tutoriels** : chaque TD, pas à pas
-- {: .fragment} Les **guides** : quand quelque chose ne marche pas
+- Le **syllabus** et l'**évaluation**
+- Les **slides** de chaque cours, dont celles-ci
+- Les **concepts** : la théorie, à relire avant chaque TD
+- Les **tutoriels** : chaque TD, pas à pas
+- Les **guides** : quand quelque chose ne marche pas
 
 Chaque slide se termine par une pastille qui ouvre la page correspondante. **↓** pour la page de l'atelier.
 {: .caption}
@@ -94,13 +94,13 @@ La barre de **recherche** du site trouve une page par mot-clé. Le bouton **Beso
 
 ## Hors du site : les sources officielles
 
-- {: .fragment} **Espressif** : la datasheet de l'ESP32-S3, la documentation Arduino-ESP32
-- {: .fragment} **Seeed Studio** : le wiki de la carte XIAO ESP32S3
-- {: .fragment} **Les bibliothèques** : leur page GitHub, son README et ses exemples
-- {: .fragment} **PlatformIO** : sa documentation, pour la configuration du projet
+- **Espressif** : la datasheet de l'ESP32-S3, la documentation Arduino-ESP32
+- **Seeed Studio** : le wiki de la carte XIAO ESP32S3
+- **Les bibliothèques** : leur page GitHub, son README et ses exemples
+- **PlatformIO** : sa documentation, pour la configuration du projet
 
 Un forum ou un assistant IA aide à chercher. Mais quand deux sources se contredisent, c'est la **documentation du fabricant** qui tranche.
-{: .fragment .highlight-red}
+{: .highlight-red}
 
 [XIAO ESP32S3](/docs/references/hardware/xiao-esp32s3/){: .doc-link}
 
@@ -190,14 +190,14 @@ Un checkpoint se valide **en séance**, sur votre montage : venir avec un travai
 
 ## Et dans votre vie d'ingénieur ?
 
-- {: .fragment} Les microcontrôleurs sont **partout** : voiture, médical, industrie, énergie
-- {: .fragment} Vous en **choisirez**, en **spécifierez**, en **intégrerez** dans vos produits
-- {: .fragment} Vous **parlerez la même langue** que les électroniciens
-- {: .fragment} Vous saurez **prototyper** seul un capteur, un banc de test, un démonstrateur
-- {: .fragment} Tester, concevoir, documenter : des réflexes pour tout projet
+- Les microcontrôleurs sont **partout** : voiture, médical, industrie, énergie
+- Vous en **choisirez**, en **spécifierez**, en **intégrerez** dans vos produits
+- Vous **parlerez la même langue** que les électroniciens
+- Vous saurez **prototyper** seul un capteur, un banc de test, un démonstrateur
+- Tester, concevoir, documenter : des réflexes pour tout projet
 
 Même sans programmer de microcontrôleur au quotidien, vous travaillerez avec ceux qui le font.
-{: .fragment .caption}
+{: .caption}
 
 [L'atelier Microcontrôleurs](/workshops/microcontroleur/){: .doc-link}
 
@@ -229,15 +229,15 @@ Dévoiler ensuite la slide suivante : on est deux ordres de grandeur en dessous.
 
 ## Il y en a des centaines, à cet étage
 
-- {: .fragment} Chaque **téléphone** en contient plusieurs : tactile, batterie, radio
-- {: .fragment} Les **écouteurs sans fil**, les **montres**, les **badges** d'accès
-- {: .fragment} Dans chaque salle : **vidéoprojecteur**, **détecteur de fumée**, **thermostat**
-- {: .fragment} Dans le couloir : l'**imprimante**, le **distributeur**, les **lecteurs de badge**
-- {: .fragment} Chez vous : le **micro-ondes**, la **machine à laver**, la **télécommande**
-- {: .fragment} Et **50 à 150** dans une voiture récente : vitres, airbags, injection
+- Chaque **téléphone** en contient plusieurs : tactile, batterie, radio
+- Les **écouteurs sans fil**, les **montres**, les **badges** d'accès
+- Dans chaque salle : **vidéoprojecteur**, **détecteur de fumée**, **thermostat**
+- Dans le couloir : l'**imprimante**, le **distributeur**, les **lecteurs de badge**
+- Chez vous : le **micro-ondes**, la **machine à laver**, la **télécommande**
+- Et **50 à 150** dans une voiture récente : vitres, airbags, injection
 
 Aucun n'a besoin d'un « vrai » ordinateur. Ils ont besoin d'une puce à quelques euros, qui démarre instantanément et fait sa tâche en boucle.
-{: .fragment .caption}
+{: .caption}
 
 [Qu'est-ce qu'un microcontrôleur ?](/workshops/microcontroleur/concepts/qu-est-ce-qu-un-microcontroleur/){: .doc-link}
 
@@ -255,7 +255,7 @@ flowchart LR
 Un thermostat *perçoit* la température, *décide* qu'il fait trop froid, *agit* en allumant le chauffage. Puis il recommence, indéfiniment.
 
 Cette boucle, vous la retrouverez telle quelle dans votre Pong : lire le joystick, calculer la position de la balle, redessiner l'écran.
-{: .fragment .caption}
+{: .caption}
 
 [Qu'est-ce qu'un microcontrôleur ?](/workshops/microcontroleur/concepts/qu-est-ce-qu-un-microcontroleur/){: .doc-link} [Les capteurs](/docs/concepts/capteurs/){: .doc-link}
 
@@ -273,7 +273,7 @@ void loop() {
 </code></pre>
 
 Le microcontrôleur ne sait rien faire tout seul. Sans programme, c'est une puce inerte : le seuil de 19 °C et ce qu'on en fait, personne ne les écrira pour vous.
-{: .fragment .caption}
+{: .caption}
 
 ---
 
@@ -298,13 +298,13 @@ Un bouton est un capteur, une LED est un actionneur.
 
 Un microcontrôleur est jugé sur sa **ponctualité**, pas sur sa puissance.
 
-- {: .fragment} Un **airbag** doit se déclencher 20 ms après le choc, jamais 100
-- {: .fragment} L'écran du **Pong** se redessine toutes les 16 ms, sinon ça saccade
-- {: .fragment} Un **servomoteur** attend une impulsion toutes les 20 ms, à 10 µs près
-- {: .fragment .highlight-red} Tenir le délai **à chaque tour** compte plus qu'aller vite une fois
+- Un **airbag** doit se déclencher 20 ms après le choc, jamais 100
+- L'écran du **Pong** se redessine toutes les 16 ms, sinon ça saccade
+- Un **servomoteur** attend une impulsion toutes les 20 ms, à 10 µs près
+- {: .highlight-red} Tenir le délai **à chaque tour** compte plus qu'aller vite une fois
 
 **Déterministe** : les mêmes entrées produisent les mêmes actions, dans le même temps, à chaque tour. Sur un PC un retard de 200 ms passe inaperçu, ici il casse le système. Le **temps réel**, ce n'est pas « vite », c'est « à l'heure ».
-{: .fragment .caption}
+{: .caption}
 
 <aside class="notes" markdown="1">
 La slide qui prépare toute la suite : c'est parce que la puce est branchée sur le monde physique qu'elle doit être prévisible, et c'est ce déterminisme qui explique qu'on n'y fasse pas tourner un système d'exploitation de PC (partie 3) et la chasse aux `delay()`.
@@ -327,7 +327,7 @@ Contre-exemple utile : sur un PC, un antivirus qui se réveille vole 300 ms au p
 {: .table-dense}
 
 C'est cette sobriété qui le rend si présent : on peut en mettre partout, pour presque rien, sans y penser.
-{: .fragment .caption}
+{: .caption}
 
 [Qu'est-ce qu'un microcontrôleur ?](/workshops/microcontroleur/concepts/qu-est-ce-qu-un-microcontroleur/){: .doc-link}
 
@@ -357,7 +357,7 @@ Un vrai système d'exploitation (Linux), un écran, le réseau complet, beaucoup
 </div>
 
 La question à se poser n'est pas « lequel est le plus puissant » mais « de quoi ai-je réellement besoin ». Un Raspberry Pi qui met 20 secondes à démarrer ne peut pas déclencher un airbag.
-{: .fragment .caption}
+{: .caption}
 
 [Qu'est-ce qu'un microcontrôleur ?](/workshops/microcontroleur/concepts/qu-est-ce-qu-un-microcontroleur/){: .doc-link}
 
@@ -384,14 +384,14 @@ Les cinq premiers se partagent l'essentiel du marché, tiré par l'automobile. D
 
 ## Espressif, le Wi-Fi pour tous
 
-- {: .fragment} **2008** : création à Shanghai
-- {: .fragment} **2014** : l'**ESP8266** met une puce Wi-Fi programmable à quelques euros
-- {: .fragment} **2016** : l'**ESP32** ajoute un second cœur et le Bluetooth
-- {: .fragment} Les makers s'en emparent : Arduino, documentation ouverte, milliers de projets
-- {: .fragment} L'industrie aussi : prises, ampoules, capteurs connectés
+- **2008** : création à Shanghai
+- **2014** : l'**ESP8266** met une puce Wi-Fi programmable à quelques euros
+- **2016** : l'**ESP32** ajoute un second cœur et le Bluetooth
+- Les makers s'en emparent : Arduino, documentation ouverte, milliers de projets
+- L'industrie aussi : prises, ampoules, capteurs connectés
 
 Pas le plus gros fabricant, mais la référence de l'objet connecté en Wi-Fi.
-{: .fragment .caption}
+{: .caption}
 
 [Qu'est-ce qu'un microcontrôleur ?](/workshops/microcontroleur/concepts/qu-est-ce-qu-un-microcontroleur/){: .doc-link}
 
@@ -418,14 +418,14 @@ Pas le plus gros fabricant, mais la référence de l'objet connecté en Wi-Fi.
 
 ## Pourquoi l'ESP32-S3 ?
 
-- {: .fragment} **Wi-Fi et Bluetooth intégrés** : le joueur 2 joue depuis un navigateur
-- {: .fragment} **De la puissance en réserve** : jeu, écran couleur et réseau en même temps
-- {: .fragment} **USB natif** : on programme sans pilote, sur tous les systèmes
-- {: .fragment} **Un écosystème accessible** : Arduino, PlatformIO, ESP-IDF
-- {: .fragment} **Moins de 10 € la carte**, et la même puce dans de vrais produits
+- **Wi-Fi et Bluetooth intégrés** : le joueur 2 joue depuis un navigateur
+- **De la puissance en réserve** : jeu, écran couleur et réseau en même temps
+- **USB natif** : on programme sans pilote, sur tous les systèmes
+- **Un écosystème accessible** : Arduino, PlatformIO, ESP-IDF
+- **Moins de 10 € la carte**, et la même puce dans de vrais produits
 
 En contrepartie : il consomme plus qu'une puce basse consommation, et il vit en **3,3 V**.
-{: .fragment .caption}
+{: .caption}
 
 [Qu'est-ce qu'un microcontrôleur ?](/workshops/microcontroleur/concepts/qu-est-ce-qu-un-microcontroleur/){: .doc-link}
 
@@ -533,7 +533,7 @@ Chaque concept de l'atelier détaille l'une de ces briques.
 {: .table-dense}
 
 Tout est sur le même silicium : un **système sur puce**. Il suffit de l'alimenter.
-{: .fragment .caption}
+{: .caption}
 
 [Architecture d'un microcontrôleur](/workshops/microcontroleur/concepts/architecture-microcontroleur/){: .doc-link}
 
@@ -580,7 +580,7 @@ Tout est sur le même silicium : un **système sur puce**. Il suffit de l'alimen
 **Execute** : calculer dans l'**ALU**, ou transférer une donnée. Puis recommencer, **240 millions de fois par seconde**.
 
 Au fond, un CPU ne fait que deux choses : calculer, et déplacer des octets d'un endroit à un autre.
-{: .fragment .caption}
+{: .caption}
 
 [Architecture d'un microcontrôleur](/workshops/microcontroleur/concepts/architecture-microcontroleur/){: .doc-link}
 
@@ -597,7 +597,7 @@ Au fond, un CPU ne fait que deux choses : calculer, et déplacer des octets d'un
 {: .table-dense}
 
 À 60 images par seconde, chaque image dispose de **4 millions de cycles**.
-{: .fragment .highlight-red}
+{: .highlight-red}
 
 [Architecture d'un microcontrôleur](/workshops/microcontroleur/concepts/architecture-microcontroleur/){: .doc-link}
 
@@ -611,7 +611,7 @@ Au fond, un CPU ne fait que deux choses : calculer, et déplacer des octets d'un
 - Le **RTC** continue de tourner en veille profonde pour réveiller la carte à l'heure dite
 
 C'est ce qui permet à un capteur sur pile de tenir des mois : il dort 99,9 % du temps.
-{: .fragment .caption}
+{: .caption}
 
 [Architecture d'un microcontrôleur](/workshops/microcontroleur/concepts/architecture-microcontroleur/){: .doc-link}
 
@@ -628,7 +628,7 @@ C'est ce qui permet à un capteur sur pile de tenir des mois : il dort 99,9 % du
 {: .table-dense}
 
 Deux espaces d'adressage séparés : une architecture **Harvard modifiée**.
-{: .fragment .caption}
+{: .caption}
 
 [Architecture d'un microcontrôleur](/workshops/microcontroleur/concepts/architecture-microcontroleur/){: .doc-link}
 
@@ -688,10 +688,10 @@ Si deux périphériques poussaient une valeur en même temps sur le bus de donn�
 D'où les sorties **trois états** : en plus de 0 et 1, un état de **haute impédance** qui déconnecte électriquement le composant de la ligne.
 
 À tout instant, un seul émetteur est actif ; tous les autres sont à l'écoute. C'est l'adresse qui désigne celui qui a le droit de répondre.
-{: .fragment .highlight-red}
+{: .highlight-red}
 
 Retenez le mot **haute impédance** : il reviendra au CM2 avec les entrées flottantes, et au CM3 avec l'I2C.
-{: .fragment .caption}
+{: .caption}
 
 [Architecture d'un microcontrôleur](/workshops/microcontroleur/concepts/architecture-microcontroleur/){: .doc-link}
 
@@ -703,10 +703,10 @@ Chaque périphérique se pilote par des **registres** : de simples cases mémoir
 
 - Écrire dans un registre allume une LED
 - Lire un registre donne l'état d'un bouton
-- {: .fragment .highlight-red} `digitalWrite(LED, HIGH)` écrit dans le bon registre
+- {: .highlight-red} `digitalWrite(LED, HIGH)` écrit dans le bon registre
 
 Ranger une variable et allumer une LED : la même opération, poser une valeur à une adresse.
-{: .fragment .caption}
+{: .caption}
 
 [Architecture d'un microcontrôleur](/workshops/microcontroleur/concepts/architecture-microcontroleur/){: .doc-link}
 
@@ -722,12 +722,12 @@ Compiler, flasher, exécuter
 
 ## En quel langage ?
 
-- {: .fragment} Sur un microcontrôleur, on programme en **C** ou en **C++**
-- {: .fragment} **Arduino**, c'est du **C++**
-- {: .fragment} Vous connaissez Python : la logique est la même
+- Sur un microcontrôleur, on programme en **C** ou en **C++**
+- **Arduino**, c'est du **C++**
+- Vous connaissez Python : la logique est la même
 
 Ce qui change, c'est **quand** le code est traduit en instructions pour le processeur.
-{: .fragment .caption}
+{: .caption}
 
 [Du matériel au logiciel](/workshops/microcontroleur/concepts/du-materiel-au-logiciel/){: .doc-link}
 
@@ -760,7 +760,7 @@ L'Arduino IDE, pour écrire, compiler et téléverser
 </div>
 
 Dans l'atelier, on utilise **le framework** (Arduino-ESP32), avec PlatformIO. Ni la carte, ni l'IDE.
-{: .fragment .highlight-red}
+{: .highlight-red}
 
 [Du matériel au logiciel](/workshops/microcontroleur/concepts/du-materiel-au-logiciel/){: .doc-link}
 
@@ -813,9 +813,9 @@ Il doit tourner sur la machine qui exécute.
 
 ## Pourquoi le C/C++ sur un microcontrôleur ?
 
-- {: .fragment} **Pas d'interpréteur** à loger dans la petite mémoire de la puce
-- {: .fragment} **Rapide** : la puce exécute directement le code machine
-- {: .fragment} **Des erreurs repérées tôt** : le compilateur les signale avant de flasher
+- **Pas d'interpréteur** à loger dans la petite mémoire de la puce
+- **Rapide** : la puce exécute directement le code machine
+- **Des erreurs repérées tôt** : le compilateur les signale avant de flasher
 
 [Du matériel au logiciel](/workshops/microcontroleur/concepts/du-materiel-au-logiciel/){: .doc-link}
 
@@ -847,7 +847,7 @@ Un clic sur **Upload** déclenche les quatre étapes, toujours dans cet ordre. Q
 {: .table-dense}
 
 L'IDE ne fait qu'orchestrer ces trois outils. Arduino IDE ou PlatformIO, la chaîne reste la même : **compiler, flasher, exécuter**.
-{: .fragment .caption}
+{: .caption}
 
 [PlatformIO](/docs/references/software/platformIO/){: .doc-link} [Arduino IDE](/docs/references/software/arduino-ide/){: .doc-link}
 
@@ -877,7 +877,7 @@ Savoir les distinguer, c'est savoir lire une erreur. C'est la compétence la plu
 {: .table-dense}
 
 Corrigez la **première** erreur, pas les 40 suivantes.
-{: .fragment .highlight-red}
+{: .highlight-red}
 
 [Du matériel au logiciel](/workshops/microcontroleur/concepts/du-materiel-au-logiciel/){: .doc-link}
 
@@ -890,7 +890,7 @@ Corrigez la **première** erreur, pas les 40 suivantes.
 3. **Votre application** : `setup()` une fois, puis `loop()` sans fin
 
 C'est exactement ce que force le bouton **BOOT** maintenu au reset : il bloque l'étape 1 en mode téléversement.
-{: .fragment .caption}
+{: .caption}
 
 [Du matériel au logiciel](/workshops/microcontroleur/concepts/du-materiel-au-logiciel/){: .doc-link}
 
@@ -929,12 +929,12 @@ Pas de `main()` : le core Arduino l'écrit, et appelle `setup()` puis `loop()`. 
 
 Sur un ordinateur, votre programme est un processus parmi des centaines. Ici, c'est **le seul** programme de la puce :
 
-- {: .fragment} un petit noyau (FreeRTOS) fait tourner Wi-Fi et USB à côté, mais tout votre code vit dans **une seule tâche** : `loop()`
-- {: .fragment} un `delay()` met cette tâche en pause : **rien** de votre programme n'avance, boutons compris
-- {: .fragment} pas d'arrêt propre : couper le courant coupe le programme net
+- un petit noyau (FreeRTOS) fait tourner Wi-Fi et USB à côté, mais tout votre code vit dans **une seule tâche** : `loop()`
+- un `delay()` met cette tâche en pause : **rien** de votre programme n'avance, boutons compris
+- pas d'arrêt propre : couper le courant coupe le programme net
 
 En contrepartie, votre code est seul maître de son temps : son comportement est **prévisible**.
-{: .fragment .caption}
+{: .caption}
 
 [Du matériel au logiciel](/workshops/microcontroleur/concepts/du-materiel-au-logiciel/){: .doc-link}
 
@@ -969,9 +969,9 @@ Réponse attendue : le bouton n'est lu qu'une fois par seconde, et seulement à 
 
 Le programme passe **1 seconde sur 1** dans les `delay()`. Le `digitalRead()` n'est atteint qu'une fois par tour.
 
-- {: .fragment} Un appui court de 200 ms : vu une fois sur cinq
-- {: .fragment} Ajoutez un écran à rafraîchir : le jeu devient injouable
-- {: .fragment .highlight-red} La solution n'est pas de raccourcir le `delay()`, c'est de ne **jamais** bloquer
+- Un appui court de 200 ms : vu une fois sur cinq
+- Ajoutez un écran à rafraîchir : le jeu devient injouable
+- {: .highlight-red} La solution n'est pas de raccourcir le `delay()`, c'est de ne **jamais** bloquer
 
 [Du matériel au logiciel](/workshops/microcontroleur/concepts/du-materiel-au-logiciel/){: .doc-link}
 
@@ -1140,13 +1140,13 @@ Tant qu'il n'y a pas d'écran, c'est votre seul retour visuel. Afficher une vari
 
 ## À retenir
 
-- {: .fragment} Un µC = CPU + Flash + RAM + périphériques, sur **une seule puce**
-- {: .fragment} Percevoir, décider, agir : le « décider », c'est votre programme
-- {: .fragment} Flash = le programme (persistant), RAM = les données (volatile)
-- {: .fragment} Les périphériques se pilotent par des **registres**
-- {: .fragment} Code → compilation → édition de liens → flashage → exécution
-- {: .fragment} Une seule tâche, `loop()` : `delay()` la fige, `millis()` ne bloque rien
-- {: .fragment .highlight-red} Tension logique : **3,3 V**
+- Un µC = CPU + Flash + RAM + périphériques, sur **une seule puce**
+- Percevoir, décider, agir : le « décider », c'est votre programme
+- Flash = le programme (persistant), RAM = les données (volatile)
+- Les périphériques se pilotent par des **registres**
+- Code → compilation → édition de liens → flashage → exécution
+- Une seule tâche, `loop()` : `delay()` la fige, `millis()` ne bloque rien
+- {: .highlight-red} Tension logique : **3,3 V**
 
 [Architecture d'un microcontrôleur](/workshops/microcontroleur/concepts/architecture-microcontroleur/){: .doc-link} [Du matériel au logiciel](/workshops/microcontroleur/concepts/du-materiel-au-logiciel/){: .doc-link}
 
