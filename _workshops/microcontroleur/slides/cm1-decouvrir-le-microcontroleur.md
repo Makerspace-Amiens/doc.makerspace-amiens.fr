@@ -469,32 +469,6 @@ Vous programmez **la puce**. La **carte de dev** (XIAO) ajoute ce qu'il faut pou
 
 ---
 
-## Notre puce : l'ESP32-S3
-
-| Caractéristique | Valeur |
-|---|---|
-| CPU | Xtensa LX7 **dual-core** 32 bits, 240 MHz |
-| RAM | 512 Ko SRAM + 8 Mo PSRAM |
-| Flash | 8 Mo, externe via SPI |
-| GPIO | 45 sur la puce, 11 sorties sur la XIAO |
-| Tension logique | **3,3 V** |
-| Connectivité | Wi-Fi 802.11 b/g/n + Bluetooth 5 |
-| Prix | ~8 € la carte XIAO ESP32S3 |
-{: .table-dense}
-
-Montée sur une carte XIAO de 21 × 18 mm. Le sans-fil servira au projet Snake. **↓** pour le brochage.
-{: .caption}
-
-[XIAO ESP32S3](/docs/references/hardware/xiao-esp32s3/){: .doc-link}
-
-<!-- .down -->
-
-## La fiche de la carte
-
-<iframe class="page-preview" data-src="/docs/references/hardware/xiao-esp32s3/#brochage" title="Fiche de référence XIAO ESP32S3"></iframe>
-
----
-
 {% include message.html title="3,3 V, jamais 5 V" message="Relier une broche GPIO directement à du 5 V (un Arduino Uno, un capteur alimenté en 5 V) peut détruire la puce de façon irréversible. C'est l'erreur la plus fréquente et la plus coûteuse de l'atelier : avant de brancher un module, cherchez sa tension d'alimentation." status="is-danger" icon="fas fa-exclamation-triangle" %}
 
 [GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link}
@@ -626,7 +600,18 @@ C'est ce qui permet à un capteur sur pile de tenir des mois : il dort 99,9 % du
 | **Taille** | 8 Mo | 512 Ko (+ 8 Mo PSRAM) |
 {: .table-dense}
 
-Deux espaces d'adressage séparés : une architecture **Harvard modifiée**.
+Deux espaces d'adressage séparés : une architecture **Harvard modifiée**. **↓** pour les situer sur le schéma-bloc.
+{: .caption}
+
+[Architecture d'un microcontrôleur](/workshops/microcontroleur/concepts/architecture-microcontroleur/){: .doc-link}
+
+<!-- .down -->
+
+## Les mémoires sur le schéma-bloc
+
+![Schéma-bloc fonctionnel de l'ESP32-S3](/workshops/microcontroleur/concepts/architecture-microcontroleur/functional-block-diagram.png){: .img-md}
+
+Repérez la **ROM** (le programme de démarrage gravé en usine), la **SRAM** interne, et le lien vers la **Flash** et la **PSRAM**, externes à la puce.
 {: .caption}
 
 [Architecture d'un microcontrôleur](/workshops/microcontroleur/concepts/architecture-microcontroleur/){: .doc-link}
@@ -777,11 +762,45 @@ Question bonus pour départager : lesquels survivent à un appui sur RESET ? Ré
 | `const uint16_t SPRITE[] = {...};` | Flash | survit au reset |
 | `int score;` en dehors des fonctions | RAM | tout le programme |
 | `int i;` dans une fonction | RAM, sur la **pile** | le temps de l'appel |
-| `new`, `malloc()` | RAM, dans le **tas** (*heap*) | jusqu'à libération |
 {: .table-dense}
 
-Le mot `const` déplace un grand tableau de la RAM vers la Flash : précieux pour les images d'un jeu. Évitez `new` et `malloc()` dans `loop()` : à force d'allouer et de libérer, le tas se fragmente et la puce finit par redémarrer.
+Le mot `const` déplace un grand tableau de la RAM vers la Flash : précieux pour les images d'un jeu.
 {: .caption}
+
+[Architecture d'un microcontrôleur](/workshops/microcontroleur/concepts/architecture-microcontroleur/){: .doc-link}
+
+---
+
+## La pile et le tas
+
+<div class="columns" markdown="1">
+<div markdown="1">
+
+### La pile (*stack*)
+
+- Variables locales, paramètres
+- Prise à l'appel, rendue au retour
+- Rapide, automatique, mais petite
+
+</div>
+<div markdown="1">
+
+### Le tas (*heap*)
+
+- Mémoire réservée à la demande
+- Utilisé par `String`, le Wi-Fi
+- Se fragmente à la longue
+
+</div>
+</div>
+
+Un grand tableau déclaré dans une fonction peut faire **déborder la pile** : la puce redémarre. Dans un jeu, préférez des variables globales de taille fixe.
+{: .caption}
+
+<aside class="notes" markdown="1">
+La pile, c'est une pile d'assiettes : chaque appel de fonction pose une assiette (ses variables locales), le retour la retire. Tout est automatique, mais la pile est petite (quelques Ko pour la tâche de `loop()`).
+Le tas, c'est un parking : on prend une place quand on en a besoin, on la rend quand on part. À force d'arrivées et de départs, il reste des places libres éparpillées, trop petites pour une grande voiture : c'est la fragmentation. Les `String` d'Arduino et la pile Wi-Fi s'en servent en coulisse.
+</aside>
 
 [Architecture d'un microcontrôleur](/workshops/microcontroleur/concepts/architecture-microcontroleur/){: .doc-link}
 
@@ -972,19 +991,6 @@ Un simple Blink pèse déjà **270 Ko** : le core Arduino, FreeRTOS et les pilot
 - **Flash** : le code et les constantes, ce que le flashage écrit
 
 Valeurs indicatives sur la XIAO ESP32S3. Surveillez ces deux lignes quand vous ajouterez des images.
-{: .caption}
-
-[Du matériel au logiciel](/workshops/microcontroleur/concepts/du-materiel-au-logiciel/){: .doc-link}
-
----
-
-## Au reset : la séquence de démarrage
-
-1. **ROM bootloader** : gravé en usine, il lit les broches de *strapping* (dont GPIO0) pour choisir démarrage normal ou mode téléversement
-2. **Bootloader de second niveau** : chargé depuis la Flash, il initialise horloge et mémoire, choisit la partition à lancer
-3. **Votre application** : `setup()` une fois, puis `loop()` sans fin
-
-C'est exactement ce que force le bouton **BOOT** maintenu au reset : il bloque l'étape 1 en mode téléversement.
 {: .caption}
 
 [Du matériel au logiciel](/workshops/microcontroleur/concepts/du-materiel-au-logiciel/){: .doc-link}
