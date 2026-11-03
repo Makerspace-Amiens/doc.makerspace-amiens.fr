@@ -37,6 +37,16 @@ Ce concept suit ce voyage de bout en bout, du texte que tu tapes jusqu'aux élec
 
 Sur un microcontrôleur, on programme presque toujours en **C** ou en **C++**. Le framework **Arduino**, utilisé dans l'atelier, est du **C++** (le C, avec quelques outils en plus, comme les objets : `Serial.println()`). Tu as peut-être appris à programmer en **Python** : la logique reste la même, mais le code n'est pas traduit pour le processeur au même moment.
 
+### Arduino : la carte, le logiciel et le framework
+
+Le mot « Arduino » désigne trois choses différentes :
+
+- des **cartes** de développement (Uno, Nano, Mega), souvent construites autour d'un microcontrôleur ATmega ;
+- un **logiciel**, l'Arduino IDE, pour écrire, compiler et téléverser un programme ;
+- un **framework** : les fonctions `setup()`, `loop()`, `pinMode()`, `digitalWrite()`... qui simplifient l'accès au matériel. Il a été porté sur des centaines de puces, dont l'ESP32-S3 (sous le nom **Arduino-ESP32**).
+
+Dans l'atelier, on utilise **le framework**, avec PlatformIO à la place de l'Arduino IDE, sur une carte XIAO ESP32S3 plutôt que sur une carte Arduino. Une Arduino Uno, avec son ATmega328P (8 bits, 16 MHz, 2 Ko de RAM, pas de Wi-Fi), serait trop limitée pour un écran couleur et un joueur connecté en Wi-Fi : on garde la simplicité du framework, et on gagne la puissance et le Wi-Fi de l'ESP32-S3.
+
 ### Compilé ou interprété
 
 ```mermaid

@@ -733,6 +733,57 @@ Ce qui change, c'est **quand** le code est traduit en instructions pour le proce
 
 ---
 
+## Arduino : trois choses sous un même nom
+
+<div class="columns is-3" markdown="1">
+<div markdown="1">
+
+### Des cartes
+
+Uno, Nano, Mega : des cartes de développement, souvent autour d'un ATmega
+
+</div>
+<div markdown="1">
+
+### Un logiciel
+
+L'Arduino IDE, pour écrire, compiler et téléverser
+
+</div>
+<div markdown="1">
+
+### Un framework
+
+`setup()`, `loop()`, `digitalWrite()`... porté sur des centaines de puces, dont l'ESP32-S3
+
+</div>
+</div>
+
+Dans l'atelier, on utilise **le framework** (Arduino-ESP32), avec PlatformIO. Ni la carte, ni l'IDE.
+{: .fragment .highlight-red}
+
+[Du matériel au logiciel](/workshops/microcontroleur/concepts/du-materiel-au-logiciel/){: .doc-link}
+
+---
+
+## Pourquoi pas une carte Arduino Uno ?
+
+| | Arduino Uno | XIAO ESP32S3 |
+|---|---|---|
+| **Processeur** | ATmega328P, 8 bits, 16 MHz | ESP32-S3, 2 cœurs 32 bits, 240 MHz |
+| **RAM** | 2 Ko | 512 Ko + 8 Mo |
+| **Wi-Fi, Bluetooth** | Non | Oui |
+| **Tension logique** | 5 V | 3,3 V |
+| **Taille** | 69 × 53 mm | 21 × 18 mm |
+{: .table-dense}
+
+Le framework Arduino apporte la **simplicité** ; l'ESP32-S3, la **puissance** et le **Wi-Fi** qu'exigent un écran couleur et le joueur du navigateur.
+{: .caption}
+
+[Qu'est-ce qu'un microcontrôleur ?](/workshops/microcontroleur/concepts/qu-est-ce-qu-un-microcontroleur/){: .doc-link}
+
+---
+
 ## Compilé ou interprété
 
 <div class="columns" markdown="1">
