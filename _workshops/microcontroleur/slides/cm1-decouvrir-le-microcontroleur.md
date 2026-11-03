@@ -1098,22 +1098,6 @@ Tout le projet est décrit ici. C'est ce fichier, versionné dans votre repo, qu
 
 ---
 
-## Les raccourcis PlatformIO
-
-| Action | Raccourci | Où |
-|---|---|---|
-| Compiler (*Build*) | <kbd>Ctrl</kbd> <kbd>Alt</kbd> <kbd>B</kbd> | icône ✓, barre bleue |
-| Téléverser (*Upload*) | <kbd>Ctrl</kbd> <kbd>Alt</kbd> <kbd>U</kbd> | icône →, barre bleue |
-| Moniteur série | <kbd>Ctrl</kbd> <kbd>Alt</kbd> <kbd>S</kbd> | icône prise, barre bleue |
-{: .table-dense}
-
-Compiler avant de téléverser fait gagner du temps : les erreurs de syntaxe sortent sans attendre le flashage.
-{: .caption}
-
-[Installer VSCode](/docs/tutorials/software/vscode-platformio/installation-vscode/){: .doc-link} [Installer PlatformIO](/docs/tutorials/software/vscode-platformio/installation-platformio/){: .doc-link}
-
----
-
 ## Déboguer : le moniteur série
 
 ```cpp
