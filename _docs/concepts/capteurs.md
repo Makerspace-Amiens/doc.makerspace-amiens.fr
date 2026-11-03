@@ -8,262 +8,182 @@ component_toc: true
 doc_header: true
 type: concept
 
-title: Les Capteurs
-subtitle: Introduction à la notion de capteur
-description: Ressources pour la découverte des capteurs
+title: Les capteurs
+subtitle: Transformer une grandeur physique en information exploitable
+description: Comprendre ce qu'est un capteur, ses caractéristiques, la chaîne de mesure, les familles de capteurs et la façon de les lire avec un microcontrôleur.
+author: Alban Petit
+
+difficulty: 1
+todo: 90
+
+prerequisites:
+  - label: Aucun pré-requis nécessaire
+    link: ""
 ---
 
-## Les capteurs
+## Percevoir le monde physique
 
-*ou "Comment acquérir une grandeur physique"*
+Un système automatique, qu'il s'agisse d'une ligne de production, d'une voiture, d'un objet connecté ou d'une console de jeu, doit **connaître son environnement** pour réagir : une température, une position, une distance, un appui. C'est le rôle des **capteurs**.
 
-[Extrait du cours "Acquisition d'une grandeur physique" par Christian BISSIERES](https://www.les-electroniciens.com/sites/default/files/cours/capteurs.pdf)
+**À la fin de ce concept, tu sauras :**
 
-## Generalités
+- définir un capteur et ses principales caractéristiques ;
+- décrire une chaîne de mesure, du phénomène physique au nombre traité par un programme ;
+- distinguer les types de signaux et les familles de capteurs (actifs, passifs) ;
+- lire un capteur avec un microcontrôleur, selon le type de signal qu'il délivre.
 
-### 1 - Introduction
+## Qu'est-ce qu'un capteur ?
 
-Que ce soit dans les process industrielles, les véhicules, les objets connectés ou les dispositif vidéo-ludiques, il est systématiquement nécessaire d'avoir recours à des des dispositifs permettant de récupérer une information sur l'environnement physique du système et d'en faire le traitement. Ces dispositifs sont appelés "capteurs" et sont indispensable dans la mesure des grandeurs physique désirées.
+Un **capteur** transforme une grandeur physique (la grandeur **d'entrée**, ou *mesurande*) en une autre grandeur (la grandeur **de sortie**), qui la représente et peut être exploitée pour mesurer ou commander. Le plus souvent, la sortie est **électrique** : une tension, un courant, une résistance, ou directement une valeur numérique.
 
----
-
-#### a. Définitions
-
-**Un Capteur**
-
-On appel capteur le dispositif qui permet de récupérer une information provenant d'une grandeur physique et de la transformer en une autre grandeur physique. Cette dernière est représentative de la grandeur mesurée et va être utilisée dans un but de mesure ou de commande.
-
-Bien souvent, la grandeur physique de sortie et de nature electrique, mais il existe bien évidemment d'autre type de sorties possible selon le besoins en mesure ou en commende désirés. Par exemple, il est tout à fait possible de retrouver des capteurs ayant comme grandeur physique de sortie une pression d'air variable dans des systèmes pneumatiques.
-
-```mermaid!
+```mermaid
 flowchart LR
-
-state001([Grandeur \nd'entrée]) --> state002([Capteur]) --> state003([Grandeur de \nsortie])
-state004([Energie]) --> state002
+  E(["Grandeur d'entrée\n(température, position...)"]) --> C(["Capteur"]) --> S(["Grandeur de sortie\n(tension, résistance...)"])
+  A(["Énergie"]) -.-> C
 ```
 
-**Etendue de mesure :** Valeurs extrêmes pouvant être mesurée par le capteur.
+Quelques capteurs que tu as déjà croisés :
 
-**Résolution :** Plus petite variation de grandeur mesurable par le capteur.
+- le **joystick** d'une manette : deux potentiomètres, dont la résistance dépend de la position du stick ;
+- la **photorésistance** d'un éclairage automatique : sa résistance baisse quand la lumière augmente ;
+- l'**accéléromètre** d'un téléphone : il détecte l'orientation de l'écran ;
+- le **bouton** : le plus simple des capteurs, qui ne connaît que deux états.
 
-**Sensibilité :** Variation du signal de sortie par rapport à la variation du signal d'entrée.
+La sortie n'est pas toujours électrique : un manomètre à aiguille ou un capteur pneumatique produisent un déplacement ou une pression. Mais pour être lue par un microcontrôleur, l'information doit finir sous forme électrique.
 
-{% include message.html
-message="**Exemple :** Le capteur de température LM35 a une sensibilité de 10mV / °C."
-status="is-info" %}
+## Les caractéristiques d'un capteur
 
-**Précision :** Aptitude du capteur à donner une mesure proche de la valeur vraie.
+La fiche technique (*datasheet*) d'un capteur donne ses caractéristiques. Les plus importantes :
 
-**Rapidité :** Temps de réaction du capteur. La rapidité est liée à la bande passante.
+| Caractéristique | Définition | Exemple |
+|---|---|---|
+| **Étendue de mesure** | Les valeurs extrêmes que le capteur sait mesurer | -55 °C à 150 °C |
+| **Sensibilité** | La variation de la sortie pour une variation de l'entrée | 10 mV par °C pour le capteur de température LM35 |
+| **Résolution** | La plus petite variation de l'entrée que le capteur sait distinguer | 0,1 °C |
+| **Précision** | L'aptitude à donner une mesure proche de la valeur vraie | ± 0,5 °C |
+| **Temps de réponse** | Le temps que met la sortie à suivre un changement de l'entrée | 1 s pour atteindre la nouvelle valeur |
 
----
+Avec la sensibilité, on passe de la sortie à la grandeur mesurée. Pour le LM35, une tension de 250 mV correspond à :
 
-#### b. Quelques éléments de métrologie
+$$T = \frac{250\ \text{mV}}{10\ \text{mV/°C}} = 25\ \text{°C}$$
 
-**Le mesurage :** C'est l'ensemble des opérations ayant pour but de déterminer une valeur
-d'une grandeur.
+Une mesure n'est jamais exacte : elle s'accompagne toujours d'une **incertitude**. On écrit par exemple $T = 25 \pm 0{,}5$ °C. Les notions de précision, de justesse, d'incertitude et les erreurs de mesure courantes sont détaillées dans le concept [Précision, justesse et bonnes pratiques de mesure](/docs/concepts/precision-justesse-mesure/).
 
-**La mesure (x) :** C'est l'évaluation d'une grandeur par comparaison avec une autre grandeur
-de même nature prise pour unité.
+## La chaîne de mesure
 
-{% include message.html
-message="**Exemple :** 2 mètres, 400 grammes, 6 secondes."
-status="is-info" %}
+Entre le phénomène physique et le nombre qu'affiche ou qu'utilise un programme, l'information traverse plusieurs étages :
 
-**La grandeur (X) :** Paramètre qui doit être contrôlé lors de l'élaboration d'un produit ou de
-son transfert.
-
-{% include message.html
-message="**Exemple :** pression, température, niveau.
-
-- On effectue des mesures pour connaître la valeur instantanée et l'évolution de certaines grandeurs.
-- Renseignements sur l'état et l'évolution d'un phénomène physique, chimique, industriel."
-status="is-info" %}
-
-**L'incertitude (dx) :** Le résultat de la mesure x d'une grandeur X n'est pas complètement défini par un seul nombre. Il faut au moins la caractériser par un couple (x, dx) et une unité de mesure. dx est l'incertitude sur x. Les incertitudes proviennent des différentes erreurs liées à la mesure. Ainsi, on a :
-
-$ x-dx < X < x+dx $
-
-{% include message.html
-message="**Exemple :** 3 cm ±10%, ou 3 cm ± 3 mm."
-status="is-info" %}
-
-**Erreur absolue (e) :** Résultat d'un mesurage moins la valeur vraie du mesurande. Une erreur
-absolue s'exprime dans l'unité de la mesure.
-
-$ e = x - X $
-
-{% include message.html
-message="**Exemple :** Une erreur de 10 cm sur une mesure de distance."
-status="is-info" %}
-
-**Erreur relative (er) :** Rapport de l'erreur de mesure à une valeur vraie de mesurande. Une
-erreur relative s'exprime généralement en pourcentage de la grandeur
-mesurée.
-
-$ e_r = e/X $
-
-$ e_{r percent} = 100 e_r $
-
-{% include message.html
-message="**Exemple :** Une erreur de 10 % sur une mesure de distance (10 % de la distance réelle). "
-status="is-info" %}
-
----
-
-#### c. Types d'erreurs classiques
-
-{% include message.html
-title="En cours de rédaction"
-icon="fas fa-hard-hat"
-status="is-warning" %}
-
----
-
-### 2 - Caractéristiques d'une chaîne de mesure informatisée
-
-```mermaid!
+```mermaid
 flowchart LR
-
-subgraph Grandeur analogique
-    state001([Grandeur \nd'entrée]) --> state002([Capteur]) -- Grandeur \nelectrique --> state003([Circuit de mise \nen forme du signal])
-end
-
-state003 -- Grandeur \nelectrique --> state004([Acquisition]) 
-
-subgraph Grandeur numérique
-    state004 -- Données \nnumériques --> state005([Traitement])-->state006([Affichage])
-end
-
+  subgraph Analogique
+    G(["Grandeur\nphysique"]) --> C(["Capteur"]) --> M(["Mise en forme\ndu signal"])
+  end
+  M --> N(["Numérisation\n(CAN)"])
+  subgraph Numérique
+    N --> T(["Traitement"]) --> A(["Affichage,\ncommande"])
+  end
 ```
 
-La structure de base d'une chaîne de mesure comprend au minimum quatre étages :
+1. Le **capteur** convertit la grandeur physique en signal électrique.
+2. La **mise en forme** (ou *conditionnement*) adapte ce signal : amplification d'un signal trop faible, filtrage des perturbations, conversion d'une résistance en tension.
+3. La **numérisation**, par un convertisseur analogique-numérique (**CAN**, ou *ADC* en anglais), mesure la tension à intervalles réguliers et la transforme en nombre.
+4. Le **traitement**, par un microcontrôleur ou un ordinateur, exploite ces nombres : calcul, enregistrement, affichage, décision.
 
-- Un capteur sensible aux variations d'une grandeur physique et qui, à partir de ces variations, délivre un signal électrique.
-- Un conditionneur de signal dont le rôle principal est l'amplification du signal délivré par le capteur pour lui donner un niveau compatible avec l'unité de numérisation; cet étage peut parfois intégrer un filtre qui réduit les perturbations présentes sur le signal.
-- Une unité de numérisation qui va échantillonner le signal à intervalles réguliers et affecter un nombre (image de la tension) à chaque point d'échantillonnage.
-- L'unité de traitement informatique peut exploiter les mesures qui sont maintenant une suite de nombres (enregistrement, affichage de courbes, traitements Mathématiques, transmissions des données …).
+De plus en plus de capteurs intègrent les trois premiers étages dans un seul boîtier : le capteur de température **DS18B20** ou le capteur de température, d'humidité et de pression **BME280** délivrent directement une valeur numérique, que le microcontrôleur lit sur un bus de communication.
 
-De nos jours, compte tenu des possibilités offertes par l'électronique et l'informatique, les capteurs délivrent un signal électrique et la quasi-totalité des chaînes de mesure sont des chaînes électroniques et informatiques.
+## Les types de signaux
 
-Certains capteurs, par exemple le thermomètre DALLAS DS1621, délivrent directement un mot binaire, image de la température, en leur sortie. Ils intègrent, dans un seul boîtier (DIL 08) le capteur + le circuit de mise en forme + le CAN.
+Un capteur peut délivrer deux grandes familles de signaux.
 
----
+Un signal **analogique** peut prendre une **infinité de valeurs** dans un intervalle. On s'intéresse selon les cas :
 
-### 3 - Classification des signaux
+- à sa **valeur** à un instant donné, pour un signal qui varie lentement : une température, un niveau ;
+- à sa **forme** dans le temps : un battement cardiaque, un choc ;
+- à son **contenu en fréquences** : la voix, un sonar.
 
-```mermaid!
-flowchart LR
+Un signal **numérique** ne prend qu'un **nombre fini de valeurs** :
 
-state001(Signal)
-state011(Analogique)
-state021(Numérique)
+- **tout ou rien** (TOR) : deux états seulement, comme un bouton ou un interrupteur de fin de course ;
+- **train d'impulsions** : chaque impulsion signale un événement, comme un codeur de roue qui envoie un nombre connu d'impulsions par tour ;
+- **valeur numérique** : un nombre transmis sur un bus (I2C, SPI, 1-Wire...), image d'une grandeur analogique numérisée par le capteur lui-même.
 
-state111(Continu)
-state211(Temporel)
-state311(Fréquentiel)
+## Capteurs actifs et capteurs passifs
 
-state121(TOR)
-state221(Train d'impulsion)
-state321(Echantillonnage)
+Selon le phénomène physique utilisé, on distingue deux familles.
 
-state001 --> state011
-state001 --> state021
+### Les capteurs actifs
 
-state011 --> state111
-state011 --> state211
-state011 --> state311
+Un capteur **actif** fonctionne comme un **générateur** : il convertit directement l'énergie de la grandeur mesurée (chaleur, mouvement, lumière) en énergie électrique, sans alimentation extérieure pour la mesure elle-même.
 
-state021 --> state121
-state021 --> state221
-state021 --> state321
+| Effet physique | Principe | Grandeur mesurée | Sortie |
+|---|---|---|---|
+| **Thermoélectrique** | Deux métaux différents soudés, dont les jonctions sont à des températures différentes, produisent une tension | Température (thermocouple) | Tension |
+| **Piézoélectrique** | Certains cristaux (le quartz) se chargent électriquement quand on les déforme | Force, pression, accélération | Charge électrique |
+| **Induction** | Un aimant qui bouge près d'une bobine y induit une tension | Vitesse | Tension |
+| **Photovoltaïque** | La lumière qui frappe une jonction de semi-conducteurs produit une tension | Éclairement | Tension |
+| **Photoémission** | La lumière arrache des électrons à un matériau | Éclairement | Courant |
 
-```
+### Les capteurs passifs
 
-Un signal est dit analogique si l'amplitude de la grandeur physique le représentant peut prendre une infinité de valeurs dans un intervalle donné.
+Un capteur **passif** est un composant dont une caractéristique électrique (résistance, capacité, inductance) **varie** avec la grandeur mesurée. Il ne produit rien par lui-même : il faut l'**alimenter** pour mesurer cette variation.
 
-- **Signal continu :** C'est un signal qui varie 'lentement' dans le temps : température, débit, niveau.
-- **Forme :** C'est la forme de ce signal qui est importante : pression cardiaque, chromatographie, impact.
-- **Fréquentiel :** C'est le spectre fréquentiel qui transporte l'information désirée : analyse vocale, sonar, spectrographie.
+| Grandeur mesurée | Caractéristique qui varie | Exemple de capteur |
+|---|---|---|
+| Position | Résistance | Potentiomètre (le joystick) |
+| Température | Résistance | Thermistance, sonde platine Pt100 |
+| Lumière | Résistance | Photorésistance (LDR) |
+| Déformation, force | Résistance | Jauge de contrainte |
+| Distance, humidité | Capacité | Capteur capacitif |
+| Position d'une pièce métallique | Inductance | Capteur inductif |
 
-Un signal est dit numérique si l'amplitude de la grandeur physique le représentant ne peut prendre qu'un nombre fini de valeurs. En général ce nombre fini de valeurs est une puissance de 2.
+Certains capteurs ne rentrent pas dans ces deux cases. Le capteur à **effet Hall**, par exemple, mesure un champ magnétique (la position d'un aimant, un courant) : il a besoin d'une alimentation, mais délivre directement une tension.
 
-- **Tout ou rien (TOR) :** Il informe sur l'état bivalent d'un système.
+## Lire un capteur avec un microcontrôleur
 
-    `Une vanne ouverte ou fermée.`
+La façon de lire un capteur dépend du signal qu'il délivre :
 
-- **Train d'impulsion :** Chaque impulsion est l'image d'un changement d'état.
+| Signal du capteur | Exemple | Lecture par le microcontrôleur |
+|---|---|---|
+| Tout ou rien | Bouton, fin de course | Une entrée numérique : `digitalRead()` |
+| Tension analogique | Joystick, LM35 | Le convertisseur analogique-numérique : `analogRead()` |
+| Résistance variable | Photorésistance, thermistance | Un **pont diviseur**, puis `analogRead()` |
+| Impulsions | Codeur de roue | Compter les fronts, par interruption |
+| Valeur numérique | DS18B20, BME280 | Un bus (I2C, SPI, 1-Wire), via une bibliothèque |
 
-    `Un codeur incrémental donne un nombre fini et connu d'impulsion par tour.`
+Un capteur **résistif** ne délivre pas de tension : on le place dans un **pont diviseur** : le capteur (de résistance $R_c$) entre le 3,3 V et l'entrée analogique, une résistance fixe $R$ entre cette entrée et GND. La tension sur l'entrée dépend alors de $R_c$ :
 
-- **Echantillonnage :** C'est l'image numérique d'un signal analogique.
+$$V_{mesure} = 3{,}3\ \text{V} \times \frac{R}{R + R_c}$$
 
-    `Température, débit, niveau, son (pression)…`
+Quand la lumière augmente, la résistance d'une photorésistance baisse, et $V_{mesure}$ monte : l'ADC la convertit en un nombre entre 0 et 4095. Les lectures analogiques sont détaillées dans le concept [ADC & PWM](/workshops/microcontroleur/concepts/adc-pwm/), et les bus numériques dans [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/).
 
----
+{% include message.html title="Vérifier la tension de sortie" message="Une entrée de microcontrôleur supporte une plage de tension précise : 0 à 3,3 V sur un ESP32. Avant de brancher un capteur, vérifie sur sa datasheet la tension qu'il délivre : un capteur alimenté en 5 V peut détruire l'entrée." status="is-warning" icon="fas fa-exclamation-triangle" %}
 
-## LES DIFFÉRENTES FAMILLES DE CAPTEURS
+## Quiz express
 
-Si l'on s'intéresse aux phénomènes physiques mis en jeux dans les capteurs, on peut classer ces derniers en deux catégories.
+**1. Un capteur de température délivre 10 mV par °C. Il sort 320 mV. Quelle est la température ?**
 
----
+<details><summary>Voir la réponse</summary>320 / 10 = 32 °C.</details>
 
-### 1 - Capteurs actifs
+**2. Une photorésistance est-elle un capteur actif ou passif ?**
 
-Fonctionnant en générateur, un capteur actif est généralement fondé dans son principe sur un effet physique qui assure la conversion en énergie électrique de la forme d'énergie propre à la grandeur physique à prélever, énergie thermique, mécanique ou de rayonnement.
+<details><summary>Voir la réponse</summary>Passif : sa résistance varie avec la lumière, mais elle ne produit aucune tension. Il faut l'alimenter, par exemple dans un pont diviseur.</details>
 
-Les effets physique les plus classiques sont :
+**3. Comment un microcontrôleur lit-il un capteur qui délivre directement une valeur numérique ?**
 
-- **Effet thermoélectrique :** Un circuit formé de deux conducteurs de nature chimique différente, dont les jonctions sont à des températures T1 et T2, est le siège d'une force électromotrice d'origine thermique e(T1,T2).
-- **Effet piézo-électrique :** L'application d'une contrainte mécanique à certains matériaux dits piézo-électriques (le quartz par exemple) entraîne l'apparition d'une déformation et d'une même charge électrique de signe différent sur les faces opposées.
-- **Effet d'induction électromagnétique :** La variation du flux d'induction magnétique dans un circuit électrique induit une tension électrique (détection de passage d'un objet métallique).
-- **Effet photo-électrique :** La libération de charges électriques dans la matière sous l'influence d'un rayonnement lumineux ou plus généralement d'une onde électromagnétique.
-- **Effet Hall :** Un champ magnétique B et un courant électrique I créent dans le matériau une différence de potentiel UH .
-- **Effet photovoltaïque :** Des électrons et des trous sont libérés au voisinage d'une jonction PN illuminée, leur déplacement modifie la tension à ses bornes.
+<details><summary>Voir la réponse</summary>Par un bus de communication (I2C, SPI, 1-Wire...), en général avec une bibliothèque fournie pour ce capteur.</details>
 
-| Grandeur physique mesurée   | Effet utilisé               | Grandeur de sortie |
-| ---                         | :---:                       | ---                |
-| Température                 | Thermoélectricité           | Tension            |
-| Flux de rayonnement optique | Photo-émission              | Courant            |
-| ^^                          | Effet photovoltaïque        | Tension            |
-| ^^                          | Effet photo-électrique      | Tension            |
-| Force                       | Piézo-électricité           | Charge électrique  |
-| Pression                    | ^^                          | ^^                 |
-| Accélération                | Induction électromagnétique | Tension            |
-| Vitesse                     | ^^                          | ^^                 |
-| Position (Aimant)           | Effet Hall                  | Tension            |
-| Courant                     | ^^                          | ^^                 |
+## Résumé
 
----
+- Un **capteur** transforme une grandeur physique en une grandeur exploitable, le plus souvent électrique.
+- Ses caractéristiques (étendue de mesure, sensibilité, résolution, précision, temps de réponse) se lisent sur sa **datasheet**.
+- Une **chaîne de mesure** enchaîne capteur, mise en forme, numérisation et traitement ; beaucoup de capteurs modernes intègrent tout et délivrent une valeur numérique.
+- Un signal est **analogique** (infinité de valeurs) ou **numérique** (tout ou rien, impulsions, valeur sur un bus).
+- Un capteur **actif** produit lui-même son signal ; un capteur **passif** voit une caractéristique varier, et doit être alimenté.
+- Un microcontrôleur lit un capteur avec `digitalRead()`, `analogRead()` (avec un pont diviseur pour un capteur résistif), des interruptions, ou un bus.
 
-### 2- Capteurs passifs
+## Pour aller plus loin
 
-Il s'agit généralement d'impédance dont l'un des paramètres déterminants est sensible à la grandeur mesurée. La variation d'impédance résulte :
-
-- Soit d'une variation de dimension du capteur, c'est le principe de fonctionnement d'un grand nombre de capteur de position, potentiomètre, inductance à noyaux mobile, condensateur à armature mobile.
-- Soit d'une déformation résultant de force ou de grandeur s'y ramenant, pression accélération (armature de condensateur soumise à une différence de pression, jauge d'extensomètre liée à une structure déformable).
-
-| Grandeur mesurée              | Caractéristique électrique sensible   | Type de matériau utilisé                                      |
-| ---                           | ---                                   | ---                                                           |
-| Température                   | Résistivité                           | Métaux : platine, nickel, cuivre ...                          |
-| Très basse température        | Constante diélectrique                | Verre                                                         |
-| Flux de rayonnement optique   | Résistivité                           | Semi-conducteur                                               |
-| Déformation                   | Résistivité                           | Alliage de Nickel, silicium dopé                              |
-| ^^                            | Perméabilité magnétique               | Alliage ferromagnétique                                       |
-| Position (aimant)             | Résistivité                           | Matériaux magnéto résistants : bismuth, antimoine d'indium    |
-| Humidité                      | Résistivité                           | Chlorure de lithium                                           |
-
-## RÉCAPITULATIF
-
-- Un capteur transforme généralement une grandeur physique en une grandeur électrique.
-- La relation grandeur physique ↔ grandeur électrique est souvent linéaire.
-- Les capteurs résistifs sont souvent utilisés de deux façons :
-  - alimentés à courant constant (tension proportionnelle à la résistance)
-  - placés dans un pont de jauge (tension quasi-proportionnelle à la résistance).
-- On trouve de plus en plus des capteurs à sortie numérique directe.
-
-**Remarque :** Il est important de connaître les principes des phénomènes physiques liés aux capteurs.
-
-## ALLER PLUS LOIN
-
-- [Cours sources : "Acquisition d'une grandeur physique" par Christian BISSIERES](https://www.les-electroniciens.com/sites/default/files/cours/capteurs.pdf)
+- [Précision, justesse et bonnes pratiques de mesure](/docs/concepts/precision-justesse-mesure/) : erreurs, incertitudes et bons gestes de mesure.
+- [ADC & PWM](/workshops/microcontroleur/concepts/adc-pwm/) : convertir une tension en nombre avec un microcontrôleur.
+- [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/) : lire un capteur numérique en I2C ou en SPI.
+- [Acquisition d'une grandeur physique](https://www.les-electroniciens.com/sites/default/files/cours/capteurs.pdf), cours de Christian Bissières, qui a servi de point de départ à cette page.
