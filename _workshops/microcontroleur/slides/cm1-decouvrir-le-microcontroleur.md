@@ -1,7 +1,7 @@
 ---
 layout: slides
 title: Découvrir le microcontrôleur
-subtitle: "CM1 : de la puce au premier programme"
+subtitle: "CM1 : de la puce au code"
 description: "Support du premier cours de l'atelier Microcontrôleurs (1 h 30) : ce qu'est un microcontrôleur, comment il est fait à l'intérieur, et la chaîne qui mène du code à la puce."
 author: Alban Petit
 kicker: MakerSpace Amiens · Microcontrôleurs
@@ -14,12 +14,11 @@ back_link: /workshops/microcontroleur/
 2. Un ordinateur sur une puce
 3. Sous le capot
 4. Du code à la puce
-5. Votre premier programme
 
 <aside class="notes" markdown="1">
 1 h 30 de cours, sans manipulation. Fil rouge de tout l'atelier : la console de jeu (Pong en TD, Snake multijoueur en projet).
 Partie 1 (environ 10 min) : où trouver la documentation, le déroulé du module, ce qu'ils vont y apprendre et à quoi ça leur servira.
-Parties 2 et 3 : le vocabulaire et la puce. Parties 4 et 5 : la chaîne de développement, plus concrètes, à garder pour la seconde moitié quand l'attention baisse.
+Parties 2 et 3 : le vocabulaire et la puce. Partie 4 : la chaîne de développement et le temps dans `loop()`, plus concrète, à garder pour la seconde moitié quand l'attention baisse.
 La partie 4 s'ouvre sur compilé / interprété (environ 5 min) : partir de Python, qu'ils connaissent, sans entrer dans la syntaxe.
 </aside>
 
@@ -712,6 +711,82 @@ Ranger une variable et allumer une LED : la même opération, poser une valeur �
 
 ---
 
+## Un registre, c'est 32 interrupteurs
+
+Un registre de 32 bits pilote souvent 32 choses à la fois : un bit par broche, un bit par option. On ne touche qu'au bit visé, avec les opérateurs **bit à bit** du C :
+
+```cpp
+reg |=  (1 << n);      // met le bit n à 1, sans toucher aux autres
+reg &= ~(1 << n);      // met le bit n à 0
+reg ^=  (1 << n);      // inverse le bit n
+if (reg & (1 << n))    // teste le bit n
+```
+
+C'est la langue des fiches techniques : le manuel de référence décrit chaque registre bit par bit.
+{: .caption}
+
+[Architecture d'un microcontrôleur](/workshops/microcontroleur/concepts/architecture-microcontroleur/){: .doc-link}
+
+---
+
+## Sous `digitalWrite()`, une écriture
+
+```cpp
+digitalWrite(21, HIGH);                   // la version Arduino
+REG_WRITE(GPIO_OUT_W1TS_REG, 1 << 21);    // le registre, directement
+REG_WRITE(GPIO_OUT_W1TC_REG, 1 << 21);    // remet la broche à 0
+```
+
+`GPIO_OUT_W1TS_REG` n'est qu'un nom pour l'adresse `0x60004008`. *W1TS* : *write 1 to set*, seuls les bits écrits à 1 passent à 1, les autres ne bougent pas.
+
+Pourquoi pas `GPIO_OUT_REG |= ...` ? Il faut lire, modifier, réécrire : si une interruption change le registre entre-temps, sa modification est perdue. W1TS le fait en **une seule écriture**.
+{: .caption}
+
+[Architecture d'un microcontrôleur](/workshops/microcontroleur/concepts/architecture-microcontroleur/){: .doc-link} [ESP32-S3 Technical Reference Manual](https://www.espressif.com/sites/default/files/documentation/esp32-s3_technical_reference_manual_en.pdf){: .doc-link}
+
+<aside class="notes" markdown="1">
+Personne n'écrira de registre à la main dans l'atelier : le but est de montrer qu'il n'y a pas de magie sous `digitalWrite()`. C'est aussi ce qui rend le code Arduino portable : la fonction est la même, seuls l'adresse et le bit changent d'une puce à l'autre.
+</aside>
+
+---
+
+## Activité : Flash ou RAM ?
+
+<p class="activity-meta"><span><i class="fas fa-user-friends"></i>En binôme</span><span><i class="far fa-clock"></i>3 min</span><span><i class="fas fa-pen"></i>Sans PC</span></p>
+
+### Dans votre Pong, où vit chacun de ces éléments ?
+
+- Le code de `loop()`
+- Le score de la partie
+- L'image d'un sprite, déclarée `const`
+- La position de la balle
+- Le nom du réseau Wi-Fi, écrit en dur
+- Un compteur local, dans une fonction
+
+<aside class="notes" markdown="1">
+Question bonus pour départager : lesquels survivent à un appui sur RESET ? Réponse sur la slide suivante : tout ce qui est en Flash (le code, les constantes, le texte écrit en dur), rien de ce qui est en RAM. Le score repart à zéro.
+</aside>
+
+---
+
+## Où vivent vos variables
+
+| Ce que vous écrivez | Où ça vit | Combien de temps |
+|---|---|---|
+| Le code, les chaînes écrites en dur | Flash | survit au reset |
+| `const uint16_t SPRITE[] = {...};` | Flash | survit au reset |
+| `int score;` en dehors des fonctions | RAM | tout le programme |
+| `int i;` dans une fonction | RAM, sur la **pile** | le temps de l'appel |
+| `new`, `malloc()` | RAM, dans le **tas** (*heap*) | jusqu'à libération |
+{: .table-dense}
+
+Le mot `const` déplace un grand tableau de la RAM vers la Flash : précieux pour les images d'un jeu. Évitez `new` et `malloc()` dans `loop()` : à force d'allouer et de libérer, le tas se fragmente et la puce finit par redémarrer.
+{: .caption}
+
+[Architecture d'un microcontrôleur](/workshops/microcontroleur/concepts/architecture-microcontroleur/){: .doc-link}
+
+---
+
 <!-- .slide: class="slide-section" -->
 
 ## Du code à la puce
@@ -883,6 +958,26 @@ Corrigez la **première** erreur, pas les 40 suivantes.
 
 ---
 
+## Lire une compilation réussie
+
+```text
+RAM:   [=         ]   6.0% (used 19736 bytes from 327680 bytes)
+Flash: [=         ]   8.1% (used 270213 bytes from 3342336 bytes)
+========== [SUCCESS] Took 4.21 seconds ==========
+```
+
+Un simple Blink pèse déjà **270 Ko** : le core Arduino, FreeRTOS et les pilotes USB sont compilés avec vos dix lignes.
+
+- **RAM** : les variables globales (ni la pile, ni le tas)
+- **Flash** : le code et les constantes, ce que le flashage écrit
+
+Valeurs indicatives sur la XIAO ESP32S3. Surveillez ces deux lignes quand vous ajouterez des images.
+{: .caption}
+
+[Du matériel au logiciel](/workshops/microcontroleur/concepts/du-materiel-au-logiciel/){: .doc-link}
+
+---
+
 ## Au reset : la séquence de démarrage
 
 1. **ROM bootloader** : gravé en usine, il lit les broches de *strapping* (dont GPIO0) pour choisir démarrage normal ou mode téléversement
@@ -999,6 +1094,46 @@ On compare l'heure à une date mémorisée : rien n'est jamais figé.
 
 ---
 
+## Un `int`, c'est combien ?
+
+| Type | Arduino Uno (8 bits) | ESP32-S3 (32 bits) |
+|---|---|---|
+| `int` | 16 bits, jusqu'à 32 767 | 32 bits, jusqu'à 2,1 milliards |
+| `long`, `unsigned long` | 32 bits | 32 bits |
+| `uint8_t` | 8 bits, de 0 à 255 | identique |
+| `uint32_t` | 32 bits | identique |
+{: .table-dense}
+
+La taille d'un `int` dépend de la puce : le même code peut déborder sur l'une et pas sur l'autre. Les types de `<stdint.h>` (`uint8_t`, `int16_t`, `uint32_t`) ont la même taille partout : utilisez-les dès que la taille compte.
+{: .caption}
+
+[Du matériel au logiciel](/workshops/microcontroleur/concepts/du-materiel-au-logiciel/){: .doc-link}
+
+---
+
+## `millis()` fait le tour du cadran
+
+`millis()` renvoie un entier non signé de 32 bits : il repasse à 0 au bout de 2³² ms, soit **49,7 jours**.
+
+```cpp
+if (millis() - dernierClignotement >= INTERVALLE)   // juste, toujours
+if (millis() >= dernierClignotement + INTERVALLE)   // faux au passage à 0
+```
+
+La soustraction de deux non signés donne l'écart réel même si le compteur a fait le tour, comme sur une horloge : de 23 h à 1 h, il s'est écoulé 2 h.
+{: .caption}
+
+Écrivez toujours `maintenant - date >= durée`.
+{: .highlight-red}
+
+[Du matériel au logiciel](/workshops/microcontroleur/concepts/du-materiel-au-logiciel/){: .doc-link}
+
+<aside class="notes" markdown="1">
+49 jours, c'est long pour un Pong, mais pas pour un capteur, une borne ou un thermostat qui ne s'éteint jamais. Le bug n'apparaît jamais en test, seulement en production : le meilleur argument pour prendre la bonne habitude tout de suite.
+</aside>
+
+---
+
 {% include message.html title="delay() reste utile" message="Pour une pause courte et unique (initialiser un composant, attendre au démarrage), `delay()` est parfaitement acceptable. C'est dans la `loop()`, quand plusieurs tâches doivent avancer en parallèle, qu'il faut l'éviter." status="is-info" icon="fas fa-info-circle" %}
 
 [Du matériel au logiciel](/workshops/microcontroleur/concepts/du-materiel-au-logiciel/){: .doc-link}
@@ -1029,96 +1164,6 @@ Insister : tant que cette fonction s'exécute, tout le reste est suspendu, y com
 </aside>
 
 [Architecture d'un microcontrôleur](/workshops/microcontroleur/concepts/architecture-microcontroleur/){: .doc-link} [GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link}
-
----
-
-<!-- .slide: class="slide-section" -->
-
-## Votre premier programme
-
-Blink, ligne par ligne
-
----
-
-## Quatre lignes qui résument le cours
-
-<pre><code class="language-cpp" data-trim data-line-numbers="1-3|6|7|8-9">
-void setup() {
-  pinMode(LED_BUILTIN, OUTPUT);     // configure la broche : écriture registre
-}
-
-void loop() {
-  digitalWrite(LED_BUILTIN, HIGH);  // 3,3 V sur la broche
-  delay(500);                       // met loop() en pause
-  digitalWrite(LED_BUILTIN, LOW);   // 0 V
-  delay(500);
-}
-</code></pre>
-
-Architecture, registres, GPIO et `loop()`, réunis en quatre lignes. Sur la XIAO, la LED orange est en logique inversée : `LOW` l'allume, `HIGH` l'éteint.
-{: .caption}
-
-[Vérification de la toolchain](/workshops/microcontroleur/tutorials/toolchain-blink/){: .doc-link}
-
----
-
-{% include message.html title="La LED de la XIAO est inversée" message="La LED orange de la XIAO ESP32S3 (`LED_BUILTIN`, GPIO21) est câblée vers le 3,3 V : elle s'allume quand la broche est à `LOW` et s'éteint à `HIGH`. Le Blink clignote quand même, simplement en opposition de phase. La LED rouge voisine indique la charge de la batterie et ne se pilote pas." status="is-info" icon="fas fa-lightbulb" %}
-
-[Vérification de la toolchain](/workshops/microcontroleur/tutorials/toolchain-blink/){: .doc-link} [XIAO ESP32S3](/docs/references/hardware/xiao-esp32s3/){: .doc-link}
-
----
-
-## Le montage le plus simple
-
-![LED rouge et résistance série sur breadboard, reliées à une carte ESP32-S3](/workshops/microcontroleur/tutorials/toolchain-blink/esp32-s3-blink.png){: .img-md}
-
-La base du montage du Pong (photo prise avec une autre carte ESP32-S3 : sur la XIAO, la LED se branche sur D3). Boutons, joystick et écran viendront s'y ajouter.
-{: .caption}
-
-[Vérification de la toolchain](/workshops/microcontroleur/tutorials/toolchain-blink/){: .doc-link}
-
----
-
-## Le fichier `platformio.ini`
-
-```ini
-[env:seeed_xiao_esp32s3]
-platform = espressif32        ; la famille de puces
-board = seeed_xiao_esp32s3    ; la carte exacte
-framework = arduino           ; le core utilisé
-monitor_speed = 115200        ; la vitesse du moniteur série
-lib_deps =                    ; les bibliothèques, téléchargées seules
-    adafruit/Adafruit ST7735 and ST7789 Library@^1.11.0
-```
-
-Tout le projet est décrit ici. C'est ce fichier, versionné dans votre repo, qui permet à quelqu'un d'autre de recompiler votre code à l'identique.
-{: .caption}
-
-[PlatformIO](/docs/references/software/platformIO/){: .doc-link} [Installer PlatformIO](/docs/tutorials/software/vscode-platformio/installation-platformio/){: .doc-link}
-
----
-
-## Déboguer : le moniteur série
-
-```cpp
-void setup() {
-  Serial.begin(115200);
-}
-
-void loop() {
-  Serial.printf("x=%d y=%d btn=%d\n", x, y, btn);
-}
-```
-
-Tant qu'il n'y a pas d'écran, c'est votre seul retour visuel. Afficher une variable au bon endroit résout la moitié des bugs.
-
-[Le port série sous VSCode](/docs/tutorials/electronics/vscode-port-serie/){: .doc-link}
-
----
-
-{% include message.html title="Du charabia à l'écran ?" message="C'est presque toujours une vitesse qui ne correspond pas. Vérifiez que le moniteur série est réglé sur la même valeur que celle passée à `Serial.begin()`, en général 115200." status="is-warning" icon="fas fa-exclamation-triangle" %}
-
-[Le port série sous VSCode](/docs/tutorials/electronics/vscode-port-serie/){: .doc-link}
 
 ---
 
