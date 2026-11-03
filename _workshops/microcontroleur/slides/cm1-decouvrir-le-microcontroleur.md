@@ -437,32 +437,57 @@ En contrepartie : il consomme plus qu'une puce basse consommation, et il vit en 
 
 ### La puce
 
-- Le microcontrôleur seul
-- Un boîtier de 7 × 7 mm
-- Inutilisable sans rien autour
+![Puce ESP32-S3](/workshops/microcontroleur/slides/cm1-decouvrir-le-microcontroleur/esp32-s3-puce.jpg){: .img-sm}
+
+- Le µC seul, 7 × 7 mm
+- Inutilisable seule
 
 </div>
 <div markdown="1">
 
 ### Le module
 
+![Module ESP32-S3-WROOM-1](/workshops/microcontroleur/slides/cm1-decouvrir-le-microcontroleur/esp32-s3-wroom-1-module.webp){: .img-sm}
+
 - Puce, Flash, quartz
-- Antenne et blindage
-- Certifié pour la radio
+- Antenne, blindage
 
 </div>
 <div markdown="1">
 
 ### La carte de dev
 
-- Un module ou une puce
-- USB, régulateur 3,3 V
-- Boutons, broches au pas
+![Carte XIAO ESP32S3](/workshops/microcontroleur/slides/cm1-decouvrir-le-microcontroleur/xiao-esp32s3-carte.webp){: .img-sm}
+
+- USB, régulateur
+- Boutons, broches
 
 </div>
 </div>
 
-Vous programmez **la puce**. La **carte de dev** (XIAO) ajoute ce qu'il faut pour la brancher au PC. Dans un produit, on soude le module ou la puce sur sa propre carte.
+Vous programmez **la puce**. La **carte de dev** (XIAO) ajoute ce qu'il faut pour la brancher au PC. **↓** pour voir ce qu'elle contient.
+{: .caption}
+
+[XIAO ESP32S3](/docs/references/hardware/xiao-esp32s3/){: .doc-link}
+
+<!-- .down -->
+
+## Ce qu'il y a sur la XIAO
+
+![Schéma électronique de la XIAO ESP32S3](/workshops/microcontroleur/slides/cm1-decouvrir-le-microcontroleur/xiao-esp32s3-schema.png){: .img-md}
+
+La puce ESP32-S3 au centre, son quartz à 40 MHz, sa Flash de 8 Mo, l'antenne et les condensateurs de découplage. Schéma : Seeed Studio.
+{: .caption}
+
+[XIAO ESP32S3](/docs/references/hardware/xiao-esp32s3/){: .doc-link}
+
+<!-- .down -->
+
+## Le brochage de la XIAO
+
+![Brochage de la XIAO ESP32S3](/workshops/microcontroleur/slides/cm1-decouvrir-le-microcontroleur/xiao-esp32s3-brochage.jpg){: .img-md}
+
+11 broches, D0 à D10, chacune avec plusieurs fonctions possibles. Image : Seeed Studio.
 {: .caption}
 
 [XIAO ESP32S3](/docs/references/hardware/xiao-esp32s3/){: .doc-link}
