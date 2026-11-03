@@ -157,6 +157,10 @@ body {
     margin-top: 0.5em;
   }
 
+  /* Mise en avant en rouge, affichée d'emblée : {: .highlight-red} sans .fragment
+     (reveal.js ne colore .highlight-red que sur un fragment visible) */
+  .highlight-red:not(.fragment) { color: $accent; }
+
   .columns blockquote { font-size: 0.75em; margin-top: 0; }
 
   /* Lien vers la page du site qui approfondit la slide :
