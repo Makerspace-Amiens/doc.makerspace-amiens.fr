@@ -203,6 +203,22 @@ Même sans programmer de microcontrôleur au quotidien, vous travaillerez avec c
 
 ---
 
+## Activité : c'est quoi, pour vous ?
+
+<p class="activity-meta"><span><i class="fas fa-users"></i>Toute la classe</span><span><i class="far fa-clock"></i>3 min</span><span><i class="fas fa-pen"></i>Sans PC</span></p>
+
+### Qu'est-ce que c'est, pour vous, un microcontrôleur ?
+
+- Une réponse par personne, à voix haute : un mot, une phrase, un exemple
+- Pas de bonne ou de mauvaise réponse
+
+<aside class="notes" markdown="1">
+Laisser venir toutes les réponses, même fausses ou floues (« un petit processeur », « une Arduino », « une puce dans une machine à laver »...) : elles serviront de point de départ. Reformuler à l'oral ce qui relève de la nature (un ordinateur, une puce), des exemples (objets du quotidien) et du rôle (commander, mesurer).
+Les slides suivantes reprennent ces réponses : citer celles de la classe au passage pour les compléter ou les corriger.
+</aside>
+
+---
+
 <!-- .slide: class="slide-section" -->
 
 ## Un ordinateur sur une puce
@@ -211,23 +227,7 @@ Percevoir, décider, agir
 
 ---
 
-## Activité : comptez-les autour de vous
-
-<p class="activity-meta"><span><i class="fas fa-users"></i>Toute la classe</span><span><i class="far fa-clock"></i>3 min</span><span><i class="fas fa-pen"></i>Sans PC</span></p>
-
-### Combien d'ordinateurs y a-t-il à cet étage ?
-
-- Une réponse par personne, à voix haute
-- On note les chiffres au tableau, du plus petit au plus grand
-
-<aside class="notes" markdown="1">
-Les réponses tournent en général autour du nombre de PC portables : c'est le but, on compte ce qu'on appelle « ordinateur » dans la vie courante. Si quelqu'un a lu le titre de la partie et annonce un très grand nombre, lui demander de citer trois objets : il ouvre la slide suivante à votre place.
-Dévoiler ensuite la slide suivante : on est deux ordres de grandeur en dessous.
-</aside>
-
----
-
-## Il y en a des centaines, à cet étage
+## Il y en a des centaines autour de vous
 
 - Chaque **téléphone** en contient plusieurs : tactile, batterie, radio
 - Les **écouteurs sans fil**, les **montres**, les **badges** d'accès
