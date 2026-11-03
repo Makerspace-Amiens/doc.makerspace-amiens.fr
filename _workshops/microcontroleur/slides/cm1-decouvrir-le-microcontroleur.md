@@ -957,7 +957,7 @@ void loop() {
 }
 ```
 
-### Le joueur appuie sur le bouton. Que se passe-t-il ?
+### L'utilisateur appuie sur le bouton. Que se passe-t-il ?
 
 <aside class="notes" markdown="1">
 Réponse attendue : le bouton n'est lu qu'une fois par seconde, et seulement à l'instant précis où le programme atteint la ligne. Un appui de 200 ms a une chance sur cinq d'être vu. Enchaîner sur la slide suivante.
