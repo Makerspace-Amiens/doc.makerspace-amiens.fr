@@ -17,8 +17,8 @@ back_link: /workshops/microcontroleur/
 5. Simuler une tension
 
 <aside class="notes" markdown="1">
-1 h 30 de cours, sans manipulation. Le câblage du Pong est figé (boutons sur D5/D6, joystick sur D0/D1 en ADC1 et D2, comme sur le PCB du projet) : le montrer tôt, tout le cours y renvoie.
-Rappel du CM1 à faire en ouverture : percevoir → décider → agir, et `millis()` plutôt que `delay()`.
+1 h 30 de cours, sans manipulation. Le cours prépare le TD2 : les modules de la malette (bouton, joystick, buzzer, écran) branchés sur les broches de la future carte. Le montrer tôt, tout le cours y renvoie.
+Ouvrir sur la slide de rappel du CM1 : registres, `millis()`, interruption, 3,3 V. Les quatre reviennent dans ce cours.
 </aside>
 
 ---
@@ -35,6 +35,20 @@ Rappel du CM1 à faire en ouverture : percevoir → décider → agir, et `milli
 - produire une tension moyenne avec le **PWM**
 
 [GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link} [ADC et PWM](/workshops/microcontroleur/concepts/adc-pwm/){: .doc-link}
+
+---
+
+## Le CM1 en quatre idées
+
+- Les périphériques se pilotent par des **registres** : un bit, une broche
+- Ne jamais bloquer : `millis()` plutôt que `delay()`
+- L'**interruption** : le matériel prévient le logiciel
+- {: .highlight-red} Tension logique : **3,3 V**, jamais 5 V
+
+Les quatre reviennent aujourd'hui, appliqués aux broches d'entrée et de sortie.
+{: .caption}
+
+[Architecture d'un microcontrôleur](/workshops/microcontroleur/concepts/architecture-microcontroleur/){: .doc-link} [Du matériel au logiciel](/workshops/microcontroleur/concepts/du-materiel-au-logiciel/){: .doc-link}
 
 ---
 
@@ -80,12 +94,6 @@ Cette zone grise au milieu explique tout ce qui suit sur les entrées flottantes
 
 ---
 
-{% include message.html title="3,3 V, pas 5 V" message="Une broche mise en sortie produit 3,3 V, pas 5 V comme sur un Arduino Uno. Et un signal 5 V appliqué en entrée peut endommager la puce. Avant de brancher un module trouvé dans un tiroir, cherchez sa tension d'alimentation." status="is-danger" icon="fas fa-exclamation-triangle" %}
-
-[GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link} [XIAO ESP32S3](/docs/references/hardware/xiao-esp32s3/){: .doc-link}
-
----
-
 <!-- .slide: class="slide-section" -->
 
 ## Une broche en sortie
@@ -105,7 +113,7 @@ digitalWrite(LED_PIN, LOW);   // 0 V   : LED éteinte
 
 *GPIO* veut dire *General Purpose Input/Output* : la même broche peut servir d'entrée ou de sortie, et c'est le logiciel qui décide, à l'exécution.
 
-Derrière `pinMode`, un registre de configuration. Derrière `digitalWrite`, un registre de sortie.
+Vu au CM1 : derrière `pinMode`, un registre de configuration ; derrière `digitalWrite`, un bit d'un registre de sortie.
 {: .caption}
 
 [GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link} [Architecture d'un microcontrôleur](/workshops/microcontroleur/concepts/architecture-microcontroleur/){: .doc-link}
@@ -353,22 +361,19 @@ Même motif qu'au CM1 : comparer `millis()` à une date mémorisée.
 
 ---
 
-## Réagir sans scruter
+## L'interruption, face à un bouton qui rebondit
+
+L'interruption du CM1 se déclenche sur **chaque front** : un bouton qui rebondit la déclenche plusieurs fois pour un seul appui.
+
+- L'interruption lève un drapeau ; `loop()` filtre les **rebonds** avec `millis()`
+- **`volatile`** : la variable change hors de `loop()`, le compilateur la relit à chaque fois
 
 ```cpp
-volatile bool drapeau = false;
-
-void IRAM_ATTR surAppui() {
-  drapeau = true;        // rien de plus
-}
-
-attachInterrupt(digitalPinToInterrupt(BTN_PIN), surAppui, FALLING);
+volatile bool appui = false;   // écrite par l'interruption, lue par loop()
 ```
 
-Plus d'attente : la puce interrompt le CPU au changement de broche.
-
-`IRAM_ATTR` sur l'ISR, `volatile` sur la variable partagée, et rien de plus.
-{: .highlight-red}
+Pour un bouton lu à chaque image d'un jeu, la scrutation avec anti-rebond suffit : c'est la solution du TD2.
+{: .caption}
 
 [GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link}
 
@@ -390,18 +395,18 @@ Vérifiez le brochage de la carte avant de câbler, pas après.
 
 ---
 
-## Le câblage du Pong
+## Le câblage de la malette
 
-| Rôle | Broche | Mode |
+| Module | Broche | Mode |
 |---|---|---|
-| Joystick joueur 1 : axe X | D0 (GPIO1, **ADC1**) | `analogRead` |
-| Joystick : axe Y (Snake) | D1 (GPIO2, **ADC1**) | `analogRead` |
-| Bouton du joystick (START) | D2 (GPIO3) | `INPUT_PULLUP` |
-| Bouton joueur 2 : GAUCHE | D5 (GPIO6) | `INPUT_PULLUP` |
-| Bouton joueur 2 : DROITE | D6 (GPIO43), via 1 kΩ | `INPUT_PULLUP` |
+| Joystick : axes X et Y | D0, D1 (**ADC1**) | `analogRead` |
+| Joystick : appui sur le stick | D2 | `INPUT_PULLUP` |
+| Bouton | D5 | `INPUT_PULLUP` |
+| Buzzer | D3 | PWM (`tone`) |
+| Écran (SPI, vu au CM3) | D7 à D10 | Bibliothèque |
 {: .table-dense}
 
-C'est le câblage du PCB du projet : l'écran viendra occuper D7 à D10 ; D3/D4 vont à un connecteur d'extension.
+C'est le brochage de la future carte (TD3), plus le buzzer, présent seulement sur breadboard. Un programme écrit au TD2 tournera tel quel sur la carte soudée.
 {: .caption}
 
 [Les modules de la malette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/){: .doc-link}
@@ -478,7 +483,7 @@ L'ADC de l'ESP32 n'est pas parfaitement linéaire, surtout près des extrémité
 
 ![Carte ESP32-S3 sur breadboard, reliée par des fils de couleur à un module joystick](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/hero.webp){: .img-md}
 
-Le montage du Pong, ici sur une autre carte ESP32-S3
+Un module joystick, ici sur une autre carte ESP32-S3
 {: .caption}
 
 </div>
@@ -648,7 +653,7 @@ Le CPU n'intervient pas. Une fois le canal réglé, le signal est généré par 
 | LED dimmable | Duty cycle proportionnel à la luminosité |
 | Moteur à courant continu | Duty cycle proportionnel à la vitesse |
 | Servomoteur | Impulsion de 1 à 2 ms toutes les 20 ms |
-| Buzzer | La fréquence devient un ton |
+| Buzzer (celui de la malette) | La fréquence devient un ton |
 {: .table-dense}
 
 Un servomoteur n'écoute pas le rapport cyclique mais la **largeur** de l'impulsion : c'est le même périphérique, lu autrement.
