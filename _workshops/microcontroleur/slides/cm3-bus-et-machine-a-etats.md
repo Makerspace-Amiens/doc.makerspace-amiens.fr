@@ -17,8 +17,8 @@ back_link: /workshops/microcontroleur/
 5. La machine à états
 
 <aside class="notes" markdown="1">
-1 h 30, dernier cours de la série. Garder du temps pour l'exercice de la FSM du Pong : une FSM se dessine sur papier, pas devant un écran.
-Rappels d'ouverture : `millis()` du CM1, l'open-drain du CM2 (il revient avec l'I2C).
+1 h 30, dernier cours de la série, juste avant les TD. Garder du temps pour l'exercice de la FSM du Pong : une FSM se dessine sur papier, pas devant un écran.
+Ouvrir sur la slide de rappel : le bus interne et la haute impédance du CM1, l'open-drain du CM2 (les deux reviennent avec l'I2C), `millis()` (il revient avec la game loop).
 </aside>
 
 ---
@@ -40,6 +40,20 @@ Les deux premiers font dialoguer la puce avec le monde ; les trois derniers gard
 
 ---
 
+## Les CM1 et CM2 en quatre idées
+
+- **CM1** : un **bus interne** partagé ; les composants muets en **haute impédance**
+- **CM1** : ne jamais bloquer, `millis()` plutôt que `delay()`
+- **CM2** : l'**open-drain** tire vers 0 V, une résistance de rappel fait le reste
+- **CM2** : GPIO, ADC et PWM relient la puce au monde
+
+Aujourd'hui, on sort de la puce : des bus pour parler aux composants, puis la structure du programme qui les pilote.
+{: .caption}
+
+[Architecture d'un microcontrôleur](/workshops/microcontroleur/concepts/architecture-microcontroleur/){: .doc-link} [GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link}
+
+---
+
 <!-- .slide: class="slide-section" -->
 
 ## Pourquoi des bus
@@ -50,12 +64,40 @@ Faire dialoguer les composants
 
 ## Un fil par information ?
 
-Un écran couleur 240×240 reçoit **57 600 pixels par image**, soit plus de 115 000 octets en couleur 16 bits. Un capteur renvoie une température sur 16 bits. Une carte SD, des blocs de 512 octets.
+L'écran de l'atelier (240 × 320) reçoit **76 800 pixels par image**, soit plus de 150 000 octets en couleur 16 bits. Un capteur renvoie une température sur 16 bits. Une carte SD, des blocs de 512 octets.
 
 Câbler un fil par bit serait impraticable : plus aucune broche disponible, une carte illisible, et des perturbations entre pistes.
 
 Un **bus série** envoie les bits **les uns après les autres**, sur deux à quatre fils. On échange de la largeur contre du temps, et la puce est assez rapide pour que ça ne se voie pas.
 {: .highlight-red}
+
+[Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link}
+
+---
+
+## Série ou parallèle
+
+![Comparaison d'une liaison parallèle, huit fils et un seul coup, et d'une liaison série, un fil et huit coups successifs](/workshops/microcontroleur/concepts/bus-communication/serie-parallele.svg){: .img-md}
+
+En parallèle, un fil par bit : rapide, mais encombrant. En série, un seul fil de données : les bits passent l'un après l'autre.
+{: .caption}
+
+[Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link}
+
+---
+
+## Quatre questions pour comparer deux liaisons
+
+| Question | Les deux réponses possibles |
+|---|---|
+| Combien d'interlocuteurs ? | **Point à point** (deux) ou **multipoint** (plusieurs) |
+| Une horloge partagée ? | **Synchrone** (oui) ou **asynchrone** (non) |
+| Les deux sens en même temps ? | **Full-duplex** (oui) ou **half-duplex** (chacun son tour) |
+| Comment choisir le destinataire ? | Une **adresse** dans le message, ou un **fil** de sélection |
+{: .table-dense}
+
+Ces quatre réponses suffisent à décrire UART, I2C et SPI.
+{: .caption}
 
 [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link}
 
@@ -84,21 +126,10 @@ Deux fils, point à point
 
 ## Le plus simple des trois
 
-```mermaid!
-flowchart LR
-  subgraph ESP["ESP32-S3"]
-    ETX["TX"]
-    ERX["RX"]
-  end
-  subgraph PER["Périphérique"]
-    PRX["RX"]
-    PTX["TX"]
-  end
-  ETX -->|données| PRX
-  PTX -->|données| ERX
-```
+![Câblage UART : le TX de chaque appareil relié au RX de l'autre, et une masse commune](/workshops/microcontroleur/concepts/bus-communication/uart-cablage.svg){: .img-md}
 
-Pas d'horloge partagée : c'est un bus **asynchrone**. La vitesse est fixée des deux côtés à l'avance, c'est le **baud rate**, en général 115 200 bauds.
+**Point à point**, **full-duplex**, **asynchrone** : sans horloge, la vitesse (le **baud rate**, souvent 115 200 bauds) est fixée à l'avance des deux côtés.
+{: .caption}
 
 [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link}
 
@@ -112,14 +143,9 @@ Pas d'horloge partagée : c'est un bus **asynchrone**. La vitesse est fixée des
 
 ## Anatomie d'une trame
 
-Sans horloge partagée, comment le récepteur sait-il quand lire ? La ligne est au repos à `HIGH`, et chaque octet est encadré :
+![Chronogramme d'une trame UART 8N1 pour la lettre A : repos à 1, bit de start à 0, huit bits de données du poids faible au poids fort, bit de stop à 1](/workshops/microcontroleur/concepts/bus-communication/uart-trame.svg){: .img-md}
 
-- un **bit de start** (passage à `LOW`) annonce le début
-- les **bits de données**, du poids faible au poids fort
-- un **bit de parité** facultatif, pour détecter une erreur
-- un ou deux **bits de stop** (retour à `HIGH`)
-
-D'où la notation **`8N1`**. Format ou vitesse qui diffèrent : c'est le charabia du moniteur série.
+Le **start** donne le signal, le récepteur compte les bits à la vitesse convenue. 8 bits, pas de parité, 1 stop : **`8N1`**. Format ou vitesse différents : du charabia.
 {: .caption}
 
 [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link}
@@ -163,13 +189,21 @@ Deux fils, plusieurs composants
 
 ## Un bus, des adresses
 
-Deux fils partagés : **SDA** (données) et **SCL** (horloge). Chaque composant a une **adresse** sur 7 bits.
+![Bus I2C : un maître et trois esclaves, chacun avec son adresse, reliés à deux fils partagés SDA et SCL, avec deux résistances de tirage vers 3,3 V](/workshops/microcontroleur/concepts/bus-communication/i2c-bus.svg){: .img-md}
 
-1. **Start** : le maître prend la main sur le bus
-2. **Adresse + R/W** : il désigne le composant, lecture ou écriture
-3. **ACK** : l'esclave répond ; un silence = personne à cette adresse
-4. **Données** : les octets circulent, chacun confirmé par un ACK
-5. **Stop** : le maître libère le bus
+**Multipoint**, **synchrone** (SCL), **half-duplex**. Chaque esclave a une **adresse** sur 7 bits ; le maître l'écrit en tête de chaque message.
+{: .caption}
+
+[Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link}
+
+---
+
+## Un échange I2C
+
+![Chronogramme I2C : START, sept bits d'adresse, bit R/W, ACK, huit bits de données, ACK, STOP, avec un coup d'horloge SCL par bit](/workshops/microcontroleur/concepts/bus-communication/i2c-trame.svg){: .img-md}
+
+**Start**, **adresse + R/W**, **ACK** de l'esclave, **données** (un ACK par octet), **stop**. Pas d'ACK après l'adresse : personne ne répond à cette adresse.
+{: .caption}
 
 [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link}
 
@@ -181,10 +215,21 @@ SDA et SCL sont en **open-drain**, comme au CM2 : les composants ne peuvent que 
 
 Il faut donc deux résistances de **pull-up** (~4,7 kΩ) vers le 3,3 V. Sans elles, la ligne ne remonte jamais et **rien ne communique**.
 
-La plupart des modules du commerce les intègrent déjà. Si vous en chaînez plusieurs, une seule paire suffit sur tout le bus : inutile de les cumuler.
+La plupart des modules du commerce les intègrent déjà. Si vous en chaînez plusieurs, une seule paire suffit sur tout le bus : inutile de les cumuler. **↓** pour le détail.
 {: .caption}
 
 [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link} [GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link}
+
+<!-- .down -->
+
+## Partager un fil sans court-circuit
+
+![Deux composants en open-drain sur la même ligne, avec une résistance de tirage vers 3,3 V : l'un relâche la ligne, l'autre la tire à 0](/workshops/microcontroleur/concepts/bus-communication/open-drain.svg){: .img-md}
+
+Chacun peut tirer la ligne à 0 ou la relâcher, jamais imposer un 1 : deux composants ne peuvent pas se contredire.
+{: .caption}
+
+[GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link}
 
 ---
 
@@ -215,9 +260,10 @@ Absent du scan ? Le problème est le câblage ou les pull-ups.
 | Standard | 100 kHz |
 | Fast | 400 kHz |
 | Fast+ | 1 MHz |
+| High Speed | 3,4 MHz |
 {: .table-dense}
 
-Largement suffisant pour des capteurs ou un petit écran OLED monochrome. Bien trop lent pour un écran TFT couleur : à 400 kHz, une image de 240×240 pixels demanderait plus de deux secondes.
+Largement suffisant pour des capteurs ou un petit écran OLED monochrome, sur un ou deux mètres au plus. Bien trop lent pour un écran TFT couleur : à 400 kHz, une image de 240 × 320 pixels demanderait plus de trois secondes.
 {: .highlight-red}
 
 [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link}
@@ -250,19 +296,20 @@ Transmission **synchrone** (l'horloge cadence chaque bit, donc pas de baud rate 
 
 ## Un maître, plusieurs esclaves
 
-```mermaid!
-graph LR
-  M["ESP32-S3"] -->|"MOSI + SCK"| E1["Écran TFT"]
-  M -->|"MOSI + SCK"| E2["Carte SD"]
-  E1 -->|"MISO"| M
-  E2 -->|"MISO"| M
-  M -->|"CS1"| E1
-  M -->|"CS2"| E2
-```
+![Bus SPI : un maître et trois esclaves partageant SCK, MOSI et MISO, chacun relié au maître par son propre fil CS](/workshops/microcontroleur/concepts/bus-communication/spi-bus.svg){: .img-md}
 
-Les trois premiers fils sont partagés ; seul le **CS** distingue les esclaves. Un seul CS actif à la fois, les autres composants se mettent en haute impédance.
+Pas d'adresse : le **CS** à 0 désigne l'esclave. Les autres laissent MISO en haute impédance. De quelques MHz à **80 MHz** sur ESP32-S3.
+{: .caption}
 
-De quelques MHz à **80 MHz** sur ESP32-S3 : c'est ce qui rend un écran TFT fluide.
+[Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link}
+
+---
+
+## Un échange SPI
+
+![Chronogramme SPI : CS passe à 0, huit coups d'horloge SCK, un bit envoyé sur MOSI et un bit reçu sur MISO à chaque coup, puis CS remonte](/workshops/microcontroleur/concepts/bus-communication/spi-trame.svg){: .img-md}
+
+À chaque coup d'horloge, un bit part et un bit revient : **full-duplex**. Ni adresse, ni accusé de réception : c'est ce qui le rend si rapide.
 {: .caption}
 
 [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link}
@@ -304,7 +351,7 @@ tft.fillScreen(ST77XX_BLACK);
 
 {% include message.html title="Le point de blocage classique" message="De mauvaises broches donnent un écran **noir**, pas une erreur de compilation. Si l'écran reste éteint alors que tout compile, vérifier en premier les broches passées à `SPI.begin()` (SCK sur D9) et le `SPI_MODE3`, obligatoire quand CS est relié à GND." status="is-warning" icon="fas fa-exclamation-triangle" %}
 
-[Écran SPI et game loop](/docs/tutorials/electronics/ecran-spi-game-loop/){: .doc-link}
+[Les modules de la malette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/){: .doc-link}
 
 ---
 
@@ -318,12 +365,13 @@ tft.fillScreen(ST77XX_BLACK);
 
 | Critère | UART | I2C | SPI |
 |---|---|---|---|
-| Fils | 2 | 2 | 4 et plus |
-| Vitesse | ~1 Mbit/s | 100 k à 1 Mbit/s | 10 à 80 Mbit/s |
-| Plusieurs composants | non | oui, par adresse | oui, un CS chacun |
-| Full-duplex | oui | non | oui |
-| Horloge partagée | non | oui | oui |
-| Complexité | faible | moyenne | moyenne |
+| Fils (hors masse) | 2 | 2 | 3 + 1 CS par esclave |
+| Liaison | point à point | multipoint | multipoint |
+| Horloge | asynchrone | synchrone | synchrone |
+| Sens | full-duplex | half-duplex | full-duplex |
+| Destinataire | aucun à choisir | adresse 7 bits | fil CS |
+| Accusé de réception | non | oui (ACK) | non |
+| Vitesse | ~1 Mbit/s | 0,1 à 3,4 Mbit/s | jusqu'à 80 Mbit/s |
 | Usage type | debug, modules | capteurs, OLED | écrans, carte SD |
 {: .table-dense}
 
@@ -373,16 +421,16 @@ void loop() {
   }
   lastFrameMs = nowMs;
 
-  InputState input = inputRead();              // 1. lire
-  update(input);                               // 2. calculer
-  draw();                                      // 3. afficher
+  float x = readJoystick();                    // 1. lire
+  gameUpdate(game, x, nowMs);                  // 2. calculer
+  rendererDraw(game);                          // 3. afficher
 }
 </code></pre>
 
-Cette charpente ne changera plus : le Pong puis le Snake enrichiront `update()` et `draw()`.
+Cette charpente ne changera plus : le Pong du TD4 puis le Snake du projet enrichiront `gameUpdate()` et `rendererDraw()`.
 {: .caption}
 
-[Écran SPI et game loop](/docs/tutorials/electronics/ecran-spi-game-loop/){: .doc-link}
+[Le Pong sur la console](/workshops/microcontroleur/tutorials/collisions-fsm-pong/){: .doc-link}
 
 ---
 
@@ -408,7 +456,7 @@ Cette charpente ne changera plus : le Pong puis le Snake enrichiront `update()` 
 Si une image prend plus de 16 ms à calculer, le jeu ralentit au lieu de sauter des images. Premier suspect en cas de lenteur : un `delay()` oublié, ou un redessin complet de l'écran au lieu des seules zones modifiées.
 {: .caption}
 
-[Écran SPI et game loop](/docs/tutorials/electronics/ecran-spi-game-loop/){: .doc-link}
+[Le Pong sur la console](/workshops/microcontroleur/tutorials/collisions-fsm-pong/){: .doc-link}
 
 ---
 
@@ -648,16 +696,18 @@ Piège classique à relever pendant la mise en commun : oublier de réinitialise
 
 ---
 
-## Où tout cela vous mène
+## Et maintenant : les TD, puis le projet
 
-<p class="activity-meta"><span><i class="fas fa-rocket"></i>Le projet</span><span><i class="fas fa-user-friends"></i>En binôme</span></p>
+| Séance | Ce que vous allez faire |
+|---|---|
+| TD1 | Installer, flasher, lire le port série |
+| TD2 | Tester les modules de la malette : GPIO, ADC, PWM, SPI |
+| TD3 | Concevoir votre carte sous KiCad |
+| TD4 | Souder la carte, y écrire un Pong : game loop et FSM |
+| Projet | Un Snake multijoueur, la FSM étendue au réseau |
+{: .table-dense}
 
-- Un **Snake multijoueur** : la console d'un côté, un navigateur de l'autre
-- Une mécanique neuve, les mêmes briques : GPIO, ADC, SPI, FSM
-- La FSM **étendue aux états réseau** : connexion, attente, partie, déconnexion
-- Un **PCB conçu sous KiCad** et soudé, pour remplacer la breadboard
-
-Tout ce que vous venez de voir se retrouve là. Le projet n'ajoute que le réseau.
+Les trois cours sont terminés : tout ce que vous venez de voir sert dès le TD2.
 {: .caption}
 
-[L'atelier Microcontrôleurs](/workshops/microcontroleur/){: .doc-link} [Le Pong sur la console](/workshops/microcontroleur/tutorials/collisions-fsm-pong/){: .doc-link}
+[Syllabus de l'atelier](/workshops/microcontroleur/syllabus/){: .doc-link} [Les modules de la malette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/){: .doc-link}

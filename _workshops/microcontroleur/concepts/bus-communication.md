@@ -34,14 +34,20 @@ Ces langages communs, ce sont les **bus de communication**. Comme des humains, l
 
 ## Pourquoi des bus ?
 
-Relier chaque périphérique au CPU par une broche dédiée serait impraticable : un écran 240×240 nécessiterait des milliers de fils. Les **bus de communication** permettent de transmettre des données sur un petit nombre de fils en les envoyant bit par bit ou octet par octet.
+Relier chaque périphérique au CPU par un fil par bit serait impraticable : l'écran de l'atelier (240 × 320 pixels) reçoit plus de 150 000 octets par image. Les **bus de communication série** transmettent les données sur un petit nombre de fils, en envoyant les bits **l'un après l'autre**. Une liaison **parallèle**, à l'inverse, envoie plusieurs bits en même temps, un par fil : plus rapide à fréquence égale, mais bien plus encombrante.
 
-```mermaid
-graph LR
-  CPU["ESP32-S3"] -->|"2 fils"| I2C["Capteur I2C"]
-  CPU -->|"4 fils"| SPI["Écran SPI"]
-  CPU -->|"2 fils"| UART["PC / GPS / Bluetooth"]
-```
+![Comparaison d'une liaison parallèle, huit fils et un seul coup, et d'une liaison série, un fil et huit coups successifs](serie-parallele.svg)
+
+### Quatre questions pour comparer deux liaisons
+
+| Question | Les deux réponses possibles |
+|---|---|
+| Combien d'interlocuteurs ? | **Point à point** (deux appareils) ou **multipoint** (plusieurs sur les mêmes fils) |
+| Une horloge partagée ? | **Synchrone** (un fil d'horloge cadence les bits) ou **asynchrone** (chacun compte de son côté, à une vitesse convenue) |
+| Les deux sens en même temps ? | **Full-duplex** (oui, sur deux fils de données) ou **half-duplex** (chacun son tour, sur le même fil) |
+| Comment choisir le destinataire ? | Une **adresse** écrite dans le message (logiciel) ou un **fil de sélection** par composant (matériel) |
+
+Ces quatre réponses suffisent à décrire les trois bus de cette page, et la plupart des autres (CAN, 1-Wire, USB...).
 
 ## UART : Universal Asynchronous Receiver-Transmitter
 
@@ -54,25 +60,15 @@ UART est le bus le plus simple : **deux fils**, point à point (une liaison dire
 | **TX** | Transmission (sortie du µC) |
 | **RX** | Réception (entrée du µC) |
 
-La vitesse est fixée à l'avance des deux côtés (**baud rate**, en bits/s). Valeur standard : **115 200 baud**.
+La vitesse est fixée à l'avance des deux côtés (**baud rate**, en bits/s). Valeur standard : **115 200 baud**. Les deux appareils partagent aussi leur **masse** (GND) : sans référence commune, un niveau de tension ne veut rien dire.
 
-```mermaid
-flowchart LR
-  subgraph ESP[ESP32-S3]
-    ETX[TX]
-    ERX[RX]
-  end
-  subgraph PER[Périphérique]
-    PRX[RX]
-    PTX[TX]
-  end
-  ETX -->|données| PRX
-  PTX -->|données| ERX
-```
+![Câblage UART : le TX de chaque appareil relié au RX de l'autre, et une masse commune](uart-cablage.svg)
 
 {% include message.html title="Croisement obligatoire" message="TX d'un appareil se connecte au RX de l'autre, et inversement. Un câblage TX→TX ne fonctionne pas." status="is-info" icon="fas fa-info-circle" %}
 
 ### Anatomie d'une trame
+
+![Chronogramme d'une trame UART 8N1 pour la lettre A : repos à 1, bit de start à 0, huit bits de données du poids faible au poids fort, bit de stop à 1](uart-trame.svg)
 
 Sans horloge partagée, comment le récepteur sait-il quand lire ? Par convention : la ligne est au repos à `HIGH`, et chaque octet est encadré de bits de synchronisation.
 
@@ -111,16 +107,15 @@ I2C relie **plusieurs périphériques** sur seulement **2 fils** grâce à un sy
 
 Chaque composant I2C possède une **adresse 7 bits** unique (ex : `0x3C` pour un écran OLED SSD1306). Le **maître** (l'appareil qui dirige les échanges, ici l'ESP32-S3) initie toujours la communication ; les autres, les **esclaves**, ne répondent que lorsqu'il les sollicite.
 
-```mermaid
-graph LR
-  M["ESP32-S3\n(Maître)"] -->|"SDA + SCL"| C1["Capteur 0x40"]
-  M -->|"même bus"| C2["OLED 0x3C"]
-  M -->|"même bus"| C3["RTC 0x68"]
-```
+![Bus I2C : un maître et trois esclaves, chacun avec son adresse, reliés à deux fils partagés SDA et SCL, avec deux résistances de tirage vers 3,3 V](i2c-bus.svg)
+
+C'est un bus **multipoint**, **synchrone** (le maître génère l'horloge sur SCL) et **half-duplex** (SDA sert dans les deux sens, chacun son tour).
 
 ### Le déroulement d'un échange
 
 Un échange I2C suit toujours le même rituel, orchestré par le maître :
+
+![Chronogramme I2C : START, sept bits d'adresse, bit R/W, ACK, huit bits de données, ACK, STOP, avec un coup d'horloge SCL par bit](i2c-trame.svg)
 
 1. **Condition de start** : le maître prend la main sur le bus.
 2. **Adresse + bit R/W** : il émet l'adresse 7 bits du composant visé, suivie d'un bit « lecture ou écriture ».
@@ -154,6 +149,10 @@ Wire.begin(SDA_PIN, SCL_PIN);  // démarre I2C
 ### Câblage : les résistances de pull-up
 
 Les lignes SDA et SCL sont en **open-drain** (voir [GPIO & monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/)) : les composants ne peuvent que tirer la ligne vers `LOW` ou la relâcher. Il faut donc deux **résistances de pull-up** (typiquement 4,7 kΩ) reliant SDA et SCL au 3,3 V : sans elles, le bus reste bloqué et rien ne communique.
+
+![Deux composants en open-drain sur la même ligne, avec une résistance de tirage vers 3,3 V : l'un relâche la ligne, l'autre la tire à 0](open-drain.svg)
+
+C'est aussi ce qui rend le bus sûr : chacun peut tirer la ligne à 0 ou la relâcher, mais personne n'impose un 1. Deux composants ne peuvent donc jamais se contredire et créer un court-circuit.
 
 {% include message.html title="Souvent déjà présentes" message="La plupart des modules I2C du commerce (écran OLED, capteur…) intègrent déjà leurs pull-ups. Si tu en chaînes plusieurs, une seule paire sur le bus suffit, inutile de les cumuler." status="is-info" icon="fas fa-info-circle" %}
 
@@ -195,15 +194,19 @@ SPI est le bus **le plus rapide** des trois. Il utilise **4 fils** et une logiqu
 
 La transmission est **synchrone** (l'horloge SCK cadence chaque bit) et **full-duplex** (MOSI et MISO actifs simultanément).
 
-```mermaid
-graph LR
-  M["ESP32-S3"] -->|"MOSI + SCK"| E1["Écran TFT"]
-  M -->|"MOSI + SCK"| E2["Carte SD"]
-  E1 -->|"MISO"| M
-  E2 -->|"MISO"| M
-  M -->|"CS1"| E1
-  M -->|"CS2"| E2
-```
+![Bus SPI : un maître et trois esclaves partageant SCK, MOSI et MISO, chacun relié au maître par son propre fil CS](spi-bus.svg)
+
+SCK, MOSI et MISO sont **partagés** ; chaque esclave a son propre fil **CS**. Pas d'adresse : le maître met à 0 le CS de l'esclave qu'il veut, et les autres laissent leur MISO en haute impédance. Selon les composants, les broches portent d'autres noms : SCLK pour SCK, SS pour CS, SDI/SDO pour MOSI/MISO.
+
+### Le déroulement d'un échange
+
+![Chronogramme SPI : CS passe à 0, huit coups d'horloge SCK, un bit envoyé sur MOSI et un bit reçu sur MISO à chaque coup, puis CS remonte](spi-trame.svg)
+
+1. Le maître met le **CS** de l'esclave à 0.
+2. Il génère l'horloge sur **SCK** ; à chaque coup, un bit part sur **MOSI** et un bit revient sur **MISO**.
+3. Il remonte le CS : l'échange est terminé.
+
+Ni adresse, ni accusé de réception : rien ne garantit que l'esclave a bien reçu. C'est le prix de la vitesse. Quand le maître ne fait qu'écrire (comme vers l'écran de l'atelier), MISO n'est même pas câblé.
 
 ### Vitesses typiques
 
@@ -234,7 +237,7 @@ Le maître et l'esclave doivent aussi s'accorder sur **la forme de l'horloge** :
 
 Le mode est imposé par le périphérique (sa datasheet l'indique) et le maître s'y adapte ; le mode 0 est le plus courant. Un mauvais mode ne produit aucune erreur : l'esclave lit simplement des bits décalés, et l'écran reste noir.
 
-{% include message.html title="Sans CS, le mode compte encore plus" message="Sur le PCB de l'atelier, le CS de l'écran est relié à GND : l'écran est sélectionné en permanence et ne sait pas quand une trame commence. Le ST7789 a alors besoin du **mode 3** (horloge à l'état haut au repos) pour rester synchronisé : d'où le `tft.init(240, 320, SPI_MODE3)` du tutoriel [Écran SPI et game loop](/docs/tutorials/electronics/ecran-spi-game-loop/)." status="is-warning" icon="fas fa-exclamation-triangle" %}
+{% include message.html title="Sans CS, le mode compte encore plus" message="Sur le PCB de l'atelier, le CS de l'écran est relié à GND : l'écran est sélectionné en permanence et ne sait pas quand une trame commence. Le ST7789 a alors besoin du **mode 3** (horloge à l'état haut au repos) pour rester synchronisé : d'où le `tft.init(240, 320, SPI_MODE3)` du tutoriel [Les modules de la malette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/)." status="is-warning" icon="fas fa-exclamation-triangle" %}
 
 Pour l'écran de l'atelier, cet appel suffit à router le bus sur les broches du PCB : `SPI.begin(D9, -1, D10, -1)` (pas de MISO, CS relié à GND). La bibliothèque **Adafruit ST7789** se charge ensuite de toutes les trames : tu ne manipules jamais les octets toi-même.
 
@@ -242,12 +245,17 @@ Pour l'écran de l'atelier, cet appel suffit à router le bus sur les broches du
 
 | Critère | UART | I2C | SPI |
 |---|---|---|---|
-| Fils | 2 | 2 | 4+ |
-| Vitesse | ~1 Mbit/s | 100 k–1 Mbit/s | 10–80 Mbit/s |
-| Multi-périphériques | Non (point à point) | Oui (adressage) | Oui (CS par esclave) |
-| Full-duplex | Oui (TX et RX séparés) | Non | Oui |
-| Complexité | Faible | Moyenne | Moyenne |
-| Usage type | Debug, modules | Capteurs, OLED | Écrans, SD |
+| Fils (hors masse) | 2 (TX, RX) | 2 (SDA, SCL) | 3 (SCK, MOSI, MISO) + 1 CS par esclave |
+| Liaison | Point à point | Multipoint | Multipoint |
+| Horloge | Asynchrone | Synchrone | Synchrone |
+| Sens | Full-duplex | Half-duplex | Full-duplex |
+| Choix du destinataire | Aucun (un seul) | Adresse 7 bits | Fil CS |
+| Accusé de réception | Non | Oui (ACK) | Non |
+| Vitesse | ~1 Mbit/s | 100 kbit/s à 3,4 Mbit/s | Jusqu'à 80 Mbit/s sur ESP32-S3 |
+| Distance | Environ 1 m | 1 à 2 m | Quelques dizaines de cm |
+| Usage type | Debug, modules | Capteurs, OLED | Écrans, carte SD |
+
+Ces valeurs sont indicatives : la distance utile dépend de la vitesse, de la qualité des fils et des composants.
 
 ## Comment choisir ?
 
@@ -276,9 +284,10 @@ flowchart TD
 
 ## Pour aller plus loin
 
-- [Écran SPI et game loop](/docs/tutorials/electronics/ecran-spi-game-loop/) : le SPI en pratique
+- [Les modules de la malette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/) : le SPI en pratique, avec l'écran de l'atelier
 - [Écran OLED SSD1306 avec ESP32](/docs/tutorials/electronics/esp32-ssd1306-oled/) : l'I2C en pratique
 - [VSCode et PlatformIO : port série](/docs/tutorials/electronics/vscode-port-serie/) : l'UART pour déboguer
+- [Introduction aux liaisons séries filaires UART, I2C et SPI](https://passionelectronique.fr/liaisons-series-uart-i2c-spi/) (Passion Électronique) : un article très complet, dont la démarche a inspiré les schémas de cette page
 
 ## Résumé
 
