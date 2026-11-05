@@ -13,7 +13,7 @@ subtitle: Game loop, collisions, vies et machine à états sur la carte soudée
 description: Écrire un Pong à un joueur sur la carte de la console, avec une game loop non bloquante, des collisions fiables, des vies, un score et une machine à états.
 author: Alban Petit
 
-time: 2
+time: 1
 difficulty: 3
 
 prerequisites:
@@ -37,7 +37,7 @@ todo: 80
 
 La carte est soudée et testée : il est temps d'y faire tourner un jeu. Ce Pong se joue **seul** : la raquette en bas de l'écran suit le joystick, la balle rebondit sur les trois autres murs, et chaque balle manquée coûte une vie. Il réunit tout ce que la suite demandera : une **game loop** qui ne bloque jamais, des **collisions** fiables, un **affichage** qui ne scintille pas, et une **machine à états** pour l'accueil, la partie et la fin.
 
-On repart du programme de test de l'étape 7 du TD2 ([Les modules de la malette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/)) : il contient déjà la game loop, la lecture du joystick, la détection d'appui et l'initialisation de l'écran.
+On repart du programme de test de l'étape 7 du TD2 ([Les modules de la mallette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/)) : il contient déjà la game loop, la lecture du joystick, la détection d'appui et l'initialisation de l'écran.
 
 {% include step-tuto.html
 greyBackground=true
