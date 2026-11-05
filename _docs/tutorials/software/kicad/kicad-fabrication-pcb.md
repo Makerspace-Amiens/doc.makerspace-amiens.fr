@@ -495,11 +495,11 @@ Consultez les capabilities (capacités de fabrication) de votre fabricant :
 ### Guides et standards
 
 - [IPC Standards](https://www.ipc.org/) : Standards industriels PCB
-- [KiCAD Documentation - Gerber](https://docs.kicad.org/master/fr/pcbnew/pcbnew.html#generate-fabrication-files)
+- [KiCAD Documentation : Gerber](https://docs.kicad.org/master/fr/pcbnew/pcbnew.html#generate-fabrication-files)
 
 {% include message.html
 title="Continuez à apprendre"
-message="La fabrication de PCB devient plus facile avec l'expérience. Commencez simple, observez les résultats, et ajustez pour les versions suivantes. N'ayez pas peur de faire des erreurs - c'est comme ça qu'on apprend !"
+message="La fabrication de PCB devient plus facile avec l'expérience. Commencez simple, observez les résultats, et ajustez pour les versions suivantes. N'ayez pas peur de faire des erreurs : c'est comme ça qu'on apprend !"
 status="is-success"
 icon="fas fa-graduation-cap" %}
 

@@ -88,8 +88,8 @@ greyBackground = true
 title = "Étape 1 : Téléchargement"
 content="Rendez-vous sur le site officiel de KiCAD à l'adresse [https://www.kicad.org/download/macos/](https://www.kicad.org/download/macos/). Téléchargez la version correspondant à votre processeur :
 
-- KiCAD pour Apple Silicon (M1, M2, M3, M4) - fichier .dmg
-- KiCAD pour Intel - fichier .dmg" %}
+- KiCAD pour Apple Silicon (M1, M2, M3, M4) : fichier .dmg
+- KiCAD pour Intel : fichier .dmg" %}
 
 {% include step-tuto.html
 greyBackground = true
@@ -107,7 +107,7 @@ title = "Étape 4 : Premier lancement"
 content="Ouvrez le dossier Applications et double-cliquez sur KiCAD. Si macOS vous affiche un message de sécurité, allez dans Préférences Système > Confidentialité et sécurité, puis autorisez l'exécution de KiCAD." %}
 
 {% include message.html
-title="Important - Sécurité macOS"
+title="Important : sécurité macOS"
 message="Lors du premier lancement, macOS peut bloquer KiCAD car il n'est pas téléchargé depuis l'App Store. C'est normal, suivez simplement les instructions ci-dessus pour autoriser l'application."
 status="is-warning"
 icon="fas fa-exclamation-triangle" %}
@@ -213,7 +213,7 @@ content="KiCAD est livré avec de nombreux composants, mais vous pouvez en ajout
 - En téléchargeant des bibliothèques tierces depuis GitHub
 - En créant vos propres bibliothèques personnalisées
 
-Pour apprendre à importer des bibliothèques supplémentaires dans KiCAD, consultez notre tutoriel [KiCAD - Importer des librairies](/docs/tutorials/software/kicad/kicad-import-librairies/)." %}
+Pour apprendre à importer des bibliothèques supplémentaires dans KiCAD, consultez notre tutoriel [KiCAD : importer des librairies](/docs/tutorials/software/kicad/kicad-import-librairies/)." %}
 
 ---
 

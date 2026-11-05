@@ -9,7 +9,7 @@ doc_header: true
 type: tutorial
 order: 4
 
-title: KiCAD Pcbnew - Les Bases
+title: "KiCAD Pcbnew : les bases"
 subtitle: Concevez votre premier circuit imprimé
 description: Ce tutoriel couvre les fonctionnalités de base de l'éditeur de PCB Pcbnew de KiCAD.
 author: Alban Petit
@@ -126,7 +126,7 @@ content="Mémorisez ces raccourcis pour gagner en efficacité :
 **Échap** : Annuler l'action en cours" %}
 
 {% include message.html
-title="Astuce - Navigation"
+title="Astuce : navigation"
 message="Utilisez la molette pour zoomer, maintenez le bouton du milieu pour déplacer la vue. Appuyez sur F11 pour passer en mode plein écran et gagner de l'espace de travail."
 status="is-success"
 icon="fas fa-mouse" %}
@@ -193,7 +193,7 @@ Retournez dans Pcbnew et mettez à jour le PCB (F8) pour voir les nouvelles empr
 
 {% include message.html
 title="Bibliothèques d'empreintes"
-message="KiCAD inclut des milliers d'empreintes standards. Pour des composants spécifiques, consultez les sites des fabricants ou utilisez SnapEDA/Ultra Librarian pour télécharger des empreintes toutes faites. Pour importer des bibliothèques d'empreintes supplémentaires, consultez notre tutoriel [KiCAD - Importer des librairies](/docs/tutorials/software/kicad/kicad-import-librairies/)."
+message="KiCAD inclut des milliers d'empreintes standards. Pour des composants spécifiques, consultez les sites des fabricants ou utilisez SnapEDA/Ultra Librarian pour télécharger des empreintes toutes faites. Pour importer des bibliothèques d'empreintes supplémentaires, consultez notre tutoriel [KiCAD : importer des librairies](/docs/tutorials/software/kicad/kicad-import-librairies/)."
 status="is-info"
 icon="fas fa-download" %}
 
@@ -395,9 +395,9 @@ greyBackground = true
 title = "Étape 3 : Modes de routage"
 content="Pcbnew propose plusieurs modes de routage (changez avec **/** ou **\\**) :
 
-**Mode 1 - 45°** : Les pistes suivent des angles de 45° (recommandé)
-**Mode 2 - 90°** : Angles droits (à éviter pour les signaux rapides)
-**Mode 3 - Libre** : Angles quelconques (pour cas particuliers)
+**Mode 1, 45°** : Les pistes suivent des angles de 45° (recommandé)
+**Mode 2, 90°** : Angles droits (à éviter pour les signaux rapides)
+**Mode 3, libre** : Angles quelconques (pour cas particuliers)
 **Push and shove** : Les pistes existantes sont écartées automatiquement
 
 Pour la plupart des cas, utilisez le mode 45° avec push and shove activé." %}
@@ -428,7 +428,7 @@ Changez la largeur pendant le routage : appuyez sur **W** puis tapez la valeur.
 Utilisez des calculateurs en ligne pour dimensionner précisément selon le courant."%}
 
 {% include message.html
-title="Astuce - Déplacement de pistes"
+title="Astuce : déplacement de pistes"
 message="Pour déplacer une piste déjà routée, appuyez sur **D** (Drag) au lieu de **M** (Move). Cela déplace la piste en maintenant les connexions, ce qui est beaucoup plus pratique."
 status="is-success"
 icon="fas fa-arrows-alt" %}
@@ -630,7 +630,7 @@ content="Avant de générer les fichiers de fabrication, faites une vérificatio
 Prenez le temps de vérifier, c'est plus facile maintenant qu'après fabrication !" %}
 
 {% include message.html
-title="Conseil - Vue 3D"
+title="Conseil : vue 3D"
 message="Utilisez la vue 3D (Alt+3 ou menu Vue > Vue 3D) pour visualiser votre PCB en trois dimensions. C'est excellent pour détecter les problèmes et avoir un aperçu du résultat final."
 status="is-success"
 icon="fas fa-cube" %}
@@ -694,7 +694,7 @@ Pour approfondir vos connaissances sur Pcbnew et la conception de PCB :
 
 - [Documentation officielle Pcbnew](https://docs.kicad.org/master/fr/pcbnew/pcbnew.html)
 - [Forum KiCAD](https://forum.kicad.info/)
-- [EEVblog - Tutoriels PCB](https://www.eevblog.com/)
+- [EEVblog : tutoriels PCB](https://www.eevblog.com/)
 
 {% include message.html
 title="Continuez à pratiquer !"

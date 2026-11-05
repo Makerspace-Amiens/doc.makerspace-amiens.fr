@@ -9,7 +9,7 @@ doc_header: true
 type: tutorial
 order: 5
 
-title: KiCAD - Importer des librairies
+title: "KiCAD : importer des librairies"
 subtitle: Intégrez des librairies de composants dans KiCAD
 description: Apprenez à importer des librairies de symboles et d'empreintes dans KiCAD, notamment la librairie du Makerspace Amiens référençant les composants disponibles en stock.
 author: Alban Petit
@@ -54,7 +54,7 @@ icon="fas fa-info-circle" %}
 
 {% include step-tuto.html
 greyBackground = true
-title = "Télécharger l'archive ZIP"
+title = "Étape 1 : Télécharger l'archive ZIP"
 content="Rendez-vous sur le dépôt GitHub de la librairie :
 
 **[https://github.com/Makerspace-Amiens/kicad-library](https://github.com/Makerspace-Amiens/kicad-library)**
@@ -81,7 +81,7 @@ Notez le chemin complet du dossier, vous en aurez besoin pour les étapes suivan
 
 {% include step-tuto.html
 greyBackground = true
-title = "Ouvrir le gestionnaire de librairies de symboles"
+title = "Étape 1 : Ouvrir le gestionnaire de librairies de symboles"
 content="Dans KiCAD, ouvrez votre projet puis lancez **Eeschema**. Allez dans :
 
 **Préférences > Gérer les librairies de symboles...**
@@ -96,7 +96,7 @@ image="gestionnaire-librairies-symboles.png" %}
 
 {% include step-tuto.html
 greyBackground = true
-title = "Ajouter la librairie de symboles"
+title = "Étape 2 : Ajouter la librairie de symboles"
 content="Dans l'onglet **Librairies spécifiques au projet** :
 
 1. Cliquez sur l'icône **Ajouter une librairie existante** (symbole de dossier)
@@ -113,7 +113,7 @@ image="ajouter-librairie-symboles.png" %}
 
 {% include step-tuto.html
 greyBackground = true
-title = "Ouvrir le gestionnaire de librairies d'empreintes"
+title = "Étape 1 : Ouvrir le gestionnaire de librairies d'empreintes"
 content="Dans KiCAD, ouvrez **Pcbnew** ou l'éditeur d'empreintes. Allez dans :
 
 **Préférences > Gérer les librairies d'empreintes...**
@@ -123,7 +123,7 @@ image="gestionnaire-librairies-empreintes.png" %}
 
 {% include step-tuto.html
 greyBackground = true
-title = "Ajouter la librairie d'empreintes"
+title = "Étape 2 : Ajouter la librairie d'empreintes"
 content="Dans l'onglet **Librairies spécifiques au projet** :
 
 1. Cliquez sur l'icône **Ajouter une librairie existante** (dossier avec un +)
@@ -140,7 +140,7 @@ image="ajouter-librairie-empreintes.png" %}
 
 {% include step-tuto.html
 greyBackground = true
-title = "Vérifier la librairie de symboles"
+title = "Étape 1 : Vérifier la librairie de symboles"
 content="Dans Eeschema, appuyez sur **A** pour ouvrir la fenêtre d'ajout de composants. Dans la barre de recherche, tapez `Makerspace` ou le nom d'un composant du stock.
 
 Les composants de la librairie Makerspace Amiens doivent apparaître dans la liste, préfixés par le nom de la librairie (`Makerspace-Amiens:NomDuComposant`)."
@@ -148,7 +148,7 @@ image="verifier-librairie-symboles.png" %}
 
 {% include step-tuto.html
 greyBackground = true
-title = "Vérifier la librairie d'empreintes"
+title = "Étape 2 : Vérifier la librairie d'empreintes"
 content="Dans Pcbnew, ouvrez l'éditeur d'empreintes ou ajoutez une empreinte depuis le menu. Recherchez `Makerspace` dans la barre de recherche.
 
 Les empreintes de la librairie Makerspace Amiens doivent être listées et prévisualisées correctement."

@@ -9,7 +9,7 @@ doc_header: true
 type: tutorial
 order: 3
 
-title: KiCAD Eeschema - Les Bases
+title: "KiCAD Eeschema : les bases"
 subtitle: Apprenez à créer vos premiers schémas électroniques
 description: Ce tutoriel couvre les fonctionnalités de base de l'éditeur de schémas Eeschema de KiCAD.
 author: Alban Petit
@@ -103,7 +103,7 @@ content="Mémorisez ces raccourcis pour gagner en efficacité :
 - **Échap** : Annuler l'action en cours" %}
 
 {% include message.html
-title="Astuce - Zoom"
+title="Astuce : zoom"
 message="Utilisez la molette de la souris pour zoomer/dézoomer. Maintenez le bouton du milieu (molette) enfoncé pour déplacer la vue. Double-clic sur la molette pour ajuster le zoom à la page."
 status="is-success"
 icon="fas fa-mouse" %}
@@ -156,7 +156,7 @@ image="placer-composant.png" %}
 
 {% include message.html
 title="Bibliothèques de composants"
-message="Les composants sont organisés en bibliothèques thématiques : Device (composants génériques), Connector (connecteurs), MCU (microcontrôleurs), etc. N'hésitez pas à explorer les différentes bibliothèques. Pour importer des bibliothèques supplémentaires (comme la librairie Makerspace Amiens), consultez notre tutoriel [KiCAD - Importer des librairies](/docs/tutorials/software/kicad/kicad-import-librairies/)."
+message="Les composants sont organisés en bibliothèques thématiques : Device (composants génériques), Connector (connecteurs), MCU (microcontrôleurs), etc. N'hésitez pas à explorer les différentes bibliothèques. Pour importer des bibliothèques supplémentaires (comme la librairie Makerspace Amiens), consultez notre tutoriel [KiCAD : importer des librairies](/docs/tutorials/software/kicad/kicad-import-librairies/)."
 status="is-info"
 icon="fas fa-book" %}
 
@@ -200,7 +200,7 @@ content="Connectez les composants de votre circuit :
 Votre premier circuit est maintenant câblé !" %}
 
 {% include message.html
-title="Attention - Symboles d'alimentation"
+title="Attention : symboles d'alimentation"
 message="Les symboles d'alimentation (+5V, GND, +3.3V, etc.) sont des connexions implicites : tous les symboles portant le même nom sont connectés entre eux automatiquement, même sans fil visible."
 status="is-warning"
 icon="fas fa-bolt" %}
@@ -246,7 +246,7 @@ title = "Étape 4 : Ajouter des notes et du texte"
 content="Pour documenter votre schéma, vous pouvez ajouter du texte libre. Cliquez sur l'icône 'T' (Texte) dans la barre d'outils droite, ou allez dans **Placer > Texte**. Ajoutez des commentaires, des notes de version, ou toute information pertinente." %}
 
 {% include message.html
-title="Bonnes pratiques - Documentation"
+title="Bonnes pratiques : documentation"
 message="Documentez toujours vos schémas : ajoutez un titre, votre nom, la date, et des notes expliquant le fonctionnement du circuit. Votre vous-même dans 6 mois vous remerciera !"
 status="is-success"
 icon="fas fa-file-alt" %}
@@ -373,7 +373,7 @@ title = "Étape 2 : Sauvegarder votre travail"
 content="Sauvegardez régulièrement votre schéma avec **Ctrl+S** (Cmd+S sur macOS) ou **Fichier > Enregistrer**. KiCAD crée automatiquement des fichiers de sauvegarde (backup) pour éviter les pertes de données." %}
 
 {% include message.html
-title="Conseil - Versioning"
+title="Conseil : versioning"
 message="Pour les projets importants, utilisez un système de contrôle de version (Git) pour suivre l'évolution de vos schémas et pouvoir revenir en arrière si nécessaire."
 status="is-success"
 icon="fas fa-code-branch" %}
