@@ -89,7 +89,7 @@ flowchart LR
 3. La **numérisation**, par un convertisseur analogique-numérique (**CAN**, ou *ADC* en anglais), mesure la tension à intervalles réguliers et la transforme en nombre.
 4. Le **traitement**, par un microcontrôleur ou un ordinateur, exploite ces nombres : calcul, enregistrement, affichage, décision.
 
-De plus en plus de capteurs intègrent les trois premiers étages dans un seul boîtier : le capteur de température **DS18B20** ou le capteur de température, d'humidité et de pression **BME280** délivrent directement une valeur numérique, que le microcontrôleur lit sur un bus de communication.
+De plus en plus de capteurs intègrent les trois premiers étages dans un seul boîtier : le capteur de température **DS18B20** ou le capteur de température, d'humidité et de pression **BME280** délivrent directement une valeur numérique, que le microcontrôleur lit sur un bus de communication : le DS18B20 en 1-Wire, le BME280 en I2C ou en SPI.
 
 ## Les types de signaux
 
@@ -148,7 +148,7 @@ La façon de lire un capteur dépend du signal qu'il délivre :
 | Tension analogique | Joystick, LM35 | Le convertisseur analogique-numérique : `analogRead()` |
 | Résistance variable | Photorésistance, thermistance | Un **pont diviseur**, puis `analogRead()` |
 | Impulsions | Codeur de roue | Compter les fronts, par interruption |
-| Valeur numérique | DS18B20, BME280 | Un bus (I2C, SPI, 1-Wire), via une bibliothèque |
+| Valeur numérique | DS18B20 (1-Wire), BME280 (I2C) | Un bus de communication, via une bibliothèque |
 
 Un capteur **résistif** ne délivre pas de tension : on le place dans un **pont diviseur** : le capteur (de résistance $R_c$) entre le 3,3 V et l'entrée analogique, une résistance fixe $R$ entre cette entrée et GND. La tension sur l'entrée dépend alors de $R_c$ :
 
@@ -185,5 +185,5 @@ Quand la lumière augmente, la résistance d'une photorésistance baisse, et $V_
 
 - [Précision, justesse et bonnes pratiques de mesure](/docs/concepts/precision-justesse-mesure/) : erreurs, incertitudes et bons gestes de mesure.
 - [ADC & PWM](/workshops/microcontroleur/concepts/adc-pwm/) : convertir une tension en nombre avec un microcontrôleur.
-- [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/) : lire un capteur numérique en I2C ou en SPI.
+- [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/) : lire un capteur numérique en I2C, en SPI ou en 1-Wire, et choisir son adresse I2C.
 - [Acquisition d'une grandeur physique](https://www.les-electroniciens.com/sites/default/files/cours/capteurs.pdf), cours de Christian Bissières, qui a servi de point de départ à cette page.
