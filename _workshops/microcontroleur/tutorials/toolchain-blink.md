@@ -36,7 +36,7 @@ hardwares:
 todo: 90
 ---
 
-Ce tutoriel a pour but de vérifier que **chacun** a une chaîne de développement fonctionnelle avant d'attaquer la suite des aventures sur les microcontrôleurs. Au TD2, ce même montage accueillera les modules de la malette ; au TD3, vous concevrez la carte qui les réunit.
+Ce tutoriel a pour but de vérifier que **chacun** a une chaîne de développement fonctionnelle avant d'attaquer la suite des aventures sur les microcontrôleurs. Au TD2, ce même montage accueillera les modules de la mallette ; au TD3, vous concevrez la carte qui les réunit.
 
 {% include message.html title="À faire avant la séance" message="L'installation de PlatformIO (voir le prérequis ci-dessus) et du support ESP32 doit être terminée." status="is-warning" icon="fas fa-exclamation-triangle" %}
 
@@ -109,7 +109,7 @@ content="La LED orange intégrée (`LED_BUILTIN`) doit clignoter à 1 Hz. **Mont
 
 ## Bonus : LED externe sur breadboard
 
-S'il te reste du temps, câble une LED externe avec sa résistance série entre la broche **D3** (GPIO4) et GND. C'est ta première sortie **physique** : un montage d'essai, à retirer ensuite : au TD2, D3 accueille le buzzer de la malette, et sur la carte de la console, le connecteur I2C.
+S'il te reste du temps, câble une LED externe avec sa résistance série entre la broche **D3** (GPIO4) et GND. C'est ta première sortie **physique** : un montage d'essai, à retirer ensuite : au TD2, D3 accueille le buzzer de la mallette, et sur la carte de la console, le connecteur I2C.
 
 ![BreadBoard](esp32-s3-blink.png)
 
@@ -136,4 +136,4 @@ void loop() {
 
 Le calcul de la résistance série est détaillé dans le concept [GPIO & monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/).
 
-{% include message.html title="Rendez-vous au tutoriel suivant" message="Le TD2 réutilise cette même carte et ce même projet PlatformIO : retire la LED externe, puis tu brancheras un à un les modules de la malette, selon le câblage de la future carte : voir [Les modules de la malette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/)." status="is-success" icon="fas fa-check-circle" %}
+{% include message.html title="Rendez-vous au tutoriel suivant" message="Le TD2 réutilise cette même carte et ce même projet PlatformIO : retire la LED externe, puis tu brancheras un à un les modules de la mallette, selon le câblage de la future carte : voir [Les modules de la mallette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/)." status="is-success" icon="fas fa-check-circle" %}

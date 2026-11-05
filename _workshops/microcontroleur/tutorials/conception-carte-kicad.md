@@ -13,7 +13,7 @@ time: 3
 difficulty: 3
 
 prerequisites:
-  - label: Les modules de la malette
+  - label: Les modules de la mallette
     link: /workshops/microcontroleur/tutorials/entrees-boutons-joystick/
   - label: Installation de KiCAD
     link: /docs/tutorials/software/kicad/installation-kicad/
@@ -31,7 +31,7 @@ todo: 80
 
 ## La démarche
 
-Au TD2, les modules de la malette vivaient sur une breadboard. Au TD3, ils se retrouvent sur un **circuit imprimé** (PCB) : plus de fils qui se débranchent, une console qui tient dans la main. Vous concevez **votre** carte sous KiCad, en deux étapes validées par l'encadrant pendant la séance, puis, au TD4, vous soudez la carte finale fournie et y faites tourner le Pong :
+Au TD2, les modules de la mallette vivaient sur une breadboard. Au TD3, ils se retrouvent sur un **circuit imprimé** (PCB) : plus de fils qui se débranchent, une console qui tient dans la main. Vous concevez **votre** carte sous KiCad, en deux étapes validées par l'encadrant pendant la séance, puis, au TD4, vous soudez la carte finale fournie et y faites tourner le Pong :
 
 ```mermaid
 flowchart LR
@@ -102,7 +102,7 @@ Le connecteur de l'écran suit le brochage standard des modules TFT SPI 14 broch
 Chacun de ces choix doit apparaître dans votre schéma, avec sa justification dans la documentation de la carte :
 
 - **La broche D6** est aussi la sortie TX de l'UART0 : la puce y émet des messages au démarrage. Que se passe-t-il si SW2 la relie directement à GND pendant ce temps, et comment l'éviter ? (Voir le concept [GPIO & monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/).)
-- **Les boutons** n'ont pas besoin de résistance de tirage externe : pourquoi ? (Voir le tutoriel [Les modules de la malette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/).)
+- **Les boutons** n'ont pas besoin de résistance de tirage externe : pourquoi ? (Voir le tutoriel [Les modules de la mallette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/).)
 - **Le bus I2C** a besoin de résistances de tirage : où, et de quelle valeur ? (Voir le concept [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/).)
 - **La LED témoin** : quelle résistance pour un courant de quelques mA sous 3,3 V ? (Le calculateur du concept GPIO vous aide.)
 - **Le découplage** : quels condensateurs, et où les placer pour qu'ils soient utiles ?

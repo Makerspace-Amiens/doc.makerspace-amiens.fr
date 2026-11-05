@@ -17,7 +17,7 @@ back_link: /workshops/microcontroleur/
 5. Simuler une tension
 
 <aside class="notes" markdown="1">
-1 h 30 de cours, sans manipulation. Le cours prépare le TD2 : les modules de la malette (bouton, joystick, buzzer, écran) branchés sur les broches de la future carte. Le montrer tôt, tout le cours y renvoie.
+1 h 30 de cours, sans manipulation. Le cours prépare le TD2 : les modules de la mallette (bouton, joystick, buzzer, écran) branchés sur les broches de la future carte. Le montrer tôt, tout le cours y renvoie.
 Ouvrir sur la slide de rappel du CM1 : registres, `millis()`, interruption, 3,3 V. Les quatre reviennent dans ce cours.
 </aside>
 
@@ -303,7 +303,7 @@ bool presse = (digitalRead(BTN_PIN) == LOW);   // logique inversée
 **La logique est inversée** : `LOW` veut dire « pressé ».
 {: .highlight-red}
 
-[GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link} [Les modules de la malette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/){: .doc-link}
+[GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link} [Les modules de la mallette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/){: .doc-link}
 
 ---
 
@@ -357,7 +357,7 @@ Même motif qu'au CM1 : comparer `millis()` à une date mémorisée.
 
 {% include message.html title="Et un simple delay(20) ?" message="On le voit souvent : attendre 20 ms après la première lecture. Il fige tout le programme pendant 20 ms à chaque appui, et ne règle pas la répétition quand le bouton reste enfoncé. Avec un écran à rafraîchir 60 fois par seconde, ces 20 ms se voient : prenez tout de suite l'habitude de la version `millis()`." status="is-warning" icon="fas fa-exclamation-triangle" %}
 
-[Les modules de la malette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/){: .doc-link}
+[Les modules de la mallette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/){: .doc-link}
 
 ---
 
@@ -395,7 +395,7 @@ Vérifiez le brochage de la carte avant de câbler, pas après.
 
 ---
 
-## Le câblage de la malette
+## Le câblage de la mallette
 
 | Module | Broche | Mode |
 |---|---|---|
@@ -409,7 +409,7 @@ Vérifiez le brochage de la carte avant de câbler, pas après.
 C'est le brochage de la future carte (TD3), plus le buzzer, présent seulement sur breadboard. Un programme écrit au TD2 tournera tel quel sur la carte soudée.
 {: .caption}
 
-[Les modules de la malette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/){: .doc-link}
+[Les modules de la mallette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/){: .doc-link}
 
 ---
 
@@ -472,7 +472,7 @@ L'ADC de l'ESP32 n'est pas parfaitement linéaire, surtout près des extrémité
 
 {% include message.html title="ADC2 est inutilisable avec le Wi-Fi" message="Sur ESP32, le bloc ADC2 partage du matériel avec la radio : dès que le Wi-Fi est actif, ses lectures échouent. Utilisez uniquement les broches ADC1, GPIO1 à GPIO10 : sur la XIAO, toutes les broches analogiques le sont. Le symptôme est déroutant : le montage marche parfaitement pendant des semaines, jusqu'au jour où vous activez le Wi-Fi pour le projet." status="is-warning" icon="fas fa-exclamation-triangle" %}
 
-[ADC et PWM](/workshops/microcontroleur/concepts/adc-pwm/){: .doc-link} [Les modules de la malette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/){: .doc-link}
+[ADC et PWM](/workshops/microcontroleur/concepts/adc-pwm/){: .doc-link} [Les modules de la mallette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/){: .doc-link}
 
 ---
 
@@ -502,7 +502,7 @@ Cinq fils : `VCC`, `GND`, `VRx`, `VRy`, `SW`.
 </div>
 </div>
 
-[Les modules de la malette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/){: .doc-link}
+[Les modules de la mallette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/){: .doc-link}
 
 ---
 
@@ -544,7 +544,7 @@ float normaliser(int brut, int centre) {
 De **-1** à **+1**, **0** au repos : la raquette avance d'autant plus vite que le stick est incliné.
 {: .caption}
 
-[ADC et PWM](/workshops/microcontroleur/concepts/adc-pwm/){: .doc-link} [Les modules de la malette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/){: .doc-link}
+[ADC et PWM](/workshops/microcontroleur/concepts/adc-pwm/){: .doc-link} [Les modules de la mallette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/){: .doc-link}
 
 ---
 
@@ -653,7 +653,7 @@ Le CPU n'intervient pas. Une fois le canal réglé, le signal est généré par 
 | LED dimmable | Duty cycle proportionnel à la luminosité |
 | Moteur à courant continu | Duty cycle proportionnel à la vitesse |
 | Servomoteur | Impulsion de 1 à 2 ms toutes les 20 ms |
-| Buzzer (celui de la malette) | La fréquence devient un ton |
+| Buzzer (celui de la mallette) | La fréquence devient un ton |
 {: .table-dense}
 
 Un servomoteur n'écoute pas le rapport cyclique mais la **largeur** de l'impulsion : c'est le même périphérique, lu autrement.
@@ -721,4 +721,4 @@ Quatre lignes, et vous avez déjà couvert l'essentiel de ce que fait un microco
 Ces quatre réflexes couvrent la quasi-totalité des bugs de câblage et de lecture d'entrées.
 {: .caption}
 
-[GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link} [ADC et PWM](/workshops/microcontroleur/concepts/adc-pwm/){: .doc-link} [Les modules de la malette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/){: .doc-link}
+[GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link} [ADC et PWM](/workshops/microcontroleur/concepts/adc-pwm/){: .doc-link} [Les modules de la mallette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/){: .doc-link}

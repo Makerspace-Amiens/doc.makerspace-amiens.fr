@@ -30,7 +30,7 @@ Chaque TD se termine par des checkpoints, que l'encadrant valide **en séance**,
 | TD | Poids | Ce qui doit fonctionner |
 |---|---|---|
 | TD1 | 5 % | La LED de la XIAO clignote ; le moniteur série affiche les messages de la carte |
-| TD2 | 5 % | Les quatre modules de la malette fonctionnent sur breadboard : un seul message par appui de bouton, joystick calibré (0 au repos, -1 / +1 aux butées), buzzer qui sonne, écran qui affiche ; le programme de test réunit les quatre |
+| TD2 | 5 % | Les quatre modules de la mallette fonctionnent sur breadboard : un seul message par appui de bouton, joystick calibré (0 au repos, -1 / +1 aux butées), buzzer qui sonne, écran qui affiche ; le programme de test réunit les quatre |
 | TD3 | 10 % | Le schéma de la carte passe la **validation 1** et le routage la **validation 2** ; les choix de conception (protection de D6, tirage I2C, LED, découplage) sont justifiés par écrit |
 | TD4 | 10 % | La carte finale est soudée proprement et passe tous les tests ; le Pong s'y joue de l'accueil à la fin de partie, sans reflasher |
 

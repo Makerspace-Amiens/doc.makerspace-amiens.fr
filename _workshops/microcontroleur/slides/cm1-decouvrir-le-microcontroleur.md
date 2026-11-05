@@ -111,7 +111,7 @@ Un forum ou un assistant IA aide à chercher. Mais quand deux sources se contred
 |---|---|---|
 | CM1, CM2, CM3 | 3 × 1 h 30 | Les concepts, en cours |
 | TD1 | 1 h 30 | Installer, flasher un premier programme |
-| TD2 | 3 h | Tester les modules de la malette |
+| TD2 | 3 h | Tester les modules de la mallette |
 | TD3 | 3 h | Concevoir votre carte sous KiCad |
 | TD4 | 3 h | Souder la carte, y faire tourner un Pong |
 | Projet | 24 h | Un Snake multijoueur, en binôme |

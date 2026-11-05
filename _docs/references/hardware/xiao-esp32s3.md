@@ -89,7 +89,7 @@ Le moniteur série (`Serial`) passe par cet USB natif : c'est l'option `ARDUINO_
 
 - Programmation via **PlatformIO** (voir la [fiche PlatformIO](/docs/references/software/platformIO/)), carte `seeed_xiao_esp32s3`, et premier flashage dans le tutoriel [Vérification de la toolchain](/workshops/microcontroleur/tutorials/toolchain-blink/).
 - La carte est livrée **sans connecteurs** : souder les deux barrettes de broches avant de la poser sur la breadboard, sans créer de pont entre deux broches voisines.
-- Brochage figé dès le TD2 (modules de la malette sur breadboard), puis repris à l'identique par la carte de la console soudée au TD4 : le code passe de l'une à l'autre sans modification.
+- Brochage figé dès le TD2 (modules de la mallette sur breadboard), puis repris à l'identique par la carte de la console soudée au TD4 : le code passe de l'une à l'autre sans modification.
 
 ## Sources
 

@@ -8,9 +8,9 @@ image: hero.webp
 component_toc: true
 doc_header: true
 
-title: Les modules de la malette
+title: Les modules de la mallette
 subtitle: Tester bouton, joystick, buzzer et écran sur breadboard, un par un
-description: Brancher les quatre modules de la malette sur une breadboard, et vérifier chacun avec un petit programme et le moniteur série, avant de concevoir la carte.
+description: Brancher les quatre modules de la mallette sur une breadboard, et vérifier chacun avec un petit programme et le moniteur série, avant de concevoir la carte.
 author: Alban Petit
 
 time: 3
@@ -33,7 +33,7 @@ softwares:
 hardwares:
   - label: Carte Seeed Studio XIAO ESP32S3
     link: /docs/references/hardware/xiao-esp32s3/
-  - label: "La malette : module bouton, module joystick, module buzzer, module écran, câbles"
+  - label: "La mallette : module bouton, module joystick, module buzzer, module écran, câbles"
     link: ""
   - label: Une breadboard
     link: ""
@@ -43,7 +43,7 @@ todo: 80
 
 ## Tester avant de concevoir
 
-La malette contient les quatre modules de la future console : un **bouton**, un **joystick**, un **buzzer** et un **écran**. Avant de dessiner la carte qui les réunira (TD3), on vérifie chacun **séparément**, sur breadboard : comment il se branche, ce qu'il renvoie, comment le programmer. Ce que vous apprenez ici décidera de votre schéma.
+La mallette contient les quatre modules de la future console : un **bouton**, un **joystick**, un **buzzer** et un **écran**. Avant de dessiner la carte qui les réunira (TD3), on vérifie chacun **séparément**, sur breadboard : comment il se branche, ce qu'il renvoie, comment le programmer. Ce que vous apprenez ici décidera de votre schéma.
 
 La démarche est la même pour chaque module, et pour tout composant que vous découvrirez plus tard :
 
@@ -54,7 +54,7 @@ La démarche est la même pour chaque module, et pour tout composant que vous d�
 
 {% include message.html title="Toujours 3,3 V" message="Alimentez **tous** les modules sur la broche **3V3** de la XIAO, jamais sur 5V : les entrées de l'ESP32-S3 ne supportent pas plus de 3,3 V. Un module conçu pour 5 V fonctionne presque toujours en 3,3 V ; l'inverse peut détruire la carte." status="is-danger" icon="fas fa-exclamation-triangle" %}
 
-### Le câblage de la malette
+### Le câblage de la mallette
 
 On utilise dès maintenant les broches de la carte de la console : un programme écrit aujourd'hui fonctionnera sans modification sur la carte soudée au TD4.
 
@@ -239,7 +239,7 @@ Appelez `calibrateJoystick()` à la fin de `setup()`, puis affichez `normalizeJo
 {% include step-tuto.html
 greyBackground=true
 title="Étape 5 : Le buzzer, jouer une note"
-content="Il existe deux sortes de buzzers, et la malette peut contenir l'une ou l'autre :
+content="Il existe deux sortes de buzzers, et la mallette peut contenir l'une ou l'autre :
 
 - un buzzer **actif** contient son propre oscillateur : il sonne dès qu'on met sa broche à HIGH, toujours sur la même note ;
 - un buzzer **passif** est un simple haut-parleur : il faut lui envoyer un signal carré à la fréquence de la note voulue. C'est du **PWM** (voir le concept [ADC & PWM](/workshops/microcontroleur/concepts/adc-pwm/)).

@@ -275,7 +275,7 @@ Le maître et l'esclave doivent aussi s'accorder sur **la forme de l'horloge** :
 
 Le mode est imposé par le périphérique (sa datasheet l'indique) et le maître s'y adapte ; le mode 0 est le plus courant. Un mauvais mode ne produit aucune erreur : l'esclave lit simplement des bits décalés, et l'écran reste noir.
 
-{% include message.html title="Sans CS, le mode compte encore plus" message="Sur le PCB de l'atelier, le CS de l'écran est relié à GND : l'écran est sélectionné en permanence et ne sait pas quand une trame commence. Le ST7789 a alors besoin du **mode 3** (horloge à l'état haut au repos) pour rester synchronisé : d'où le `tft.init(240, 320, SPI_MODE3)` du tutoriel [Les modules de la malette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/)." status="is-warning" icon="fas fa-exclamation-triangle" %}
+{% include message.html title="Sans CS, le mode compte encore plus" message="Sur le PCB de l'atelier, le CS de l'écran est relié à GND : l'écran est sélectionné en permanence et ne sait pas quand une trame commence. Le ST7789 a alors besoin du **mode 3** (horloge à l'état haut au repos) pour rester synchronisé : d'où le `tft.init(240, 320, SPI_MODE3)` du tutoriel [Les modules de la mallette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/)." status="is-warning" icon="fas fa-exclamation-triangle" %}
 
 Pour l'écran de l'atelier, cet appel suffit à router le bus sur les broches du PCB : `SPI.begin(D9, -1, D10, -1)` (pas de MISO, CS relié à GND). La bibliothèque **Adafruit ST7789** se charge ensuite de toutes les trames : tu ne manipules jamais les octets toi-même.
 
@@ -344,7 +344,7 @@ flowchart TD
 
 ## Pour aller plus loin
 
-- [Les modules de la malette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/) : le SPI en pratique, avec l'écran de l'atelier
+- [Les modules de la mallette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/) : le SPI en pratique, avec l'écran de l'atelier
 - [Écran OLED SSD1306 avec ESP32](/docs/tutorials/electronics/esp32-ssd1306-oled/) : l'I2C en pratique
 - [VSCode et PlatformIO : port série](/docs/tutorials/electronics/vscode-port-serie/) : l'UART pour déboguer
 - [Introduction aux liaisons séries filaires UART, I2C et SPI](https://passionelectronique.fr/liaisons-series-uart-i2c-spi/) (Passion Électronique) : un article très complet, dont la démarche a inspiré les schémas de cette page

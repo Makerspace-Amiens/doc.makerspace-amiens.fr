@@ -18,7 +18,7 @@ time: 3
 difficulty: 3
 
 prerequisites:
-  - label: "Les modules de la malette"
+  - label: "Les modules de la mallette"
     link: /workshops/microcontroleur/tutorials/entrees-boutons-joystick/
   - label: "Concept : Les bus de communication"
     link: /workshops/microcontroleur/concepts/bus-communication/
@@ -38,7 +38,7 @@ todo: 90
 
 ## Écran SPI et game loop
 
-Ce tutoriel ajoute un **écran** à un montage XIAO ESP32S3 qui a déjà un joystick, câblé et calibré comme dans le tutoriel [Les modules de la malette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/) (dont il reprend les fonctions `calibrateJoystick()` et `normalizeJoystick()`). À la fin, une raquette suit le joystick et une balle rebondit sur les bords de l'écran : les premières briques visuelles d'un jeu.
+Ce tutoriel ajoute un **écran** à un montage XIAO ESP32S3 qui a déjà un joystick, câblé et calibré comme dans le tutoriel [Les modules de la mallette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/) (dont il reprend les fonctions `calibrateJoystick()` et `normalizeJoystick()`). À la fin, une raquette suit le joystick et une balle rebondit sur les bords de l'écran : les premières briques visuelles d'un jeu.
 
 ### Câblage additionnel de l'atelier
 

@@ -18,8 +18,8 @@ todo: 80
 |---|---|
 | **Public** | Étudiants débutants en programmation embarquée ; quelques bases de C ou de programmation suffisent |
 | **Volume** | 39 h : 4 h 30 de cours (CM), 10 h 30 de TD, environ 24 h de projet |
-| **Format** | Des cours courts, des TD où chacun teste les modules de la malette, conçoit sa carte, la soude et y fait tourner un Pong, puis un projet en binôme |
-| **Matériel** | Un PC avec VSCode, PlatformIO et KiCad ; la malette de modules (TD2) ; la carte de la console, fournie au TD4 |
+| **Format** | Des cours courts, des TD où chacun teste les modules de la mallette, conçoit sa carte, la soude et y fait tourner un Pong, puis un projet en binôme |
+| **Matériel** | Un PC avec VSCode, PlatformIO et KiCad ; la mallette de modules (TD2) ; la carte de la console, fournie au TD4 |
 | **Évaluation** | Les checkpoints des TD et le projet Snake : voir [Évaluation de l'atelier](/workshops/microcontroleur/evaluation/) |
 
 ## Objectifs
@@ -67,7 +67,7 @@ Les TD viennent **après** les trois cours, et construisent la console en trois 
 | Séance | Durée | Contenu | Concepts mobilisés | Supports |
 |---|---|---|---|---|
 | **TD1** | 1 h 30 | Créer le projet, flasher le premier programme, lire le port série | CM1 | [Vérification de la toolchain](/workshops/microcontroleur/tutorials/toolchain-blink/), [Port série](/docs/tutorials/electronics/vscode-port-serie/) |
-| **TD2** | 3 h | Tester sur breadboard les modules de la malette : bouton, joystick, buzzer, écran | CM2, CM3 | [Les modules de la malette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/) |
+| **TD2** | 3 h | Tester sur breadboard les modules de la mallette : bouton, joystick, buzzer, écran | CM2, CM3 | [Les modules de la mallette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/) |
 | **TD3** | 3 h | Concevoir la carte sous KiCad : schéma, **validation 1**, routage, **validation 2** | CM2, CM3 | [Concevoir la carte de la console](/workshops/microcontroleur/tutorials/conception-carte-kicad/) |
 | **TD4** | 3 h | Souder et tester la carte finale fournie (environ 1 h 30), puis y écrire un Pong à un joueur | CM3 | [Souder et tester la carte](/workshops/microcontroleur/tutorials/souder-tester-carte/), [Le Pong sur la console](/workshops/microcontroleur/tutorials/collisions-fsm-pong/) |
 

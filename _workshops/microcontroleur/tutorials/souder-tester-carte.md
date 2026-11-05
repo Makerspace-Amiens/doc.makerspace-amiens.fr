@@ -137,7 +137,7 @@ title="Étape 8 : Tester chaque fonction avec les programmes du TD2"
 content="La carte suit le brochage du TD2 : ses programmes servent de **programmes de test**, sans modification.
 
 1. **Flashage** : le Blink de [Vérification de la toolchain](/workshops/microcontroleur/tutorials/toolchain-blink/). La LED orange de la XIAO clignote.
-2. **Boutons** : le programme de l'étape 2 de [Les modules de la malette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/), sur D5 (SW1) puis sur D6 (SW2) en changeant `PIN_BUTTON`. Sur la carte, les boutons relient leur broche à GND : `PRESSED_LEVEL` vaut `LOW`.
+2. **Boutons** : le programme de l'étape 2 de [Les modules de la mallette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/), sur D5 (SW1) puis sur D6 (SW2) en changeant `PIN_BUTTON`. Sur la carte, les boutons relient leur broche à GND : `PRESSED_LEVEL` vaut `LOW`.
 3. **Joystick** : les programmes des étapes 3 et 4. Valeurs brutes, appui sur le stick, puis 0 au repos et -1 / +1 aux butées.
 4. **Écran** : carte débranchée, montez l'écran sur son connecteur, puis flashez le programme de l'étape 6. Le texte et les formes s'affichent.
 5. **Tout ensemble** : le programme de l'étape 7, sans le buzzer (absent de la carte). Le point suit le joystick.

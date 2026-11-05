@@ -351,7 +351,7 @@ tft.fillScreen(ST77XX_BLACK);
 
 {% include message.html title="Le point de blocage classique" message="De mauvaises broches donnent un écran **noir**, pas une erreur de compilation. Si l'écran reste éteint alors que tout compile, vérifier en premier les broches passées à `SPI.begin()` (SCK sur D9) et le `SPI_MODE3`, obligatoire quand CS est relié à GND." status="is-warning" icon="fas fa-exclamation-triangle" %}
 
-[Les modules de la malette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/){: .doc-link}
+[Les modules de la mallette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/){: .doc-link}
 
 ---
 
@@ -701,7 +701,7 @@ Piège classique à relever pendant la mise en commun : oublier de réinitialise
 | Séance | Ce que vous allez faire |
 |---|---|
 | TD1 | Installer, flasher, lire le port série |
-| TD2 | Tester les modules de la malette : GPIO, ADC, PWM, SPI |
+| TD2 | Tester les modules de la mallette : GPIO, ADC, PWM, SPI |
 | TD3 | Concevoir votre carte sous KiCad |
 | TD4 | Souder la carte, y écrire un Pong : game loop et FSM |
 | Projet | Un Snake multijoueur, la FSM étendue au réseau |
@@ -710,4 +710,4 @@ Piège classique à relever pendant la mise en commun : oublier de réinitialise
 Les trois cours sont terminés : tout ce que vous venez de voir sert dès le TD2.
 {: .caption}
 
-[Syllabus de l'atelier](/workshops/microcontroleur/syllabus/){: .doc-link} [Les modules de la malette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/){: .doc-link}
+[Syllabus de l'atelier](/workshops/microcontroleur/syllabus/){: .doc-link} [Les modules de la mallette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/){: .doc-link}

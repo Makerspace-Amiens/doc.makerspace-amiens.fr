@@ -96,9 +96,9 @@ Vous y trouverez les concepts fondamentaux d'un microcontrôleur (architecture d
 | Phase | Volume | Résultat |
 |----|---|---|
 | CM | 4,5h | µC : archi, GPIO, ADC/PWM, bus, chaîne de dev |
-| TD | 10,5h | Modules de la malette sur breadboard, **carte conçue sous KiCad puis soudée**, **Pong** sur la carte (TD1 : 1h30, TD2 à TD4 : 3h chacun) |
+| TD | 10,5h | Modules de la mallette sur breadboard, **carte conçue sous KiCad puis soudée**, **Pong** sur la carte (TD1 : 1h30, TD2 à TD4 : 3h chacun) |
 | Projet | 24h, en binôme | **Snake multijoueur** (console + navigateur) sur la carte soudée : voir [l'énoncé](/workshops/microcontroleur/projet-snake/) |
 
 ## Pourquoi ce projet ?
 
-Le mini-jeu façon Game Boy est le fil rouge de l'atelier : simple à comprendre, riche à implémenter. Les TD construisent la console elle-même : chaque module de la malette est d'abord testé sur breadboard, puis réuni sur une carte conçue sous KiCad et soudée, sur laquelle tourne un premier **Pong**. Le projet introduit ensuite **Snake** sur une mécanique neuve, et ajoute le multijoueur asymétrique dans le navigateur. La machine à états finis (FSM), pour gérer les écrans menu/partie/fin, prépare directement les états réseau du projet.
+Le mini-jeu façon Game Boy est le fil rouge de l'atelier : simple à comprendre, riche à implémenter. Les TD construisent la console elle-même : chaque module de la mallette est d'abord testé sur breadboard, puis réuni sur une carte conçue sous KiCad et soudée, sur laquelle tourne un premier **Pong**. Le projet introduit ensuite **Snake** sur une mécanique neuve, et ajoute le multijoueur asymétrique dans le navigateur. La machine à états finis (FSM), pour gérer les écrans menu/partie/fin, prépare directement les états réseau du projet.

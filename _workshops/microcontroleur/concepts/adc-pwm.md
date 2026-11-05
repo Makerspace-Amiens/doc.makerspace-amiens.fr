@@ -275,7 +275,7 @@ L'ESP32-S3 dispose de **8 canaux LEDC** (*LED Control*, le générateur de PWM m
 
 ## Pour aller plus loin
 
-- [Les modules de la malette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/) : lire, calibrer et normaliser un joystick
+- [Les modules de la mallette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/) : lire, calibrer et normaliser un joystick
 - [Piloter un servomoteur](/docs/tutorials/electronics/servomotor/) : le PWM en action
 
 ## Résumé

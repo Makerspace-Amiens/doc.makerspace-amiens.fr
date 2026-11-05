@@ -106,7 +106,7 @@ Une démarche qui marche :
 | Pour... | Voir |
 |---|---|
 | Structurer le jeu | [Le Pong sur la console](/workshops/microcontroleur/tutorials/collisions-fsm-pong/) (game loop, collisions, rendu, et ses pistes pour aller plus loin, dont le découpage en modules) et le concept [Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/) |
-| Lire le joystick en directions | [Les modules de la malette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/) et le concept [ADC & PWM](/workshops/microcontroleur/concepts/adc-pwm/) |
+| Lire le joystick en directions | [Les modules de la mallette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/) et le concept [ADC & PWM](/workshops/microcontroleur/concepts/adc-pwm/) |
 | Dessiner sans scintiller | L'étape « Afficher sans scintiller » du [Pong sur la console](/workshops/microcontroleur/tutorials/collisions-fsm-pong/) |
 | Comprendre le réseau | Le concept [Wi-Fi, HTTP et WebSocket](/docs/concepts/reseau-wifi-websocket/) |
 | Mettre le réseau en place | Le tutoriel [ESP32, Wi-Fi et WebSocket](/docs/tutorials/electronics/esp32-wifi-websocket/) |
