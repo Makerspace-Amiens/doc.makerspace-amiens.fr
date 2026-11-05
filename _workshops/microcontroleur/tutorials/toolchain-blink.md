@@ -109,7 +109,7 @@ content="La LED orange intégrée (`LED_BUILTIN`) doit clignoter à 1 Hz. **Mont
 
 ## Bonus : LED externe sur breadboard
 
-S'il te reste du temps, câble une LED externe avec sa résistance série entre la broche **D3** (GPIO4) et GND. C'est ta première sortie **physique** : un montage d'essai, à retirer ensuite, car sur le PCB du projet D3 sert au connecteur I2C.
+S'il te reste du temps, câble une LED externe avec sa résistance série entre la broche **D3** (GPIO4) et GND. C'est ta première sortie **physique** : un montage d'essai, à retirer ensuite : au TD2, D3 accueille le buzzer de la malette, et sur la carte de la console, le connecteur I2C.
 
 ![BreadBoard](esp32-s3-blink.png)
 

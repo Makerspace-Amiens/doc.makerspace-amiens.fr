@@ -343,8 +343,9 @@ void loop() {
     }
     lastFrameMs = nowMs;
 
-    InputState input = inputRead();     // boutons, joystick ET messages reçus
-    gameUpdate(game, input, nowMs);     // règles, validation des demandes
+    float joystickX = readJoystick();   // commandes de la console...
+    readNetworkMessages(game);          // ...et demandes reçues du navigateur
+    gameUpdate(game, joystickX, nowMs); // règles, validation des demandes
     rendererDraw(game);                 // écran de la console
     networkSendUpdates(game);           // ce qui a changé, vers le navigateur
 }

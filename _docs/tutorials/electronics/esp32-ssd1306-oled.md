@@ -92,7 +92,7 @@ icon="fas fa-microchip" %}
 
 {% include message.html
 title="Avec une XIAO ESP32S3"
-message="Sur la [XIAO ESP32S3](/docs/references/hardware/xiao-esp32s3/) de l'atelier Microcontrôleurs, le PCB du projet sort le bus I2C sur un connecteur 4 broches (3V3, SDA, SCL, GND), avec SDA sur **D3 (GPIO4)** et SCL sur **D4 (GPIO5)** et des pull-ups de 4,7 kΩ déjà soudées : écrire `Wire.begin(D3, D4);` et choisir `board = seeed_xiao_esp32s3` dans `platformio.ini`. Ce ne sont pas les broches I2C par défaut de la XIAO (D4/D5), d'où l'appel explicite à `Wire.begin()`."
+message="Sur la [XIAO ESP32S3](/docs/references/hardware/xiao-esp32s3/) de l'atelier Microcontrôleurs, la carte de la console sort le bus I2C sur un connecteur 4 broches (3V3, SDA, SCL, GND), avec SDA sur **D3 (GPIO4)** et SCL sur **D4 (GPIO5)** et des pull-ups de 4,7 kΩ déjà soudées : écrire `Wire.begin(D3, D4);` et choisir `board = seeed_xiao_esp32s3` dans `platformio.ini`. Ce ne sont pas les broches I2C par défaut de la XIAO (D4/D5), d'où l'appel explicite à `Wire.begin()`."
 status="is-info"
 icon="fas fa-info-circle" %}
 

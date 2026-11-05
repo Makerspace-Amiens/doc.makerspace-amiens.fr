@@ -261,6 +261,8 @@ Serial1.begin(115200, SERIAL_8N1, D2, D3);  // UART1 routé sur D2 (RX) / D3 (TX
 // une autre paire de broches fonctionnerait tout aussi bien
 ```
 
+Si aucun périphérique ne convient, il reste possible de piloter les broches à la main, bit après bit, pour émuler un bus : c'est le *bit-banging*, plus lent et plus gourmand en temps processeur (voir [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/#quand-le-bon-bus-manque)).
+
 {% include message.html title="L'ADC échappe à la règle" message="Contrairement aux périphériques numériques (UART, SPI, I2C, PWM), l'ADC n'est pas routable via la GPIO matrix : chaque canal ADC1/ADC2 est câblé en dur sur des broches fixes (voir le concept [ADC & PWM](/workshops/microcontroleur/concepts/adc-pwm/))." status="is-info" icon="fas fa-info-circle" %}
 
 ## Toutes les broches ne se valent pas
@@ -280,7 +282,7 @@ Malgré la souplesse de la GPIO matrix, certaines broches ont un **rôle réserv
 Sur la [XIAO ESP32S3](/docs/references/hardware/xiao-esp32s3/) de l'atelier, ce tri est déjà fait par la carte : seules 11 broches sont sorties (D0 à D10) et aucune broche critique n'en fait partie. GPIO0 est relié au bouton BOOT, GPIO19/20 au connecteur USB-C, la Flash et la PSRAM restent internes. Deux cas particuliers :
 
 - **D2 (GPIO3)** est une broche de *strapping*, mais elle ne choisit que la source du JTAG, et seulement si les eFuses de la puce ont été programmés pour : elle s'utilise comme une broche ordinaire.
-- **D6/D7 (GPIO43/44)** portent l'UART0, mais le moniteur série de la XIAO passe par l'USB natif : ces deux broches restent utilisables. Au démarrage, la puce **émet** toutefois ses messages de boot sur D6 : un bouton qui la relie à GND doit passer par une résistance série (1 kΩ sur le PCB du projet) pour ne pas court-circuiter cette sortie.
+- **D6/D7 (GPIO43/44)** portent l'UART0, mais le moniteur série de la XIAO passe par l'USB natif : ces deux broches restent utilisables. Au démarrage, la puce **émet** toutefois ses messages de boot sur D6 : un bouton qui la relie à GND doit passer par une résistance série (1 kΩ sur la carte de la console) pour ne pas court-circuiter cette sortie.
 
 ## Courant maximum et protection des broches
 

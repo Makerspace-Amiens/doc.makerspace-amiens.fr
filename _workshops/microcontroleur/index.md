@@ -89,6 +89,7 @@ Vous y trouverez les concepts fondamentaux d'un microcontrôleur (architecture d
 - Communiquer sur les bus série standards (UART, I2C, SPI)
 - Structurer un programme embarqué avec une game loop et une machine à états (FSM)
 - Concevoir un schéma électronique sous KiCad et souder un PCB
+- Relier un microcontrôleur à un navigateur en Wi-Fi (serveur web, WebSocket)
 
 ## Progression
 

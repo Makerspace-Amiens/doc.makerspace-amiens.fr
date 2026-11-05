@@ -40,7 +40,7 @@ Elle réunit le microcontrôleur, 8 Mo de Flash, 8 Mo de PSRAM, une antenne Wi-F
 
 Sur la carte, les broches sont sérigraphiées `D0` à `D10`. Dans le code, Arduino-ESP32 accepte ces noms (`D3`, `A0`…) ou directement le numéro de GPIO.
 
-| Broche | GPIO | Fonctions | Rôle dans l'atelier (PCB du projet) |
+| Broche | GPIO | Fonctions | Rôle dans l'atelier (carte de la console) |
 |---|---|---|---|
 | D0 | GPIO1 | ADC1, tactile | Joystick : axe X (raquette du joueur 1) |
 | D1 | GPIO2 | ADC1, tactile | Joystick : axe Y (inutilisé par le Pong) |
@@ -54,7 +54,7 @@ Sur la carte, les broches sont sérigraphiées `D0` à `D10`. Dans le code, Ardu
 | D9 | GPIO8 | ADC1, SPI MISO par défaut | Écran : SCK |
 | D10 | GPIO9 | ADC1, SPI MOSI par défaut | Écran : MOSI |
 
-Les 11 broches sont toutes utilisées par le PCB du projet. Pour économiser des broches, le *Chip Select* (CS) de l'écran est relié en permanence à GND (l'écran est le seul composant du bus SPI) et son rétroéclairage (LED/BLK) directement au 3V3. Le bus I2C (D3/D4) est sorti sur un connecteur d'extension 4 broches (avec ses résistances de pull-up de 4,7 kΩ), qui n'est pas utilisé par le Pong : il reste disponible pour ajouter un module plus tard.
+Les 11 broches sont toutes utilisées par la carte de la console. Pour économiser des broches, le *Chip Select* (CS) de l'écran est relié en permanence à GND (l'écran est le seul composant du bus SPI) et son rétroéclairage (LED/BLK) directement au 3V3. Le bus I2C (D3/D4) est sorti sur un connecteur d'extension 4 broches (avec ses résistances de pull-up de 4,7 kΩ), qui n'est pas utilisé par le Pong : il reste disponible pour ajouter un module plus tard.
 
 {% include message.html title="Le SPI n'est pas sur les broches par défaut" message="Sur le PCB, l'horloge SPI est sur **D9** et la sélection commande/donnée (DC) sur **D8**, alors que le SCK par défaut de la XIAO est D8. Ce n'est pas un problème sur l'ESP32-S3 : la GPIO matrix route le SPI vers n'importe quelle broche. Il faut simplement passer les bonnes broches à `SPI.begin()` (voir le tutoriel [Écran SPI et game loop](/docs/tutorials/electronics/ecran-spi-game-loop/))." status="is-info" icon="fas fa-info-circle" %}
 
@@ -89,7 +89,7 @@ Le moniteur série (`Serial`) passe par cet USB natif : c'est l'option `ARDUINO_
 
 - Programmation via **PlatformIO** (voir la [fiche PlatformIO](/docs/references/software/platformIO/)), carte `seeed_xiao_esp32s3`, et premier flashage dans le tutoriel [Vérification de la toolchain](/workshops/microcontroleur/tutorials/toolchain-blink/).
 - La carte est livrée **sans connecteurs** : souder les deux barrettes de broches avant de la poser sur la breadboard, sans créer de pont entre deux broches voisines.
-- Câblage figé (boutons, joystick, écran SPI) posé au fil des tutoriels et conservé jusqu'au projet.
+- Brochage figé dès le TD2 (modules de la malette sur breadboard), puis repris à l'identique par la carte de la console soudée au TD4 : le code passe de l'une à l'autre sans modification.
 
 ## Sources
 
