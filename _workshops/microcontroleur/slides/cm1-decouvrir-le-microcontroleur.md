@@ -590,7 +590,7 @@ Au fond, un CPU ne fait que deux choses : calculer, et déplacer des octets d'un
 |---|---|
 | Une multiplication entière | un ou deux cycles |
 | Un `digitalWrite()` | quelques dizaines de cycles |
-| Redessiner un écran 240×240 en SPI | quelques millions de cycles |
+| Redessiner l'écran 240 × 320 en SPI | quelques millions de cycles |
 | Établir une connexion Wi-Fi | plusieurs centaines de millions |
 {: .table-dense}
 
