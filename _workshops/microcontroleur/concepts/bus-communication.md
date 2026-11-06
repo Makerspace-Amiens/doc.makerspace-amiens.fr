@@ -47,7 +47,9 @@ Relier chaque périphérique au CPU par un fil par bit serait impraticable : l'�
 | Les deux sens en même temps ? | **Full-duplex** (oui, sur deux fils de données) ou **half-duplex** (chacun son tour, sur le même fil) |
 | Comment choisir le destinataire ? | Une **adresse** écrite dans le message (logiciel) ou un **fil de sélection** par composant (matériel) |
 
-Ces quatre réponses suffisent à décrire les trois bus de cette page, et la plupart des autres (CAN, 1-Wire, USB...).
+Pour le sens de circulation, pense au téléphone et au talkie-walkie : au téléphone, les deux interlocuteurs peuvent parler en même temps (full-duplex) ; au talkie-walkie, il faut attendre son tour (half-duplex).
+
+Ces quatre réponses suffisent à décrire les trois bus de cette page, et la plupart des autres : RS-232 et SATA sont point à point, RS-485, Ethernet et USB multipoints, CAN asynchrone comme l'UART...
 
 ## UART : Universal Asynchronous Receiver-Transmitter
 
@@ -60,7 +62,7 @@ UART est le bus le plus simple : **deux fils**, point à point (une liaison dire
 | **TX** | Transmission (sortie du µC) |
 | **RX** | Réception (entrée du µC) |
 
-La vitesse est fixée à l'avance des deux côtés (**baud rate**, en bits/s). Valeur standard : **115 200 baud**. Les deux appareils partagent aussi leur **masse** (GND) : sans référence commune, un niveau de tension ne veut rien dire.
+La vitesse est fixée à l'avance des deux côtés : c'est le **baud rate**. Ici, un signal à deux niveaux transporte un bit par symbole, donc 1 baud vaut 1 bit/s (ce n'est pas vrai de toutes les liaisons). Les vitesses usuelles sont normalisées : 1 200, 2 400, 4 800, **9 600** et **115 200** bauds, la plus courante sur un microcontrôleur moderne. Les deux appareils partagent aussi leur **masse** (GND) : sans référence commune, un niveau de tension ne veut rien dire.
 
 ![Câblage UART : le TX de chaque appareil relié au RX de l'autre, et une masse commune](uart-cablage.svg)
 
@@ -77,13 +79,13 @@ Sans horloge partagée, comment le récepteur sait-il quand lire ? Par conventio
 - un **bit de parité** optionnel (contrôle d'erreur) ;
 - un ou deux **bits de stop** (retour à `HIGH`).
 
-C'est ce que résume la notation **`8N1`** : 8 bits de données, `N`o parité, 1 bit de stop. Les deux extrémités doivent partager exactement le même format **et** la même vitesse, sinon les octets sont mal découpés.
+C'est ce que résume la notation **`8N1`** : 8 bits de données, `N`o parité, 1 bit de stop. Les deux extrémités doivent partager exactement le même format **et** la même vitesse, sinon les octets sont mal découpés. Huit bits suffisent pour un caractère ASCII (codes 0 à 127) ou n'importe quel octet (0 à 255).
 
 D'autres formats existent, que l'on rencontre sur des appareils plus anciens ou industriels :
 
 - de **5 à 9 bits** de données ;
 - une **parité** absente (`N`), paire (`E`, *even*) ou impaire (`O`, *odd*) : un bit ajouté pour que le nombre total de 1 soit pair (ou impair), ce qui permet de détecter une erreur sur un bit ;
-- **1 ou 2 bits** de stop.
+- un bit de stop d'une durée de **1, 1,5 ou 2 bits**.
 
 `7E1` désigne ainsi 7 bits de données, une parité paire et 1 bit de stop.
 
@@ -91,11 +93,12 @@ D'autres formats existent, que l'on rencontre sur des appareils plus anciens ou 
 
 Entre deux cartes, les niveaux sont ceux des broches : 0 V pour un 0, 3,3 V (ou 5 V sur une carte Arduino Uno) pour un 1, avec la ligne à 1 au repos. Une telle liaison ne porte qu'à **un mètre environ** : au-delà, les fils captent des parasites et déforment les fronts.
 
-Pour aller plus loin, on intercale un **convertisseur de niveaux** (une puce MAX3232, par exemple) qui transforme la liaison en **RS-232**, l'ancien port série des ordinateurs : des tensions plus élevées, positives et négatives, bien plus robustes. La norme vise une quinzaine de mètres, et la règle est toujours la même : **plus la vitesse est basse, plus on peut aller loin**.
+Pour aller plus loin, on intercale un **convertisseur de niveaux** (une puce MAX3232, par exemple) qui transforme la liaison en **RS-232**, l'ancien port série des ordinateurs : des tensions plus élevées, positives et négatives, bien plus robustes. La règle est toujours la même : **plus la vitesse est basse, plus on peut aller loin**. À titre indicatif, on compte une quinzaine de mètres à 9 600 bauds, une soixantaine à 2 400 bauds, mais seulement deux à trois mètres au-delà de 38 400 bauds ; ces valeurs dépendent beaucoup des câbles.
 
 ### Usage principal
 
 - **Moniteur série** (debug via USB)
+- **Programmation** : une carte Arduino Uno reçoit ses programmes par son UART, relié à l'USB par une puce de conversion
 - Modules GPS, Bluetooth, GSM
 - Communication entre deux µC
 
@@ -119,7 +122,7 @@ I2C relie **plusieurs périphériques** sur seulement **2 fils** grâce à un sy
 | **SDA** | Données (bidirectionnel) |
 | **SCL** | Horloge (générée par le maître) |
 
-Chaque composant I2C possède une **adresse 7 bits** unique (ex : `0x3C` pour un écran OLED SSD1306). Le **maître** (l'appareil qui dirige les échanges, ici l'ESP32-S3) initie toujours la communication ; les autres, les **esclaves**, ne répondent que lorsqu'il les sollicite.
+Chaque composant I2C possède une **adresse 7 bits** unique (ex : `0x3C` pour un écran OLED SSD1306). Le **maître** (l'appareil qui dirige les échanges, ici l'ESP32-S3) initie toujours la communication ; les autres, les **esclaves**, ne répondent que lorsqu'il les sollicite, et ne se parlent jamais entre eux. C'est aussi le maître qui fixe la vitesse, puisqu'il génère l'horloge.
 
 ![Bus I2C : un maître et trois esclaves, chacun avec son adresse, reliés à deux fils partagés SDA et SCL, avec deux résistances de tirage vers 3,3 V](i2c-bus.svg)
 
@@ -165,8 +168,10 @@ Plus le bus est rapide, plus il doit être court : comptez **un à deux mètres*
 
 ### Usage principal
 
-- Capteurs (température, accéléromètre, IMU)
+- Capteurs (température, pression, humidité avec le BME280, accéléromètre, IMU)
 - Petits écrans OLED
+- Convertisseurs : analogique-numérique (ADS1115), numérique-analogique (MCP4725)
+- Extensions de broches (PCF8574, huit entrées-sorties de plus pour deux fils)
 - Mémoires EEPROM (petite mémoire non volatile réinscriptible)
 - Cas où on chaîne plusieurs périphériques sur peu de broches
 
@@ -178,13 +183,13 @@ Wire.begin(SDA_PIN, SCL_PIN);  // démarre I2C
 
 ### Câblage : les résistances de pull-up
 
-Les lignes SDA et SCL sont en **open-drain** (voir [GPIO & monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/)) : les composants ne peuvent que tirer la ligne vers `LOW` ou la relâcher. Il faut donc deux **résistances de pull-up** (typiquement 4,7 kΩ) reliant SDA et SCL au 3,3 V : sans elles, le bus reste bloqué et rien ne communique.
+Les lignes SDA et SCL sont en **open-drain** (voir [GPIO & monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/)) : les composants ne peuvent que tirer la ligne vers `LOW` ou la relâcher. Il faut donc deux **résistances de pull-up** (typiquement 4,7 kΩ) reliant SDA et SCL au 3,3 V : sans elles, le bus reste bloqué et rien ne communique. Leur valeur s'ajuste à la longueur du bus et à sa vitesse : plus elle est faible, plus les fronts remontent vite, mais plus chaque composant doit absorber de courant pour tirer la ligne à 0.
 
 ![Deux composants en open-drain sur la même ligne, avec une résistance de tirage vers 3,3 V : l'un relâche la ligne, l'autre la tire à 0](open-drain.svg)
 
 C'est aussi ce qui rend le bus sûr : chacun peut tirer la ligne à 0 ou la relâcher, mais personne n'impose un 1. Deux composants ne peuvent donc jamais se contredire et créer un court-circuit.
 
-{% include message.html title="Souvent déjà présentes" message="La plupart des modules I2C du commerce (écran OLED, capteur…) intègrent déjà leurs pull-ups. Si tu en chaînes plusieurs, une seule paire sur le bus suffit, inutile de les cumuler." status="is-info" icon="fas fa-info-circle" %}
+{% include message.html title="Souvent déjà présentes" message="La plupart des modules I2C du commerce (écran OLED, capteur…) intègrent déjà leurs pull-ups. Si tu en chaînes plusieurs, une seule paire sur le bus suffit : les cumuler revient à mettre les résistances en parallèle, et augmente le courant que chaque composant doit absorber pour tirer la ligne à 0, parfois au-delà de ce qu'il supporte." status="is-info" icon="fas fa-info-circle" %}
 
 ### Trouver l'adresse d'un périphérique : le scanner I2C
 
@@ -226,13 +231,13 @@ La transmission est **synchrone** (l'horloge SCK cadence chaque bit) et **full-d
 
 ![Bus SPI : un maître et trois esclaves partageant SCK, MOSI et MISO, chacun relié au maître par son propre fil CS](spi-bus.svg)
 
-SCK, MOSI et MISO sont **partagés** ; chaque esclave a son propre fil **CS**. Pas d'adresse : le maître met à 0 le CS de l'esclave qu'il veut, et les autres laissent leur MISO en haute impédance. Selon les composants, les broches portent d'autres noms : SCLK pour SCK, SS pour CS, SDI/SDO pour MOSI/MISO.
+SCK, MOSI et MISO sont **partagés** ; chaque esclave a son propre fil **CS**. Pas d'adresse : le maître met à 0 le CS de l'esclave qu'il veut, et les autres laissent leur MISO en haute impédance. Selon les composants, les broches portent d'autres noms : SCLK ou SCL pour SCK ; SS, nCS, nSS, CSN ou STE pour CS ; SDI, DI ou SI pour l'entrée de données (côté esclave, MOSI) ; SDO, DO ou SO pour sa sortie (MISO). MOSI et MISO ne vont chacun que dans un sens, contrairement au SDA de l'I2C.
 
 ### Le déroulement d'un échange
 
 ![Chronogramme SPI : CS passe à 0, huit coups d'horloge SCK, un bit envoyé sur MOSI et un bit reçu sur MISO à chaque coup, puis CS remonte](spi-trame.svg)
 
-1. Le maître met le **CS** de l'esclave à 0.
+1. Le maître met le **CS** de l'esclave à 0 : ce fil est **actif à l'état bas**, au repos à 1, et le maître le pilote comme une simple sortie GPIO.
 2. Il génère l'horloge sur **SCK** ; à chaque coup, un bit part sur **MOSI** et un bit revient sur **MISO**.
 3. Il remonte le CS : l'échange est terminé.
 
@@ -248,12 +253,13 @@ Les octets traversent les esclaves l'un après l'autre : pour en commander trois
 
 ### Vitesses typiques
 
-De quelques MHz à **80 MHz** sur ESP32-S3, bien plus rapide que I2C.
+De quelques MHz à **80 MHz** sur ESP32-S3, bien plus rapide que I2C. En contrepartie, le SPI ne porte que sur de courtes distances, quelques dizaines de centimètres ; des circuits d'amplification de ligne (*buffers*) permettent d'aller un peu plus loin.
 
 ### Usage principal
 
 - Écrans TFT (ST7789, ILI9341), **utilisé dans ce projet**
 - Cartes SD
+- Modules radio (NRF24L01, 2,4 GHz)
 - Mémoires Flash externes
 - Tout périphérique nécessitant un haut débit
 
@@ -281,21 +287,21 @@ Pour l'écran de l'atelier, cet appel suffit à router le bus sur les broches du
 
 ## Quand le bon bus manque
 
-Un microcontrôleur gère ses bus avec des **périphériques matériels** dédiés : l'ESP32-S3 a trois UART, deux I2C et deux SPI disponibles pour l'utilisateur, que la GPIO matrix route vers presque n'importe quelle broche. Le processeur prépare les octets, le périphérique s'occupe du chronométrage bit par bit.
+Un microcontrôleur gère ses bus avec des **périphériques matériels** dédiés, dont la liste figure dans sa datasheet : tous n'ont pas les mêmes (certains ajoutent CAN ou USB, d'autres n'ont qu'un UART). Par exemple, l'ESP32-S3 a trois UART, deux I2C et deux SPI disponibles pour l'utilisateur, que la GPIO matrix route vers presque n'importe quelle broche. Le processeur prépare les octets, le périphérique s'occupe du chronométrage bit par bit.
 
 Quand le périphérique manque (une petite puce, un bus exotique), on peut **émuler** le bus en pilotant les broches par logiciel, bit après bit : c'est le *bit-banging*. Ça marche pour des vitesses modestes, mais le processeur est occupé pendant tout l'échange, et une interruption au mauvais moment déforme le chronométrage. Quand un périphérique matériel existe, on l'utilise.
 
 ## D'autres bus
 
-UART, I2C et SPI couvrent l'essentiel des besoins sur une carte. D'autres bus se rencontrent dès qu'on sort de la carte :
+UART, I2C et SPI couvrent l'essentiel des besoins sur une carte, et l'I2C et le SPI sont les deux à connaître en priorité. D'autres bus se rencontrent dès qu'on sort de la carte :
 
 | Bus | Fils | Principe | Où on le trouve |
 |---|---|---|---|
-| **CAN** | 2 (paire différentielle) | Multipoint, robuste aux parasites, jusqu'à 1 Mbit/s sur quelques dizaines de mètres, bien plus loin à bas débit | Automobile, machines industrielles |
-| **1-Wire** | 1 de données + la masse | Multipoint, une résistance de tirage, chaque composant a un numéro unique gravé en usine | Capteur de température DS18B20 |
+| **CAN** | 2 (paire différentielle) | Multipoint (une vingtaine à une trentaine de nœuds), asynchrone, robuste aux parasites : de l'ordre de 30 m à 1 Mbit/s, jusqu'à plusieurs kilomètres à 10 kbit/s | Automobile, machines industrielles |
+| **1-Wire** | 1 de données + la masse (parfois l'alimentation) | Multipoint, half-duplex, une résistance de tirage, environ 16 kbit/s ; chaque composant a un numéro unique gravé en usine | Capteur de température DS18B20 |
 | **USB** | 2 de données + alimentation | Point à point vers un hôte, rapide, avec détection automatique des appareils | Programmation de la XIAO, claviers, clés |
 
-L'ESP32-S3 intègre un contrôleur compatible CAN (appelé TWAI chez Espressif) : il suffit de lui ajouter une puce d'interface (*transceiver*) pour rejoindre un réseau CAN.
+L'ESP32-S3 intègre un contrôleur compatible CAN (appelé TWAI chez Espressif) : il suffit de lui ajouter une puce d'interface (*transceiver*, comme le TJA1050) pour rejoindre un réseau CAN. Sur une carte qui n'a pas de contrôleur CAN, un module à MCP2515 en fournit un, piloté en SPI. On croise aussi, hors des cartes électroniques, SATA (disques), RS-485 (réseaux industriels) ou Ethernet.
 
 ## Tableau comparatif
 
