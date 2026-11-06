@@ -69,13 +69,26 @@ how_to_guides:
 hardware:
   - /docs/references/hardware/xiao-esp32s3/
   - /docs/references/hardware/ecran-tft-spi-st7789/
+  - /docs/references/hardware/module-joystick/
+  - /docs/references/hardware/module-bouton/
+  - /docs/references/hardware/module-buzzer/
   - /docs/references/machines/weller-wt-1010/
 
 software:
-  - /docs/references/software/arduino-ide/
   - /docs/references/software/platformIO/
+  - /docs/references/software/kicad/
+  - /docs/references/software/arduino-ide/
 
 ressources:
+  - /docs/references/others/esp32-s3-datasheet/
+  - /docs/references/others/esp32-s3-manuel-reference/
+  - /docs/references/others/xiao-esp32s3-wiki-seeed/
+  - /docs/references/others/arduino-esp32-documentation/
+  - /docs/references/others/adafruit-gfx-guide/
+  - /docs/references/others/kicad-librairies-seeed/
+  - /docs/references/others/kicad-librairies-sparkfun/
+  - /docs/references/others/liaisons-series-passion-electronique/
+  - /docs/references/others/mdn-websocket/
 ---
 
 Bienvenue dans l'atelier **Microcontrôleurs** !

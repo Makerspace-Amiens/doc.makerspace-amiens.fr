@@ -127,8 +127,8 @@ greyBackground=true
 title="Étape 1 : Créer le projet et importer les librairies"
 content="Créez un projet KiCad dans le dossier de votre repo prévu pour la carte. La XIAO et le joystick ne font pas partie des librairies standard de KiCad :
 
-- **XIAO ESP32S3** : la librairie KiCad officielle de Seeed Studio (symbole et empreintes de la série XIAO) ;
-- **Joystick** : les librairies KiCad de SparkFun, installables depuis le gestionnaire de plugins et contenus de KiCad (*Plugin and Content Manager*) ou depuis leur dépôt GitHub ;
+- **XIAO ESP32S3** : la [librairie KiCad de Seeed Studio](https://github.com/Seeed-Studio/OPL_Kicad_Library), dossier de la série XIAO ;
+- **Joystick** : les [librairies KiCad de SparkFun](https://github.com/sparkfun/SparkFun-KiCad-Libraries), installables aussi depuis le gestionnaire de plugins et contenus de KiCad (*Plugin and Content Manager*) ;
 - **Composants courants** (résistances et condensateurs 1206, boutons) : les librairies standard de KiCad, ou la [librairie du MakerSpace](/docs/tutorials/software/kicad/kicad-import-librairies/).
 
 Ajoutez-les **au projet** (et non à votre installation) : le projet reste alors autonome, et s'ouvre sur un autre ordinateur sans rien installer. La méthode est détaillée dans [KiCAD : importer des librairies](/docs/tutorials/software/kicad/kicad-import-librairies/)."

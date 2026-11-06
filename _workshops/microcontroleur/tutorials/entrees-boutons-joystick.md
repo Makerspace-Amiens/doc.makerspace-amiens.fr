@@ -33,8 +33,14 @@ softwares:
 hardwares:
   - label: Carte Seeed Studio XIAO ESP32S3
     link: /docs/references/hardware/xiao-esp32s3/
-  - label: "La mallette : module bouton, module joystick, module buzzer, module écran, câbles"
-    link: ""
+  - label: Module joystick analogique
+    link: /docs/references/hardware/module-joystick/
+  - label: Module bouton poussoir
+    link: /docs/references/hardware/module-bouton/
+  - label: Module buzzer
+    link: /docs/references/hardware/module-buzzer/
+  - label: Module écran TFT SPI ST7789
+    link: /docs/references/hardware/ecran-tft-spi-st7789/
   - label: Une breadboard
     link: ""
 
