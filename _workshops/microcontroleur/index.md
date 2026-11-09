@@ -65,6 +65,7 @@ tutorials:
 how_to_guides:
   - /docs/how-to-guides/esp32-s3-carte-introuvable/
   - /docs/how-to-guides/ecran-tft-noir/
+  - /docs/how-to-guides/deboguer-programme-embarque/
 
 hardware:
   - /docs/references/hardware/xiao-esp32s3/
