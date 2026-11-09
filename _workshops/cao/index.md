@@ -18,6 +18,7 @@ special_sections:
     desc: "Les pièces à modéliser sur OnShape et ce sur quoi vous êtes évalués."
     items:
       - /workshops/cao/evaluation/
+      - /workshops/cao/evaluation-rattrapage/
 
 concepts:
   - 
