@@ -597,7 +597,8 @@ Un GPIO ne produit que `0 V` ou `3,3 V`. Et l'ESP32-S3 n'a **pas de DAC** matér
 
 Comment régler une demi-luminosité, une vitesse de moteur, la position d'un servo ?
 
-<p class="r-fit-text">En alternant très vite.</p>
+**En alternant très vite.**
+{: .highlight-red}
 
 [ADC et PWM](/workshops/microcontroleur/concepts/adc-pwm/){: .doc-link}
 
