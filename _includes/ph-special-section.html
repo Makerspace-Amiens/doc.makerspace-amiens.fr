@@ -27,14 +27,25 @@
         {% if include.compact %}
         <div class="ph-resource-grid">
           {% for doc in _cards %}
+          {% assign _sub = doc.subtitle | default: doc.description %}
+          {%- comment %} disabled: true dans le front matter : carte grisée, sans lien (ex. une évaluation fermée pour l'année) {% endcomment -%}
+          {% if doc.disabled %}
+          <div class="ph-resource-card is-disabled" aria-disabled="true">
+            <div class="ph-resource-icon"><i class="fas fa-lock"></i></div>
+            <div class="ph-resource-body">
+              <span class="ph-resource-title">{{ doc.title }}</span>
+              <span class="ph-resource-sub">{{ _i18n.unavailable }}</span>
+            </div>
+          </div>
+          {% else %}
           <a href="{{ doc.url | relative_url }}?project={{ page.project_slug }}" class="ph-resource-card">
             <div class="ph-resource-icon"><i class="{{ include.icon | default: 'fas fa-star' }}"></i></div>
             <div class="ph-resource-body">
               <span class="ph-resource-title">{{ doc.title }}</span>
-              {% assign _sub = doc.subtitle | default: doc.description %}
               {% if _sub %}<span class="ph-resource-sub">{{ _sub }}</span>{% endif %}
             </div>
           </a>
+          {% endif %}
           {% endfor %}
         </div>
         {% else %}

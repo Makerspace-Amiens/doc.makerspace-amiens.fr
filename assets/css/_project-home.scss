@@ -277,6 +277,20 @@
     box-shadow: 0 4px 12px rgba(0,0,0,0.07);
     .ph-resource-title { color: $primary; }
   }
+
+  // Page désactivée (disabled: true) : visible mais grisée et non cliquable
+  &.is-disabled {
+    opacity: 0.5;
+    filter: grayscale(1);
+    cursor: not-allowed;
+    user-select: none;
+
+    &:hover {
+      border-color: var(--border);
+      box-shadow: none;
+      .ph-resource-title { color: var(--fg); }
+    }
+  }
 }
 
 .ph-resource-icon {

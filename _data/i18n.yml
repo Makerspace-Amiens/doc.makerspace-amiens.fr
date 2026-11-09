@@ -21,6 +21,8 @@ fr:
   software: Logiciels & Outils
   references: Références
   discover: Découvrir
+  unavailable: Indisponible pour le moment
+  unavailable_message: "Cette page n'est pas ouverte pour le moment. Elle sera de nouveau disponible quand votre encadrant l'ouvrira."
   back_to_project: Retour au projet
   step: Étape
   toggle_steps: Afficher ou masquer la liste complète des étapes
@@ -59,6 +61,8 @@ en:
   software: Software & Tools
   references: References
   discover: Discover
+  unavailable: Not available yet
+  unavailable_message: "This page is not open at the moment. It will be available again once your instructor opens it."
   back_to_project: Back to the workshop
   step: Step
   toggle_steps: Show or hide the full list of steps
