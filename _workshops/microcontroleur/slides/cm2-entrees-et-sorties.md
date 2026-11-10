@@ -536,6 +536,17 @@ Deux exceptions à connaître :
 Vérifiez le brochage de la carte avant de câbler, pas après.
 {: .caption}
 
+## Exemple : le schéma de la carte
+
+![Extrait du schéma KiCad de la carte : le symbole de la XIAO ESP32S3, avec SDA sur D3, SCL sur D4, SCK sur D9 et MOSI sur D10](schema-xiao-routage-broches.png){: .img-md}
+
+SDA et SCL sur D3 et D4, SCK et MOSI sur D9 et D10 : un **choix de routage**, pas une obligation. La GPIO matrix permet de déplacer ces signaux ; seul le code change, comme `SPI.begin(D9, -1, D10)`.
+{: .caption}
+
+[GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/#gpio-matrix--une-broche-nest-pas-toujours-un-simple-gpio){: .doc-link} [Concevoir la carte de la console](/workshops/microcontroleur/tutorials/conception-carte-kicad/#le-brochage-imposé){: .doc-link}
+
+---
+
 [GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link} [XIAO ESP32S3](/docs/references/hardware/xiao-esp32s3/){: .doc-link}
 
 ---
