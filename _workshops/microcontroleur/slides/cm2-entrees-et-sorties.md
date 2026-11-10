@@ -250,17 +250,9 @@ Pour piloter plus de courant (un moteur, un ruban de LED, un relais), la broche 
 
 ## Commander une charge : le MOSFET
 
-```mermaid!
-graph LR
-  ALIM["+ 12 V"] --> M["Moteur"]
-  M -->|"drain"| Q["MOSFET N"]
-  Q -->|"source"| GND["GND commune"]
-  IO["GPIO"] -->|"grille, 100 Ω"| Q
-```
+![Montage côté bas : la broche GPIO de la XIAO commande la grille d'un MOSFET N par une résistance de 100 ohms, avec une résistance de 10 kilo-ohms vers la masse ; le moteur est relié entre le +12 V et le drain, une diode de roue libre à ses bornes, la source à la masse commune](mosfet-cote-bas.svg){: .img-md}
 
-La broche ne fournit qu'une **tension** sur la grille, presque aucun courant. Le courant du moteur traverse le transistor, depuis sa propre alimentation.
-
-Montage « côté bas » : le MOSFET coupe la masse de la charge. Une résistance de 10 kΩ entre grille et source garde le moteur arrêté au démarrage. Les masses sont **reliées**.
+La broche n'impose qu'une **tension** sur la grille : le courant du moteur vient de sa propre alimentation. La 10 kΩ garde le moteur arrêté au démarrage ; la diode, deux slides plus loin.
 {: .caption}
 
 [GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link}
@@ -340,15 +332,27 @@ Lire un bouton, vraiment
 
 <p class="activity-meta"><span><i class="fas fa-user-friends"></i>En binôme</span><span><i class="far fa-clock"></i>3 min</span><span><i class="fas fa-pen"></i>Sans PC</span></p>
 
+<div class="columns" markdown="1">
+<div markdown="1">
+
 ```cpp
 pinMode(BTN_PIN, INPUT);
 
 void loop() {
-  if (digitalRead(BTN_PIN) == HIGH) Serial.println("Appui !");
+  if (digitalRead(BTN_PIN) == HIGH)
+    Serial.println("Appui !");
 }
 ```
 
-### Un bouton relie la broche au 3,3 V. Le programme est-il correct ?
+</div>
+<div markdown="1">
+
+![Montage : la broche 3V3 de la XIAO ESP32S3 est reliée à un bouton poussoir, dont l'autre borne va sur D5 (BTN_PIN) ; rien d'autre n'est branché](bouton-vers-3v3.svg)
+
+</div>
+</div>
+
+### Le programme est-il correct ?
 
 <aside class="notes" markdown="1">
 Réponse : non. Bouton relâché, la broche n'est reliée à rien : elle flotte, sa tension traîne dans la zone indéterminée du début de séance, et `digitalRead` rend n'importe quoi. Enchaîner.
@@ -390,31 +394,19 @@ flowchart LR
 
 ### Pull-up : repos à HIGH
 
-```mermaid!
-graph LR
-  V33["3,3 V"] -->|"R 10 kΩ"| N(("GPIO"))
-  N -->|"Bouton"| GND["GND"]
-```
-
-Pressé → `LOW`
+![Pull-up : une résistance de 10 kilo-ohms relie D5 au 3V3, le bouton relie D5 à GND ; au repos D5 lit HIGH, bouton pressé LOW](pull-up.svg){: .img-md}
 
 </div>
 <div markdown="1">
 
 ### Pull-down : repos à LOW
 
-```mermaid!
-graph LR
-  GND["GND"] -->|"R 10 kΩ"| N(("GPIO"))
-  N -->|"Bouton"| V33["3,3 V"]
-```
-
-Pressé → `HIGH`
+![Pull-down : le bouton relie D5 au 3V3, une résistance de 10 kilo-ohms relie D5 à GND ; au repos D5 lit LOW, bouton pressé HIGH](pull-down.svg){: .img-md}
 
 </div>
 </div>
 
-La résistance est là pour **fixer un niveau au repos** sans créer de court-circuit quand le bouton se ferme.
+La résistance fixe un niveau au repos, sans court-circuit quand le bouton se ferme.
 {: .caption}
 
 [GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link}
@@ -455,11 +447,11 @@ La parade : après un changement d'état, ignorer les lectures pendant 20 à 50 
 
 ---
 
-## Le rebond, vu à l'oscilloscope
+## Un appui, deux boutons
 
-![Trace d'oscilloscope : le signal d'un interrupteur bascule une dizaine de fois avant de se stabiliser](rebonds-bouton-oscilloscope.jpg){: .img-md}
+![Chronogramme d'un appui : le signal du bouton idéal passe une seule fois de 3,3 V à 0 V ; celui du bouton réel bascule plusieurs fois pendant environ 1 ms, soit 5 fronts descendants, avant de rester à 0 V](rebond-ideal-reel.svg){: .img-md}
 
-Un seul appui, et le signal bascule une dizaine de fois en moins de 2 ms. Photo : Tomoldbury, via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Switch_bounce.JPG), domaine public.
+Même appui : le bouton idéal descend une fois, le vrai rebondit. Un `digitalRead()` naïf compte chaque front descendant.
 {: .caption}
 
 [GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link}
