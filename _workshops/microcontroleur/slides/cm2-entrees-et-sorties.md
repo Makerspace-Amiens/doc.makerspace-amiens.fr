@@ -42,8 +42,6 @@ Ouvrir sur le quiz du CM1 (registres, `millis()`, interruption, 3,3 V) : les qua
 
 ## Quiz : ce qu'il reste du CM1
 
-<p class="activity-meta"><span><i class="fas fa-user"></i>Individuel</span><span><i class="far fa-clock"></i>5 min</span><span><i class="fas fa-pen"></i>Sans notes</span></p>
-
 1. Où est rangé le programme quand la carte est éteinte ?
 2. Où vit une variable locale d'une fonction ?
 3. Que fait `REG |= (1 << 5)` ?
@@ -297,8 +295,6 @@ Lire un bouton, vraiment
 
 ## Activité : le programme le plus simple
 
-<p class="activity-meta"><span><i class="fas fa-user-friends"></i>En binôme</span><span><i class="far fa-clock"></i>3 min</span><span><i class="fas fa-pen"></i>Sans PC</span></p>
-
 <div class="columns" markdown="1">
 <div markdown="1">
 
@@ -536,6 +532,10 @@ Deux exceptions à connaître :
 Vérifiez le brochage de la carte avant de câbler, pas après.
 {: .caption}
 
+[GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link} [XIAO ESP32S3](/docs/references/hardware/xiao-esp32s3/){: .doc-link}
+
+---
+
 ## Exemple : le schéma de la carte
 
 ![Extrait du schéma KiCad de la carte : le symbole de la XIAO ESP32S3, avec SDA sur D3, SCL sur D4, SCK sur D9 et MOSI sur D10](schema-xiao-routage-broches.png){: .img-md}
@@ -544,10 +544,6 @@ SDA et SCL sur D3 et D4, SCK et MOSI sur D9 et D10 : un **choix de routage**, pa
 {: .caption}
 
 [GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/#gpio-matrix--une-broche-nest-pas-toujours-un-simple-gpio){: .doc-link} [Concevoir la carte de la console](/workshops/microcontroleur/tutorials/conception-carte-kicad/#le-brochage-imposé){: .doc-link}
-
----
-
-[GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link} [XIAO ESP32S3](/docs/references/hardware/xiao-esp32s3/){: .doc-link}
 
 ---
 
@@ -878,8 +874,6 @@ Un servomoteur n'écoute pas le rapport cyclique mais la **largeur** de l'impuls
 
 ## Activité : de quoi avez-vous besoin ?
 
-<p class="activity-meta"><span><i class="fas fa-user-friends"></i>En binôme</span><span><i class="far fa-clock"></i>5 min</span><span><i class="fas fa-pen"></i>Sans PC</span></p>
-
 Pour chacun, dites **quel type de broche** et **quelle fonction Arduino** :
 
 1. Détecter qu'un capot est fermé (contact mécanique)
@@ -910,11 +904,6 @@ Quatre lignes, et vous avez déjà couvert l'essentiel de ce que fait un microco
 
 ---
 
-## À retenir
-
-- `LOW` sous ~0,8 V, `HIGH` au-dessus de ~2,5 V, rien entre les deux
-- Une entrée sans rappel **flotte** : `INPUT_PULLUP`, logique inversée
-- Un bouton mécanique rebondit : filtrer sur 20 à 50 ms
 ## Activité : la datasheet répond
 
 Avec le tableau « DC Characteristics » vu en début de cours (**↓** pour le revoir) :
@@ -966,6 +955,11 @@ Le réflexe d'ingénieur : chercher la réponse dans la datasheet avant de la ch
 
 ---
 
+## À retenir
+
+- `LOW` sous ~0,8 V, `HIGH` au-dessus de ~2,5 V, rien entre les deux
+- Une entrée sans rappel **flotte** : `INPUT_PULLUP`, logique inversée
+- Un bouton mécanique rebondit : filtrer sur 20 à 50 ms
 - Une interruption : l'ISR **note**, `loop()` **traite**
 - L'ADC rend 0 à 4095 ; **ADC1 seulement** si le Wi-Fi tourne
 - `map()` change d'échelle, `constrain()` borne le résultat

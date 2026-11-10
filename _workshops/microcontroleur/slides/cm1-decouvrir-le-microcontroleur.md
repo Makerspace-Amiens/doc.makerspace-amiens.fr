@@ -204,8 +204,6 @@ Même sans programmer de microcontrôleur au quotidien, vous travaillerez avec c
 
 ## Activité : c'est quoi, pour vous ?
 
-<p class="activity-meta"><span><i class="fas fa-users"></i>Toute la classe</span><span><i class="far fa-clock"></i>3 min</span><span><i class="fas fa-pen"></i>Sans PC</span></p>
-
 ### Qu'est-ce que c'est, pour vous, un microcontrôleur ?
 
 - Une réponse par personne, à voix haute : un mot, une phrase, un exemple
@@ -791,8 +789,6 @@ Personne n'écrira de registre à la main dans l'atelier : le but est de montrer
 
 ## Activité : Flash ou RAM ?
 
-<p class="activity-meta"><span><i class="fas fa-user-friends"></i>En binôme</span><span><i class="far fa-clock"></i>3 min</span><span><i class="fas fa-pen"></i>Sans PC</span></p>
-
 ### Dans votre Pong, où vit chacun de ces éléments ?
 
 - Le code de `loop()`
@@ -1097,8 +1093,6 @@ En contrepartie, votre code est seul maître de son temps : son comportement est
 
 ## Activité : trouvez le bug
 
-<p class="activity-meta"><span><i class="fas fa-user-friends"></i>En binôme</span><span><i class="far fa-clock"></i>3 min</span><span><i class="fas fa-pen"></i>Sans PC</span></p>
-
 ```cpp
 void loop() {
   digitalWrite(LED, HIGH);
@@ -1242,8 +1236,6 @@ Insister : tant que cette fonction s'exécute, tout le reste est suspendu, y com
 ---
 
 ## À faire de votre côté
-
-<p class="activity-meta"><span><i class="fas fa-laptop"></i>Sur votre machine</span><span><i class="far fa-clock"></i>30 min</span></p>
 
 1. Installer **VSCode**, puis l'extension **PlatformIO**
 2. Laisser PlatformIO télécharger la plateforme `espressif32` : c'est long, ne le faites pas au dernier moment

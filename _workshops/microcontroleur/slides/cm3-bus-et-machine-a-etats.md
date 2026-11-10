@@ -42,8 +42,6 @@ Les deux premiers font dialoguer la puce avec le monde ; les trois derniers gard
 
 ## Quiz : ce qu'il reste du CM2
 
-<p class="activity-meta"><span><i class="fas fa-user"></i>Individuel</span><span><i class="far fa-clock"></i>5 min</span><span><i class="fas fa-pen"></i>Sans notes</span></p>
-
 1. Entre 0,8 V et 2,5 V, que lit une entrée de l'ESP32-S3 ?
 2. Pourquoi une entrée non branchée lit-elle n'importe quoi ?
 3. Avec `INPUT_PULLUP`, que lit-on quand le bouton est pressé ?
@@ -685,8 +683,6 @@ Au projet, cette FSM s'étendra aux **états réseau** du Snake multijoueur.
 ---
 
 ## Activité : la FSM de votre Pong
-
-<p class="activity-meta"><span><i class="fas fa-user-friends"></i>En binôme</span><span><i class="far fa-clock"></i>10 min</span><span><i class="fas fa-pen"></i>Sur papier</span></p>
 
 ### Dessinez la machine à états de votre jeu
 

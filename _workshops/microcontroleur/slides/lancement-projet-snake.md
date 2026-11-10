@@ -102,8 +102,6 @@ Une seule règle : ses actions doivent **changer vraiment** la partie.
 
 ## Activité : inventez un rôle
 
-<p class="activity-meta"><span><i class="fas fa-user-friends"></i>En binôme</span><span><i class="far fa-clock"></i>10 min</span><span><i class="fas fa-pen"></i>Sur papier</span></p>
-
 ### Imaginez le rôle de votre joueur 2
 
 1. Que voit-il dans sa page ?
@@ -370,8 +368,6 @@ Une note **commune au binôme** : chacun doit savoir expliquer tout le projet, y
 ---
 
 ## Pour la suite de la séance
-
-<p class="activity-meta"><span><i class="fas fa-user-friends"></i>En binôme</span><span><i class="far fa-clock"></i>2 h</span></p>
 
 1. Créer votre **repo** depuis le template, et le partager à votre binôme
 2. Lire l'**énoncé** en entier, et noter vos questions
