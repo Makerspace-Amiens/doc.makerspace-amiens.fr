@@ -42,8 +42,6 @@ Ouvrir sur le quiz du CM1 (registres, `millis()`, interruption, 3,3 V) : les qua
 
 ## Quiz : ce qu'il reste du CM1
 
-<p class="activity-meta"><span><i class="fas fa-user"></i>Individuel</span><span><i class="far fa-clock"></i>5 min</span><span><i class="fas fa-pen"></i>Sans notes</span></p>
-
 1. Où est rangé le programme quand la carte est éteinte ?
 2. Où vit une variable locale d'une fonction ?
 3. Que fait `REG |= (1 << 5)` ?
@@ -139,40 +137,6 @@ Extrait de la datasheet de l'ESP32-S3 (VDD = 3,3 V, 25 °C). Juste avant, le tab
 {: .caption}
 
 [ESP32-S3 : datasheet](https://www.espressif.com/sites/default/files/documentation/esp32-s3_datasheet_en.pdf){: .doc-link} [GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/#ce-que-dit-la-datasheet){: .doc-link}
-
----
-
-## Activité : la datasheet répond
-
-<p class="activity-meta"><span><i class="fas fa-user-friends"></i>En binôme</span><span><i class="far fa-clock"></i>5 min</span><span><i class="fas fa-pen"></i>Sans PC</span></p>
-
-Avec le tableau précédent :
-
-1. Un capteur signale un `HIGH` par 2,2 V. L'ESP32-S3 le lit-il ?
-2. Que vaut la résistance activée par `INPUT_PULLUP` ?
-3. Une broche à `HIGH` doit fournir 20 mA. C'est permis ?
-4. Un module sort 5 V. Peut-on le brancher directement ?
-
-<aside class="notes" markdown="1">
-Laisser chercher dans le tableau, c'est l'objectif : la réponse est dans la datasheet, pas dans la mémoire. Correction sur la slide suivante.
-</aside>
-
----
-
-## Correction : la datasheet
-
-| | Réponse |
-|---|---|
-| 1 | **Non** : 2,2 V < $V_{IH}$ ≈ 2,5 V, zone indéterminée |
-| 2 | **45 kΩ** : un rappel « faible » |
-| 3 | **Oui**, $I_{OH}$ = 40 mA ; en pratique, rester sous 12 mA |
-| 4 | **Non** : 3,6 V au plus, il faut un pont diviseur |
-{: .table-dense}
-
-Le réflexe d'ingénieur : chercher la réponse dans la datasheet avant de la chercher sur un forum.
-{: .caption}
-
-[ESP32-S3 : datasheet](https://www.espressif.com/sites/default/files/documentation/esp32-s3_datasheet_en.pdf){: .doc-link}
 
 ---
 
@@ -330,8 +294,6 @@ Lire un bouton, vraiment
 ---
 
 ## Activité : le programme le plus simple
-
-<p class="activity-meta"><span><i class="fas fa-user-friends"></i>En binôme</span><span><i class="far fa-clock"></i>3 min</span><span><i class="fas fa-pen"></i>Sans PC</span></p>
 
 <div class="columns" markdown="1">
 <div markdown="1">
@@ -574,6 +536,17 @@ Vérifiez le brochage de la carte avant de câbler, pas après.
 
 ---
 
+## Exemple : le schéma de la carte
+
+![Extrait du schéma KiCad de la carte : le symbole de la XIAO ESP32S3, avec SDA sur D3, SCL sur D4, SCK sur D9 et MOSI sur D10](schema-xiao-routage-broches.png){: .img-md}
+
+SDA et SCL sur D3 et D4, SCK et MOSI sur D9 et D10 : un **choix de routage**, pas une obligation. La GPIO matrix permet de déplacer ces signaux ; seul le code change, comme `SPI.begin(D9, -1, D10)`.
+{: .caption}
+
+[GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/#gpio-matrix--une-broche-nest-pas-toujours-un-simple-gpio){: .doc-link} [Concevoir la carte de la console](/workshops/microcontroleur/tutorials/conception-carte-kicad/#le-brochage-imposé){: .doc-link}
+
+---
+
 ## Le câblage de la mallette
 
 | Module | Broche | Mode |
@@ -686,9 +659,20 @@ Joystick : `analogRead()` suffit, on calibre le centre soi-même. Tension d'une 
 
 ## Mesurer plus de 3,3 V : le pont diviseur
 
+<div class="columns" markdown="1">
+<div markdown="1">
+
+![Pont diviseur : la batterie LiPo (4,2 V au plus) alimente R1 puis R2, deux résistances de 100 kilo-ohms en série vers la masse ; le point milieu (2,1 V au plus) va sur une entrée ADC1 de la XIAO, avec un condensateur de 100 nF vers la masse](pont-diviseur-batterie.svg)
+
+</div>
+<div markdown="1">
+
 $$V_{ADC} = V_{in} \times \frac{R_2}{R_1 + R_2}$$
 
-Une batterie LiPo (4,2 V au plus) avec $R_1 = R_2 = 100$ kΩ donne 2,1 V au plus sur l'ADC : dans la plage, avec de la marge.
+Avec $R_1 = R_2 = 100$ kΩ, la LiPo (4,2 V au plus) donne 2,1 V au plus sur l'ADC : dans la plage, avec de la marge.
+
+</div>
+</div>
 
 ```cpp
 float vbat = analogReadMilliVolts(VBAT_PIN) * 2 / 1000.0;   // en volts
@@ -802,17 +786,20 @@ De **-1** à **+1**, **0** au repos : la raquette avance d'autant plus vite que 
 
 ## Changer d'échelle : `map()`
 
+`map(x, a, b, c, d)` passe `x` de [a, b] à [c, d] par une règle de trois :
+
+$$\text{résultat} = c + (x - a) \times \frac{d - c}{b - a}$$
+
 ```cpp
 int lecture = analogRead(POT_PIN);             // 0 à 4095
-int angle   = map(lecture, 0, 4095, 0, 180);   // 0 à 180°
-int pwm     = map(lecture, 0, 4095, 0, 255);   // 0 à 255
+int angle   = map(lecture, 0, 4095, 0, 180);   // servo : 0 à 180°
+int pwm     = map(lecture, 0, 4095, 0, 255);   // analogWrite : 0 à 255
 ```
 
-`map()` fait la règle de trois d'un coup, mais **ne borne pas** son résultat :
+Deux pièges : `map()` calcule en **entiers** (les décimales sont perdues), et **ne borne pas** son résultat. `map(3800, 500, 3500, 0, 255)` donne 280, hors de la plage d'`analogWrite` : `constrain(pwm, 0, 255)` le ramène à 255.
 
-```cpp
-pwm = constrain(pwm, 0, 255);
-```
+Exemple : potentiomètre à mi-course, lecture 2048, donc angle 90° et pwm 127.
+{: .caption}
 
 [ADC et PWM](/workshops/microcontroleur/concepts/adc-pwm/){: .doc-link}
 
@@ -901,8 +888,6 @@ Un servomoteur n'écoute pas le rapport cyclique mais la **largeur** de l'impuls
 
 ## Activité : de quoi avez-vous besoin ?
 
-<p class="activity-meta"><span><i class="fas fa-user-friends"></i>En binôme</span><span><i class="far fa-clock"></i>5 min</span><span><i class="fas fa-pen"></i>Sans PC</span></p>
-
 Pour chacun, dites **quel type de broche** et **quelle fonction Arduino** :
 
 1. Détecter qu'un capot est fermé (contact mécanique)
@@ -930,6 +915,57 @@ Quatre lignes, et vous avez déjà couvert l'essentiel de ce que fait un microco
 {: .caption}
 
 [GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link} [ADC et PWM](/workshops/microcontroleur/concepts/adc-pwm/){: .doc-link}
+
+---
+
+## Activité : la datasheet répond
+
+Avec le tableau « DC Characteristics » vu en début de cours (**↓** pour le revoir) :
+
+1. Un capteur signale un `HIGH` par 2,2 V. L'ESP32-S3 le lit-il ?
+2. Que vaut la résistance activée par `INPUT_PULLUP` ?
+3. Une broche à `HIGH` doit fournir 20 mA. C'est permis ?
+4. Un module sort 5 V. Peut-on le brancher directement ?
+
+<aside class="notes" markdown="1">
+Fin de cours : le tableau est en sous-slide (↓), à laisser affiché pendant la recherche. La réponse est dans la datasheet, pas dans la mémoire. Correction sur la slide suivante.
+</aside>
+
+<!-- .down -->
+
+## Le tableau, pour répondre
+
+| Symbole | Ce que c'est | Valeur |
+|---|---|---|
+| $V_{IH}$ | Tension minimale lue comme `HIGH` | 0,75 × VDD |
+| $V_{IL}$ | Tension maximale lue comme `LOW` | 0,25 × VDD |
+| $V_{OH}$ | Tension minimale garantie en sortie `HIGH` | 0,8 × VDD |
+| $V_{OL}$ | Tension maximale garantie en sortie `LOW` | 0,1 × VDD |
+| $I_{OH}$ | Courant que peut fournir une sortie `HIGH` | 40 mA |
+| $R_{PU}$, $R_{PD}$ | Résistances de tirage internes | 45 kΩ |
+{: .table-dense}
+
+3,6 V au plus sur une broche (valeurs maximales absolues).
+{: .caption}
+
+[ESP32-S3 : datasheet](https://www.espressif.com/sites/default/files/documentation/esp32-s3_datasheet_en.pdf){: .doc-link} [GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/#ce-que-dit-la-datasheet){: .doc-link}
+
+---
+
+## Correction : la datasheet
+
+| | Réponse |
+|---|---|
+| 1 | **Non** : 2,2 V < $V_{IH}$ ≈ 2,5 V, zone indéterminée |
+| 2 | **45 kΩ** : un rappel « faible » |
+| 3 | **Oui**, $I_{OH}$ = 40 mA ; en pratique, rester sous 12 mA |
+| 4 | **Non** : 3,6 V au plus, il faut un pont diviseur |
+{: .table-dense}
+
+Le réflexe d'ingénieur : chercher la réponse dans la datasheet avant de la chercher sur un forum.
+{: .caption}
+
+[ESP32-S3 : datasheet](https://www.espressif.com/sites/default/files/documentation/esp32-s3_datasheet_en.pdf){: .doc-link}
 
 ---
 
