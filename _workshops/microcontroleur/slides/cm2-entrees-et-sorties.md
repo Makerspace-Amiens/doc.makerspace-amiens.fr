@@ -775,17 +775,20 @@ De **-1** à **+1**, **0** au repos : la raquette avance d'autant plus vite que 
 
 ## Changer d'échelle : `map()`
 
+`map(x, a, b, c, d)` passe `x` de [a, b] à [c, d] par une règle de trois :
+
+$$\text{résultat} = c + (x - a) \times \frac{d - c}{b - a}$$
+
 ```cpp
 int lecture = analogRead(POT_PIN);             // 0 à 4095
-int angle   = map(lecture, 0, 4095, 0, 180);   // 0 à 180°
-int pwm     = map(lecture, 0, 4095, 0, 255);   // 0 à 255
+int angle   = map(lecture, 0, 4095, 0, 180);   // servo : 0 à 180°
+int pwm     = map(lecture, 0, 4095, 0, 255);   // analogWrite : 0 à 255
 ```
 
-`map()` fait la règle de trois d'un coup, mais **ne borne pas** son résultat :
+Deux pièges : `map()` calcule en **entiers** (les décimales sont perdues), et **ne borne pas** son résultat. `map(3800, 500, 3500, 0, 255)` donne 280, hors de la plage d'`analogWrite` : `constrain(pwm, 0, 255)` le ramène à 255.
 
-```cpp
-pwm = constrain(pwm, 0, 255);
-```
+Exemple : potentiomètre à mi-course, lecture 2048, donc angle 90° et pwm 127.
+{: .caption}
 
 [ADC et PWM](/workshops/microcontroleur/concepts/adc-pwm/){: .doc-link}
 
