@@ -411,16 +411,19 @@ Prusa tente de rester fidèle à ses idéaux tout en évoluant pour répondre au
 
 Bambu Lab est une entreprise fondée par quatre ingénieurs en 2020, basée à Shenzhen en Chine. Ils lancent une campagne Kickstarter en **2022** pour financer leur première machine, la **Bambu Lab X1**. Ils récoltent 7 millions de dollars pour cette imprimante 3D de bureau. Depuis, Bambu Lab est devenu un acteur phare de l'impression 3D et ils ont développé leur gamme : A1, A1 mini, P1P, H2D, H3C... Leurs machines sont réputées comme étant fiables, rapides, faciles d'utilisation.
 
-{% include image-row.html
-image_1="bambu-lab-logo.png"
-image_2="bambu-lab-a1-mini.png"
-%}
+![Bambu Lab](slide_43_image_1.png){:style="max-width: 150px;"}
 
 Ils développent aussi des systèmes d'**AMS** (Automatic Material System) permettant de l'impression multicouleur/multimatériaux ainsi que des logiciels dédiés à différents usages :
 
 - **Bambu Studio** : slicer dédié de Bambu Lab, basé sur PrusaSlicer, sous licence AGPLv3, mais distribué avec un module réseau propriétaire
 - **MakerWorld** : librairie de partage de modèles 3D
 - **Bambu Handy** : application mobile permettant la gestion à distance d'imprimantes Bambu Lab et l'impression de fichiers depuis MakerWorld
+
+{% include image-row.html
+image_1="slide_44_image_1.png"
+image_2="slide_44_image_2.png"
+image_3="slide_44_image_3.jpg"
+%}
 
 **Controverses**
 
