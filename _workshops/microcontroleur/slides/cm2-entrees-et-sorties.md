@@ -138,7 +138,7 @@ Cette zone grise au milieu explique tout ce qui suit sur les entrées flottantes
 Extrait de la datasheet de l'ESP32-S3 (VDD = 3,3 V, 25 °C). Juste avant, le tableau des valeurs maximales absolues : **3,6 V** au plus sur une broche.
 {: .caption}
 
-[ESP32-S3 : datasheet](https://www.espressif.com/sites/default/files/documentation/esp32-s3_datasheet_en.pdf){: .doc-link} [GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link}
+[ESP32-S3 : datasheet](https://www.espressif.com/sites/default/files/documentation/esp32-s3_datasheet_en.pdf){: .doc-link} [GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/#ce-que-dit-la-datasheet){: .doc-link}
 
 ---
 
@@ -251,12 +251,12 @@ Pour piloter plus de courant (un moteur, un ruban de LED, un relais), la broche 
 
 ## Commander une charge : le MOSFET
 
-![Montage côté bas : la broche GPIO de la XIAO commande la grille d'un MOSFET N par une résistance de 100 ohms, avec une résistance de 10 kilo-ohms vers la masse ; le moteur est relié entre le +12 V et le drain, une diode de roue libre à ses bornes, la source à la masse commune](mosfet-cote-bas.svg){: .img-md}
+![Montage côté bas : la broche GPIO de la XIAO commande la grille d'un MOSFET N par une résistance de 100 ohms, avec une résistance de 10 kilo-ohms vers la masse ; le moteur est relié entre le +12 V et le drain, une diode de roue libre à ses bornes, la source à la masse commune](/workshops/microcontroleur/concepts/gpio-monde-numerique/mosfet-cote-bas.svg){: .img-md}
 
 La broche n'impose qu'une **tension** sur la grille : le courant du moteur vient de sa propre alimentation. La 10 kΩ garde le moteur arrêté au démarrage ; la diode, deux slides plus loin.
 {: .caption}
 
-[GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link}
+[GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/#commander-une-charge-de-puissance--le-mosfet){: .doc-link}
 
 ---
 
@@ -275,7 +275,7 @@ Un MOSFET « logic level » conduit franchement avec 3,3 V : AO3400 (CMS), IRLB8
 Un IRF540 classique attend 10 V sur sa grille : à 3,3 V, il chauffe sans conduire.
 {: .highlight-red}
 
-[GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link}
+[GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/#commander-une-charge-de-puissance--le-mosfet){: .doc-link}
 
 ---
 
@@ -291,7 +291,7 @@ Charge inductive : une diode en parallèle, sans exception.
 1N4007 pour un relais, une Schottky (1N5819) pour un moteur en PWM rapide.
 {: .caption}
 
-[GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link}
+[GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/#commander-une-charge-de-puissance--le-mosfet){: .doc-link}
 
 ---
 
