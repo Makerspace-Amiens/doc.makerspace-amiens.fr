@@ -231,9 +231,9 @@ Courant maximal par broche : ~40 mA. En pratique, rester sous **12 mA**. **↓**
 </div>
 <div markdown="1">
 
-<p class="big-number">~40 mA</p>
+<p class="big-number">40 mA</p>
 
-**le maximum absolu** de la datasheet. Au-delà, la broche est endommagée.
+**le maximum** de la datasheet. Plus, et la broche grille.
 
 </div>
 </div>
