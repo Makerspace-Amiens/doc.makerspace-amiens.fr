@@ -38,14 +38,38 @@ Ouvrir sur la slide de rappel du CM1 : registres, `millis()`, interruption, 3,3 
 
 ---
 
-## Le CM1 en quatre idées
+## Quiz : ce qu'il reste du CM1
 
-- Les périphériques se pilotent par des **registres** : un bit, une broche
-- Ne jamais bloquer : `millis()` plutôt que `delay()`
-- L'**interruption** : le matériel prévient le logiciel
-- {: .highlight-red} Tension logique : **3,3 V**, jamais 5 V
+<p class="activity-meta"><span><i class="fas fa-user"></i>Individuel</span><span><i class="far fa-clock"></i>5 min</span><span><i class="fas fa-pen"></i>Sans notes</span></p>
 
-Les quatre reviennent aujourd'hui, appliqués aux broches d'entrée et de sortie.
+1. Où est rangé le programme quand la carte est éteinte ?
+2. Où vit une variable locale d'une fonction ?
+3. Que fait `REG |= (1 << 5)` ?
+4. Pourquoi ne pas mettre de `delay()` dans `loop()` ?
+5. Le C++ de l'ESP32 est-il compilé ou interprété ?
+6. Comment le matériel prévient-il le programme d'un événement ?
+7. Quelle tension au plus sur une broche de l'ESP32-S3 ?
+
+<aside class="notes" markdown="1">
+Sur une feuille, sans notes ni PC, 5 min. Correction à main levée sur la slide suivante : demander qui a 7/7, 5/7, moins. Les questions qui ont coincé indiquent quoi rappeler en passant pendant le cours.
+</aside>
+
+---
+
+## Quiz : correction
+
+| | Réponse |
+|---|---|
+| 1 | En **mémoire flash**, qui ne s'efface pas à la coupure |
+| 2 | Sur la **pile**, en RAM, libérée à la sortie de la fonction |
+| 3 | Met le bit 5 du registre à 1, sans toucher aux autres |
+| 4 | `delay()` **bloque** tout ; on regarde l'heure avec `millis()` |
+| 5 | **Compilé**, une fois pour toutes, avant le téléversement |
+| 6 | Par une **interruption** |
+| 7 | <span class="highlight-red">**3,3 V**, jamais 5 V</span> |
+{: .table-dense}
+
+Registres, `millis()`, interruptions et 3,3 V reviennent tous aujourd'hui, appliqués aux broches.
 {: .caption}
 
 [Architecture d'un microcontrôleur](/workshops/microcontroleur/concepts/architecture-microcontroleur/){: .doc-link} [Du matériel au logiciel](/workshops/microcontroleur/concepts/du-materiel-au-logiciel/){: .doc-link}
