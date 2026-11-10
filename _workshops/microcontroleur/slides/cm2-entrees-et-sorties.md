@@ -659,9 +659,20 @@ Joystick : `analogRead()` suffit, on calibre le centre soi-même. Tension d'une 
 
 ## Mesurer plus de 3,3 V : le pont diviseur
 
+<div class="columns" markdown="1">
+<div markdown="1">
+
+![Pont diviseur : la batterie LiPo (4,2 V au plus) alimente R1 puis R2, deux résistances de 100 kilo-ohms en série vers la masse ; le point milieu (2,1 V au plus) va sur une entrée ADC1 de la XIAO, avec un condensateur de 100 nF vers la masse](pont-diviseur-batterie.svg)
+
+</div>
+<div markdown="1">
+
 $$V_{ADC} = V_{in} \times \frac{R_2}{R_1 + R_2}$$
 
-Une batterie LiPo (4,2 V au plus) avec $R_1 = R_2 = 100$ kΩ donne 2,1 V au plus sur l'ADC : dans la plage, avec de la marge.
+Avec $R_1 = R_2 = 100$ kΩ, la LiPo (4,2 V au plus) donne 2,1 V au plus sur l'ADC : dans la plage, avec de la marge.
+
+</div>
+</div>
 
 ```cpp
 float vbat = analogReadMilliVolts(VBAT_PIN) * 2 / 1000.0;   // en volts
