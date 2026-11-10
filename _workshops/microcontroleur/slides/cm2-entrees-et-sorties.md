@@ -87,6 +87,8 @@ Les niveaux logiques
 
 ## Deux natures de signal
 
+![À gauche, un signal numérique en créneaux qui ne prend que deux niveaux, 0 V et 3,3 V ; à droite, un signal analogique qui varie en continu entre les deux](numerique-analogique.svg){: .img-sm}
+
 | | Numérique | Analogique |
 |---|---|---|
 | Valeurs possibles | 2 (`LOW` / `HIGH`) | continues, de 0 à 3,3 V |
@@ -94,10 +96,11 @@ Les niveaux logiques
 | Dans votre montage | les boutons | les axes du joystick |
 {: .table-dense}
 
-Toute la séance tient dans ce tableau : d'abord le tout-ou-rien, ensuite le continu.
-{: .caption}
-
 [GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link} [ADC et PWM](/workshops/microcontroleur/concepts/adc-pwm/){: .doc-link}
+
+<aside class="notes" markdown="1">
+Toute la séance tient dans ce tableau : d'abord le tout-ou-rien, ensuite le continu.
+</aside>
 
 ---
 
