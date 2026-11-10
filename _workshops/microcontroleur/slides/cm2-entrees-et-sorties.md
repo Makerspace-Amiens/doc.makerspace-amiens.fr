@@ -18,7 +18,7 @@ back_link: /workshops/microcontroleur/
 
 <aside class="notes" markdown="1">
 1 h 30 de cours, sans manipulation. Le cours prépare le TD2 : les modules de la mallette (bouton, joystick, buzzer, écran) branchés sur les broches de la future carte. Le montrer tôt, tout le cours y renvoie.
-Ouvrir sur la slide de rappel du CM1 : registres, `millis()`, interruption, 3,3 V. Les quatre reviennent dans ce cours.
+Ouvrir sur le quiz du CM1 (registres, `millis()`, interruption, 3,3 V) : les quatre reviennent dans ce cours.
 </aside>
 
 ---
@@ -28,9 +28,11 @@ Ouvrir sur la slide de rappel du CM1 : registres, `millis()`, interruption, 3,3 
 ### À la fin de ce cours, vous saurez :
 
 - distinguer un signal **numérique** d'un signal **analogique**
+- trouver une valeur dans la **datasheet**
 - configurer une broche, et calculer la résistance série d'une LED
+- commander une charge de puissance par un transistor
 - expliquer l'**état flottant**, et choisir entre pull-up et pull-down
-- filtrer les **rebonds** d'un bouton mécanique
+- filtrer les **rebonds** d'un bouton, par scrutation ou par interruption
 - lire une tension avec l'**ADC**, et la mettre à l'échelle
 - produire une tension moyenne avec le **PWM**
 
@@ -38,14 +40,38 @@ Ouvrir sur la slide de rappel du CM1 : registres, `millis()`, interruption, 3,3 
 
 ---
 
-## Le CM1 en quatre idées
+## Quiz : ce qu'il reste du CM1
 
-- Les périphériques se pilotent par des **registres** : un bit, une broche
-- Ne jamais bloquer : `millis()` plutôt que `delay()`
-- L'**interruption** : le matériel prévient le logiciel
-- {: .highlight-red} Tension logique : **3,3 V**, jamais 5 V
+<p class="activity-meta"><span><i class="fas fa-user"></i>Individuel</span><span><i class="far fa-clock"></i>5 min</span><span><i class="fas fa-pen"></i>Sans notes</span></p>
 
-Les quatre reviennent aujourd'hui, appliqués aux broches d'entrée et de sortie.
+1. Où est rangé le programme quand la carte est éteinte ?
+2. Où vit une variable locale d'une fonction ?
+3. Que fait `REG |= (1 << 5)` ?
+4. Pourquoi ne pas mettre de `delay()` dans `loop()` ?
+5. Le C++ de l'ESP32 est-il compilé ou interprété ?
+6. Comment le matériel prévient-il le programme d'un événement ?
+7. Quelle tension au plus sur une broche de l'ESP32-S3 ?
+
+<aside class="notes" markdown="1">
+Sur une feuille, sans notes ni PC, 5 min. Correction à main levée sur la slide suivante : demander qui a 7/7, 5/7, moins. Les questions qui ont coincé indiquent quoi rappeler en passant pendant le cours.
+</aside>
+
+---
+
+## Quiz : correction
+
+| | Réponse |
+|---|---|
+| 1 | En **mémoire flash**, qui ne s'efface pas à la coupure |
+| 2 | Sur la **pile**, en RAM, libérée à la sortie de la fonction |
+| 3 | Met le bit 5 du registre à 1, sans toucher aux autres |
+| 4 | `delay()` **bloque** tout ; on regarde l'heure avec `millis()` |
+| 5 | **Compilé**, une fois pour toutes, avant le téléversement |
+| 6 | Par une **interruption** |
+| 7 | <span class="highlight-red">**3,3 V**, jamais 5 V</span> |
+{: .table-dense}
+
+Ces quatre notions reviennent aujourd'hui, appliquées aux broches.
 {: .caption}
 
 [Architecture d'un microcontrôleur](/workshops/microcontroleur/concepts/architecture-microcontroleur/){: .doc-link} [Du matériel au logiciel](/workshops/microcontroleur/concepts/du-materiel-au-logiciel/){: .doc-link}
@@ -62,6 +88,8 @@ Les niveaux logiques
 
 ## Deux natures de signal
 
+![À gauche, un signal numérique en créneaux qui ne prend que deux niveaux, 0 V et 3,3 V ; à droite, un signal analogique qui varie en continu entre les deux](numerique-analogique.svg){: .img-sm}
+
 | | Numérique | Analogique |
 |---|---|---|
 | Valeurs possibles | 2 (`LOW` / `HIGH`) | continues, de 0 à 3,3 V |
@@ -69,10 +97,11 @@ Les niveaux logiques
 | Dans votre montage | les boutons | les axes du joystick |
 {: .table-dense}
 
-Toute la séance tient dans ce tableau : d'abord le tout-ou-rien, ensuite le continu.
-{: .caption}
-
 [GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link} [ADC et PWM](/workshops/microcontroleur/concepts/adc-pwm/){: .doc-link}
+
+<aside class="notes" markdown="1">
+Toute la séance tient dans ce tableau : d'abord le tout-ou-rien, ensuite le continu.
+</aside>
 
 ---
 
@@ -94,11 +123,64 @@ Cette zone grise au milieu explique tout ce qui suit sur les entrées flottantes
 
 ---
 
+## La datasheet, page « DC Characteristics »
+
+| Symbole | Ce que c'est | Valeur |
+|---|---|---|
+| $V_{IH}$ | Tension minimale lue comme `HIGH` | 0,75 × VDD |
+| $V_{IL}$ | Tension maximale lue comme `LOW` | 0,25 × VDD |
+| $V_{OH}$ | Tension minimale garantie en sortie `HIGH` | 0,8 × VDD |
+| $V_{OL}$ | Tension maximale garantie en sortie `LOW` | 0,1 × VDD |
+| $I_{OH}$ | Courant que peut fournir une sortie `HIGH` | 40 mA |
+| $R_{PU}$, $R_{PD}$ | Résistances de tirage internes | 45 kΩ |
+{: .table-dense}
+
+Extrait de la datasheet de l'ESP32-S3 (VDD = 3,3 V, 25 °C). Juste avant, le tableau des valeurs maximales absolues : **3,6 V** au plus sur une broche.
+{: .caption}
+
+[ESP32-S3 : datasheet](https://www.espressif.com/sites/default/files/documentation/esp32-s3_datasheet_en.pdf){: .doc-link} [GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/#ce-que-dit-la-datasheet){: .doc-link}
+
+---
+
+## Activité : la datasheet répond
+
+<p class="activity-meta"><span><i class="fas fa-user-friends"></i>En binôme</span><span><i class="far fa-clock"></i>5 min</span><span><i class="fas fa-pen"></i>Sans PC</span></p>
+
+Avec le tableau précédent :
+
+1. Un capteur signale un `HIGH` par 2,2 V. L'ESP32-S3 le lit-il ?
+2. Que vaut la résistance activée par `INPUT_PULLUP` ?
+3. Une broche à `HIGH` doit fournir 20 mA. C'est permis ?
+4. Un module sort 5 V. Peut-on le brancher directement ?
+
+<aside class="notes" markdown="1">
+Laisser chercher dans le tableau, c'est l'objectif : la réponse est dans la datasheet, pas dans la mémoire. Correction sur la slide suivante.
+</aside>
+
+---
+
+## Correction : la datasheet
+
+| | Réponse |
+|---|---|
+| 1 | **Non** : 2,2 V < $V_{IH}$ ≈ 2,5 V, zone indéterminée |
+| 2 | **45 kΩ** : un rappel « faible » |
+| 3 | **Oui**, $I_{OH}$ = 40 mA ; en pratique, rester sous 12 mA |
+| 4 | **Non** : 3,6 V au plus, il faut un pont diviseur |
+{: .table-dense}
+
+Le réflexe d'ingénieur : chercher la réponse dans la datasheet avant de la chercher sur un forum.
+{: .caption}
+
+[ESP32-S3 : datasheet](https://www.espressif.com/sites/default/files/documentation/esp32-s3_datasheet_en.pdf){: .doc-link}
+
+---
+
 <!-- .slide: class="slide-section" -->
 
 ## Une broche en sortie
 
-Piloter une LED
+D'une LED à un moteur
 
 ---
 
@@ -153,9 +235,9 @@ Courant maximal par broche : ~40 mA. En pratique, rester sous **12 mA**. **↓**
 </div>
 <div markdown="1">
 
-<p class="big-number">~40 mA</p>
+<p class="big-number">40 mA</p>
 
-**le maximum absolu** de la datasheet. Au-delà, la broche est endommagée.
+**le maximum** de la datasheet. Plus, et la broche grille.
 
 </div>
 </div>
@@ -164,6 +246,52 @@ Pour piloter plus de courant (un moteur, un ruban de LED, un relais), la broche 
 {: .caption}
 
 [GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link}
+
+---
+
+## Commander une charge : le MOSFET
+
+![Montage côté bas : la broche GPIO de la XIAO commande la grille d'un MOSFET N par une résistance de 100 ohms, avec une résistance de 10 kilo-ohms vers la masse ; le moteur est relié entre le +12 V et le drain, une diode de roue libre à ses bornes, la source à la masse commune](/workshops/microcontroleur/concepts/gpio-monde-numerique/mosfet-cote-bas.svg){: .img-md}
+
+La broche n'impose qu'une **tension** sur la grille : le courant du moteur vient de sa propre alimentation. La 10 kΩ garde le moteur arrêté au démarrage ; la diode, deux slides plus loin.
+{: .caption}
+
+[GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/#commander-une-charge-de-puissance--le-mosfet){: .doc-link}
+
+---
+
+## Choisir le MOSFET
+
+| Paramètre | Ce que c'est | À viser |
+|---|---|---|
+| $V_{GS(th)}$ | Tension de grille où il commence à conduire | Bien sous 3,3 V |
+| $R_{DS(on)}$ | Résistance une fois passant : elle chauffe | Donnée à 2,5 V, quelques dizaines de mΩ |
+| $I_D$ | Courant maximal | Au moins 2 × celui de la charge |
+| $V_{DS}$ | Tension maximale | Au-dessus de l'alimentation de la charge |
+{: .table-dense}
+
+Un MOSFET « logic level » conduit franchement avec 3,3 V : AO3400 (CMS), IRLB8721 (traversant).
+
+Un IRF540 classique attend 10 V sur sa grille : à 3,3 V, il chauffe sans conduire.
+{: .highlight-red}
+
+[GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/#commander-une-charge-de-puissance--le-mosfet){: .doc-link}
+
+---
+
+## La diode de roue libre
+
+Moteur, relais, électro-aimant : une **bobine** s'oppose à toute variation brutale de courant. Quand le MOSFET coupe, elle produit une pointe de plusieurs dizaines de volts, qui détruit le transistor.
+
+La parade : une **diode** aux bornes de la charge, cathode côté +. Elle offre un chemin au courant le temps qu'il s'éteigne.
+
+Charge inductive : une diode en parallèle, sans exception.
+{: .highlight-red}
+
+1N4007 pour un relais, une Schottky (1N5819) pour un moteur en PWM rapide.
+{: .caption}
+
+[GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/#commander-une-charge-de-puissance--le-mosfet){: .doc-link}
 
 ---
 
@@ -201,19 +329,31 @@ Lire un bouton, vraiment
 
 ---
 
-## Activité : le programme le plus simple du monde
+## Activité : le programme le plus simple
 
 <p class="activity-meta"><span><i class="fas fa-user-friends"></i>En binôme</span><span><i class="far fa-clock"></i>3 min</span><span><i class="fas fa-pen"></i>Sans PC</span></p>
+
+<div class="columns" markdown="1">
+<div markdown="1">
 
 ```cpp
 pinMode(BTN_PIN, INPUT);
 
 void loop() {
-  if (digitalRead(BTN_PIN) == HIGH) Serial.println("Appui !");
+  if (digitalRead(BTN_PIN) == HIGH)
+    Serial.println("Appui !");
 }
 ```
 
-### Un bouton relie la broche au 3,3 V. Le programme est-il correct ?
+</div>
+<div markdown="1">
+
+![Montage : la broche 3V3 de la XIAO ESP32S3 est reliée à un bouton poussoir, dont l'autre borne va sur D5 (BTN_PIN) ; rien d'autre n'est branché](bouton-vers-3v3.svg)
+
+</div>
+</div>
+
+### Le programme est-il correct ?
 
 <aside class="notes" markdown="1">
 Réponse : non. Bouton relâché, la broche n'est reliée à rien : elle flotte, sa tension traîne dans la zone indéterminée du début de séance, et `digitalRead` rend n'importe quoi. Enchaîner.
@@ -255,31 +395,19 @@ flowchart LR
 
 ### Pull-up : repos à HIGH
 
-```mermaid!
-graph LR
-  V33["3,3 V"] -->|"R 10 kΩ"| N(("GPIO"))
-  N -->|"Bouton"| GND["GND"]
-```
-
-Pressé → `LOW`
+![Pull-up : une résistance de 10 kilo-ohms relie D5 au 3V3, le bouton relie D5 à GND ; au repos D5 lit HIGH, bouton pressé LOW](pull-up.svg){: .img-md}
 
 </div>
 <div markdown="1">
 
 ### Pull-down : repos à LOW
 
-```mermaid!
-graph LR
-  GND["GND"] -->|"R 10 kΩ"| N(("GPIO"))
-  N -->|"Bouton"| V33["3,3 V"]
-```
-
-Pressé → `HIGH`
+![Pull-down : le bouton relie D5 au 3V3, une résistance de 10 kilo-ohms relie D5 à GND ; au repos D5 lit LOW, bouton pressé HIGH](pull-down.svg){: .img-md}
 
 </div>
 </div>
 
-La résistance est là pour **fixer un niveau au repos** sans créer de court-circuit quand le bouton se ferme.
+La résistance fixe un niveau au repos, sans court-circuit quand le bouton se ferme.
 {: .caption}
 
 [GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link}
@@ -320,11 +448,11 @@ La parade : après un changement d'état, ignorer les lectures pendant 20 à 50 
 
 ---
 
-## Le rebond, vu à l'oscilloscope
+## Un appui, deux boutons
 
-![Trace d'oscilloscope : le signal d'un interrupteur bascule une dizaine de fois avant de se stabiliser](rebonds-bouton-oscilloscope.jpg){: .img-md}
+![Chronogramme d'un appui : le signal du bouton idéal passe une seule fois de 3,3 V à 0 V ; celui du bouton réel bascule plusieurs fois pendant environ 1 ms, soit 5 fronts descendants, avant de rester à 0 V](rebond-ideal-reel.svg){: .img-md}
 
-Un seul appui, et le signal bascule une dizaine de fois en moins de 2 ms. Photo : Tomoldbury, via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Switch_bounce.JPG), domaine public.
+Même appui : le bouton idéal descend une fois, le vrai rebondit. Un `digitalRead()` naïf compte chaque front descendant.
 {: .caption}
 
 [GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link}
@@ -368,14 +496,65 @@ L'interruption du CM1 se déclenche sur **chaque front** : un bouton qui rebondi
 - L'interruption lève un drapeau ; `loop()` filtre les **rebonds** avec `millis()`
 - **`volatile`** : la variable change hors de `loop()`, le compilateur la relit à chaque fois
 
-```cpp
-volatile bool appui = false;   // écrite par l'interruption, lue par loop()
-```
-
 Pour un bouton lu à chaque image d'un jeu, la scrutation avec anti-rebond suffit : c'est la solution du TD2.
 {: .caption}
 
 [GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link}
+
+---
+
+## `attachInterrupt()` en pratique
+
+```cpp
+volatile bool appui = false;                 // écrite par l'ISR, lue par loop()
+void IRAM_ATTR surAppui() {                  // la routine d'interruption (ISR)
+  appui = true;                              // lever le drapeau, rien de plus
+}
+void setup() {
+  pinMode(BTN_PIN, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(BTN_PIN), surAppui, FALLING);
+}
+void loop() {
+  if (appui) { appui = false; /* traiter l'appui */ }
+}
+```
+
+`FALLING` : front descendant, donc l'appui en `INPUT_PULLUP` (`RISING` et `CHANGE` existent aussi). `IRAM_ATTR` range l'ISR en RAM, toujours accessible.
+{: .caption}
+
+[Architecture d'un microcontrôleur](/workshops/microcontroleur/concepts/architecture-microcontroleur/){: .doc-link}
+
+---
+
+## Dans une interruption, jamais
+
+- de `delay()` ni d'attente : tout le reste est figé pendant l'ISR
+- de `Serial.print()` ni de dessin à l'écran : bien trop lents
+- de calcul long : quelques microsecondes, pas plus
+- {: .highlight-red} La règle : l'ISR **note**, `loop()` **traite**
+
+Une ISR trop longue retarde les autres interruptions, dont celles du Wi-Fi : sur l'ESP32, un chien de garde finit par redémarrer la carte.
+{: .caption}
+
+[Architecture d'un microcontrôleur](/workshops/microcontroleur/concepts/architecture-microcontroleur/){: .doc-link}
+
+---
+
+## Scrutation ou interruption ?
+
+| | Scrutation | Interruption |
+|---|---|---|
+| Réaction | À la prochaine lecture (une image, 16 ms) | Quelques microsecondes |
+| Événement très bref | Peut être manqué | Jamais manqué |
+| Rebonds | Filtrés au passage | Déclenchent plusieurs fois |
+| Code | Simple | `volatile`, ISR courte |
+| Exemples | Boutons et joystick d'un jeu | Encodeur rotatif, capteur de vitesse |
+{: .table-dense}
+
+Un encodeur rotatif produit des impulsions trop brèves pour la scrutation : là, l'interruption s'impose.
+{: .caption}
+
+[GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link} [Architecture d'un microcontrôleur](/workshops/microcontroleur/concepts/architecture-microcontroleur/){: .doc-link}
 
 ---
 
@@ -442,7 +621,7 @@ Une température, une position de joystick, une luminosité produisent des tensi
 Le **convertisseur analogique-numérique** (ADC) fait la traduction.
 
 ```cpp
-int valeur = analogRead(JOY_X);   // 0 à 4095
+int valeur = analogRead(PIN_JOYSTICK_X);   // 0 à 4095
 ```
 
 Pas besoin de `pinMode` : `analogRead()` configure la broche lui-même.
@@ -463,7 +642,59 @@ $$\text{valeur} = \frac{V_{\text{entrée}}}{3{,}3} \times 4095$$
 | Butée droite ou haut | 3,3 V | 4095 |
 {: .table-dense}
 
-L'ADC de l'ESP32 n'est pas parfaitement linéaire, surtout près des extrémités. Pour une mesure précise, `analogReadMilliVolts()` donne une tension calibrée ; pour un joystick, l'approximation suffit largement.
+Cette formule suppose un ADC idéal, qui mesure exactement de 0 à 3,3 V. Les slides suivantes montrent le vrai.
+{: .caption}
+
+[ADC et PWM](/workshops/microcontroleur/concepts/adc-pwm/){: .doc-link}
+
+---
+
+## La plage réelle : l'atténuation
+
+Le cœur de l'ADC ne mesure qu'environ 1 V : un **atténuateur** placé devant élargit la plage, en perdant un peu de précision.
+
+| Atténuation | Plage mesurable (ESP32-S3) |
+|---|---|
+| 0 dB | 0 à ~0,95 V |
+| 2,5 dB | 0 à ~1,25 V |
+| 6 dB | 0 à ~1,75 V |
+| 11 dB (défaut d'Arduino-ESP32) | 0 à ~3,1 V |
+{: .table-dense}
+
+Au-delà de ~3,1 V, la lecture sature à 4095.
+{: .highlight-red}
+
+[ADC et PWM](/workshops/microcontroleur/concepts/adc-pwm/){: .doc-link}
+
+---
+
+## Une mesure juste : `analogReadMilliVolts()`
+
+```cpp
+int brut = analogRead(PIN);            // 0 à 4095, courbe imparfaite
+int mv   = analogReadMilliVolts(PIN);  // tension corrigée, en mV
+```
+
+La réponse de l'ADC n'est pas une droite parfaite : elle s'écrase près de 0 V et près de la saturation, et varie d'une puce à l'autre. Chaque ESP32-S3 sort d'usine avec des **coefficients de calibration** gravés dans la puce : `analogReadMilliVolts()` les applique.
+
+Joystick : `analogRead()` suffit, on calibre le centre soi-même. Tension d'une batterie ou d'un capteur : `analogReadMilliVolts()`.
+{: .caption}
+
+[ADC et PWM](/workshops/microcontroleur/concepts/adc-pwm/){: .doc-link}
+
+---
+
+## Mesurer plus de 3,3 V : le pont diviseur
+
+$$V_{ADC} = V_{in} \times \frac{R_2}{R_1 + R_2}$$
+
+Une batterie LiPo (4,2 V au plus) avec $R_1 = R_2 = 100$ kΩ donne 2,1 V au plus sur l'ADC : dans la plage, avec de la marge.
+
+```cpp
+float vbat = analogReadMilliVolts(VBAT_PIN) * 2 / 1000.0;   // en volts
+```
+
+De grandes résistances consomment peu, mais l'ADC lit mal une source aussi « molle » : un condensateur de 100 nF sur l'entrée stabilise la mesure.
 {: .caption}
 
 [ADC et PWM](/workshops/microcontroleur/concepts/adc-pwm/){: .doc-link}
@@ -490,9 +721,10 @@ Un module joystick, ici sur une autre carte ESP32-S3
 <div markdown="1">
 
 ```cpp
-int x = analogRead(JOY_X);
-int y = analogRead(JOY_Y);
-bool btn = !digitalRead(JOY_BTN);
+int x = analogRead(PIN_JOYSTICK_X);
+int y = analogRead(PIN_JOYSTICK_Y);
+bool pressed =
+  digitalRead(PIN_JOYSTICK_SELECT) == LOW;
 ```
 
 Deux axes lus par l'ADC, un bouton sous le stick en `INPUT_PULLUP`.
@@ -510,9 +742,9 @@ Cinq fils : `VCC`, `GND`, `VRx`, `VRy`, `SW`.
 
 ```cpp
 enum Direction { CENTRE, HAUT, BAS, GAUCHE, DROITE };
-
 Direction lireDirection() {
-  int x = analogRead(JOY_X), y = analogRead(JOY_Y);
+  int x = analogRead(PIN_JOYSTICK_X);
+  int y = analogRead(PIN_JOYSTICK_Y);
   if (x < 1500) return GAUCHE;
   if (x > 2500) return DROITE;
   if (y < 1500) return BAS;
@@ -521,8 +753,28 @@ Direction lireDirection() {
 }
 ```
 
-Le centre n'est jamais à 2048 : sans **zone morte**, la raquette dérive.
+Le centre n'est jamais à 2048 : les seuils laissent une large **zone morte**.
 {: .highlight-red}
+
+`enum` crée un type qui ne peut prendre que les valeurs listées : plus lisible et plus sûr qu'un entier de 0 à 4. Il revient au CM3 avec la machine à états.
+{: .caption}
+
+[ADC et PWM](/workshops/microcontroleur/concepts/adc-pwm/){: .doc-link}
+
+---
+
+## Un ADC qui tremble
+
+Une lecture analogique bruite toujours un peu : deux `analogRead()` consécutifs sur un stick immobile ne rendent pas la même valeur.
+
+```cpp
+long somme = 0;
+for (int i = 0; i < 16; i++) somme += analogRead(PIN);
+int lisse = somme / 16;
+```
+
+Seize lectures coûtent quelques centaines de microsecondes : négligeable face aux 16 ms d'une image, et l'affichage arrête de sautiller.
+{: .caption}
 
 [ADC et PWM](/workshops/microcontroleur/concepts/adc-pwm/){: .doc-link}
 
@@ -531,13 +783,13 @@ Le centre n'est jamais à 2048 : sans **zone morte**, la raquette dérive.
 ## Calibrer et normaliser
 
 ```cpp
-int centre = moyenneDe16Lectures();      // au démarrage, stick relâché
+calibrateJoystick();   // au démarrage, stick relâché : moyenne de 16 lectures
 
-float normaliser(int brut, int centre) {
-  int ecart = brut - centre;
-  if (abs(ecart) < 300) return 0.0f;     // zone morte
-  int course = (ecart > 0) ? (4095 - centre) : centre;
-  return constrain((float)ecart / course, -1.0f, 1.0f);
+float normalizeJoystick(int raw, int center) {
+  int offset = raw - center;
+  if (abs(offset) < JOYSTICK_DEADZONE) return 0.0f;   // zone morte (300)
+  int range = (offset > 0) ? (4095 - center) : center;
+  return constrain((float)offset / range, -1.0f, 1.0f);
 }
 ```
 
@@ -566,23 +818,6 @@ pwm = constrain(pwm, 0, 255);
 
 ---
 
-## Un ADC qui tremble
-
-Une lecture analogique bruite toujours un peu : deux `analogRead()` consécutifs sur un stick immobile ne rendent pas la même valeur.
-
-```cpp
-long somme = 0;
-for (int i = 0; i < 16; i++) somme += analogRead(PIN);
-int lisse = somme / 16;
-```
-
-Seize lectures coûtent quelques centaines de microsecondes : négligeable face aux 16 ms d'une image, et l'affichage arrête de sautiller.
-{: .caption}
-
-[ADC et PWM](/workshops/microcontroleur/concepts/adc-pwm/){: .doc-link}
-
----
-
 <!-- .slide: class="slide-section" -->
 
 ## Simuler une tension
@@ -597,7 +832,8 @@ Un GPIO ne produit que `0 V` ou `3,3 V`. Et l'ESP32-S3 n'a **pas de DAC** matér
 
 Comment régler une demi-luminosité, une vitesse de moteur, la position d'un servo ?
 
-<p class="r-fit-text">En alternant très vite.</p>
+**En alternant très vite.**
+{: .highlight-red}
 
 [ADC et PWM](/workshops/microcontroleur/concepts/adc-pwm/){: .doc-link}
 
@@ -616,7 +852,7 @@ Le PWM (*Pulse Width Modulation*) bascule entre `HIGH` et `LOW` à haute fréque
 
 $$V_{moyen} = V_{max} \times \frac{\text{duty cycle}}{100}$$
 
-À 1 à 50 kHz, ni l'œil ni un moteur ne perçoivent le clignotement : seulement la moyenne. **↓** pour le démonstrateur.
+Entre 1 et 50 kHz, ni l'œil ni un moteur ne perçoivent le clignotement : seulement la moyenne. **↓** pour le démonstrateur.
 {: .caption}
 
 [ADC et PWM](/workshops/microcontroleur/concepts/adc-pwm/){: .doc-link}
@@ -675,7 +911,7 @@ Pour chacun, dites **quel type de broche** et **quelle fonction Arduino** :
 4. Allumer un voyant rouge de défaut
 
 <aside class="notes" markdown="1">
-Corrections : 1. GPIO `INPUT_PULLUP` + `digitalRead`. 2. broche ADC1 + `analogRead`. 3. PWM + `analogWrite` (et un transistor, la broche ne fournit pas le courant). 4. GPIO `OUTPUT` + `digitalWrite`, avec résistance série.
+Corrections : 1. GPIO `INPUT_PULLUP` + `digitalRead`. 2. broche ADC1 + `analogRead`. 3. PWM + `analogWrite`, via un MOSFET et sa diode de roue libre (la broche ne fournit pas le courant). 4. GPIO `OUTPUT` + `digitalWrite`, avec résistance série.
 </aside>
 
 ---
@@ -686,7 +922,7 @@ Corrections : 1. GPIO `INPUT_PULLUP` + `digitalRead`. 2. broche ADC1 + `analogRe
 |---|---|---|
 | Capot fermé | GPIO en `INPUT_PULLUP` | `digitalRead` |
 | Luminosité | broche **ADC1** | `analogRead` |
-| Vitesse d'un ventilateur | GPIO en PWM, via un transistor | `analogWrite` |
+| Vitesse d'un ventilateur | PWM, via un MOSFET et sa diode | `analogWrite` |
 | Voyant de défaut | GPIO en `OUTPUT` + résistance | `digitalWrite` |
 {: .table-dense}
 
@@ -702,9 +938,11 @@ Quatre lignes, et vous avez déjà couvert l'essentiel de ce que fait un microco
 - `LOW` sous ~0,8 V, `HIGH` au-dessus de ~2,5 V, rien entre les deux
 - Une entrée sans rappel **flotte** : `INPUT_PULLUP`, logique inversée
 - Un bouton mécanique rebondit : filtrer sur 20 à 50 ms
+- Une interruption : l'ISR **note**, `loop()` **traite**
 - L'ADC rend 0 à 4095 ; **ADC1 seulement** si le Wi-Fi tourne
 - `map()` change d'échelle, `constrain()` borne le résultat
 - Le PWM simule une tension moyenne : `analogWrite(pin, 0..255)`
+- Une charge : un MOSFET « logic level », plus une diode si inductive
 - {: .highlight-red} Une LED se pilote toujours avec sa résistance série
 
 [GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link} [ADC et PWM](/workshops/microcontroleur/concepts/adc-pwm/){: .doc-link}
@@ -722,3 +960,19 @@ Ces quatre réflexes couvrent la quasi-totalité des bugs de câblage et de lect
 {: .caption}
 
 [GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link} [ADC et PWM](/workshops/microcontroleur/concepts/adc-pwm/){: .doc-link} [Les modules de la mallette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/){: .doc-link}
+
+---
+
+## Au prochain cours
+
+### CM3 : bus série, game loop et machine à états
+
+- Les **bus** UART, I2C et SPI, pour parler aux composants
+- Les **résistances de tirage** reviennent avec l'I2C, en open-drain
+- L'**écran** de la mallette dialogue en SPI
+- La **game loop** et la **machine à états** structurent le programme
+
+D'ici là, relisez les concepts GPIO et ADC & PWM : ils servent dès le TD2.
+{: .caption}
+
+[Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link} [Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/){: .doc-link}

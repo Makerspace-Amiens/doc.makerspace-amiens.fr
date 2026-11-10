@@ -57,6 +57,23 @@ Tout ce qui est sous ~0,8 V vaut `0`, tout ce qui dépasse ~2,5 V vaut `1`. Cett
 
 En **sortie**, la puce garantit à l'inverse des niveaux francs : proche de 0 V pour `LOW` ($V_{OL}$) et proche de 3,3 V pour `HIGH` ($V_{OH}$).
 
+### Ce que dit la datasheet
+
+Ces valeurs viennent du tableau **DC Characteristics** de la [datasheet de l'ESP32-S3](https://www.espressif.com/sites/default/files/documentation/esp32-s3_datasheet_en.pdf) (VDD = 3,3 V, 25 °C). C'est là qu'on trouve la réponse à la plupart des questions sur une broche :
+
+| Symbole | Ce que c'est | Valeur |
+|---|---|---|
+| $V_{IH}$ | Tension minimale lue comme `HIGH` | 0,75 × VDD |
+| $V_{IL}$ | Tension maximale lue comme `LOW` | 0,25 × VDD |
+| $V_{OH}$ | Tension minimale garantie en sortie `HIGH` | 0,8 × VDD |
+| $V_{OL}$ | Tension maximale garantie en sortie `LOW` | 0,1 × VDD |
+| $I_{OH}$ | Courant que peut fournir une sortie `HIGH` | 40 mA |
+| $R_{PU}$, $R_{PD}$ | Résistances de tirage internes | 45 kΩ |
+
+Juste avant, le tableau des **valeurs maximales absolues** donne la limite à ne jamais dépasser : 3,6 V sur une broche. Au-delà, la puce peut être détruite ; entre 3,3 V et 3,6 V, elle survit mais n'est plus dans ses conditions normales.
+
+Exemple : un capteur qui signale un `HIGH` par 2,2 V n'est **pas** lu de façon fiable, car 2,2 V est sous $V_{IH}$ ≈ 2,5 V.
+
 {% include message.html title="Attention : 3,3 V, pas 5 V" message="Les GPIO de l'ESP32-S3 supportent **3,3 V maximum**. Une broche mise en sortie produit 3,3 V, pas 5 V comme sur Arduino Uno. Un signal 5 V appliqué en entrée peut endommager la puce." status="is-danger" icon="fas fa-exclamation-triangle" %}
 
 ## GPIO : General Purpose Input/Output
@@ -289,9 +306,39 @@ Sur la [XIAO ESP32S3](/docs/references/hardware/xiao-esp32s3/) de l'atelier, ce 
 | Limite | Valeur ESP32-S3 |
 |---|---|
 | Courant max par broche | 40 mA (recommandé : ≤ 12 mA) |
-| Tension max en entrée | **3,3 V** |
+| Tension max en entrée | **3,3 V** (3,6 V en valeur maximale absolue) |
 
 {% include message.html title="Ne jamais connecter une charge inductive" message="Ne jamais connecter une charge inductive (moteur, relais : une charge qui stocke de l'énergie magnétique et renvoie des pics de tension à la coupure) directement sur un GPIO : toujours utiliser un transistor ou un **driver** (circuit de puissance intermédiaire)." status="is-warning" icon="fas fa-exclamation-triangle" %}
+
+## Commander une charge de puissance : le MOSFET
+
+Un moteur, un ruban de LED ou un relais demandent bien plus que les 12 mA d'une broche. La broche ne fournit donc pas la puissance : elle **commande** un transistor, qui la fournit depuis une alimentation séparée.
+
+![Montage côté bas : la broche GPIO de la XIAO commande la grille d'un MOSFET N par une résistance de 100 ohms, avec une résistance de 10 kilo-ohms vers la masse ; le moteur est relié entre le +12 V et le drain, une diode de roue libre à ses bornes, la source à la masse commune](mosfet-cote-bas.svg)
+
+C'est le montage **côté bas** : un MOSFET canal N coupe ou rétablit la masse de la charge.
+
+- La broche impose une **tension** sur la grille, sans débiter de courant (hormis une brève pointe à chaque basculement, limitée par la résistance de 100 Ω).
+- La résistance de **10 kΩ** entre grille et source tient le MOSFET bloqué tant que le microcontrôleur démarre et que sa broche flotte.
+- Les **masses** de la carte et de l'alimentation de la charge sont reliées, sinon la tension de grille n'a pas de référence.
+- Avec `analogWrite()` sur la grille, le PWM règle la vitesse du moteur (voir [ADC & PWM](/workshops/microcontroleur/concepts/adc-pwm/)).
+
+### Choisir le MOSFET
+
+| Paramètre | Ce que c'est | À viser |
+|---|---|---|
+| $V_{GS(th)}$ | Tension de grille où il commence à conduire | Bien sous 3,3 V |
+| $R_{DS(on)}$ | Résistance une fois passant : elle chauffe | Donnée à 2,5 V, quelques dizaines de mΩ |
+| $I_D$ | Courant maximal | Au moins 2 × celui de la charge |
+| $V_{DS}$ | Tension maximale | Au-dessus de l'alimentation de la charge |
+
+Avec 3,3 V sur la grille, il faut un MOSFET **« logic level »**, dont la datasheet donne $R_{DS(on)}$ à 2,5 V : AO3400 (CMS) ou IRLB8721 (traversant), par exemple. Un IRF540 classique attend 10 V sur sa grille : à 3,3 V, il conduit à peine et chauffe.
+
+### La diode de roue libre
+
+Une bobine (moteur, relais, électro-aimant) s'oppose à toute variation brutale de courant. Quand le MOSFET coupe, elle produit une pointe de plusieurs dizaines de volts qui détruit le transistor. La parade est une **diode** placée aux bornes de la charge, cathode côté + : elle laisse le courant s'éteindre en tournant dans la bobine.
+
+{% include message.html title="Charge inductive : une diode, sans exception" message="Une 1N4007 suffit pour un relais. Pour un moteur commandé en PWM rapide, préférer une diode Schottky (1N5819), qui réagit plus vite." status="is-warning" icon="fas fa-exclamation-triangle" %}
 
 ## Connecter un composant 5 V : l'adaptation de niveau
 
@@ -333,4 +380,5 @@ Les GPIO de l'ESP32-S3 sont en logique 3,3 V : appliquer 5 V sur une entrée peu
 - Un bouton mécanique **rebondit** : filtrer avec un anti-rebond logiciel (`millis()`) pour ne pas compter plusieurs appuis.
 - Certaines broches sont **réservées** (strapping, Flash SPI, USB) : vérifier le brochage de la carte avant de câbler.
 - Une **interruption** (`attachInterrupt`) réagit à un changement de broche sans scruter ; l'ISR reste minimale.
+- Une charge de puissance se commande par un **MOSFET « logic level »** côté bas, avec une **diode de roue libre** si elle est inductive.
 - Pour connecter du 5 V : **pont diviseur** (entrée) ou **level shifter** (bus), jamais 5 V directement sur un GPIO.

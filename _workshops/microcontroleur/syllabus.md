@@ -57,7 +57,7 @@ Les trois cours ont lieu **en premier**, à la suite : ils posent tout le vocabu
 | Séance | Durée | Contenu | Supports |
 |---|---|---|---|
 | **CM1** | 1 h 30 | Ce qu'est un microcontrôleur, son architecture, la chaîne du code à la puce | [Slides CM1](/workshops/microcontroleur/slides/cm1-decouvrir-le-microcontroleur/) |
-| **CM2** | 1 h 30 | GPIO, niveaux logiques, pull-up, anti-rebond, ADC et PWM | [Slides CM2](/workshops/microcontroleur/slides/cm2-entrees-et-sorties/) |
+| **CM2** | 1 h 30 | Niveaux logiques et datasheet, GPIO, charge par MOSFET, pull-up, anti-rebond, interruptions, ADC et PWM | [Slides CM2](/workshops/microcontroleur/slides/cm2-entrees-et-sorties/) |
 | **CM3** | 1 h 30 | Bus UART, I2C et SPI, game loop, machine à états | [Slides CM3](/workshops/microcontroleur/slides/cm3-bus-et-machine-a-etats/) |
 
 ### TD (10 h 30)

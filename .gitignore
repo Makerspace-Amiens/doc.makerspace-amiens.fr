@@ -10,3 +10,6 @@ documentation-website/
 .DS_Store
 .gitignore
 .claude/settings.local.json
+
+# Notes de travail locales (non publiées, non versionnées)
+_notes/

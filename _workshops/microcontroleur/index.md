@@ -17,10 +17,11 @@ subtitle: De l'architecture au jeu embarqué
 special_sections:
   - label: L'atelier
     icon: fas fa-compass
-    desc: "Le programme des séances et ce sur quoi vous êtes évalués."
+    desc: "Le programme des séances, ce sur quoi vous êtes évalués et le vocabulaire de l'atelier."
     items:
       - /workshops/microcontroleur/syllabus/
       - /workshops/microcontroleur/evaluation/
+      - /workshops/microcontroleur/glossaire/
   - label: Le projet
     icon: fas fa-gamepad
     desc: "L'énoncé du projet Snake multijoueur : exigences, livrables et évaluation."
@@ -65,6 +66,7 @@ tutorials:
 how_to_guides:
   - /docs/how-to-guides/esp32-s3-carte-introuvable/
   - /docs/how-to-guides/ecran-tft-noir/
+  - /docs/how-to-guides/deboguer-programme-embarque/
 
 hardware:
   - /docs/references/hardware/xiao-esp32s3/

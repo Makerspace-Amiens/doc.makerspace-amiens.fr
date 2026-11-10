@@ -12,6 +12,8 @@ title: Évaluation
 subtitle: Les pièces à modéliser sur OnShape pour l'évaluation
 description: Les quatre pièces (plus une en bonus) à reproduire sur OnShape à partir de leur plan, et ce sur quoi porte l'évaluation.
 author: Adrien Bracq
+
+disabled: true          # page et carte grisées ; retirer la ligne pour rouvrir
 ---
 
 ## Préparer votre projet

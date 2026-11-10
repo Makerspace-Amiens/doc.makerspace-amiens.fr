@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 200" font-family="Inter, Helvetica, Arial, sans-serif">
+  <rect width="1000" height="200" fill="#ffffff"/>
+
+  <!-- Numérique -->
+  <text x="270" y="26" text-anchor="middle" font-size="20" font-weight="700" fill="#18181b">Numérique : deux niveaux</text>
+  <line x1="70" y1="58" x2="470" y2="58" stroke="#d4d4d8" stroke-dasharray="5 5"/>
+  <line x1="70" y1="44" x2="70" y2="168" stroke="#71717a" stroke-width="2"/>
+  <line x1="70" y1="168" x2="475" y2="168" stroke="#71717a" stroke-width="2"/>
+  <text x="62" y="63" text-anchor="end" font-size="15" fill="#52525b">3,3 V</text>
+  <text x="62" y="173" text-anchor="end" font-size="15" fill="#52525b">0 V</text>
+  <text x="475" y="190" text-anchor="end" font-size="14" fill="#71717a">temps</text>
+  <path d="M70,166 H120 V58 H200 V166 H240 V58 H340 V166 H385 V58 H440 V166 H470"
+        fill="none" stroke="#ef2e31" stroke-width="4" stroke-linejoin="round"/>
+  <text x="160" y="50" text-anchor="middle" font-size="14" font-weight="600" fill="#ef2e31">HIGH</text>
+  <text x="220" y="158" text-anchor="middle" font-size="14" font-weight="600" fill="#ef2e31">LOW</text>
+
+  <!-- Analogique -->
+  <text x="790" y="26" text-anchor="middle" font-size="20" font-weight="700" fill="#18181b">Analogique : toutes les valeurs</text>
+  <line x1="590" y1="58" x2="990" y2="58" stroke="#d4d4d8" stroke-dasharray="5 5"/>
+  <line x1="590" y1="44" x2="590" y2="168" stroke="#71717a" stroke-width="2"/>
+  <line x1="590" y1="168" x2="995" y2="168" stroke="#71717a" stroke-width="2"/>
+  <text x="582" y="63" text-anchor="end" font-size="15" fill="#52525b">3,3 V</text>
+  <text x="582" y="173" text-anchor="end" font-size="15" fill="#52525b">0 V</text>
+  <text x="995" y="190" text-anchor="end" font-size="14" fill="#71717a">temps</text>
+  <path d="M590,140 C630,70 670,64 710,100 S790,165 830,128 S910,58 950,82 S985,112 990,108"
+        fill="none" stroke="#ef2e31" stroke-width="4" stroke-linecap="round"/>
+</svg>

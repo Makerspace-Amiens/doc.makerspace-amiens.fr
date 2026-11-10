@@ -6,7 +6,7 @@ permalink: /search.json
 {%- assign all_items = site.docs | concat: site.ressources | concat: site.workshops | concat: site.projects | concat: site.pages -%}
 {%- assign first = true -%}
 {%- for item in all_items -%}
-  {%- if item.title and item.type != "internal" and item.layout != "none" -%}
+  {%- if item.title and item.type != "internal" and item.layout != "none" and item.disabled != true -%}
     {%- unless first -%},{%- endunless -%}
     {%- assign first = false -%}
     {"title": {{ item.title | default: "" | jsonify }}, "subtitle": {{ item.subtitle | default: item.description | default: "" | jsonify }}, "url": {{ item.url | relative_url | jsonify }}}
