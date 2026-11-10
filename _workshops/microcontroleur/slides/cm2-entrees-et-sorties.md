@@ -742,7 +742,6 @@ Cinq fils : `VCC`, `GND`, `VRx`, `VRy`, `SW`.
 
 ```cpp
 enum Direction { CENTRE, HAUT, BAS, GAUCHE, DROITE };
-
 Direction lireDirection() {
   int x = analogRead(PIN_JOYSTICK_X);
   int y = analogRead(PIN_JOYSTICK_Y);
@@ -756,6 +755,9 @@ Direction lireDirection() {
 
 Le centre n'est jamais à 2048 : les seuils laissent une large **zone morte**.
 {: .highlight-red}
+
+`enum` crée un type qui ne peut prendre que les valeurs listées : plus lisible et plus sûr qu'un entier de 0 à 4. Il revient au CM3 avec la machine à états.
+{: .caption}
 
 [ADC et PWM](/workshops/microcontroleur/concepts/adc-pwm/){: .doc-link}
 
@@ -958,3 +960,19 @@ Ces quatre réflexes couvrent la quasi-totalité des bugs de câblage et de lect
 {: .caption}
 
 [GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link} [ADC et PWM](/workshops/microcontroleur/concepts/adc-pwm/){: .doc-link} [Les modules de la mallette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/){: .doc-link}
+
+---
+
+## Au prochain cours
+
+### CM3 : bus série, game loop et machine à états
+
+- Les **bus** UART, I2C et SPI, pour parler aux composants
+- Les **résistances de tirage** reviennent avec l'I2C, en open-drain
+- L'**écran** de la mallette dialogue en SPI
+- La **game loop** et la **machine à états** structurent le programme
+
+D'ici là, relisez les concepts GPIO et ADC & PWM : ils servent dès le TD2.
+{: .caption}
+
+[Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link} [Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/){: .doc-link}
