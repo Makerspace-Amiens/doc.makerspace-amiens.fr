@@ -786,43 +786,6 @@ De **-1** à **+1**, **0** au repos : la raquette avance d'autant plus vite que 
 
 ---
 
-## Quatre directions : l'axe dominant
-
-`lireDirection()` teste X avant Y : en diagonale, X gagne toujours. Pour un serpent, mieux vaut l'axe **le plus incliné**.
-
-```cpp
-Direction direction(float x, float y) {        // x, y normalisés, -1 à +1
-  if (fabsf(x) < 0.5f && fabsf(y) < 0.5f) return CENTRE;
-  if (fabsf(x) > fabsf(y)) return (x > 0) ? DROITE : GAUCHE;
-  return (y > 0) ? HAUT : BAS;
-}
-```
-
-Le serpent ne tourne qu'au pas suivant de la grille : retenir la dernière direction demandée, et l'appliquer au prochain pas.
-{: .caption}
-
-[ADC et PWM](/workshops/microcontroleur/concepts/adc-pwm/){: .doc-link}
-
----
-
-## L'hystérésis : un seuil pour entrer, un pour sortir
-
-Avec un seul seuil à 0,5, un stick tenu vers 0,5 bascule sans cesse entre `CENTRE` et `DROITE` : le jeu reçoit des ordres en rafale.
-
-```cpp
-const float SEUIL_ENTREE = 0.6f, SEUIL_SORTIE = 0.3f;
-bool aDroite = false;
-if (!aDroite && x > SEUIL_ENTREE) aDroite = true;    // on entre
-if ( aDroite && x < SEUIL_SORTIE) aDroite = false;   // on sort
-```
-
-Entre 0,3 et 0,6, l'état garde sa valeur précédente. Même idée que l'anti-rebond : ne réagir qu'à un changement franc.
-{: .caption}
-
-[ADC et PWM](/workshops/microcontroleur/concepts/adc-pwm/){: .doc-link}
-
----
-
 ## Changer d'échelle : `map()`
 
 ```cpp
