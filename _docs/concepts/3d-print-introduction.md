@@ -403,6 +403,42 @@ Prusa tente de rester fidèle à ses idéaux tout en évoluant pour répondre au
 
 ![Prusa – Open Source](slide_42_image_2.jpg)
 
+---
+
+### Bambu Lab
+
+**L'impression très grand public, mais propriétaire**
+
+Bambu Lab est une entreprise fondée par quatre ingénieurs en 2020, basée à Shenzhen en Chine. Ils lancent une campagne Kickstarter en **2022** pour financer leur première machine, la **Bambu Lab X1**. Ils récoltent 7 millions de dollars pour cette imprimante 3D de bureau. Depuis, Bambu Lab est devenu un acteur phare de l'impression 3D et ils ont développé leur gamme : A1, A1 mini, P1P, H2D, H3C... Leurs machines sont réputées comme étant fiables, rapides, faciles d'utilisation.
+
+{% include image-row.html
+image_1="bambu-lab-logo.png"
+image_2="bambu-lab-a1-mini.png"
+%}
+
+Ils développent aussi des systèmes d'**AMS** (Automatic Material System) permettant de l'impression multicouleur/multimatériaux ainsi que des logiciels dédiés à différents usages :
+
+- **Bambu Studio** : slicer dédié de Bambu Lab, basé sur PrusaSlicer, sous licence AGPLv3, mais distribué avec un module réseau propriétaire
+- **MakerWorld** : librairie de partage de modèles 3D
+- **Bambu Handy** : application mobile permettant la gestion à distance d'imprimantes Bambu Lab et l'impression de fichiers depuis MakerWorld
+
+**Controverses**
+
+Bien que devenu une référence dans le milieu, l'entreprise fait face à quelques critiques, notamment de la part de la communauté Open Source, et ce pour plusieurs raisons :
+
+- **Dépendance au Cloud** : en août 2023, Bambu Cloud subit une panne qui cause des défaillances sur certaines machines, lance des impressions aléatoires de manière autonome ou qui empêche totalement l'impression sur d'autres.
+- **Sécurité des données** : plusieurs failles de sécurité ont été recensées au fil des années. Logs en texte clair envoyés sur les serveurs, manque de cloisonnement pour les entreprises hautement confidentielles, questionnement sur le traitement des données par le cloud Bambu Lab, etc.
+- **Menace envers les communautés Libres et Open Source** : en mai 2026, Bambu Lab adresse une mise en demeure à Paweł Jarczak, développeur indépendant, pour qu'il retire *OrcaSlicer-bambulab*. Ce fork d'OrcaSlicer permettait de piloter les imprimantes Bambu Lab (envoi et suivi d'impressions via le cloud) sans passer par Bambu Studio ni par Bambu Connect, le logiciel intermédiaire imposé par la marque. L'entreprise invoque ses conditions d'utilisation et accuse le développeur de rétro-ingénierie de son code propriétaire. Il retire son projet « sous protestation ».
+
+L'affaire se retourne pourtant contre Bambu Lab. Bambu Studio est un dérivé de PrusaSlicer, lui-même issu de Slic3r, tous sous licence **AGPLv3**. Cette licence autorise la réutilisation du code, y compris commerciale, à condition que les logiciels dérivés soient publiés sous la même licence avec leur code source. La **Software Freedom Conservancy** (SFC), une association de défense du logiciel libre, relève deux violations de la licence :
+
+- Bambu Studio est distribué avec une bibliothèque réseau propriétaire dont le code n'est pas publié. C'est justement elle qui verrouille la communication avec les imprimantes.
+- Bambu Lab a interdit au développeur de modifier et redistribuer du code sous AGPL.
+
+Face au tollé (Louis Rossmann, Jeff Geerling, Gamers Nexus…), Bambu Lab fait marche arrière et parle d'un malentendu. La SFC lance alors le projet **Baltobu**, financé par une collecte qui a dépassé 250 000 $. Il a trois objectifs : rétro-concevoir la bibliothèque réseau, maintenir un fork d'OrcaSlicer compatible avec les machines Bambu, et développer *Viscose*, un fork libre de Bambu Studio (<a href="https://sfconservancy.org/news/2026/may/18/bambu-studio-3d-printer-agpl-violation-response/" target="_blank">Article de la SFC</a>).
+
+---
+
 ## Évolution des coûts
 
 L’impression 3D, autrefois une technologie de pointe réservée aux laboratoires et aux grandes entreprises, a progressivement évolué pour devenir une solution accessible au grand public. Cette démocratisation a été marquée par une réduction significative des coûts, permise par des avancées technologiques, une concurrence accrue, et une production de masse.
@@ -415,7 +451,7 @@ En **2012**, des imprimantes comme la **Prusa i3**, inspirée du projet RepRap, 
 
 En **2020**, des modèles comme la **Creality Ender 3** ont repoussé encore plus loin les limites de l’accessibilité. Proposée entre **200 € et 500 €**, cette imprimante a rendu l’impression 3D non seulement abordable, mais également fiable et performante, répondant ainsi aux attentes de nombreux utilisateurs. Ce prix attractif a contribué à une adoption massive de la technologie, transformant l’impression 3D en un outil du quotidien pour de nombreux particuliers et petites structures.
 
-Enfin, en **2022**, le marché mondial des imprimantes 3D a été évalué à **15,1 milliards de dollars**, avec une croissance annuelle prévue de **15 %** jusqu’en 2032. Cette expansion est alimentée par une innovation constante dans les procédés, les matériaux, et les logiciels, ainsi que par une concurrence accrue entre fabricants.
+Enfin, en **2022**, le marché mondial des imprimantes 3D a été évalué à **15,1 milliards de dollars**, avec une croissance annuelle prévue de **15 %** jusqu’en 2032. Cette expansion est alimentée par une innovation constante dans les procédés, les matériaux, et les logiciels, ainsi que par une concurrence accrue entre fabricants. En **2026**, ce marché est désormais estimé à **26,22 milliards de dollars**.
 
 ### Les moteurs de la baisse des coûts
 
