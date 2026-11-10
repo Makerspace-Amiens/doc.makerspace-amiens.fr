@@ -18,7 +18,7 @@ back_link: /workshops/microcontroleur/
 
 <aside class="notes" markdown="1">
 1 h 30, dernier cours de la série, juste avant les TD. Garder du temps pour l'exercice de la FSM du Pong : une FSM se dessine sur papier, pas devant un écran.
-Ouvrir sur la slide de rappel : le bus interne et la haute impédance du CM1, l'open-drain du CM2 (les deux reviennent avec l'I2C), `millis()` (il revient avec la game loop).
+Ouvrir sur le quiz du CM2 : la haute impédance et l'open-drain reviennent avec l'I2C, `millis()` avec la game loop.
 </aside>
 
 ---
@@ -40,17 +40,41 @@ Les deux premiers font dialoguer la puce avec le monde ; les trois derniers gard
 
 ---
 
-## Les CM1 et CM2 en quatre idées
+## Quiz : ce qu'il reste du CM2
 
-- **CM1** : un **bus interne** partagé ; les composants muets en **haute impédance**
-- **CM1** : ne jamais bloquer, `millis()` plutôt que `delay()`
-- **CM2** : l'**open-drain** tire vers 0 V, une résistance de rappel fait le reste
-- **CM2** : GPIO, ADC et PWM relient la puce au monde
+<p class="activity-meta"><span><i class="fas fa-user"></i>Individuel</span><span><i class="far fa-clock"></i>5 min</span><span><i class="fas fa-pen"></i>Sans notes</span></p>
 
-Aujourd'hui, on sort de la puce : des bus pour parler aux composants, puis la structure du programme qui les pilote.
+1. Entre 0,8 V et 2,5 V, que lit une entrée de l'ESP32-S3 ?
+2. Pourquoi une entrée non branchée lit-elle n'importe quoi ?
+3. Avec `INPUT_PULLUP`, que lit-on quand le bouton est pressé ?
+4. Une sortie open-drain peut-elle imposer un `HIGH` ?
+5. Pourquoi un seul appui compte-t-il parfois double ?
+6. Quelles broches pour lire le joystick quand le Wi-Fi tourne ?
+7. Comment faire tourner un moteur 12 V depuis une broche ?
+
+<aside class="notes" markdown="1">
+Même format qu'au CM2 : sur une feuille, sans notes, 5 min, correction à main levée. Les questions 2 et 4 (haute impédance, open-drain) préparent l'I2C, la 5 (`millis()`) la game loop : insister dessus si elles ont coincé.
+</aside>
+
+---
+
+## Quiz : correction
+
+| | Réponse |
+|---|---|
+| 1 | Rien de fiable : c'est la **zone indéterminée** |
+| 2 | Elle **flotte** : haute impédance, rien ne fixe sa tension |
+| 3 | `LOW` : la logique est **inversée** |
+| 4 | **Non** : elle tire vers 0 V, une résistance de rappel fait le `HIGH` |
+| 5 | Le **rebond** du contact ; on filtre avec `millis()` |
+| 6 | Les broches **ADC1** (ADC2 est inutilisable avec le Wi-Fi) |
+| 7 | Un **MOSFET** « logic level », et une diode de roue libre |
+{: .table-dense}
+
+Haute impédance, open-drain et `millis()` reviennent aujourd'hui, avec l'I2C et la game loop.
 {: .caption}
 
-[Architecture d'un microcontrôleur](/workshops/microcontroleur/concepts/architecture-microcontroleur/){: .doc-link} [GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link}
+[GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link} [ADC et PWM](/workshops/microcontroleur/concepts/adc-pwm/){: .doc-link}
 
 ---
 
