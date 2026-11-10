@@ -18,7 +18,7 @@ back_link: /workshops/microcontroleur/
 
 <aside class="notes" markdown="1">
 1 h 30 de cours, sans manipulation. Le cours prépare le TD2 : les modules de la mallette (bouton, joystick, buzzer, écran) branchés sur les broches de la future carte. Le montrer tôt, tout le cours y renvoie.
-Ouvrir sur la slide de rappel du CM1 : registres, `millis()`, interruption, 3,3 V. Les quatre reviennent dans ce cours.
+Ouvrir sur le quiz du CM1 (registres, `millis()`, interruption, 3,3 V) : les quatre reviennent dans ce cours.
 </aside>
 
 ---
@@ -163,7 +163,7 @@ Laisser chercher dans le tableau, c'est l'objectif : la réponse est dans la dat
 | | Réponse |
 |---|---|
 | 1 | **Non** : 2,2 V < $V_{IH}$ ≈ 2,5 V, zone indéterminée |
-| 2 | **45 kΩ** : un rappel « faible », une résistance externe de 10 kΩ est plus ferme |
+| 2 | **45 kΩ** : un rappel « faible » |
 | 3 | **Oui**, $I_{OH}$ = 40 mA ; en pratique, rester sous 12 mA |
 | 4 | **Non** : 3,6 V au plus, il faut un pont diviseur |
 {: .table-dense}
@@ -179,7 +179,7 @@ Le réflexe d'ingénieur : chercher la réponse dans la datasheet avant de la ch
 
 ## Une broche en sortie
 
-Piloter une LED
+D'une LED à un moteur
 
 ---
 
@@ -328,7 +328,7 @@ Lire un bouton, vraiment
 
 ---
 
-## Activité : le programme le plus simple du monde
+## Activité : le programme le plus simple
 
 <p class="activity-meta"><span><i class="fas fa-user-friends"></i>En binôme</span><span><i class="far fa-clock"></i>3 min</span><span><i class="fas fa-pen"></i>Sans PC</span></p>
 
@@ -620,7 +620,7 @@ Une température, une position de joystick, une luminosité produisent des tensi
 Le **convertisseur analogique-numérique** (ADC) fait la traduction.
 
 ```cpp
-int valeur = analogRead(JOY_X);   // 0 à 4095
+int valeur = analogRead(PIN_JOYSTICK_X);   // 0 à 4095
 ```
 
 Pas besoin de `pinMode` : `analogRead()` configure la broche lui-même.
@@ -720,9 +720,10 @@ Un module joystick, ici sur une autre carte ESP32-S3
 <div markdown="1">
 
 ```cpp
-int x = analogRead(JOY_X);
-int y = analogRead(JOY_Y);
-bool btn = !digitalRead(JOY_BTN);
+int x = analogRead(PIN_JOYSTICK_X);
+int y = analogRead(PIN_JOYSTICK_Y);
+bool pressed =
+  digitalRead(PIN_JOYSTICK_SELECT) == LOW;
 ```
 
 Deux axes lus par l'ADC, un bouton sous le stick en `INPUT_PULLUP`.
@@ -742,7 +743,8 @@ Cinq fils : `VCC`, `GND`, `VRx`, `VRy`, `SW`.
 enum Direction { CENTRE, HAUT, BAS, GAUCHE, DROITE };
 
 Direction lireDirection() {
-  int x = analogRead(JOY_X), y = analogRead(JOY_Y);
+  int x = analogRead(PIN_JOYSTICK_X);
+  int y = analogRead(PIN_JOYSTICK_Y);
   if (x < 1500) return GAUCHE;
   if (x > 2500) return DROITE;
   if (y < 1500) return BAS;
@@ -751,8 +753,25 @@ Direction lireDirection() {
 }
 ```
 
-Le centre n'est jamais à 2048 : sans **zone morte**, la raquette dérive.
+Le centre n'est jamais à 2048 : les seuils laissent une large **zone morte**.
 {: .highlight-red}
+
+[ADC et PWM](/workshops/microcontroleur/concepts/adc-pwm/){: .doc-link}
+
+---
+
+## Un ADC qui tremble
+
+Une lecture analogique bruite toujours un peu : deux `analogRead()` consécutifs sur un stick immobile ne rendent pas la même valeur.
+
+```cpp
+long somme = 0;
+for (int i = 0; i < 16; i++) somme += analogRead(PIN);
+int lisse = somme / 16;
+```
+
+Seize lectures coûtent quelques centaines de microsecondes : négligeable face aux 16 ms d'une image, et l'affichage arrête de sautiller.
+{: .caption}
 
 [ADC et PWM](/workshops/microcontroleur/concepts/adc-pwm/){: .doc-link}
 
@@ -761,13 +780,13 @@ Le centre n'est jamais à 2048 : sans **zone morte**, la raquette dérive.
 ## Calibrer et normaliser
 
 ```cpp
-int centre = moyenneDe16Lectures();      // au démarrage, stick relâché
+calibrateJoystick();   // au démarrage, stick relâché : moyenne de 16 lectures
 
-float normaliser(int brut, int centre) {
-  int ecart = brut - centre;
-  if (abs(ecart) < 300) return 0.0f;     // zone morte
-  int course = (ecart > 0) ? (4095 - centre) : centre;
-  return constrain((float)ecart / course, -1.0f, 1.0f);
+float normalizeJoystick(int raw, int center) {
+  int offset = raw - center;
+  if (abs(offset) < JOYSTICK_DEADZONE) return 0.0f;   // zone morte (300)
+  int range = (offset > 0) ? (4095 - center) : center;
+  return constrain((float)offset / range, -1.0f, 1.0f);
 }
 ```
 
@@ -791,23 +810,6 @@ int pwm     = map(lecture, 0, 4095, 0, 255);   // 0 à 255
 ```cpp
 pwm = constrain(pwm, 0, 255);
 ```
-
-[ADC et PWM](/workshops/microcontroleur/concepts/adc-pwm/){: .doc-link}
-
----
-
-## Un ADC qui tremble
-
-Une lecture analogique bruite toujours un peu : deux `analogRead()` consécutifs sur un stick immobile ne rendent pas la même valeur.
-
-```cpp
-long somme = 0;
-for (int i = 0; i < 16; i++) somme += analogRead(PIN);
-int lisse = somme / 16;
-```
-
-Seize lectures coûtent quelques centaines de microsecondes : négligeable face aux 16 ms d'une image, et l'affichage arrête de sautiller.
-{: .caption}
 
 [ADC et PWM](/workshops/microcontroleur/concepts/adc-pwm/){: .doc-link}
 
@@ -847,7 +849,7 @@ Le PWM (*Pulse Width Modulation*) bascule entre `HIGH` et `LOW` à haute fréque
 
 $$V_{moyen} = V_{max} \times \frac{\text{duty cycle}}{100}$$
 
-À 1 à 50 kHz, ni l'œil ni un moteur ne perçoivent le clignotement : seulement la moyenne. **↓** pour le démonstrateur.
+Entre 1 et 50 kHz, ni l'œil ni un moteur ne perçoivent le clignotement : seulement la moyenne. **↓** pour le démonstrateur.
 {: .caption}
 
 [ADC et PWM](/workshops/microcontroleur/concepts/adc-pwm/){: .doc-link}
@@ -906,7 +908,7 @@ Pour chacun, dites **quel type de broche** et **quelle fonction Arduino** :
 4. Allumer un voyant rouge de défaut
 
 <aside class="notes" markdown="1">
-Corrections : 1. GPIO `INPUT_PULLUP` + `digitalRead`. 2. broche ADC1 + `analogRead`. 3. PWM + `analogWrite` (et un transistor, la broche ne fournit pas le courant). 4. GPIO `OUTPUT` + `digitalWrite`, avec résistance série.
+Corrections : 1. GPIO `INPUT_PULLUP` + `digitalRead`. 2. broche ADC1 + `analogRead`. 3. PWM + `analogWrite`, via un MOSFET et sa diode de roue libre (la broche ne fournit pas le courant). 4. GPIO `OUTPUT` + `digitalWrite`, avec résistance série.
 </aside>
 
 ---
@@ -917,7 +919,7 @@ Corrections : 1. GPIO `INPUT_PULLUP` + `digitalRead`. 2. broche ADC1 + `analogRe
 |---|---|---|
 | Capot fermé | GPIO en `INPUT_PULLUP` | `digitalRead` |
 | Luminosité | broche **ADC1** | `analogRead` |
-| Vitesse d'un ventilateur | GPIO en PWM, via un transistor | `analogWrite` |
+| Vitesse d'un ventilateur | PWM, via un MOSFET et sa diode | `analogWrite` |
 | Voyant de défaut | GPIO en `OUTPUT` + résistance | `digitalWrite` |
 {: .table-dense}
 
@@ -933,6 +935,7 @@ Quatre lignes, et vous avez déjà couvert l'essentiel de ce que fait un microco
 - `LOW` sous ~0,8 V, `HIGH` au-dessus de ~2,5 V, rien entre les deux
 - Une entrée sans rappel **flotte** : `INPUT_PULLUP`, logique inversée
 - Un bouton mécanique rebondit : filtrer sur 20 à 50 ms
+- Une interruption : l'ISR **note**, `loop()` **traite**
 - L'ADC rend 0 à 4095 ; **ADC1 seulement** si le Wi-Fi tourne
 - `map()` change d'échelle, `constrain()` borne le résultat
 - Le PWM simule une tension moyenne : `analogWrite(pin, 0..255)`
