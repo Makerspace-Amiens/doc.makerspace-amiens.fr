@@ -142,40 +142,6 @@ Extrait de la datasheet de l'ESP32-S3 (VDD = 3,3 V, 25 °C). Juste avant, le tab
 
 ---
 
-## Activité : la datasheet répond
-
-<p class="activity-meta"><span><i class="fas fa-user-friends"></i>En binôme</span><span><i class="far fa-clock"></i>5 min</span><span><i class="fas fa-pen"></i>Sans PC</span></p>
-
-Avec le tableau précédent :
-
-1. Un capteur signale un `HIGH` par 2,2 V. L'ESP32-S3 le lit-il ?
-2. Que vaut la résistance activée par `INPUT_PULLUP` ?
-3. Une broche à `HIGH` doit fournir 20 mA. C'est permis ?
-4. Un module sort 5 V. Peut-on le brancher directement ?
-
-<aside class="notes" markdown="1">
-Laisser chercher dans le tableau, c'est l'objectif : la réponse est dans la datasheet, pas dans la mémoire. Correction sur la slide suivante.
-</aside>
-
----
-
-## Correction : la datasheet
-
-| | Réponse |
-|---|---|
-| 1 | **Non** : 2,2 V < $V_{IH}$ ≈ 2,5 V, zone indéterminée |
-| 2 | **45 kΩ** : un rappel « faible » |
-| 3 | **Oui**, $I_{OH}$ = 40 mA ; en pratique, rester sous 12 mA |
-| 4 | **Non** : 3,6 V au plus, il faut un pont diviseur |
-{: .table-dense}
-
-Le réflexe d'ingénieur : chercher la réponse dans la datasheet avant de la chercher sur un forum.
-{: .caption}
-
-[ESP32-S3 : datasheet](https://www.espressif.com/sites/default/files/documentation/esp32-s3_datasheet_en.pdf){: .doc-link}
-
----
-
 <!-- .slide: class="slide-section" -->
 
 ## Une broche en sortie
@@ -938,6 +904,57 @@ Quatre lignes, et vous avez déjà couvert l'essentiel de ce que fait un microco
 - `LOW` sous ~0,8 V, `HIGH` au-dessus de ~2,5 V, rien entre les deux
 - Une entrée sans rappel **flotte** : `INPUT_PULLUP`, logique inversée
 - Un bouton mécanique rebondit : filtrer sur 20 à 50 ms
+## Activité : la datasheet répond
+
+Avec le tableau « DC Characteristics » vu en début de cours (**↓** pour le revoir) :
+
+1. Un capteur signale un `HIGH` par 2,2 V. L'ESP32-S3 le lit-il ?
+2. Que vaut la résistance activée par `INPUT_PULLUP` ?
+3. Une broche à `HIGH` doit fournir 20 mA. C'est permis ?
+4. Un module sort 5 V. Peut-on le brancher directement ?
+
+<aside class="notes" markdown="1">
+Fin de cours : le tableau est en sous-slide (↓), à laisser affiché pendant la recherche. La réponse est dans la datasheet, pas dans la mémoire. Correction sur la slide suivante.
+</aside>
+
+<!-- .down -->
+
+## Le tableau, pour répondre
+
+| Symbole | Ce que c'est | Valeur |
+|---|---|---|
+| $V_{IH}$ | Tension minimale lue comme `HIGH` | 0,75 × VDD |
+| $V_{IL}$ | Tension maximale lue comme `LOW` | 0,25 × VDD |
+| $V_{OH}$ | Tension minimale garantie en sortie `HIGH` | 0,8 × VDD |
+| $V_{OL}$ | Tension maximale garantie en sortie `LOW` | 0,1 × VDD |
+| $I_{OH}$ | Courant que peut fournir une sortie `HIGH` | 40 mA |
+| $R_{PU}$, $R_{PD}$ | Résistances de tirage internes | 45 kΩ |
+{: .table-dense}
+
+3,6 V au plus sur une broche (valeurs maximales absolues).
+{: .caption}
+
+[ESP32-S3 : datasheet](https://www.espressif.com/sites/default/files/documentation/esp32-s3_datasheet_en.pdf){: .doc-link} [GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/#ce-que-dit-la-datasheet){: .doc-link}
+
+---
+
+## Correction : la datasheet
+
+| | Réponse |
+|---|---|
+| 1 | **Non** : 2,2 V < $V_{IH}$ ≈ 2,5 V, zone indéterminée |
+| 2 | **45 kΩ** : un rappel « faible » |
+| 3 | **Oui**, $I_{OH}$ = 40 mA ; en pratique, rester sous 12 mA |
+| 4 | **Non** : 3,6 V au plus, il faut un pont diviseur |
+{: .table-dense}
+
+Le réflexe d'ingénieur : chercher la réponse dans la datasheet avant de la chercher sur un forum.
+{: .caption}
+
+[ESP32-S3 : datasheet](https://www.espressif.com/sites/default/files/documentation/esp32-s3_datasheet_en.pdf){: .doc-link}
+
+---
+
 - Une interruption : l'ISR **note**, `loop()` **traite**
 - L'ADC rend 0 à 4095 ; **ADC1 seulement** si le Wi-Fi tourne
 - `map()` change d'échelle, `constrain()` borne le résultat
