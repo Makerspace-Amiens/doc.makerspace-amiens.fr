@@ -28,6 +28,7 @@ Ouvrir sur le quiz du CM1 (registres, `millis()`, interruption, 3,3 V) : les qua
 ### À la fin de ce cours, vous saurez :
 
 - distinguer un signal **numérique** d'un signal **analogique**
+- trouver une valeur dans la **datasheet**
 - configurer une broche, et calculer la résistance série d'une LED
 - commander une charge de puissance par un transistor
 - expliquer l'**état flottant**, et choisir entre pull-up et pull-down
@@ -70,7 +71,7 @@ Sur une feuille, sans notes ni PC, 5 min. Correction à main levée sur la slide
 | 7 | <span class="highlight-red">**3,3 V**, jamais 5 V</span> |
 {: .table-dense}
 
-Registres, `millis()`, interruptions et 3,3 V reviennent tous aujourd'hui, appliqués aux broches.
+Ces quatre notions reviennent aujourd'hui, appliquées aux broches.
 {: .caption}
 
 [Architecture d'un microcontrôleur](/workshops/microcontroleur/concepts/architecture-microcontroleur/){: .doc-link} [Du matériel au logiciel](/workshops/microcontroleur/concepts/du-materiel-au-logiciel/){: .doc-link}
@@ -939,7 +940,7 @@ Quatre lignes, et vous avez déjà couvert l'essentiel de ce que fait un microco
 - L'ADC rend 0 à 4095 ; **ADC1 seulement** si le Wi-Fi tourne
 - `map()` change d'échelle, `constrain()` borne le résultat
 - Le PWM simule une tension moyenne : `analogWrite(pin, 0..255)`
-- Une charge de puissance : un MOSFET « logic level », et une diode si elle est inductive
+- Une charge : un MOSFET « logic level », plus une diode si inductive
 - {: .highlight-red} Une LED se pilote toujours avec sa résistance série
 
 [GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link} [ADC et PWM](/workshops/microcontroleur/concepts/adc-pwm/){: .doc-link}
