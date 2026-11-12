@@ -1,8 +1,8 @@
 ---
 layout: slides
 title: Méthodologie de projet
-subtitle: "Séance 3 : découper et s'organiser"
-description: Support de la troisième séance du cours Méthodologie de projet (1 h 30, avec PC) sur le découpage en sous-systèmes et l'organisation du travail avec un GitHub Project.
+subtitle: "Séance 3 : découpage fonctionnel"
+description: Support de la troisième séance du cours Méthodologie de projet (1 h 30, avec PC) sur le découpage fonctionnel de la machine en sous-systèmes, en partant de ce qu'elle doit faire plutôt que des solutions.
 author: Adrien Bracq
 kicker: MakerSpace Amiens
 back_link: /workshops/methodologie-de-projet/
@@ -10,12 +10,15 @@ back_link: /workshops/methodologie-de-projet/
 
 ## Au programme
 
-1. Découper la machine en sous-systèmes
-2. S'organiser avec GitHub
-3. Garder la trace
+1. Fonction ou solution ?
+2. Découper la machine
+3. Les interfaces et le cahier des charges
+4. Garder la trace
 
 <aside class="notes" markdown="1">
-Déroulé (1 h 30, avec PC) : retour sur la consigne 5 min, découpage 33 min, organisation GitHub 37 min, journal et consigne 13 min.
+Déroulé (1 h 30) : retour sur la consigne 5 min, fonction ou solution 12 min, méthode et exemple du distributeur 13 min, découpage de leur machine 30 min, interfaces et cahier des charges 12 min, journal et consigne 13 min. Il reste 5 min de marge.
+
+Constat de la première séance : les étudiants n'arrivaient pas à sortir des solutions techniques (« un Arduino, deux moteurs ») pour imaginer un découpage. Toute la séance vise ce réflexe : dire ce que la machine doit faire avant de choisir comment elle le fait.
 </aside>
 
 ---
@@ -24,10 +27,133 @@ Déroulé (1 h 30, avec PC) : retour sur la consigne 5 min, découpage 33 min, o
 
 - Le cahier des charges : les niveaux sont-ils **validés par toute l'équipe** ?
 - L'existant : `etudes.md` contient-il des solutions **avec leurs sources** ?
-- Les grandes parties de la machine : en avez-vous parlé ensemble ?
 
-Ce qui manque se rattrape aujourd'hui : c'est justement le point de départ du découpage.
+Pas encore fini ? **Ce n'est pas bloquant.** Le découpage d'aujourd'hui va justement faire apparaître des fonctions à ajouter au cahier des charges : un projet avance en boucle, pas en cascade.
 {: .caption}
+
+[Cycle de vie d'un projet](/workshops/methodologie-de-projet/concepts/cycle-de-vie-projet/){: .doc-link}
+
+---
+
+<!-- .slide: class="slide-section" -->
+
+## Fonction ou solution ?
+
+Ce que doit faire le produit, avant comment il le fait
+
+---
+
+## Imaginez un distributeur de croquettes
+
+<p class="activity-meta"><span><i class="fas fa-users"></i>Toute la salle</span><span><i class="far fa-clock"></i>2 min</span></p>
+
+Il sert le chat tout seul, à heure fixe, et prévient quand le réservoir est vide.
+
+Vous devez le concevoir et le fabriquer : qu'est-ce que vous mettez dedans&nbsp;?
+{: .highlight-red}
+
+<aside class="notes" markdown="1">
+La question est volontairement orientée « fabrication » pour faire sortir des composants : « un Arduino, un moteur, une vis sans fin, un écran ». Lancer le chrono (clic sur la pastille ou touche T), puis noter les réponses au tableau, sans les commenter ni les corriger. Ne rien suggérer : la formulation suffit en général. Seulement si la salle sèche, relancer à l'oral sans donner de réponse : « Concrètement, vous achetez quoi ? » La slide suivante prend ces réponses à contre-pied.
+</aside>
+
+---
+
+## Ce que vous venez de faire
+
+Un **découpage en composants**. Ça marche, et c'est concret. Mais :
+
+- Vous êtes passés à côté du **vrai sujet** : ce que la machine doit faire
+- Le chat qui se sert tout seul ? La coupure de courant ? Oubliés
+- Chaque composant est **déjà un choix**, fait sans rien comparer
+- Vous avez l'impression d'aller vite, mais vous êtes **prisonniers de vos choix**
+
+Choisir, c'est renoncer : autant savoir à quoi.
+{: .highlight-red}
+
+<aside class="notes" markdown="1">
+S'ils protestent que la question les orientait : oui, exprès. Mais c'est aussi le réflexe de presque toutes les équipes en début de projet, sans que personne ne les pousse. Adapter la deuxième puce à ce qu'ils ont réellement oublié au tableau. Exemple de prison : changer de moteur, c'est refaire le support, le code et l'alimentation.
+</aside>
+
+<!-- .down -->
+
+## Choisir, c'est renoncer : d'où ça vient
+
+> « La nécessité de l'option me fut toujours intolérable ; choisir m'apparaissait non tant élire, que repousser ce que je n'élisais pas. »
+
+André Gide, *Les Nourritures terrestres* (1897)
+{: .caption}
+
+La formule courte « choisir, c'est renoncer » est la version que la langue courante a retenue de cette idée.
+
+<aside class="notes" markdown="1">
+Gide raconte qu'il n'arrivait pas à choisir, parce que choisir revenait surtout à rejeter tout le reste. La formule courte n'est pas mot pour mot dans le texte : c'est un résumé passé dans le langage courant.
+</aside>
+
+<!-- .down -->
+
+## Ce que ça veut dire
+
+- **La réalité du choix** : sélectionner une option (un métier, un lieu de vie, une personne) oblige mécaniquement à écarter toutes les autres possibilités
+- **Le vertige de la perte** : cet adage provoque souvent une angoisse, un sentiment de deuil face aux « vies parallèles » qu'on aurait pu vivre
+- **Le piège du non-choix** : refuser de choisir par peur de renoncer revient souvent à subir un choix par défaut, ce qui disperse l'énergie et crée une fatigue mentale
+
+<!-- .down -->
+
+## Changer de perspective
+
+- **Renoncer pour avancer** : voir le renoncement non pas comme une amputation ou un échec, mais comme l'ouverture active vers un chemin choisi en conscience
+- **Sortir du fantasme** : l'option idéale qui n'existe que dans l'imaginaire ne coûte rien, mais la réalité demande de s'engager pour devenir acteur de sa propre vie
+
+Dans un projet, c'est la même mécanique.
+{: .caption}
+
+<aside class="notes" markdown="1">
+Revenir au projet avec vos propres exemples concrets. L'idée : choisir est nécessaire, mais en sachant ce qu'on écarte. D'où l'ordre de la séance : fonctions aujourd'hui, comparaison des solutions en séance 4.
+</aside>
+
+
+---
+
+## À quoi ça sert ?
+
+Des réponses qu'on entend souvent, et la question à poser pour chacune.
+
+| Composant | À quoi ça sert |
+|---|---|
+| Moteur et vis sans fin | <span class="fragment highlight-red">Doser et distribuer la portion</span> |
+| Arduino | <span class="fragment highlight-red">Décider quand servir</span> |
+| Module horloge | <span class="fragment highlight-red">Savoir quelle heure il est</span> |
+| Capteur à ultrasons | <span class="fragment highlight-red">Mesurer le niveau du réservoir</span> |
+| Écran et boutons | <span class="fragment highlight-red">Dialoguer avec le propriétaire</span> |
+| Bac imprimé en 3D | <span class="fragment highlight-red">Stocker et protéger les croquettes</span> |
+{: .table-dense}
+
+<aside class="notes" markdown="1">
+Les composants de la slide sont des réponses typiques, pas celles de la salle : les comparer avec ce qui est noté au tableau (« lesquelles avez-vous données ? ») et traiter à l'oral les composants du tableau absents de la liste. Faire répondre la salle avant de révéler chaque fonction. Insister : la réponse commence toujours par un verbe.
+</aside>
+
+---
+
+## Penser en fonctions
+
+Une **fonction** : **un verbe et un complément**, jamais un composant.
+
+```mermaid!
+graph LR
+    G[Nourrir le chat sans le propriétaire] --> A[Savoir quand servir]
+    G --> B[Doser et distribuer la portion]
+    G --> C[Stocker et protéger les croquettes]
+    A --> A1[Savoir l'heure]
+```
+
+Diagramme **FAST** : vers la droite « **comment ?** », vers la gauche « **pourquoi ?** »
+{: .caption}
+
+[Des fonctions aux solutions : le diagramme FAST](/workshops/methodologie-de-projet/concepts/tracer-choix-techniques/#des-fonctions-aux-solutions--le-diagramme-fast){: .doc-link}
+
+<aside class="notes" markdown="1">
+Lire le diagramme dans les deux sens. Comment nourrir le chat sans le propriétaire ? En sachant quand servir, en dosant la portion, en stockant les croquettes. Pourquoi savoir l'heure ? Pour savoir quand servir. Chaque boîte du découpage sera une de ces fonctions. Aujourd'hui on s'arrête aux fonctions : les solutions viendront en séance 4, au bout des branches.
+</aside>
 
 ---
 
@@ -43,7 +169,7 @@ Un gros problème, c'est plusieurs petits problèmes
 
 - **Répartir le travail** : un sous-système, un responsable
 - **Chercher des solutions** partie par partie, pas pour toute la machine d'un coup
-- **Tester séparément** : on valide le porte-stylo avant d'avoir le reste
+- **Tester séparément** : on valide le doseur avant d'avoir le reste
 - **Documenter clairement** : une page par sous-système dans `conception/`
 
 Le template le prévoit déjà : `conception/index.md` commence par l'**architecture globale**, et les rôles de `equipe.md` peuvent suivre ce découpage.
@@ -55,153 +181,101 @@ Le template le prévoit déjà : `conception/index.md` commence par l'**architec
 
 ## Comment découper
 
-1. **Partez des fonctions** du cahier des charges : chacune est assurée par une partie de la machine
-2. **Regroupez** ce qui travaille ensemble : 4 à 7 sous-systèmes, pas 20
-3. **Tracez les liens** : qui alimente quoi, qui commande quoi, qui est fixé sur quoi
-4. **Repérez les interfaces** : là où deux sous-systèmes se touchent
+1. **Racontez l'usage** : de la mise en marche à la fin, une phrase par étape
+2. **Soulignez les verbes** : chacun est une fonction
+3. **Regroupez** ce qui travaille ensemble : 4 à 7 blocs, pas 20
+4. **Tracez les liens** : qui alimente, commande ou porte quoi
 
-Une interface oubliée, c'est deux pièces qui ne s'assemblent pas le jour du montage.
+Pas besoin d'un cahier des charges fini : il suffit de savoir **ce que la machine doit faire**. Trois blocs qu'on oublie souvent : l'**alimentation**, ce qui **porte** la machine, et la façon dont l'**utilisateur** la commande.
+{: .caption}
+
+---
+
+## Le scénario du distributeur
+
+1. Le propriétaire **règle** l'heure et la portion sur un petit écran
+2. À 8 h, la machine **sait qu'il est l'heure** et **décide** de servir
+3. Elle **fait tomber** les croquettes du réservoir et **dose** la portion
+4. Les croquettes **arrivent** dans la gamelle, sans tomber à côté
+5. Réservoir presque vide : elle **prévient** le propriétaire
+6. Le chat ne doit **pas pouvoir se servir** tout seul
+
+Le scénario tient en six phrases, et aucun composant n'y apparaît.
+{: .caption}
+
+<aside class="notes" markdown="1">
+Même machine que tout à l'heure, mais cette fois on part de l'usage. Lire le scénario sans le gras d'abord, si possible au tableau, et faire trouver les verbes par la salle. La phrase 6 montre une fonction qu'on n'aurait pas trouvée en pensant composants : protéger le réservoir.
+</aside>
+
+---
+
+## Le schéma bloc du distributeur
+
+```mermaid!
+graph LR
+    U[Dialoguer avec<br/>le propriétaire] -->|heure, portion| C[Décider<br/>quand servir]
+    P[Percevoir l'heure<br/>et le niveau] --> C
+    C -->|alerte| U
+    C --> D[Doser et<br/>distribuer]
+    A[Alimenter] --> C
+    A --> D
+    S[Stocker et protéger<br/>les croquettes] --- D
+```
+
+Six blocs, et toujours **aucun composant** : trappe ou vis sans fin, horloge ou wifi, c'est le travail de la séance 4.
 {: .caption}
 
 ---
 
 ## Activité : découpez votre machine
 
-<p class="activity-meta"><span><i class="fas fa-user"></i>Individuel</span><span><i class="far fa-clock"></i>12 min</span><span><i class="fas fa-pen"></i>Papier ou PC</span></p>
+<p class="activity-meta"><span><i class="fas fa-users"></i>Par équipe si possible</span><span><i class="far fa-clock"></i>30 min</span><span><i class="fas fa-pen"></i>Papier ou PC</span></p>
 
-1. Listez les **sous-systèmes** de votre machine, avec la fonction que chacun assure
-2. Dessinez un **schéma bloc** : une boîte par sous-système, une flèche par lien
-3. Entourez les **interfaces** : fixation, connecteur, format de fichier…
+1. Écrivez le **scénario d'usage** : 5 à 8 phrases, de la mise en marche à la fin
+2. Soulignez les **verbes**
+3. Regroupez en **4 à 7 blocs** : un verbe et un complément par boîte
+4. Dessinez le **schéma bloc** : une flèche par lien
 
-Puis, en **binôme de projets différents** (6 min) : expliquez votre schéma. Votre binôme voit-il une partie oubliée ?
+Plusieurs membres de la même équipe dans la salle ? Travaillez ensemble. Un nom de composant dans une boîte : à quoi sert-il ?
 {: .caption}
 
----
-
-## Correction : Machine That Draws
-
-```mermaid!
-graph LR
-    L[Logiciel<br/>image vers G-code] -->|USB, G-code| E[Électronique<br/>de commande]
-    A[Alimentation] --> E
-    E --> D[Déplacement XY]
-    E --> P[Porte-stylo]
-    D --- P
-    D --- S[Structure<br/>sur plaque percée]
-    S --- F[Maintien<br/>de la feuille]
-```
-
-Six sous-systèmes, dont deux qu'on oublie souvent : le **logiciel** qui prépare le tracé, et le **maintien de la feuille**.
-{: .caption}
-
----
-
-## Correction : les interfaces à ne pas oublier
-
-| Interface | Entre | À fixer ensemble |
-|---|---|---|
-| Fixation du stylo | Porte-stylo et déplacement XY | Encombrement, points de fixation |
-| Fixation au châssis | Structure et plaque percée | Entraxe des trous, visserie |
-| Format du tracé | Logiciel et électronique | G-code accepté par le firmware |
-| Alimentation | Alimentation et électronique | Tension, courant, connecteur |
-
-Chaque interface a **un responsable** : sinon, chacun pense que c'est l'autre.
-{: .caption}
+<aside class="notes" markdown="1">
+Passer dans les rangs et traquer les composants dans les boîtes : c'est là que se joue la séance. Pas de correction commune, les machines sont trop différentes : la correction se fait groupe par groupe.
+</aside>
 
 ---
 
 <!-- .slide: class="slide-section" -->
 
-## S'organiser avec GitHub
+## Les interfaces et le cahier des charges
 
-Qui fait quoi, pour quand
-
----
-
-## Le vocabulaire
-
-| Mot | C'est… | Exemple |
-|---|---|---|
-| **Issue** | Une tâche, un bug ou une question à trancher | « Tester la levée du stylo par servo » |
-| **Assignee** | La personne qui s'en charge | Vous |
-| **Label** | Une étiquette pour trier | `porte-stylo`, `logiciel` |
-| **Milestone** | Un jalon daté qui regroupe des issues | « POC fonctionnel », fin du S1 |
-| **Project** | Le tableau qui affiche les issues par avancement | À faire, En cours, Terminé |
-{: .table-dense}
-
-Optionnel dans le template, mais **évalué** dans ce cours.
-{: .caption}
-
-[Gérer son projet avec GitHub](/workshops/methodologie-de-projet/tutorials/gerer-projet-github/){: .doc-link}
+Là où les blocs se touchent
 
 ---
 
-## Une issue qu'on peut vraiment traiter
+## Une flèche, une interface
 
-<div class="columns" markdown="1">
-<div markdown="1">
+Chaque flèche de votre schéma est un endroit où **deux blocs doivent s'accorder**. Dans le distributeur :
 
-**❌ Vague**
+- **Ça se fixe** : la sortie du réservoir doit s'emboîter sur le doseur
+- **Ça se branche** : l'alimentation doit fournir la tension que le doseur attend
+- **Ça s'échange** : le dialogue doit envoyer l'heure et la portion sous une forme que la décision comprend
 
-**Titre** : Problème moteur
-
-**Description** : (vide)
-
-</div>
-<div markdown="1">
-
-**✅ Exploitable**
-
-**Titre** : Le moteur pas à pas ne tourne pas avec le driver A4988
-
-**Description** : le moteur reste bloqué, le driver chauffe. Câblage vérifié. Piste : réglage du courant. **Fini quand** le moteur fait 10 tours sans décrocher.
-
-</div>
-</div>
-
-Un titre précis, le contexte, et **comment on sait que c'est fini**.
+Si deux personnes conçoivent chacune un bloc sans se parler, c'est là que ça casse le jour du montage. Chaque interface a donc **un responsable**.
 {: .caption}
 
 ---
 
-## Un tableau par sous-système
+## Ce que le découpage dit de votre cahier des charges
 
-| À faire | En cours | Terminé |
-|---|---|---|
-| `porte-stylo` Tester la levée par servo | `déplacement-xy` Comparer courroie et tige filetée | `structure` Relever l'entraxe des trous de la plaque |
-| `logiciel` Générer un carré en G-code | `électronique` Régler le courant des drivers | |
-| `feuille` Essayer le maintien par aimants | | |
+- **Un bloc sans fonction** dans le cahier des charges : une fonction oubliée, à ajouter avec son critère et son niveau
+- **Une fonction sans bloc** : un bloc oublié dans votre schéma
+- Exemple : « Stocker et protéger les croquettes » devient « le chat n'ouvre pas le réservoir »
 
-Une **étiquette par sous-système**, **une personne** par issue, et un tableau qui **reflète la réalité** : une carte « En cours » depuis trois semaines, ça se discute en équipe.
+Le découpage est une **V0** : il bougera avec le cahier des charges, et c'est normal.
 {: .caption}
 
----
-
-## Les jalons : des dates, pas des intentions
-
-- Un **jalon** (milestone) est une étape datée : on sait ce qui doit être fini à cette date
-- Chaque issue est rattachée à un jalon, et GitHub affiche le **pourcentage terminé**
-- Exemples : « Architecture validée », « Premier trait tracé », « POC fonctionnel » (fin du S1)
-- Dans le repo : onglet **Issues**, bouton **Milestones**, puis **New milestone**
-
-Un jalon qui glisse n'est pas une faute : c'est une information, à écrire dans le journal avec sa raison.
-{: .caption}
-
-[Gérer le temps et les jalons](/workshops/methodologie-de-projet/concepts/gerer-temps-jalons/){: .doc-link}
-
----
-
-## Activité : vos premières issues
-
-<p class="activity-meta"><span><i class="fas fa-user"></i>Individuel</span><span><i class="far fa-clock"></i>25 min</span><span><i class="fab fa-github"></i>Sur GitHub</span></p>
-
-1. Onglet **Projects** du repo : si le tableau de l'équipe n'existe pas, créez-le (**New project**, modèle **Board**)
-2. Onglet **Issues**, bouton **Labels** : l'étiquette de votre sous-système existe-t-elle ? Sinon, créez-la
-3. Créez **trois issues** pour votre partie : titre précis, description, **fini quand**, étiquette, assignée à vous
-4. Ajoutez-les au Project
-5. Votre binôme relit une issue : sait-il quoi faire, et quand c'est fini ?
-
-[Gérer son projet avec GitHub](/workshops/methodologie-de-projet/tutorials/gerer-projet-github/){: .doc-link}
+[Définir son besoin](/workshops/methodologie-de-projet/concepts/definir-son-besoin/){: .doc-link}
 
 ---
 
@@ -217,11 +291,11 @@ Le journal, à chaque séance
 
 <p class="activity-meta"><span><i class="fas fa-user"></i>Individuel</span><span><i class="far fa-clock"></i>8 min</span><span><i class="fas fa-laptop"></i>Sur PC</span></p>
 
-- **Fait** : votre découpage de la machine, vos premières issues
-- **Pourquoi** : les regroupements que vous avez choisis, les interfaces repérées
-- **Reste à faire** : ce que l'équipe doit trancher ensemble
+- **Fait** : votre scénario d'usage et votre schéma bloc
+- **Pourquoi** : les regroupements choisis, les interfaces repérées
+- **Reste à faire** : les fonctions à ajouter au cahier des charges, ce que l'équipe doit trancher
 
-Ajoutez une photo ou une capture de votre schéma bloc : c'est la base de l'architecture globale.
+Ajoutez une photo ou une capture de votre schéma : c'est la base de l'architecture globale.
 {: .caption}
 
 [Tenir un journal de bord](/workshops/methodologie-de-projet/tutorials/journal-de-bord/){: .doc-link}
@@ -233,11 +307,11 @@ Ajoutez une photo ou une capture de votre schéma bloc : c'est la base de l'arch
 <p class="activity-meta"><span><i class="fas fa-users"></i>Avec votre équipe projet</span></p>
 
 1. Mettez en commun vos découpages dans `conception/index.md`, section **Architecture globale**
-2. Dans `equipe.md`, un **responsable** par sous-système, et un responsable par interface
-3. Créez les **jalons**, dont le POC de fin de S1, et rattachez-y les issues
-4. Au début de chaque séance de projet, passez le tableau en revue ensemble
+2. Complétez `objectifs.md` avec les **fonctions** que le découpage a fait apparaître
+3. Dans `equipe.md`, un **responsable** par sous-système et par interface
+4. Pour votre sous-système, **deux solutions existantes** dans `etudes.md`
 
-La prochaine séance : choisir les solutions de chaque sous-système, et tracer ses choix.
+La prochaine séance : choisir les solutions de chaque sous-système, et organiser le travail sur GitHub.
 {: .caption}
 
-[Tracer ses choix techniques](/workshops/methodologie-de-projet/concepts/tracer-choix-techniques/){: .doc-link} [Communiquer en équipe](/workshops/methodologie-de-projet/concepts/communiquer-en-equipe/){: .doc-link}
+[Rechercher l'existant](/workshops/methodologie-de-projet/concepts/rechercher-existant-faisabilite/){: .doc-link} [Communiquer en équipe](/workshops/methodologie-de-projet/concepts/communiquer-en-equipe/){: .doc-link}
