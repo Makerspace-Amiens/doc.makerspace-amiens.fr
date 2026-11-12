@@ -136,7 +136,9 @@ content="Pour un jeu, on ne veut pas savoir si le bouton **est** enfoncé, mais 
 - tant que le doigt reste appuyé, `loop()` voit le bouton enfoncé des milliers de fois ;
 - le contact mécanique **rebondit** quelques millisecondes : un seul appui ressemble à plusieurs.
 
-La fonction ci-dessous ne valide un changement que si le signal est resté stable 30 ms (l'**anti-rebond**), et ne renvoie `true` qu'au moment de l'appui. Elle ne bloque jamais : pas de `delay()`, seulement `millis()`. Adaptez `PRESSED_LEVEL` à ce que vous avez noté à l'étape 1."
+La fonction ci-dessous ne valide un changement que si le signal est resté stable 30 ms (l'**anti-rebond**), et ne renvoie `true` qu'au moment de l'appui. Elle ne bloque jamais : pas de `delay()`, seulement `millis()`. Adaptez `PRESSED_LEVEL` à ce que vous avez noté à l'étape 1.
+
+C'est l'anti-rebond du CM2 (`ANTIREBOND`, `dernierEtat`), avec des noms en anglais comme tout le code des TD : `DEBOUNCE_MS`, `lastRead`."
 %}
 
 ```cpp

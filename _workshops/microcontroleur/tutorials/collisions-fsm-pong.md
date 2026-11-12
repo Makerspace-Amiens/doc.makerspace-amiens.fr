@@ -46,7 +46,7 @@ content="Un jeu manipule beaucoup de valeurs : positions, vitesses, score, vies,
 
 Les positions sont des `float` (la balle peut avancer de 2,4 pixels par image) et désignent le **coin supérieur gauche** de l'objet, comme pour `fillRect()`. Le haut de l'écran est réservé à un bandeau de 24 pixels pour le score et les vies.
 
-La phase de jeu est un `enum class` : un type qui ne peut prendre **que** les valeurs listées. Le concept FSM et le CM3 nomment ces états `MENU`, `PARTIE` et `GAME_OVER` ; ce sont les mêmes, nommés en anglais comme le reste du code."
+La phase de jeu est un `enum class` : comme l'`enum` du CM3, un type qui ne peut prendre **que** les valeurs listées, mais chaque valeur s'écrit précédée du nom du type (`GameState::Title`). Un `Title` ou un `Playing` ne risque ainsi pas d'entrer en collision avec un autre nom du programme. Le concept FSM et le CM3 nomment ces états `MENU`, `PARTIE` et `GAME_OVER` ; ce sont les mêmes, nommés en anglais comme le reste du code."
 %}
 
 Ajoutez les réglages du jeu à `include/config.h` :

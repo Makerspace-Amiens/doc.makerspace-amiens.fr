@@ -120,7 +120,7 @@ Voici le code nécessaire au fonctionnement de cette démonstration.
 ```cpp
 #include <Arduino.h>
 
-#define LED_PIN D3   // GPIO4
+constexpr int LED_PIN = D3;   // GPIO4
 
 void setup() {
   pinMode(LED_PIN, OUTPUT);

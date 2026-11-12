@@ -53,7 +53,7 @@ La liaison série permet une communication point-à-point grâce à deux voies :
 - **TX (transmission)** : la voie qui transmet le message à son interlocuteur ;
 - **RX (réception)** : la voie qui reçoit les messages de l'interlocuteur.
 
-Les voies sont associées à des broches précises du µC (sur la XIAO ESP32S3, l'UART matériel est sur D6 pour TX et D7 pour RX) : pour relier deux cartes, il ne faut pas oublier de croiser les fils de communication, comme dans cet exemple :
+Les voies sont associées à des broches précises du µC (sur la XIAO ESP32S3, l'UART matériel est sur D6 pour TX et D7 pour RX ; ces broches sont libres sur breadboard, mais pas sur la carte de la console de l'atelier Microcontrôleurs, où elles servent au bouton SW2 et à l'écran) : pour relier deux cartes, il ne faut pas oublier de croiser les fils de communication, comme dans cet exemple :
 
 ![schema](schema-connexion-tx-rx.png)
 
