@@ -434,7 +434,7 @@ Ne jamais bloquer
 
 ## Lire, calculer, afficher
 
-<pre><code class="language-cpp" data-trim data-line-numbers="2-7|9|10-11">
+<pre><code class="language-cpp" data-trim data-line-numbers="2-7|9-10|11|12">
 void loop() {
   static uint32_t lastFrameMs = 0;
   uint32_t nowMs = millis();
@@ -443,9 +443,10 @@ void loop() {
   }
   lastFrameMs = nowMs;
 
-  float x = readJoystick();                    // 1. lire
-  gameUpdate(game, x, nowMs);                  // 2. calculer
-  rendererDraw(game);                          // 3. afficher
+  float joystickX   = normalizeJoystick(analogRead(PIN_JOYSTICK_X), joystickCenterX);
+  bool startPressed = justPressed(selectButton);          // 1. lire
+  gameUpdate(game, joystickX, startPressed, nowMs);       // 2. calculer
+  rendererDraw(game);                                     // 3. afficher
 }
 </code></pre>
 
