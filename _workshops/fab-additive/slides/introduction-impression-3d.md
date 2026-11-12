@@ -643,6 +643,81 @@ Chaque année, Josef Prusa présente en vidéo le bilan de l'entreprise.
 
 ---
 
+## Bambu Lab : un acteur récent
+
+![Bambu Lab Logo](/docs/concepts/3d-print-introduction/slide_43_image_1.png){: style="position: absolute; top: 20px; right: 20px; max-height: 120px;"}
+
+Bambu Lab est arrivée plus tard, mais est aujourd'hui un acteur majeur du milieu de l'impression 3D.
+
+![Frise chronologique Bambu Lab](/docs/concepts/3d-print-introduction/slide_43_image_2.png)
+
+Un écosystème complet : machines, AMS, Bambu Studio, MakerWorld, Bambu Handy.
+{: .caption}
+
+---
+
+## Bambu Lab
+
+<div class="columns is-3" markdown="1">
+<div markdown="1">
+
+![Bambu Lab A1 mini](/docs/concepts/3d-print-introduction/slide_44_image_1.png){: .img-md}
+
+A1 mini : petit format, ultra accessible
+{: .caption}
+
+</div>
+<div markdown="1">
+
+![Bambu Lab AMS](/docs/concepts/3d-print-introduction/slide_44_image_2.png){: .img-md}
+
+AMS : Automatic Material System
+{: .caption}
+
+</div>
+<div markdown="1">
+
+![Bambu Lab H3C](/docs/concepts/3d-print-introduction/slide_44_image_3.jpg){: .img-md}
+
+H3C : changeur 9 outils Bambu Lab SwapTek™
+{: .caption}
+
+</div>
+</div>
+
+Des machines bon marché et un environnement complet.
+{: .caption}
+
+[Bambu Lab](/docs/concepts/3d-print-introduction/#bambu-lab){: .doc-link}
+
+---
+
+## Bambu Lab : les controverses
+
+- **Dépendance au cloud** : en août 2023, une panne lance des impressions toutes seules ou bloque des machines
+- **Sécurité des données** : fichiers et logs transitent par les serveurs de la marque
+- **Écosystème fermé** : Bambu Connect impose un intermédiaire propriétaire aux logiciels tiers
+
+Une imprimante grand public… mais propriétaire.
+{: .caption}
+
+---
+
+## L'affaire AGPL (2026)
+
+1. Un développeur publie un fork d'OrcaSlicer qui contourne Bambu Connect
+2. Bambu Lab le menace : il retire son projet
+3. Problème : Bambu Studio dérive de PrusaSlicer, sous licence **AGPLv3**
+4. La SFC relève deux violations de la licence
+5. Bambu Lab recule ; la SFC lance **Baltobu** pour libérer l'écosystème
+
+Le libre se défend aussi collectivement.
+{: .caption}
+
+[Controverses Bambu Lab](/docs/concepts/3d-print-introduction/#bambu-lab){: .doc-link}
+
+---
+
 <!-- .slide: class="slide-section" -->
 
 ## Le Hype Cycle

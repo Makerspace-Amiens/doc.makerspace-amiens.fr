@@ -12,6 +12,8 @@ title: Évaluation de rattrapage
 subtitle: Les pièces à modéliser sur OnShape pour le rattrapage
 description: Les quatre pièces (plus une en bonus) à reproduire sur OnShape à partir de leur plan pour l'évaluation de rattrapage, et ce sur quoi elle porte.
 author: Adrien Bracq
+
+disabled: true          # page et carte grisées ; retirer la ligne pour rouvrir
 ---
 
 ## Préparer votre projet
