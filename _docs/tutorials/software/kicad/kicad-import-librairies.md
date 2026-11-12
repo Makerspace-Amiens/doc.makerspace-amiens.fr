@@ -1,7 +1,7 @@
 ---
 layout: documentation
 hide_hero: false
-hero_image: "/docs/tutorial/kicad-import-librairies/hero.png"
+hero_image: hero.png
 hero_darken: true
 image: "hero.png"
 component_toc: true
