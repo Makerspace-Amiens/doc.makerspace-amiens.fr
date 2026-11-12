@@ -190,6 +190,33 @@ Comment une adresse retrouve-t-elle la bonne case ? Un circuit appelé **décode
 
 Arduino abstrait tout ça : `digitalWrite(LED, HIGH)` écrit dans le bon registre sans que tu aies à connaître son adresse. Mais derrière, c'est toujours un accès registre.
 
+### Manipuler un bit d'un registre
+
+Un registre de 32 bits pilote souvent 32 choses à la fois : un bit par broche, un bit par option. Pour ne toucher qu'au bit visé, le C fournit les opérateurs **bit à bit** :
+
+```cpp
+reg |=  (1 << n);      // met le bit n à 1, sans toucher aux autres
+reg &= ~(1 << n);      // met le bit n à 0
+reg ^=  (1 << n);      // inverse le bit n
+if (reg & (1 << n))    // teste le bit n
+```
+
+La première ligne combine trois opérations :
+
+1. **Le décalage `1 << n`** : la valeur 1 (`00000001`) décalée de *n* positions vers la gauche. Pour *n* = 3 : `00001000`. C'est un **masque** : seul le bit visé vaut 1.
+2. **Le OU bit à bit `|`** : 1 OU x donne 1, donc le bit visé passe à 1 ; 0 OU x donne x, donc les autres ne changent pas.
+3. **L'affectation `|=`** : le raccourci de `reg = reg | (1 << n);`.
+
+```text
+reg            1010 0001
+1 << 3         0000 1000   le masque
+reg | masque   1010 1001   seul le bit 3 a changé
+```
+
+Les bits se numérotent **de droite à gauche**, en partant de 0. Les autres lignes suivent la même idée : `& ~masque` met le bit à 0 (le `~` inverse le masque : `1111 0111`), `^ masque` l'inverse, `& masque` le teste.
+
+Sous `digitalWrite()`, l'ESP32-S3 utilise des registres faits pour ça : `GPIO_OUT_W1TS_REG` (*write 1 to set*) met à 1 les seuls bits écrits à 1, en **une seule écriture**. Un `|=` devrait lire, modifier puis réécrire le registre : si une interruption le change entre-temps, sa modification est perdue. Le détail de chaque registre, bit par bit, est dans le [manuel de référence de l'ESP32-S3](https://www.espressif.com/sites/default/files/documentation/esp32-s3_technical_reference_manual_en.pdf).
+
 ## Le déroulement d'un programme
 
 Avant de voir comment un événement peut « interrompre » le CPU, comprenons comment un programme se déroule **normalement**.

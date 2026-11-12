@@ -190,6 +190,32 @@ void loop() {
 
 Ce motif (comparer `millis()` à une date mémorisée) est le fondement de la **game loop non bloquante** et se combine naturellement avec la [machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/).
 
+### La taille des entiers
+
+La taille d'un `int` dépend de la puce : le même code peut déborder sur l'une et pas sur l'autre.
+
+| Type | Arduino Uno (8 bits) | ESP32-S3 (32 bits) |
+|---|---|---|
+| `int` | 16 bits, jusqu'à 32 767 | 32 bits, jusqu'à 2,1 milliards |
+| `long`, `unsigned long` | 32 bits | 32 bits |
+| `uint8_t` | 8 bits, de 0 à 255 | identique |
+| `uint32_t` | 32 bits | identique |
+
+Les types de `<stdint.h>` (`uint8_t`, `int16_t`, `uint32_t`) ont la même taille partout : utilise-les dès que la taille compte.
+
+### Le débordement de `millis()`
+
+`millis()` renvoie un entier non signé de 32 bits : il repasse à 0 au bout de 2³² ms, soit **49,7 jours**. Selon la façon d'écrire la comparaison, le programme survit ou non à ce passage à 0 :
+
+```cpp
+if (millis() - dernierClignotement >= INTERVALLE)   // juste, toujours
+if (millis() >= dernierClignotement + INTERVALLE)   // faux au passage à 0
+```
+
+La soustraction de deux non signés donne l'écart réel même si le compteur a fait le tour, comme sur une horloge : de 23 h à 1 h, il s'est écoulé 2 h. La seconde forme, elle, compare deux dates : juste avant le passage à 0, `dernierClignotement + INTERVALLE` déborde et devient tout petit, et la condition se déclenche à tort.
+
+{% include message.html title="Une règle à retenir" message="Écris toujours `maintenant - date >= durée`. 49 jours, c'est long pour un jeu, mais pas pour un capteur ou une borne qui ne s'éteint jamais : ce bug n'apparaît jamais en test, seulement en production." status="is-warning" icon="fas fa-exclamation-triangle" %}
+
 {% include message.html title="delay() reste utile" message="Pour une pause courte et unique (initialiser un composant, un petit délai au démarrage), `delay()` est parfaitement acceptable. C'est dans la `loop()`, quand plusieurs choses doivent avancer en parallèle, qu'il faut l'éviter." status="is-info" icon="fas fa-info-circle" %}
 
 ## Blink, commenté ligne par ligne
