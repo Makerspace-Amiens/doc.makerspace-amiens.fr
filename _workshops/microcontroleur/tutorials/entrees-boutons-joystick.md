@@ -112,6 +112,8 @@ content="Un module bouton a en général trois broches : `VCC`, `GND` et un sign
 `INPUT_PULLUP` active la résistance de tirage interne de l'ESP32-S3 : elle ne gêne pas un module qui a déjà la sienne, et elle évite une entrée flottante si le module n'en a pas (voir le concept [GPIO & monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/))."
 %}
 
+![Câblage du module bouton : VCC sur 3V3, GND sur GND, le signal S sur D5](cablage-bouton.svg)
+
 ```cpp
 #include "config.h"
 
@@ -185,6 +187,8 @@ title="Étape 3 : Le joystick, lire les valeurs brutes"
 content="Le module joystick a 5 broches : `GND`, `VCC` (souvent sérigraphiée `+5V` : branchez-la quand même sur **3V3**), `VRx`, `VRy` et `SW`. Ses deux axes sont des potentiomètres : l'ADC 12 bits de l'ESP32-S3 les lit entre 0 et 4095. `SW` est un bouton (appui sur le stick) relié à GND : `INPUT_PULLUP`, et LOW quand on appuie."
 %}
 
+![Câblage du module joystick : GND sur GND, +5V sur 3V3, VRx sur D0, VRy sur D1, SW sur D2](cablage-joystick.svg)
+
 ```cpp
 void setup() {
     Serial.begin(115200);
@@ -255,6 +259,8 @@ content="Il existe deux sortes de buzzers, et la mallette peut contenir l'une ou
 `tone(broche, fréquence, durée)` génère ce signal sans bloquer le programme. Testez le programme ci-dessous : un buzzer passif joue une petite gamme ; un buzzer actif fait seulement des clics, et le second test le fait sonner."
 %}
 
+![Câblage du module buzzer : VCC sur 3V3, GND sur GND, le signal S sur D3](cablage-buzzer.svg)
+
 ```cpp
 void setup() {
     pinMode(PIN_BUZZER, OUTPUT);
@@ -285,6 +291,8 @@ content="L'écran se pilote en **SPI** avec la bibliothèque **Adafruit ST7735 a
 
 Le repère a son origine `(0, 0)` en **haut à gauche** : x vers la droite, y vers le bas. L'écran est utilisé en portrait, 240 pixels de large et 320 de haut."
 %}
+
+![Câblage de l'écran : VCC et LED sur 3V3, GND et CS sur GND, RESET sur D7, DC sur D8, SDI sur D10, SCK sur D9](cablage-ecran.svg)
 
 ```ini
 lib_deps =
