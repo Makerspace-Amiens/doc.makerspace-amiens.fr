@@ -384,6 +384,6 @@ static_assert(BALL_SPEED < BALL_SIZE + PADDLE_HEIGHT,
 
 ### Découper le programme en modules
 
-Quand `main.cpp` dépasse quelques centaines de lignes, rangez-le en modules : `input.h/.cpp` (lecture des commandes), `game.h/.cpp` (règles, sans aucun dessin), `renderer.h/.cpp` (dessin, sans aucune décision), et un `main.cpp` réduit à la game loop. Chaque `.h` déclare ce que le module **offre**, chaque `.cpp` **comment** il le fait, avec ses fonctions internes en `static`. Le projet Snake gagnera beaucoup à démarrer ainsi.
+Quand `main.cpp` dépasse quelques centaines de lignes, rangez-le en modules : `input.h/.cpp` (lecture des commandes), `game.h/.cpp` (règles, sans aucun dessin), `renderer.h/.cpp` (dessin, sans aucune décision), et un `main.cpp` réduit à la game loop. Chaque `.h` déclare ce que le module **offre**, chaque `.cpp` **comment** il le fait, avec ses fonctions internes en `static`. Le projet Snake gagnera beaucoup à démarrer ainsi : voir le concept [Organiser son code en modules](/workshops/microcontroleur/concepts/organiser-code-modules/).
 
 {% include message.html title="Direction le projet" message="Le Snake du projet reprend exactement cette chaîne : lire, calculer, afficher, cadencée par la game loop et pilotée par une machine à états. Il ajoute une nouvelle mécanique (la grille, le corps qui grandit) et un second joueur dans un navigateur : voir l'[énoncé du projet](/workshops/microcontroleur/projet-snake/)." status="is-success" icon="fas fa-flag-checkered" %}

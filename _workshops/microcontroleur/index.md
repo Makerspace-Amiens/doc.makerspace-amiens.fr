@@ -44,6 +44,7 @@ concepts:
   - /workshops/microcontroleur/concepts/adc-pwm/
   - /workshops/microcontroleur/concepts/bus-communication/
   - /workshops/microcontroleur/concepts/machine-etats-finis/
+  - /workshops/microcontroleur/concepts/organiser-code-modules/
   - /docs/concepts/reseau-wifi-websocket/
   - /docs/concepts/capteurs/
 

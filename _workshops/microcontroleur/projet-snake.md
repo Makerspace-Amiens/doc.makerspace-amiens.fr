@@ -105,12 +105,14 @@ Une démarche qui marche :
 
 | Pour... | Voir |
 |---|---|
-| Structurer le jeu | [Le Pong sur la console](/workshops/microcontroleur/tutorials/collisions-fsm-pong/) (game loop, collisions, rendu, et ses pistes pour aller plus loin, dont le découpage en modules) et le concept [Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/) |
+| Structurer le jeu | [Le Pong sur la console](/workshops/microcontroleur/tutorials/collisions-fsm-pong/) (game loop, collisions, rendu) et le concept [Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/) |
+| Découper le code en modules | Le concept [Organiser son code en modules](/workshops/microcontroleur/concepts/organiser-code-modules/) : `.h` et `.cpp`, `static`, un découpage `input` / `game` / `renderer` / `network` |
 | Lire le joystick en directions | [Les modules de la mallette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/) et le concept [ADC & PWM](/workshops/microcontroleur/concepts/adc-pwm/) |
 | Dessiner sans scintiller | L'étape « Afficher sans scintiller » du [Pong sur la console](/workshops/microcontroleur/tutorials/collisions-fsm-pong/) |
 | Comprendre le réseau | Le concept [Wi-Fi, HTTP et WebSocket](/docs/concepts/reseau-wifi-websocket/) |
 | Mettre le réseau en place | Le tutoriel [ESP32, Wi-Fi et WebSocket](/docs/tutorials/electronics/esp32-wifi-websocket/) |
-| Déboguer | [VSCode et PlatformIO : port série](/docs/tutorials/electronics/vscode-port-serie/), et la console de développement du navigateur (touche <kbd>F12</kbd> sur PC) |
+| Déboguer | Le guide [Déboguer un programme embarqué](/docs/how-to-guides/deboguer-programme-embarque/), [VSCode et PlatformIO : port série](/docs/tutorials/electronics/vscode-port-serie/), et la console de développement du navigateur (touche <kbd>F12</kbd> sur PC) |
+| Placer la nourriture au hasard | `random(n)` renvoie un entier de 0 à n − 1. Sur ESP32, il s'appuie sur le générateur matériel de la puce : pas besoin de `randomSeed()`. À l'inverse, `randomSeed(42)` rend la suite reproductible, pratique pour rejouer un bug |
 
 Côté navigateur, la documentation de référence est celle de MDN : l'[API WebSocket](https://developer.mozilla.org/fr/docs/Web/API/WebSocket) et l'[élément canvas](https://developer.mozilla.org/fr/docs/Web/API/Canvas_API) pour dessiner une grille.
 
