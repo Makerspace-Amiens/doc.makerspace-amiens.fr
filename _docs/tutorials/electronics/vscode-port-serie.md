@@ -21,6 +21,8 @@ compatibilities-os: win, mac, lin
 prerequisites:
   - label: Installation de VSCode et PlatformIO
     link: /docs/tutorials/software/vscode-platformio/installation-vscode/
+  - label: Créer un projet PlatformIO pour la XIAO ESP32S3
+    link: /workshops/microcontroleur/tutorials/toolchain-blink/
   - label: Notions de base en C++ (framework Arduino)
     link: ""
 
@@ -31,7 +33,7 @@ softwares:
     link: "https://github.com/nesnes/teleplot-vscode"
 
 hardwares:
-  - label: Carte XIAO ESP32S3 (ou toute carte compatible Arduino)
+  - label: Carte XIAO ESP32S3 (ou toute carte ESP32)
     link: /docs/references/hardware/xiao-esp32s3/
 
 todo: 90
@@ -51,7 +53,7 @@ La liaison série permet une communication point-à-point grâce à deux voies :
 - **TX (transmission)** : la voie qui transmet le message à son interlocuteur ;
 - **RX (réception)** : la voie qui reçoit les messages de l'interlocuteur.
 
-Les voies sont associées à des broches précises du µC (sur une Uno : RX = pin 0 et TX = pin 1) : il ne faut pas oublier de croiser les fils de communication, comme dans cet exemple :
+Les voies sont associées à des broches précises du µC (sur la XIAO ESP32S3, l'UART matériel est sur D6 pour TX et D7 pour RX) : pour relier deux cartes, il ne faut pas oublier de croiser les fils de communication, comme dans cet exemple :
 
 ![schema](schema-connexion-tx-rx.png)
 
@@ -68,34 +70,44 @@ Dans notre exemple, nous allons envoyer une trame (un sinus) et nous allons l'af
 
 Le code utilisé sera le suivant :
 
-``` c++
+```cpp
 #include <Arduino.h>
-float i=0;
 
-void setup() 
+float i = 0;
+
+void setup()
 {
   Serial.begin(115200);
+  delay(1500);   // USB natif : laisse le temps au PC de rouvrir le port
 }
 
-void loop() 
+void loop()
 {
-  i+=0.1;
+  i += 0.1;
   Serial.print("sin:");
   Serial.println(sin(i));
   delay(10);
 }
-
 ```
 
 - `Serial.begin(115200)`   : initialise une communication série à 115200 bauds
+- `delay(1500)`            : sur la XIAO, le port série disparaît à chaque reset ; sans cette pause, les premiers messages de `setup()` partent avant que le PC ne l'ait rouvert, et sont perdus
 - `Serial.print("sin:")`   : envoie sur le port série la chaîne de caractères `"sin:"`
 - `Serial.println(sin(i))`  : envoie sur le port série le résultat de l'opération `sin(i)` avec un retour à la ligne à la fin
 
 En savoir plus sur l'utilisation du port série dans le framework Arduino : [référence Arduino : Serial](https://www.arduino.cc/reference/en/language/functions/communication/serial/)
 
-Pour que le moniteur série puisse lire le port série, il faut donner à PlatformIO la vitesse de la communication en ajoutant la ligne `monitor_speed = 115200` dans le fichier de configuration **platformio.ini**.
+Pour que le moniteur série puisse lire le port série, il faut donner à PlatformIO la vitesse de la communication avec la ligne `monitor_speed = 115200` du fichier de configuration **platformio.ini** :
 
-![speed](platformio-ini-monitor-speed.png)
+```ini
+[env:seeed_xiao_esp32s3]
+platform = espressif32
+board = seeed_xiao_esp32s3
+framework = arduino
+monitor_speed = 115200
+```
+
+La configuration `seeed_xiao_esp32s3` active déjà `ARDUINO_USB_CDC_ON_BOOT=1` : c'est ce qui fait passer `Serial` par le connecteur USB-C, sans câble ni adaptateur supplémentaire.
 
 Vous pouvez ensuite ouvrir le **Serial Monitor** dans la barre de menu en bas à gauche :
 
@@ -104,6 +116,8 @@ Vous pouvez ensuite ouvrir le **Serial Monitor** dans la barre de menu en bas à
 Le moniteur série s'ouvre et vous affiche l'ensemble des données transmises entre votre carte et votre ordinateur.
 
 ![](platformio-moniteur-serie-ouvert.png)
+
+{% include message.html title="Téléverser, puis écouter" message="Un téléversement ferme le moniteur série, puisque le port disparaît pendant le flashage. La commande **Upload and Monitor** du menu PlatformIO enchaîne les deux et rouvre le moniteur dès que la carte redémarre. Si la carte plante, ajoutez `monitor_filters = esp32_exception_decoder` au `platformio.ini` : voir [Déboguer un programme embarqué](/docs/how-to-guides/deboguer-programme-embarque/)." status="is-info" icon="fas fa-info-circle" %}
 
 {% include message.html
 message="**Problème :** les données sont transmises toutes les 10 ms. Elles sont donc difficiles à suivre et à interpréter dans le terminal série."
@@ -154,10 +168,10 @@ Afin d'afficher des courbes dans TelePlot, il est nécessaire, comme pour l'Ardu
 
 Pour afficher une donnée dans le moniteur textuel, il suffit juste d'envoyer la donnée sur le port série comme sous Arduino.
 
-``` c++
-void loop() 
+```cpp
+void loop()
 {
-  i+=0.1;
+  i += 0.1;
   Serial.print("loop - i=");
   Serial.println(i);
   delay(10);
@@ -172,20 +186,17 @@ image="teleplot-moniteur-textuel.png" %}
 
 Pour afficher une courbe dans TelePlot, nous allons utiliser le caractère `>` juste avant le label de la courbe afin d'indiquer à l'outil que la prochaine valeur envoyée sera liée à un graphe du label correspondant. On terminera l'envoi de données par un retour chariot à l'aide de la fonction `println()` par exemple.
 
-``` c++
-void loop() 
+```cpp
+void loop()
 {
-  i+=0.1;
- 
-  Serial.print("loop - i=");
-  Serial.println(i);  
+  i += 0.1;
 
   Serial.print(">sin:");
   Serial.println(sin(i));
 
   Serial.print(">cos:");
   Serial.println(cos(i));
-    
+
   delay(10);
 }
 ```
@@ -198,20 +209,20 @@ image="teleplot-courbes-sin-cos.png" %}
 
 Il est également possible d'afficher les courbes et les données en même temps en combinant les deux codes précédents.
 
-``` c++
-void loop() 
+```cpp
+void loop()
 {
-  i+=0.1;
- 
+  i += 0.1;
+
   Serial.print("loop - i=");
-  Serial.println(i);  
+  Serial.println(i);
 
   Serial.print(">sin:");
   Serial.println(sin(i));
 
   Serial.print(">cos:");
   Serial.println(cos(i));
-    
+
   delay(10);
 }
 ```
@@ -220,20 +231,28 @@ void loop()
 
 #### d. Fonction d'aide
 
-Si vous souhaitez simplifier votre écriture de code dans le but d'afficher des graphiques, vous pouvez utiliser la fonction suivante (ou similaire) dans votre code :
+Sur ESP32, `Serial.printf()` formate toute une ligne en un seul appel, comme le `printf` du C. La fonction d'aide tient alors en une ligne :
 
-``` c++
-void teleplot(String label, float value)
+```cpp
+void teleplot(const char* label, float value)
 {
-  Serial.print(">");
-  Serial.print(label);
-  Serial.print(":");
-  Serial.println(value);
+  Serial.printf(">%s:%.3f\n", label, value);
+}
+
+void loop()
+{
+  i += 0.1;
+  teleplot("sin", sin(i));
+  teleplot("cos", cos(i));
+  delay(10);
 }
 ```
 
-- `String label`    : Le nom de votre label
-- `float value`     : La valeur à afficher
+- `const char* label` : le nom de la courbe, par exemple `"sin"`
+- `float value`       : la valeur à afficher
+- `%s` insère le texte, `%.3f` le nombre avec trois décimales, `\n` termine la ligne
+
+Le label est un `const char*` plutôt qu'un `String` : un `String` réserve de la mémoire dans le tas à chaque appel, ce qui finit par le fragmenter sur un programme qui tourne longtemps.
 
 ## Sources
 
