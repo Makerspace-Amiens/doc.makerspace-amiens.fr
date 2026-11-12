@@ -1,6 +1,10 @@
 ---
 layout: documentation
-hide_hero: true
+hide_hero: false
+hero_image: /docs/tutorials/software/kicad/kicad-import-librairies/hero.png
+hero_height: is-small
+hero_darken: true
+image: /docs/tutorials/software/kicad/kicad-import-librairies/hero.png
 component_toc: true
 doc_header: true
 
