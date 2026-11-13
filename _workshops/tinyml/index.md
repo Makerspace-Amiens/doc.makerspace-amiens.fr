@@ -28,10 +28,7 @@ concepts:
   - /docs/concepts/capteurs/
 
 tutorials:
-  - /docs/tutorials/software/vscode-platformio/installation-vscode/
-  - /docs/tutorials/software/vscode-platformio/installation-platformio/
-  - /workshops/microcontroleur/tutorials/toolchain-blink/
-  - /docs/tutorials/electronics/vscode-port-serie/
+  _workshops/tinyml/tutorials/installation-vscode/
   - /workshops/tinyml/tutorials/collecter-donnees-capteur/
 
 how_to_guides:
