@@ -9,32 +9,39 @@ doc_header: true
 type: tutorial
 order: 10
 
+title: Installation de VSCode
+subtitle: Configurez votre environnement de développement pour microcontrôleurs
+description: Ce tutoriel explique comment installer Visual Studio Code et PlatformIO pour programmer des microcontrôleurs Arduino, ESP32, STM32 et bien d'autres.
+author: Alban Petit
 
-title: Environnement et outils de développement
-subtitle: Configurez votre environnement de développement pour votre modèle IA.
-description: Dans ce tutoriel, nous allons découvrir différents environnements de travail, puis présenter quelques outils et bibliothèques utilisés pour développer et entraîner un modèle d’apprentissage automatique.
-author: Lina Abousamama
+time: 1
+difficulty: 1
+compatibilities-os: win, mac, lin
+
+prerequisites:
+  - label: Droits administrateur sur votre ordinateur
+    link: ""
 
 softwares:
-  - label: Google Colab
-    link: "https://colab.research.google.com/"
+  - label: Visual Studio Code (dernière version)
+    link: "https://code.visualstudio.com/"
+  - label: PlatformIO IDE (extension VSCode)
+    link: "https://platformio.org/"
+
+hardwares:
+  - label: Ordinateur avec au moins 4GB de RAM
+    link: ""
+  - label: Connexion internet pour télécharger les outils
+    link: ""
 
 todo: 100
 ---
 
 ## Introduction
 
--Il existe plusieurs environnements pour développer un modèle, comme Google Colab, Jupyter Notebook ou Kaggle. 
-Pour notre projet, nous avons choisi : 
+**Visual Studio Code** (VSCode) est un éditeur de code léger et puissant développé par Microsoft.
 
-**Google Colab** : qui permet d’écrire et d’exécuter du code Python dans un notebook en ligne. 
-
--Nous utiliserons également les outils suivants :
-
-**TensorFlow** : bibliothèque utilisée pour créer et entraîner des modèles d’intelligence artificielle
-**Keras** : outil qui facilite la construction et l’entraînement de réseaux de neurones, notamment avec TensorFlow.
-
--Nous allons maintenant découvrir comment accéder à Google Colab, ouvrir un notebook, vérifier les bibliothèques disponibles et installer celles qui seraient manquantes.
+Ce tutoriel vous guidera à travers l'installation complète sur Windows, macOS et Linux.
 
 ## Installation de Visual Studio Code
 
