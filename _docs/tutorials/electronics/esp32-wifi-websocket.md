@@ -39,6 +39,8 @@ todo: 80
 
 C'est le squelette réseau du projet Snake : une page servie par la console, et une ligne ouverte dans les deux sens pour les messages du jeu. Les notions (point d'accès, HTTP, WebSocket, protocole) sont expliquées dans le concept [Wi-Fi, HTTP et WebSocket](/docs/concepts/reseau-wifi-websocket/).
 
+![Le téléphone se connecte au point d'accès de la console, 192.168.4.1 ; il demande la page au serveur HTTP sur le port 80, puis ouvre un WebSocket sur le port 81 pour échanger des messages dans les deux sens](/docs/concepts/reseau-wifi-websocket/architecture-reseau.svg)
+
 Ce tutoriel part d'un projet PlatformIO neuf : le code du Pong n'est pas nécessaire. Le joystick reste câblé comme dans l'atelier (axe X sur D0).
 
 {% include message.html title="L'antenne, d'abord" message="La XIAO ESP32S3 est livrée avec une petite antenne Wi-Fi à clipser sur son connecteur. Sans elle, la portée tombe à quelques centimètres et le réseau peut ne même pas apparaître." status="is-warning" icon="fas fa-broadcast-tower" %}

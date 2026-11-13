@@ -49,6 +49,8 @@ Les positions sont des `float` (la balle peut avancer de 2,4 pixels par image) e
 La phase de jeu est un `enum class` : comme l'`enum` du CM3, un type qui ne peut prendre **que** les valeurs listées, mais chaque valeur s'écrit précédée du nom du type (`GameState::Title`). Un `Title` ou un `Playing` ne risque ainsi pas d'entrer en collision avec un autre nom du programme. Le concept FSM et le CM3 nomment ces états `MENU`, `PARTIE` et `GAME_OVER` ; ce sont les mêmes, nommés en anglais comme le reste du code."
 %}
 
+![Le repère de l'écran en portrait : (0, 0) en haut à gauche, x vers la droite, y vers le bas, (239, 319) en bas à droite ; un rectangle se positionne par son coin haut gauche](ecran-repere.svg)
+
 Ajoutez les réglages du jeu à `include/config.h` :
 
 ```cpp
@@ -125,6 +127,8 @@ La collision avec la raquette est un test de **chevauchement de rectangles** : d
 
 `moveBall()` renvoie `false` quand la balle sort par le bas : le joueur l'a manquée."
 %}
+
+![À gauche, l'écran du Pong avec la raquette en bas et la balle ; à droite, un zoom sur le contact : la balle et la raquette sont deux rectangles positionnés par leur coin haut gauche, et ils se touchent s'ils se chevauchent en x et en y](pong-collision.svg)
 
 ```cpp
 // Vrai si le rectangle de la balle chevauche celui de la raquette

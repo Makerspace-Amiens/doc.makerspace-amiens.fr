@@ -294,6 +294,8 @@ Le repère a son origine `(0, 0)` en **haut à gauche** : x vers la droite, y ve
 
 ![Câblage de l'écran : VCC et LED sur 3V3, GND et CS sur GND, RESET sur D7, DC sur D8, SDI sur D10, SCK sur D9](cablage-ecran.svg)
 
+![Le repère de l'écran en portrait : (0, 0) en haut à gauche, x vers la droite, y vers le bas, (239, 319) en bas à droite](/workshops/microcontroleur/tutorials/collisions-fsm-pong/ecran-repere.svg)
+
 ```ini
 lib_deps =
     adafruit/Adafruit ST7735 and ST7789 Library@^1.11.0

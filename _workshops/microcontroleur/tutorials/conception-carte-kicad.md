@@ -68,6 +68,16 @@ La carte doit être **compatible avec le code du TD2** : un programme qui foncti
 | Témoin | Une LED qui s'allume quand la carte est alimentée | Résistance série |
 | Alimentation | Par l'USB-C de la XIAO, distribuée en 3,3 V | Découplage |
 
+```mermaid!
+flowchart LR
+  USB["USB-C"] --> X["XIAO ESP32S3"]
+  X -->|"SPI : D7 à D10"| E["Écran TFT<br/>connecteur 1 × 14"]
+  J["Joystick"] -->|"ADC : D0, D1<br/>bouton : D2"| X
+  B["SW1, SW2"] -->|"D5, D6"| X
+  X ---|"I2C : D3, D4"| I["Connecteur I2C"]
+  X -->|"3V3"| L["LED témoin"]
+```
+
 ### Le brochage imposé
 
 C'est le câblage du TD2 (sans le buzzer, qui n'est pas sur la carte) ; il ne doit pas changer.
