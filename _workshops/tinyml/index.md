@@ -28,7 +28,7 @@ concepts:
   - /docs/concepts/capteurs/
 
 tutorials:
-  - /workshops/tinyml/tutorials/installation-vscode/
+  - /workshops/tinyml/tutorials/Environnement-outils/
   - /workshops/tinyml/tutorials/collecter-donnees-capteur/
 
 how_to_guides:
