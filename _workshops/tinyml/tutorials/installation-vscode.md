@@ -56,13 +56,13 @@ content= "Certaines bibliothèques, comme TensorFlow, scikit-learn et Pandas, so
 
 Dans une cellule du notebook, tu peux installer les bibliothèques utilisées dans le projet :
 
-'''
+```cpp
 %pip install -q tensorflow-datasets importlib-resources keras-tuner openpyxl  # Installe les bibliothèques qui peuvent manquer
-'''
+```
 
 Puis, dans une autre cellule, importer les bibliothèques :
 
-'''
+```cpp
 import os                         # Gérer les fichiers et vérifier leur existence
 from collections import Counter    # Compter les éléments, par exemple les étiquettes
 
@@ -83,6 +83,6 @@ from sklearn.metrics import (      # Évaluer les prédictions du modèle
 
 from google.colab import drive, files  # Accéder à Google Drive et importer ou télécharger des fichiers
 
-'''
+```
 
 
