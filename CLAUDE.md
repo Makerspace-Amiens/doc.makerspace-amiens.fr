@@ -390,6 +390,8 @@ Format : `type(scope): description courte` — voir `CONTRIBUTING.md` pour la li
 La convention suit [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/) ;
 la spec et la procédure complète sont dans le skill `.claude/skills/commit/` (invoqué par `/commit`).
 
+**Avant tout commit qui touche un atelier** (ou une page de `_docs/` qu'un atelier référence), vérifier la cohérence de l'atelier : liens et pages (`python3 .claude/skills/commit/scripts/check-workshop.py <slug>`), anciennes valeurs encore présentes ailleurs, notions des slides couvertes par les concepts et tutoriels. Les divergences sont présentées à l'utilisateur avant correction. Procédure complète : étape « 1 bis » du skill `commit`.
+
 Scopes courants : `docs`, `workshop`, `theme`, `nav`, `config`.
 Types courants : `feat` (nouveau contenu), `fix` (correction), `chore` (tooling/config), `style` (CSS).
 

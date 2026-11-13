@@ -22,6 +22,52 @@ Lancer ces commandes en parallèle :
 - `git diff HEAD` : détail des changements (pour comprendre le « pourquoi »)
 - `git log --oneline -15` : vérifier le style des commits récents
 
+## 1 bis. Vérifier la cohérence de l'atelier
+
+À faire **avant de committer** dès que les changements touchent un atelier : un fichier de
+`_workshops/<slug>/`, ou une page de `_docs/` citée par l'`index.md` d'un atelier (la
+retrouver avec `grep -rl "<url de la page>" _workshops/*/index.md`). Un atelier est un
+ensemble : index, syllabus, évaluation, concepts, tutoriels, slides et pages de `_docs/`
+qu'il référence doivent dire la même chose.
+
+**a. Liens et pages** : lancer le script, pour chaque atelier touché :
+
+```bash
+python3 .claude/skills/commit/scripts/check-workshop.py <slug>
+```
+
+Il signale les liens internes morts (listes de l'index, `special_sections`, liens des pages
+et des slides, `doc-link`), les fichiers statiques absents et les pages de l'atelier citées
+nulle part. Un lien mort bloque le commit. Une page orpheline peut être voulue (deck de
+démo, page de travail) : la signaler, sans bloquer.
+
+**b. Valeurs qui ont changé** : pour chaque fait modifié par le diff (broche, constante,
+durée, nom de fonction ou de variable, bibliothèque, seuil, ordre des séances, titre de
+page), chercher **l'ancienne valeur** dans tout l'atelier et dans les pages de `_docs/`
+qu'il référence :
+
+```bash
+grep -rn "<ancienne valeur>" _workshops/<slug>/ <pages _docs citées>
+```
+
+Toute occurrence restante est une divergence.
+
+**c. Notions des cours** : si un deck de slides change, chaque notion ajoutée doit être
+expliquée dans un concept ou un tutoriel de l'atelier (le `doc-link` de la slide pointe vers
+une page qui en parle vraiment), et inversement une notion retirée d'un cours ne doit pas
+rester exigée par l'évaluation ou le syllabus. Le code des tutoriels, des concepts et des
+slides utilise les mêmes noms et les mêmes valeurs.
+
+**d. Sources de vérité propres à un atelier** (voir `CLAUDE.md`) : firmware de référence
+pour `microcontroleur`, repo `template-project` pour `methodologie-de-projet`. Un
+changement qui s'en écarte est une divergence.
+
+**Que faire d'une divergence** : ne pas l'étendre en silence au commit. La présenter à
+l'utilisateur (fichier:ligne, ce qui diverge, correction proposée) et attendre son accord
+avant de corriger ; une fois validée, la correction peut rejoindre le commit si elle porte
+sur le même sujet, sinon un commit à part. Si rien ne diverge, l'indiquer en une ligne dans
+le compte rendu du commit.
+
 ## 2. Structure du message
 
 La spécification impose cette structure (détail complet dans
