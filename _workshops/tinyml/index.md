@@ -18,6 +18,7 @@ prerequisites:
   - /workshops/microcontroleur/
 
 concepts:
+  - /workshops/tinyml/concepts/qu-est-ce-que-le-tinyml/
   - /workshops/microcontroleur/concepts/qu-est-ce-qu-un-microcontroleur/
   - /workshops/microcontroleur/concepts/architecture-microcontroleur/
   - /workshops/microcontroleur/concepts/du-materiel-au-logiciel/
@@ -31,8 +32,10 @@ tutorials:
   - /docs/tutorials/software/vscode-platformio/installation-platformio/
   - /workshops/microcontroleur/tutorials/toolchain-blink/
   - /docs/tutorials/electronics/vscode-port-serie/
+  - /workshops/tinyml/tutorials/collecter-donnees-capteur/
 
 how_to_guides:
+  - /workshops/tinyml/how-to-guides/mesurer-memoire-temps-inference/
   - /docs/how-to-guides/esp32-s3-carte-introuvable/
   - /docs/how-to-guides/deboguer-programme-embarque/
 
@@ -65,11 +68,11 @@ Un microcontrôleur peut faire plus que suivre des règles écrites à la main :
 | Étape | Contenu | Type |
 |---|---|---|
 | 1. Préparer les outils | VSCode, PlatformIO, la XIAO et le port série, déjà vus dans l'atelier Microcontrôleurs | Tutoriels existants |
-| 2. Qu'est-ce que le TinyML ? | Apprentissage et inférence, ce qu'un microcontrôleur peut faire tourner, les contraintes de mémoire et d'énergie | Concept, à venir |
-| 3. Collecter des données | Lire un capteur, envoyer des mesures au PC, constituer un jeu de données étiqueté | Tutoriel, à venir |
+| 2. [Qu'est-ce que le TinyML ?](/workshops/tinyml/concepts/qu-est-ce-que-le-tinyml/) | Apprentissage et inférence, ce qu'un microcontrôleur peut faire tourner, les contraintes de mémoire et d'énergie | Concept |
+| 3. [Collecter des données](/workshops/tinyml/tutorials/collecter-donnees-capteur/) | Lire un capteur, envoyer des mesures au PC, constituer un jeu de données étiqueté | Tutoriel |
 | 4. Entraîner un modèle | Entraîner et évaluer un classifieur, puis le quantifier | Tutoriel, à venir |
 | 5. Déployer sur la XIAO | Intégrer le modèle dans un projet PlatformIO et lancer l'inférence | Tutoriel, à venir |
-| 6. Mesurer et optimiser | Mémoire, latence, précision : trouver le bon compromis | Guide pratique, à venir |
+| 6. [Mesurer et optimiser](/workshops/tinyml/how-to-guides/mesurer-memoire-temps-inference/) | Mémoire, latence, précision : trouver le bon compromis | Guide pratique |
 | 7. Mini-projet | Une application complète, de la donnée à l'action | Projet, à venir |
 
 ## Pourquoi cet atelier ?
