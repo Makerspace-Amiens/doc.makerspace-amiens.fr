@@ -119,6 +119,17 @@ Cette zone grise au milieu explique tout ce qui suit sur les entrées flottantes
 
 [GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link}
 
+<!-- .down -->
+
+## Les seuils, sur une échelle
+
+![LOW sous 0,8 V, zone indéterminée entre 0,8 et 2,5 V, HIGH au-dessus de 2,5 V](/workshops/microcontroleur/concepts/gpio-monde-numerique/seuils-logiques.svg){: .img-md}
+
+Une entrée flottante traîne dans la zone rouge.
+{: .caption}
+
+[GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link}
+
 ---
 
 ## La datasheet, page « DC Characteristics »
@@ -283,6 +294,17 @@ Deux composants en push-pull sur le même fil, l'un imposant 0 et l'autre 1 : c'
 
 [GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link} [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link}
 
+<!-- .down -->
+
+## Push-pull et open-drain, côte à côte
+
+![Push-pull : un interrupteur vers 3,3 V et un vers 0 V ; open-drain : un seul vers 0 V, et une résistance de pull-up](/workshops/microcontroleur/concepts/gpio-monde-numerique/push-pull-open-drain.svg){: .img-md}
+
+En open-drain, personne n'impose le HIGH : on peut partager le fil.
+{: .caption}
+
+[GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link} [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link}
+
 ---
 
 <!-- .slide: class="slide-section" -->
@@ -443,6 +465,17 @@ Même motif qu'au CM1 : comparer `millis()` à une date mémorisée.
 
 [GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link}
 
+<!-- .down -->
+
+## La fenêtre de 30 ms
+
+![Le signal rebondit environ 1 ms, l'appui n'est retenu qu'une fois le signal stable depuis 30 ms](/workshops/microcontroleur/concepts/gpio-monde-numerique/anti-rebond-fenetre.svg){: .img-md}
+
+Une seule détection par appui, sans jamais bloquer la boucle.
+{: .caption}
+
+[GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link}
+
 ---
 
 {% include message.html title="Et un simple delay(20) ?" message="On le voit souvent : attendre 20 ms après la première lecture. Il fige tout le programme pendant 20 ms à chaque appui, et ne règle pas la répétition quand le bouton reste enfoncé. Avec un écran à rafraîchir 60 fois par seconde, ces 20 ms se voient : prenez tout de suite l'habitude de la version `millis()`." status="is-warning" icon="fas fa-exclamation-triangle" %}
@@ -563,6 +596,25 @@ C'est le brochage de la future carte (TD3), plus le buzzer, présent seulement s
 
 [Les modules de la mallette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/){: .doc-link}
 
+<!-- .down -->
+
+## Le câblage, module par module
+
+<div class="columns is-3" markdown="1">
+
+![Bouton : VCC sur 3V3, GND sur GND, S sur D5](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/cablage-bouton.svg)
+
+![Buzzer : VCC sur 3V3, GND sur GND, S sur D3](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/cablage-buzzer.svg)
+
+![Joystick : GND sur GND, +5V sur 3V3, VRx sur D0, VRy sur D1, SW sur D2](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/cablage-joystick.svg)
+
+</div>
+
+Le câblage de l'écran est au CM3, avec le SPI.
+{: .caption}
+
+[Les modules de la mallette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/){: .doc-link}
+
 ---
 
 ## Connecter un composant 5 V
@@ -573,6 +625,17 @@ C'est le brochage de la future carte (TD3), plus le buzzer, présent seulement s
 - {: .highlight-red} Jamais 5 V directement sur un GPIO
 
 Le sens inverse est sans danger pour la puce : un composant 5 V lit souvent 3,3 V comme un `HIGH`, mais pas toujours (vérifier son seuil $V_{IH}$).
+{: .caption}
+
+[GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link}
+
+<!-- .down -->
+
+## Le pont diviseur pour un signal 5 V
+
+![Le signal 5 V traverse R1 de 10 kilo-ohms et R2 de 20 kilo-ohms vers la masse ; le point milieu à 3,3 V va sur l'entrée](/workshops/microcontroleur/concepts/gpio-monde-numerique/pont-diviseur-5v.svg){: .img-md}
+
+Deux résistances suffisent dans le sens 5 V vers la puce.
 {: .caption}
 
 [GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link}
@@ -620,6 +683,17 @@ Cette formule suppose un ADC idéal, qui mesure exactement de 0 à 3,3 V. Les sl
 
 [ADC et PWM](/workshops/microcontroleur/concepts/adc-pwm/){: .doc-link}
 
+<!-- .down -->
+
+## Du continu aux marches
+
+![Une tension continue convertie en valeur en marches d'escalier, 8 marches pour la lisibilité](/workshops/microcontroleur/concepts/adc-pwm/adc-quantification.svg){: .img-md}
+
+Ici 8 marches pour les voir ; l'ESP32-S3 en a 4096.
+{: .caption}
+
+[ADC et PWM](/workshops/microcontroleur/concepts/adc-pwm/){: .doc-link}
+
 ---
 
 ## La plage réelle : l'atténuation
@@ -651,6 +725,17 @@ int mv   = analogReadMilliVolts(PIN);  // tension corrigée, en mV
 La réponse de l'ADC n'est pas une droite parfaite : elle s'écrase près de 0 V et près de la saturation, et varie d'une puce à l'autre. Chaque ESP32-S3 sort d'usine avec des **coefficients de calibration** gravés dans la puce : `analogReadMilliVolts()` les applique.
 
 Joystick : `analogRead()` suffit, on calibre le centre soi-même. Tension d'une batterie ou d'un capteur : `analogReadMilliVolts()`.
+{: .caption}
+
+[ADC et PWM](/workshops/microcontroleur/concepts/adc-pwm/){: .doc-link}
+
+<!-- .down -->
+
+## L'ADC réel
+
+![La courbe réelle reste à 0 sous environ 0,1 V et sature dès environ 3,1 V](/workshops/microcontroleur/concepts/adc-pwm/adc-lineaire-reel.svg){: .img-md}
+
+La calibration d'usine redresse cette courbe.
 {: .caption}
 
 [ADC et PWM](/workshops/microcontroleur/concepts/adc-pwm/){: .doc-link}
@@ -745,6 +830,17 @@ Le centre n'est jamais à 2048 : les seuils laissent une large **zone morte**.
 
 [ADC et PWM](/workshops/microcontroleur/concepts/adc-pwm/){: .doc-link}
 
+<!-- .down -->
+
+## Les zones du joystick
+
+![GAUCHE sous 1500 et DROITE au-dessus de 2500, HAUT et BAS dans la colonne centrale, CENTRE dans la zone morte](/workshops/microcontroleur/concepts/adc-pwm/joystick-zones.svg){: .img-md}
+
+X est testé avant Y : en diagonale, GAUCHE et DROITE l'emportent.
+{: .caption}
+
+[ADC et PWM](/workshops/microcontroleur/concepts/adc-pwm/){: .doc-link}
+
 ---
 
 ## Un ADC qui tremble
@@ -799,6 +895,17 @@ int pwm     = map(lecture, 0, 4095, 0, 255);   // analogWrite : 0 à 255
 Deux pièges : `map()` calcule en **entiers** (les décimales sont perdues), et **ne borne pas** son résultat. `map(3800, 500, 3500, 0, 255)` donne 280, hors de la plage d'`analogWrite` : `constrain(pwm, 0, 255)` le ramène à 255.
 
 Exemple : potentiomètre à mi-course, lecture 2048, donc angle 90° et pwm 127.
+{: .caption}
+
+[ADC et PWM](/workshops/microcontroleur/concepts/adc-pwm/){: .doc-link}
+
+<!-- .down -->
+
+## map(), en image
+
+![La plage 0 à 4095 projetée sur 0 à 255 : 2048 donne 127](/workshops/microcontroleur/concepts/adc-pwm/map-echelle.svg){: .img-md}
+
+Une règle de trois, puis les décimales sont tronquées.
 {: .caption}
 
 [ADC et PWM](/workshops/microcontroleur/concepts/adc-pwm/){: .doc-link}
@@ -880,6 +987,17 @@ Le CPU n'intervient pas. Une fois le canal réglé, le signal est généré par 
 {: .table-dense}
 
 Un servomoteur n'écoute pas le rapport cyclique mais la **largeur** de l'impulsion : c'est le même périphérique, lu autrement.
+{: .caption}
+
+[ADC et PWM](/workshops/microcontroleur/concepts/adc-pwm/){: .doc-link}
+
+<!-- .down -->
+
+## Le signal d'un servomoteur
+
+![Une impulsion toutes les 20 ms : 1 ms pour 0°, 1,5 ms pour 90°, 2 ms pour 180°](/workshops/microcontroleur/concepts/adc-pwm/servo-impulsion.svg){: .img-md}
+
+Le servo lit la largeur de l'impulsion, pas la moyenne.
 {: .caption}
 
 [ADC et PWM](/workshops/microcontroleur/concepts/adc-pwm/){: .doc-link}

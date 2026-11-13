@@ -355,6 +355,17 @@ Pas d'adresse : le **CS** à 0 désigne l'esclave. Les autres laissent MISO en h
 
 [Écran TFT SPI ST7789](/docs/references/hardware/ecran-tft-spi-st7789/){: .doc-link}
 
+<!-- .down -->
+
+## Le câblage de l'écran, fil par fil
+
+![VCC et LED sur 3V3, GND et CS sur GND, RESET sur D7, DC sur D8, SDI sur D10, SCK sur D9](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/cablage-ecran.svg){: .img-md}
+
+CS est relié à GND : un seul esclave, toujours sélectionné.
+{: .caption}
+
+[Les modules de la mallette](/workshops/microcontroleur/tutorials/entrees-boutons-joystick/){: .doc-link}
+
 ---
 
 ## En pratique, vous n'écrirez pas le SPI
@@ -454,6 +465,17 @@ Cette charpente ne changera plus : le Pong du TD4 puis le Snake du projet enrich
 {: .caption}
 
 [Le Pong sur la console](/workshops/microcontroleur/tutorials/collisions-fsm-pong/){: .doc-link}
+
+<!-- .down -->
+
+## La game loop dans le temps
+
+![Une image toutes les 16 ms : lire, calculer, afficher, puis une attente rendue à loop](/workshops/microcontroleur/concepts/du-materiel-au-logiciel/game-loop-frise.svg){: .img-md}
+
+Le temps restant n'est jamais perdu dans un delay().
+{: .caption}
+
+[Du matériel au logiciel](/workshops/microcontroleur/concepts/du-materiel-au-logiciel/){: .doc-link}
 
 ---
 
@@ -628,6 +650,22 @@ FSM et `millis()` se combinent naturellement : c'est la **transition temporisée
 {: .caption}
 
 [Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/){: .doc-link} [Du matériel au logiciel](/workshops/microcontroleur/concepts/du-materiel-au-logiciel/){: .doc-link}
+
+<!-- .down -->
+
+## La transition temporisée, en schéma
+
+```mermaid!
+stateDiagram-v2
+  MENU --> PARTIE : appui
+  PARTIE --> GAME_OVER : plus de vies
+  GAME_OVER --> MENU : 3 s écoulées
+```
+
+La flèche du bas ne dépend d'aucune entrée : seulement du temps passé dans l'état.
+{: .caption}
+
+[Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/){: .doc-link}
 
 ---
 

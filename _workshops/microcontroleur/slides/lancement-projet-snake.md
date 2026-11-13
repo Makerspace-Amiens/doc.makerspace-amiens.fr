@@ -232,6 +232,17 @@ La ligne reste ouverte : chacun parle quand il veut.
 
 [Wi-Fi, HTTP et WebSocket](/docs/concepts/reseau-wifi-websocket/){: .doc-link} [ESP32, Wi-Fi et WebSocket](/docs/tutorials/electronics/esp32-wifi-websocket/){: .doc-link}
 
+<!-- .down -->
+
+## L'architecture réseau
+
+![Le téléphone se connecte au point d'accès de la console, charge la page en HTTP sur le port 80, puis ouvre un WebSocket sur le port 81](/docs/concepts/reseau-wifi-websocket/architecture-reseau.svg){: .img-md}
+
+La page une fois, puis les messages en continu.
+{: .caption}
+
+[Wi-Fi, HTTP et WebSocket](/docs/concepts/reseau-wifi-websocket/){: .doc-link}
+
 ---
 
 ## Votre protocole
@@ -246,6 +257,28 @@ La ligne reste ouverte : chacun parle quand il veut.
 - Écrit **avant** le code, dans votre repo
 - La **console est l'arbitre** : le navigateur propose, la console décide
 - Un message invalide est ignoré, jamais un plantage
+
+[Wi-Fi, HTTP et WebSocket](/docs/concepts/reseau-wifi-websocket/){: .doc-link}
+
+<!-- .down -->
+
+## Un échange, dans l'ordre
+
+```mermaid!
+sequenceDiagram
+  participant N as Navigateur
+  participant C as Console
+  N->>C: GET / (HTTP)
+  C-->>N: la page
+  N->>C: ouverture du WebSocket
+  C->>N: STATE:PLAYING
+  N->>C: une demande du joueur 2
+  Note over C: la console valide, puis applique
+  C->>N: le nouvel état
+```
+
+Les messages sont à vous : seul l'enchaînement est imposé.
+{: .caption}
 
 [Wi-Fi, HTTP et WebSocket](/docs/concepts/reseau-wifi-websocket/){: .doc-link}
 

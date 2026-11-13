@@ -597,6 +597,17 @@ Au fond, un CPU ne fait que deux choses : calculer, et déplacer des octets d'un
 
 [Architecture d'un microcontrôleur](/workshops/microcontroleur/concepts/architecture-microcontroleur/){: .doc-link}
 
+<!-- .down -->
+
+## L'horloge, vue de près
+
+![Un signal d'horloge carré dont une période dure 4,2 ns à 240 MHz](/workshops/microcontroleur/concepts/architecture-microcontroleur/horloge-240mhz.svg){: .img-md}
+
+Chaque front fait avancer le CPU d'un pas : 240 millions de fois par seconde.
+{: .caption}
+
+[Architecture d'un microcontrôleur](/workshops/microcontroleur/concepts/architecture-microcontroleur/){: .doc-link}
+
 ---
 
 ## Deux cœurs, et le droit de dormir
@@ -764,6 +775,17 @@ Les bits se numérotent **de droite à gauche**, en partant de 0. La même idée
 
 [Architecture d'un microcontrôleur](/workshops/microcontroleur/concepts/architecture-microcontroleur/){: .doc-link}
 
+<!-- .down -->
+
+## Le masque, case par case
+
+![Le registre 1010 0001, le masque 0000 1000 et le résultat 1010 1001 : seul le bit 3 change](/workshops/microcontroleur/concepts/architecture-microcontroleur/registre-masque.svg){: .img-md}
+
+Les huit premiers bits d'un registre de 32 : seul le bit visé change.
+{: .caption}
+
+[Architecture d'un microcontrôleur](/workshops/microcontroleur/concepts/architecture-microcontroleur/){: .doc-link}
+
 ---
 
 ## Sous `digitalWrite()`, une écriture
@@ -851,6 +873,17 @@ Un grand tableau déclaré dans une fonction peut faire **déborder la pile** : 
 La pile, c'est une pile d'assiettes : chaque appel de fonction pose une assiette (ses variables locales), le retour la retire. Tout est automatique, mais la pile est petite (quelques Ko pour la tâche de `loop()`).
 Le tas, c'est un parking : on prend une place quand on en a besoin, on la rend quand on part. À force d'arrivées et de départs, il reste des places libres éparpillées, trop petites pour une grande voiture : c'est la fragmentation. Les `String` d'Arduino et la pile Wi-Fi s'en servent en coulisse.
 </aside>
+
+[Architecture d'un microcontrôleur](/workshops/microcontroleur/concepts/architecture-microcontroleur/){: .doc-link}
+
+<!-- .down -->
+
+## La carte de la mémoire
+
+![En Flash le code et les constantes ; en RAM les variables globales, le tas qui monte, la pile qui descend](/workshops/microcontroleur/concepts/architecture-microcontroleur/carte-memoire.svg){: .img-md}
+
+Si la pile et le tas se rejoignent, la puce redémarre.
+{: .caption}
 
 [Architecture d'un microcontrôleur](/workshops/microcontroleur/concepts/architecture-microcontroleur/){: .doc-link}
 
@@ -1146,6 +1179,17 @@ On compare l'heure à une date mémorisée : rien n'est jamais figé.
 
 [Du matériel au logiciel](/workshops/microcontroleur/concepts/du-materiel-au-logiciel/){: .doc-link}
 
+<!-- .down -->
+
+## delay() contre millis()
+
+![Avec delay, deux appuis sont manqués pendant les attentes ; avec millis, loop tourne en continu et les lit](/workshops/microcontroleur/concepts/du-materiel-au-logiciel/delay-vs-millis.svg){: .img-md}
+
+Même LED, même cadence : seul le second programme voit encore le bouton.
+{: .caption}
+
+[Du matériel au logiciel](/workshops/microcontroleur/concepts/du-materiel-au-logiciel/){: .doc-link}
+
 ---
 
 ## Un `int`, c'est combien ?
@@ -1186,6 +1230,17 @@ La soustraction de deux non signés donne l'écart réel même si le compteur a 
 49 jours, c'est long pour un Pong, mais pas pour un capteur, une borne ou un thermostat qui ne s'éteint jamais. Le bug n'apparaît jamais en test, seulement en production : le meilleur argument pour prendre la bonne habitude tout de suite.
 </aside>
 
+<!-- .down -->
+
+## Le cadran de millis()
+
+![Le compteur fait le tour en 49,7 jours ; la soustraction donne le petit écart réel même après le passage à 0](/workshops/microcontroleur/concepts/du-materiel-au-logiciel/millis-cadran.svg){: .img-md}
+
+Comme sur une horloge : de 23 h à 1 h, il s'est écoulé 2 h.
+{: .caption}
+
+[Du matériel au logiciel](/workshops/microcontroleur/concepts/du-materiel-au-logiciel/){: .doc-link}
+
 ---
 
 {% include message.html title="delay() reste utile" message="Pour une pause courte et unique (initialiser un composant, attendre au démarrage), `delay()` est parfaitement acceptable. C'est dans la `loop()`, quand plusieurs tâches doivent avancer en parallèle, qu'il faut l'éviter." status="is-info" icon="fas fa-info-circle" %}
@@ -1218,6 +1273,17 @@ Insister : tant que cette fonction s'exécute, tout le reste est suspendu, y com
 </aside>
 
 [Architecture d'un microcontrôleur](/workshops/microcontroleur/concepts/architecture-microcontroleur/){: .doc-link} [GPIO et monde numérique](/workshops/microcontroleur/concepts/gpio-monde-numerique/){: .doc-link}
+
+<!-- .down -->
+
+## L'interruption dans le temps
+
+![loop tourne, un front du bouton déclenche l'ISR pendant quelques microsecondes, puis loop reprend et traite l'appui](/workshops/microcontroleur/concepts/architecture-microcontroleur/interruption-frise.svg){: .img-md}
+
+L'ISR note, loop() traite.
+{: .caption}
+
+[Architecture d'un microcontrôleur](/workshops/microcontroleur/concepts/architecture-microcontroleur/){: .doc-link}
 
 ---
 
