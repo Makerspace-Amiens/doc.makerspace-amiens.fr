@@ -74,6 +74,8 @@ Ton ordinateur portable est une machine polyvalente : il fait *tout* (naviguer, 
 
 C'est cette **sobriété** qui le rend si présent : on peut en mettre partout, pour presque rien, sans y penser.
 
+![À gauche, un ordinateur : processeur, RAM, carte graphique, disque et interfaces sur une carte mère, alimentée en dizaines de watts ; à droite, un microcontrôleur : CPU, Flash, RAM et périphériques dans une seule puce qui consomme quelques milliampères](uc-vs-ordinateur.svg)
+
 {% include message.html title="Et le Raspberry Pi, alors ?" message="Un Raspberry Pi n'est pas un microcontrôleur mais un **nano-ordinateur** : il a un vrai système d'exploitation (Linux), un processeur puissant et beaucoup de mémoire. Il l'emporte en polyvalence, mais consomme bien plus, démarre lentement et coûte plus cher. Règle simple : une seule tâche, temps réel, économe → microcontrôleur ; besoin d'un OS, d'un écran, du réseau complet → nano-ordinateur." status="is-info" icon="fas fa-info-circle" %}
 
 ## Qui fabrique les microcontrôleurs ?

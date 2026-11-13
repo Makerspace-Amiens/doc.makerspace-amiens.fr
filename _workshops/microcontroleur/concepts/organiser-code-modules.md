@@ -108,6 +108,21 @@ Le module `game` ne dépend ni de l'écran ni des broches : on peut le relire, e
 
 Découper en modules fait apparaître des erreurs qui correspondent aux étapes de la compilation vues au CM1 :
 
+```mermaid!
+flowchart LR
+  A["main.cpp"] -->|"compilation"| AO["main.o"]
+  B["game.cpp"] -->|"compilation"| BO["game.o"]
+  C["renderer.cpp"] -->|"compilation"| CO["renderer.o"]
+  H["game.h"] -.->|"#include"| A
+  H -.->|"#include"| B
+  AO --> L["édition<br/>de liens"]
+  BO --> L
+  CO --> L
+  L --> F["firmware.bin"]
+```
+
+Chaque `.cpp` est compilé **séparément**, en ne connaissant des autres que les `.h` qu'il inclut ; l'édition de liens assemble ensuite les morceaux et vérifie que chaque fonction appelée existe quelque part, une seule fois.
+
 | Message | Étape | Cause probable |
 |---|---|---|
 | `'gameUpdate' was not declared in this scope` | Compilation | Le `.h` n'est pas inclus dans le fichier qui appelle la fonction |

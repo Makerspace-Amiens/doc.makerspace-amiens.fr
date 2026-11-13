@@ -123,6 +123,16 @@ Entre la mise sous tension et l'exécution de ton `setup()`, l'ESP32-S3 traverse
 2. **Bootloader de second niveau** : chargé depuis la Flash, il initialise l'horloge et la mémoire, puis choisit la partition applicative à lancer.
 3. **Ton application** : enfin, le code compilé s'exécute : `setup()` une fois, puis `loop()` en boucle.
 
+```mermaid!
+flowchart LR
+  P["Mise sous<br/>tension"] --> R{"ROM bootloader<br/>BOOT enfoncé ?"}
+  R -->|"oui"| U["Mode<br/>téléversement"]
+  R -->|"non"| B["Bootloader<br/>de second niveau"]
+  B --> S["setup()<br/>une fois"]
+  S --> L["loop()"]
+  L --> L
+```
+
 C'est ce mécanisme qui explique le bouton **BOOT** : le maintenir enfoncé au reset force l'étape 1 en mode téléversement.
 
 ## `setup()` et `loop()` : toute la structure
@@ -190,6 +200,12 @@ void loop() {
 
 Ce motif (comparer `millis()` à une date mémorisée) est le fondement de la **game loop non bloquante** et se combine naturellement avec la [machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/).
 
+![Deux frises sur une seconde : avec delay(500), le programme est bloqué et deux appuis sur le bouton sont manqués ; avec millis(), loop() tourne en continu, les deux appuis sont lus et la LED change à 500 ms](delay-vs-millis.svg)
+
+Dans un jeu, ce même motif cadence une **game loop** : une image toutes les 16 ms, et le temps restant rendu à `loop()`.
+
+![Frise de la game loop : une image toutes les 16 ms, chacune faite de lire, calculer et afficher, suivie d'une attente pendant laquelle loop() revient tout de suite](game-loop-frise.svg)
+
 ### La taille des entiers
 
 La taille d'un `int` dépend de la puce : le même code peut déborder sur l'une et pas sur l'autre.
@@ -211,6 +227,8 @@ Les types de `<stdint.h>` (`uint8_t`, `int16_t`, `uint32_t`) ont la même taille
 if (millis() - dernierClignotement >= INTERVALLE)   // juste, toujours
 if (millis() >= dernierClignotement + INTERVALLE)   // faux au passage à 0
 ```
+
+![Cadran de millis() : le compteur fait le tour en 49,7 jours ; entre une date mémorisée juste avant le passage à 0 et maintenant, la soustraction donne le petit écart réel](millis-cadran.svg)
 
 La soustraction de deux non signés donne l'écart réel même si le compteur a fait le tour, comme sur une horloge : de 23 h à 1 h, il s'est écoulé 2 h. La seconde forme, elle, compare deux dates : juste avant le passage à 0, `dernierClignotement + INTERVALLE` déborde et devient tout petit, et la condition se déclenche à tort.
 

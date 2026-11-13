@@ -55,6 +55,8 @@ En entrée, une broche ne bascule pas exactement à 0 V ou 3,3 V : elle compare 
 
 Tout ce qui est sous ~0,8 V vaut `0`, tout ce qui dépasse ~2,5 V vaut `1`. Cette zone grise au milieu explique pourquoi une entrée **flottante** (voir plus bas) donne des lectures erratiques : sa tension traîne dans cette plage indéterminée.
 
+![Échelle des tensions sur une entrée de l'ESP32-S3 : lu LOW sous 0,8 V, zone indéterminée entre 0,8 et 2,5 V, lu HIGH au-dessus de 2,5 V](seuils-logiques.svg)
+
 En **sortie**, la puce garantit à l'inverse des niveaux francs : proche de 0 V pour `LOW` ($V_{OL}$) et proche de 3,3 V pour `HIGH` ($V_{OH}$).
 
 ### Ce que dit la datasheet
@@ -147,6 +149,8 @@ Par défaut, `OUTPUT` configure la broche en **push-pull** : deux transistors in
 
 Il existe un second mode, **open-drain** : la broche ne peut **que** tirer vers `LOW` (un seul transistor, côté masse). Pour lire ou produire un `HIGH`, il faut une résistance de tirage (interne ou externe) qui « relâche » la broche vers `HIGH` quand personne ne la tire vers le bas.
 
+![À gauche, une sortie push-pull : un interrupteur vers 3,3 V et un vers 0 V imposent tous les deux un niveau ; à droite, une sortie open-drain : un seul interrupteur vers 0 V, la résistance de pull-up donne le HIGH](push-pull-open-drain.svg)
+
 ```cpp
 pinMode(PIN, OUTPUT_OPEN_DRAIN);  // la broche ne peut que tirer vers 0 V
 digitalWrite(PIN, LOW);           // tire activement à 0 V
@@ -228,6 +232,8 @@ Quand tu presses un bouton mécanique, le contact ne s'établit pas net : les la
 
 La parade la plus simple est logicielle : après un changement d'état, on **ignore** les lectures pendant un court délai (20 à 50 ms), grâce à `millis()` (le nombre de millisecondes écoulées depuis le démarrage), le temps que le contact se stabilise.
 
+![Le signal lu rebondit pendant environ 1 ms ; l'anti-rebond attend qu'il soit stable depuis 30 ms, puis justPressed() renvoie vrai une seule fois](anti-rebond-fenetre.svg)
+
 ```cpp
 const unsigned long ANTIREBOND = 30;   // ms
 int dernierEtat = HIGH;
@@ -272,6 +278,8 @@ L'ISR (*Interrupt Service Routine*) se contente de lever un drapeau ; le vrai tr
 Au-delà de `digitalRead()`/`digitalWrite()`, une broche peut être prise en charge par un périphérique : UART, SPI, I2C, PWM (LEDC)... Sur beaucoup de microcontrôleurs, chaque fonction est câblée en dur sur des broches précises (« fonction alternative » fixe).
 
 L'ESP32-S3 est plus flexible : une **GPIO matrix** interne permet de router presque n'importe quel signal numérique de périphérique vers presque n'importe quelle broche, par logiciel.
+
+![UART, SPI, I2C et PWM passent par la GPIO matrix, qui les route vers les broches choisies dans le code ; l'ADC, lui, est câblé en dur sur certaines broches](gpio-matrix.svg)
 
 ```cpp
 Serial1.begin(115200, SERIAL_8N1, D2, D3);  // UART1 routé sur D2 (RX) / D3 (TX) de la XIAO
@@ -347,6 +355,8 @@ Les GPIO de l'ESP32-S3 sont en logique 3,3 V : appliquer 5 V sur une entrée peu
 - **Entrée 5 V → 3,3 V** (lire un signal 5 V) : un simple **pont diviseur** de deux résistances (ex. 10 kΩ + 20 kΩ) ramène 5 V vers ~3,3 V.
 - **Bus ou bidirectionnel (I2C, SPI…)** : utiliser un **convertisseur de niveau** (*level shifter*) dédié, qui traduit proprement dans les deux sens.
 - **Sortie 3,3 V → 5 V** : beaucoup de composants 5 V reconnaissent déjà 3,3 V comme un `HIGH` valide ; sinon, un level shifter s'impose.
+
+![Pont diviseur : le signal 5 V d'un module traverse R1 de 10 kilo-ohms puis R2 de 20 kilo-ohms vers la masse ; le point milieu, à 3,3 V, va sur l'entrée de la XIAO](pont-diviseur-5v.svg)
 
 {% include message.html title="Le sens du signal compte" message="Le danger vient surtout des signaux 5 V qui *entrent* dans l'ESP32-S3. Une sortie 3,3 V vers une entrée 5 V est généralement sans risque pour la puce." status="is-info" icon="fas fa-info-circle" %}
 

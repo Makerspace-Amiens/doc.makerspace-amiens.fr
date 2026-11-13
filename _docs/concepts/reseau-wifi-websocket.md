@@ -64,6 +64,8 @@ Un même appareil peut faire tourner plusieurs services : chacun écoute sur un 
 
 L'analogie classique : l'adresse IP est l'adresse d'un immeuble, le port est le numéro de l'appartement.
 
+![Le téléphone se connecte au point d'accès de la console, 192.168.4.1 ; il demande la page au serveur HTTP sur le port 80, puis ouvre un WebSocket sur le port 81 pour échanger les messages du jeu dans les deux sens](architecture-reseau.svg)
+
 ## HTTP : demander une page
 
 Quand tu tapes `http://192.168.4.1/` dans un navigateur, il envoie une **requête HTTP** à la console, qui renvoie une **réponse** : le code de la page web (HTML, CSS, JavaScript). La page s'affiche, et la connexion se termine.
@@ -114,6 +116,20 @@ Un WebSocket transporte des messages, mais ne dit rien de **leur contenu** : c'e
 
 Le plus simple est un format texte court, `TYPE:valeurs` :
 
+```mermaid!
+sequenceDiagram
+  participant N as Navigateur
+  participant C as Console
+  N->>C: GET / (HTTP, port 80)
+  C-->>N: la page HTML + JavaScript
+  N->>C: ouverture du WebSocket (port 81)
+  C->>N: STATE:PLAYING
+  C->>N: SCORE:12
+  N->>C: FOOD:12,7
+  Note over C: la console vérifie la demande, puis l'applique
+  C->>N: SCORE:13
+```
+
 | Sens | Message | Sens du message |
 |---|---|---|
 | Console → navigateur | `STATE:PLAYING` | La phase de jeu a changé |
@@ -140,6 +156,16 @@ void loop() {
 
     // ... puis la game loop habituelle, cadencée par millis()
 }
+```
+
+```mermaid!
+flowchart LR
+  A["server.handleClient()<br/>webSocket.loop()"] --> T{"16 ms<br/>écoulées ?"}
+  T -->|"non"| A
+  T -->|"oui"| R["1. lire : joystick<br/>et messages reçus"]
+  R --> C["2. calculer : la console<br/>valide et applique"]
+  C --> D["3. afficher, et envoyer<br/>l'état s'il a changé"]
+  D --> A
 ```
 
 La règle vue dans [Du matériel au logiciel](/workshops/microcontroleur/concepts/du-materiel-au-logiciel/) n'a jamais été aussi vraie : **aucun `delay()`**. Pendant une attente bloquante, les messages s'accumulent, le navigateur croit la console figée, et la connexion finit par tomber.

@@ -180,6 +180,17 @@ void allerVers(EtatJeu nouvel) {
 
 **Transition temporisée.** Un état peut basculer tout seul après un certain temps, comme un écran « GAME OVER » qui revient au menu après 3 secondes. On combine la FSM avec `millis()` (voir [Du matériel au logiciel](/workshops/microcontroleur/concepts/du-materiel-au-logiciel/)) : on compare l'heure actuelle à la date d'entrée dans l'état.
 
+```mermaid!
+stateDiagram-v2
+  MENU --> PARTIE : appui
+  PARTIE --> GAME_OVER : plus de vies
+  GAME_OVER --> MENU : 3 s écoulées
+  note right of GAME_OVER
+    action d'entrée : afficherGameOver()
+    une seule fois, à la transition
+  end note
+```
+
 ```cpp
 case GAME_OVER:
   if (millis() - entreeEtat > 3000) {  // 3 s écoulées

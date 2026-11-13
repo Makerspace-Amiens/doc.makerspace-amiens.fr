@@ -38,6 +38,8 @@ Le monde physique est **analogique** : une température, une position de joystic
 
 Le **convertisseur analogique-numérique** (ADC, *Analog-to-Digital Converter*) transforme cette tension continue en un entier.
 
+![Quantification : une tension continue de 0 à 3,3 V est convertie en une valeur en marches d'escalier ; ici 8 marches pour la lisibilité, 4096 sur l'ESP32-S3](adc-quantification.svg)
+
 ### Résolution : 12 bits sur l'ESP32-S3
 
 L'ADC de l'ESP32-S3 a une résolution de **12 bits**, ce qui donne $2^{12} = 4096$ valeurs possibles :
@@ -55,6 +57,8 @@ int valeur = analogRead(PIN_JOYSTICK_X);  // retourne 0 à 4095
 ```
 
 {% include message.html title="L'ADC n'est pas parfaitement linéaire" message="La formule ci-dessus est une approximation pédagogique. En réalité, l'ADC de l'ESP32 est légèrement non linéaire (surtout près de 0 V et de 3,3 V) et sa pleine échelle dépend de l'atténuation configurée. Pour une mesure précise on calibre l'ADC ; pour lire un joystick, cette approximation suffit largement." status="is-info" icon="fas fa-info-circle" %}
+
+![Courbe de l'ADC réel comparée à l'ADC idéal : la valeur reste à 0 sous environ 0,1 V et sature à 4095 dès environ 3,1 V](adc-lineaire-reel.svg)
 
 ### La plage de mesure : l'atténuation
 
@@ -118,6 +122,8 @@ else                direction = CENTRE;
 
 La plage `1500`-`2500` est une **zone morte** : au repos, la valeur n'est jamais exactement 2048 et tremble de quelques unités, et ces petites variations ne doivent pas compter comme un mouvement.
 
+![Le plan des valeurs du joystick, de 0 à 4095 sur chaque axe : GAUCHE sous 1500 et DROITE au-dessus de 2500 sur toute la hauteur, HAUT et BAS dans la colonne centrale, CENTRE dans le carré de la zone morte](joystick-zones.svg)
+
 ### Calibrer et normaliser
 
 Pour un jeu, on veut souvent plus qu'une direction : **de combien** le stick est poussé. On convertit alors la lecture en une valeur entre **-1** (butée basse) et **+1** (butée haute), qui vaut **0** au repos :
@@ -147,6 +153,8 @@ int angle   = map(lecture, 0, 4095, 0, 180);  // 0 – 180°
 int pwm     = map(lecture, 0, 4095, 0, 255);  // 0 – 255
 ```
 
+![map() fait correspondre la plage 0 à 4095 à la plage 0 à 255 : 0 donne 0, 2048 donne 127, 4095 donne 255](map-echelle.svg)
+
 `map(valeur, entrée_min, entrée_max, sortie_min, sortie_max)` suppose une relation linéaire et **ne borne pas** le résultat : si la lecture peut déborder de la plage attendue, encadre-la avec `constrain(pwm, 0, 255)`.
 
 ## Du numérique vers l'analogique : le PWM
@@ -156,6 +164,8 @@ Un GPIO numérique ne peut produire que `0 V` ou `3,3 V`. Pour simuler une tensi
 ### Principe
 
 Le PWM alterne rapidement entre `HIGH` et `LOW` à haute fréquence. La proportion de temps à `HIGH` s'appelle le **rapport cyclique** (*duty cycle*) :
+
+![Trois signaux PWM de même fréquence, à 25, 50 et 75 % de rapport cyclique, avec leur tension moyenne de 0,8 V, 1,65 V et 2,5 V](pwm-rapports-cycliques.svg)
 
 | Duty cycle | Effet perçu |
 |---|---|
@@ -258,6 +268,8 @@ L'ESP32-S3 dispose de **8 canaux LEDC** (*LED Control*, le générateur de PWM m
 | Servomoteur | Impulsion 1–2 ms toutes les 20 ms (position angulaire) |
 | Moteur DC | Duty cycle ∝ vitesse |
 | Buzzer | Fréquence audio → ton |
+
+![Commande d'un servomoteur : une impulsion toutes les 20 ms, de 1 ms pour 0°, 1,5 ms pour 90° et 2 ms pour 180°](servo-impulsion.svg)
 
 ## Quiz express
 

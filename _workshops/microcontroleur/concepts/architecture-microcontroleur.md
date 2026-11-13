@@ -64,7 +64,16 @@ Le CPU exécute un **cycle fetch–decode–execute** en continu :
 2. **Decode** : la décoder
 3. **Execute** : l'exécuter (calcul, accès mémoire, écriture registre)
 
+```mermaid!
+flowchart LR
+  F["1. Fetch<br/>lire l'instruction"] --> D["2. Decode<br/>la comprendre"]
+  D --> E["3. Execute<br/>calculer, écrire"]
+  E -->|"instruction suivante"| F
+```
+
 Ce cycle est cadencé par l'**horloge** : l'ESP32-S3 tourne à **240 MHz**, soit 240 millions de cycles par seconde. Une addition ou une multiplication entière prend un ou deux cycles, un `digitalWrite()` (qui traverse plusieurs couches du core Arduino avant d'atteindre le registre) quelques dizaines, et établir une connexion Wi-Fi en réclame plusieurs centaines de millions.
+
+![Le signal d'horloge : un signal carré dont une période dure 4,2 ns à 240 MHz](horloge-240mhz.svg)
 
 L'ESP32-S3 possède **deux cœurs** (deux unités de calcul quasi indépendantes, capables de travailler en parallèle) Xtensa LX7. Dans le cadre Arduino-ESP32, le petit noyau temps réel FreeRTOS répartit le travail : le code principal `setup()`/`loop()` tourne sur le cœur 1, et le cœur 0 gère le Wi-Fi en arrière-plan.
 
@@ -114,6 +123,8 @@ const char msg[] = "Hello";
 // En RAM (variable)
 int compteur = 0;
 ```
+
+![Carte mémoire : en Flash le code et les constantes ; en RAM les variables globales, le tas qui grandit vers le haut et la pile qui grandit vers le bas, séparés par la mémoire libre](carte-memoire.svg)
 
 ## Périphériques : le glossaire
 
@@ -213,6 +224,8 @@ reg            1010 0001
 reg | masque   1010 1001   seul le bit 3 a changé
 ```
 
+![Les huit premiers bits d'un registre : le registre 1010 0001, le masque 1 << 3 qui vaut 0000 1000, et le résultat 1010 1001 où seul le bit 3 a changé](registre-masque.svg)
+
 Les bits se numérotent **de droite à gauche**, en partant de 0. Les autres lignes suivent la même idée : `& ~masque` met le bit à 0 (le `~` inverse le masque : `1111 0111`), `^ masque` l'inverse, `& masque` le teste.
 
 Sous `digitalWrite()`, l'ESP32-S3 utilise des registres faits pour ça : `GPIO_OUT_W1TS_REG` (*write 1 to set*) met à 1 les seuls bits écrits à 1, en **une seule écriture**. Un `|=` devrait lire, modifier puis réécrire le registre : si une interruption le change entre-temps, sa modification est perdue. Le détail de chaque registre, bit par bit, est dans le [manuel de référence de l'ESP32-S3](https://www.espressif.com/sites/default/files/documentation/esp32-s3_technical_reference_manual_en.pdf).
@@ -243,6 +256,8 @@ C'est précisément cette limite que lèvent les interruptions. (Le trajet compl
 ## Interruptions : réagir sans attendre
 
 Le CPU exécute `loop()` en continu, mais certains événements ne peuvent pas attendre le prochain passage dans la boucle, par exemple un bouton pressé pendant une longue routine. Une **interruption** suspend momentanément l'exécution normale pour exécuter une petite fonction dédiée, puis reprend exactement où elle s'était arrêtée.
+
+![Frise d'une interruption : loop() tourne, un front du bouton déclenche l'ISR qui dure quelques microsecondes et lève un drapeau, puis loop() reprend là où elle était et traite l'appui](interruption-frise.svg)
 
 ```cpp
 volatile int compteurAppuis = 0;  // volatile : modifiée hors du déroulement normal
