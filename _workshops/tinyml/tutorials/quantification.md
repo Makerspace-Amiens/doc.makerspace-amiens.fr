@@ -2,7 +2,8 @@
 # RÉDACTION : un tutoriel fait réaliser quelque chose, pas à pas, du début à la fin.
 # Chaque étape utilise l'include step-tuto.html (jamais de titres numérotés à la main).
 layout: documentation
-hide_hero: true          # passer à false et ajouter hero_image: hero.png quand une photo existe    
+hide_hero: false
+image: "ima.png"   
 component_toc: true
 doc_header: true
 
