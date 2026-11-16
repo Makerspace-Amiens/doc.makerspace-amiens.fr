@@ -170,7 +170,7 @@ Le site est construit deux fois par le plugin **jekyll-polyglot** (`Gemfile`, gr
 - Pages de listing : le corps est dans `_includes/docs-index.html`, `workshops-index.html`, `ressources-index.html`, partagé par `docs.md` / `docs.en.md`, etc. Les noms de catégories (sous-dossiers) sont dans la clé `categories` de `i18n.yml`.
 - `<html lang>` suit la langue du contenu (`page.rendered_lang`, posé par polyglot), pas celle de l'interface.
 
-**Limites connues** : Decap CMS ne connaît pas les `.en.md` (il les liste comme des pages à part, et range leurs images dans un dossier `<nom>.en/`) : éditer les traductions en Markdown. Le script `check-workshop.py` rattache un `.en.md` à l'URL française. Les pages de redirection (`tutorials.html`...) renvoient vers la version française.
+**Limites connues** : Decap CMS ne connaît pas les `.en.md` (il les liste comme des pages à part, et range leurs images dans un dossier `<nom>.en/`) : éditer les traductions en Markdown. Le script `check-workshop.py` rattache un `.en.md` à l'URL française ; `check-translations.py` (skill `commit`, étape « 1 ter ») vérifie que chaque traduction suit sa page française. Les pages de redirection (`tutorials.html`...) renvoient vers la version française.
 
 ---
 
@@ -405,6 +405,8 @@ La convention suit [Conventional Commits 1.0.0](https://www.conventionalcommits.
 la spec et la procédure complète sont dans le skill `.claude/skills/commit/` (invoqué par `/commit`).
 
 **Avant tout commit qui touche un atelier** (ou une page de `_docs/` qu'un atelier référence), vérifier la cohérence de l'atelier : liens et pages (`python3 .claude/skills/commit/scripts/check-workshop.py <slug>`), anciennes valeurs encore présentes ailleurs, notions des slides couvertes par les concepts et tutoriels. Les divergences sont présentées à l'utilisateur avant correction. Procédure complète : étape « 1 bis » du skill `commit`.
+
+**Avant tout commit qui touche une page, `_data/i18n.yml`, un menu, un layout ou un include**, vérifier la concordance des traductions : `python3 .claude/skills/commit/scripts/check-translations.py` (traductions orphelines, front matter divergent, pages françaises modifiées sans leur `.en.md`, clés `i18n.yml` manquantes, menus désalignés, libellés en dur). Procédure : étape « 1 ter » du skill `commit`.
 
 Scopes courants : `docs`, `workshop`, `theme`, `nav`, `config`.
 Types courants : `feat` (nouveau contenu), `fix` (correction), `chore` (tooling/config), `style` (CSS).

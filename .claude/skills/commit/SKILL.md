@@ -1,6 +1,6 @@
 ---
 name: commit
-description: Analyse les changements en cours et crée un commit Git suivant la spécification Conventional Commits 1.0.0 et les conventions de ce dépôt. À utiliser quand l'utilisateur demande de committer, de créer un commit, de rédiger un message de commit, ou de découper des changements en plusieurs commits.
+description: Analyse les changements en cours et crée un commit Git suivant la spécification Conventional Commits 1.0.0 et les conventions de ce dépôt, après avoir vérifié la cohérence des ateliers et la concordance des traductions FR/EN. À utiliser quand l'utilisateur demande de committer, de créer un commit, de rédiger un message de commit, ou de découper des changements en plusieurs commits.
 ---
 
 # Commit
@@ -67,6 +67,57 @@ l'utilisateur (fichier:ligne, ce qui diverge, correction proposée) et attendre 
 avant de corriger ; une fois validée, la correction peut rejoindre le commit si elle porte
 sur le même sujet, sinon un commit à part. Si rien ne diverge, l'indiquer en une ligne dans
 le compte rendu du commit.
+
+## 1 ter. Vérifier la concordance des traductions
+
+Le site est bilingue (voir « Site bilingue » dans `CLAUDE.md`) : la traduction anglaise de
+`<nom>.md` est le fichier frère `<nom>.en.md`. À faire **avant chaque commit** qui touche
+une page (`.md`), `_data/i18n.yml`, un menu (`_data/navigation.yml`,
+`_data/footer_navigation.yml` et leurs versions `_data/en/`), un layout ou un include :
+
+```bash
+python3 .claude/skills/commit/scripts/check-translations.py
+```
+
+Le script compare les changements en cours (indexés ou non) à `HEAD` ; `--base <réf>` pour
+toute une branche (ex. `--base main`), `--all` pour auditer tout le dépôt.
+
+**ERREUR** (exit 1, bloque le commit tant qu'elle n'est pas corrigée ou explicitement
+acceptée par l'utilisateur) :
+
+- traduction orpheline : page française supprimée ou renommée alors que `<nom>.en.md`
+  existe. Renommer ou supprimer la traduction avec elle (`git mv`), sinon elle deviendrait
+  une page seulement anglaise ;
+- `lang: en` absent, ou `permalink` de la traduction différent de l'URL française ;
+- front matter divergent sur un champ non traduisible (layout, type, kind, images, durée,
+  difficulté, listes d'URL d'un atelier, `link` des prérequis/logiciels/matériels...) :
+  reporter la nouvelle valeur dans l'autre langue ;
+- `_data/i18n.yml` : clé présente en `fr` et pas en `en` (ou l'inverse), ou valeur vide ;
+- menus français et anglais qui n'ont plus les mêmes liens dans le même ordre.
+
+**À VÉRIFIER** (signalé, ne bloque pas) :
+
+- **à traduire** : la page française a changé, pas sa traduction (ou l'inverse). Lire le
+  diff français (`git diff HEAD -- <nom>.md`), puis la traduction, et vérifier que chaque
+  changement de fond y est reporté : étapes, valeurs (broches, constantes, durées,
+  commandes, URL), blocs de code, images. Une coquille ou une reformulation française
+  n'appelle pas de mise à jour ;
+- **nouvelle traduction** : vérifier qu'elle couvre toute la page française (aucune étape
+  omise) et reprend les mêmes valeurs ;
+- **structure** : titres, includes, images ou blocs de code différents entre les deux
+  langues. Souvent le symptôme d'un « à traduire » ;
+- **libellé en dur** : texte ajouté dans un layout ou un include. Le passer par
+  `_data/i18n.yml`, avec les deux clés `fr` et `en`.
+
+Une page française **sans** traduction n'est jamais signalée : elle est servie en français
+sous `/en/`, avec un bandeau.
+
+**Que faire d'un écart** : comme pour l'atelier (étape 1 bis), le présenter à l'utilisateur
+(fichier, écart, correction proposée : texte anglais à ajouter ou à modifier) et attendre
+son accord. Une traduction mise à jour rejoint le commit de la page française (même sujet) ;
+si l'utilisateur préfère traduire plus tard, committer quand même et l'indiquer dans le
+compte rendu (« traduction de X à mettre à jour »). Si tout concorde, l'indiquer en une
+ligne dans le compte rendu.
 
 ## 2. Structure du message
 
