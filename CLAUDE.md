@@ -7,7 +7,7 @@ Documentation du projet pour Claude Code. Ce fichier décrit l'architecture, les
 ## Ce qu'est ce dépôt
 
 Site **Jekyll 4.4.1**, thème `bulma-clean-theme 1.3.1`, déployé sur <https://doc.makerspace-amiens.fr>.
-Contenu en **français**. Édition possible via le CMS Decap (`/admin`) ou directement en Markdown.
+Contenu en **français**, interface et pages traduites en anglais sous `/en/` (voir « Site bilingue »). Édition possible via le CMS Decap (`/admin`) ou directement en Markdown.
 
 Lancer en local : `make serve` (Jekyll + live reload sur `http://localhost:4000`).
 
@@ -150,13 +150,27 @@ Le champ `kind` distingue les deux natures d'ateliers, sur la page `/workshops/`
 
 Le filtre est porté par l'include `card_collections.html` (paramètre `kind="project"` / `kind="course"`). Tout `index.md` d'atelier **doit** avoir un `kind` — sans lui, l'atelier n'apparaît dans aucune des deux sections.
 
-### Atelier en anglais — champ `lang`
+### Site bilingue FR/EN (jekyll-polyglot)
 
-Le site est en français (`lang: fr` dans `_config.yml`), mais une page peut basculer son interface en anglais avec `lang: en` dans son front matter (ex : atelier `initiation-makerspace`). Les libellés des layouts `project-home`, `documentation` et de l'include `project-tutos.html` (« Tutoriels », « Commencer », « Précédent/Suivant », « Durée », « Pré-requis »…) sont lus dans `_data/i18n.yml` (clés `fr` / `en`).
+Le site est construit deux fois par le plugin **jekyll-polyglot** (`Gemfile`, groupe `jekyll_plugins`) : le français à la racine, l'anglais sous `/en/` (`languages`, `default_lang`, `exclude_from_localization` dans `_config.yml`). **Toutes les pages existent dans les deux langues** : une page non traduite est servie en français sous `/en/`, avec un bandeau « not translated yet » (`_includes/lang-notice.html`).
 
-- Mettre `lang: en` sur **l'`index.md` et sur chaque sous-page** de l'atelier (la barre de progression et la navigation sont rendues par la sous-page).
-- Tout nouveau libellé ajouté à ces layouts doit passer par `_data/i18n.yml` (variable `_i18n`), jamais en dur.
-- La navbar et le footer restent en français (globaux au site).
+**Traduire une page** : créer un fichier frère `<nom>.en.md` à côté de `<nom>.md`, avec `lang: en` et le même front matter traduit. Il prend l'URL de la page française (préfixée de `/en/`) et la remplace dans le build anglais : listes de cartes, ateliers (`project-home`), recherche et navigation suivent automatiquement. Les images restent celles du dossier `<nom>/` (ne pas les copier).
+
+- Pages racine (`index.md`, `docs.md`...) : mettre aussi `permalink:` identique à la version française dans le `.en.md` (sinon `index.en.md` donnerait `/index/`).
+- Une page **uniquement** en anglais (atelier `initiation-makerspace`, `lang: en` sans version française) est servie à la racine avec le bandeau « Cette page n'existe qu'en anglais » ; son interface de layout reste en anglais.
+- Pour un atelier traduit : traduire l'`index.md` **et** chaque sous-page (la navigation et la barre de progression sont rendues par la sous-page).
+- Le code du site n'écrit jamais de lien vers une langue en dur : le sélecteur (`_includes/lang-switch.html`, dans la navbar) et polyglot s'en chargent. Au build anglais, polyglot préfixe de `/en/` tous les `href="/..."` internes ; un lien qui doit rester vers le français s'écrit `{% static_href %}href="..."{% endstatic_href %}`.
+- Les **fichiers statiques ne sont écrits qu'une fois**, à leur URL française : le site pèse près de 900 Mo et la limite de GitHub Pages est 1 Go. `_plugins/polyglot-shared-files.rb` empêche leur copie sous `/en/` et réécrit dans le HTML anglais les chemins relatifs (`src="hero.png"`, `url('hero.png')`, `href="plan.pdf"`) vers l'URL française. Ne pas retirer ce plugin ni le contourner.
+
+**Libellés d'interface** : tout passe par `_data/i18n.yml` (clés `fr` / `en`, toujours les deux), jamais en dur.
+
+- Chrome global (navbar, footer, accueil, recherche, widget d'aide, pages de listing `/docs/`, `/workshops/`, `/ressources/`) : `site.data.i18n[site.lang]`, `site.lang` valant la langue du build (`lang_vars` de polyglot).
+- Layouts `project-home`, `documentation`, include `project-tutos.html` : variable `_i18n`, d'après `page.lang | default: site.lang`.
+- Menus : `_data/navigation.yml` et `_data/footer_navigation.yml` (français) ; leurs versions anglaises `_data/en/navigation.yml` et `_data/en/footer_navigation.yml` les remplacent sous `/en/` (garder les mêmes entrées, dans le même ordre).
+- Pages de listing : le corps est dans `_includes/docs-index.html`, `workshops-index.html`, `ressources-index.html`, partagé par `docs.md` / `docs.en.md`, etc. Les noms de catégories (sous-dossiers) sont dans la clé `categories` de `i18n.yml`.
+- `<html lang>` suit la langue du contenu (`page.rendered_lang`, posé par polyglot), pas celle de l'interface.
+
+**Limites connues** : Decap CMS ne connaît pas les `.en.md` (il les liste comme des pages à part, et range leurs images dans un dossier `<nom>.en/`) : éditer les traductions en Markdown. Le script `check-workshop.py` rattache un `.en.md` à l'URL française. Les pages de redirection (`tutorials.html`...) renvoient vers la version française.
 
 ---
 
@@ -207,7 +221,7 @@ Un deck est un `.md` avec `layout: slides` (ex. `_workshops/<slug>/slides/<deck>
 
 ## Widget « Besoin d'aide ? » (assistant IA)
 
-Otto (frame 1 de l'animation de la home, recadrée dans `assets/img/otto-help.webp`) et une bulle en bas à droite de toutes les pages, lien vers l'assistant IA (nouvel onglet). URL et libellé dans `_config.yml` (`help_bot.url`, `help_bot.label`), markup dans `_includes/help-bot.html`, style dans `assets/css/_help-bot.scss`.
+Otto (frame 1 de l'animation de la home, recadrée dans `assets/img/otto-help.webp`) et une bulle en bas à droite de toutes les pages, lien vers l'assistant IA (nouvel onglet). URL et libellé dans `_config.yml` (`help_bot.url`, `help_bot.label`, prioritaire en français), libellés anglais dans `_data/i18n.yml` (`help_bot_label`, `help_bot_aria`), markup dans `_includes/help-bot.html`, style dans `assets/css/_help-bot.scss`.
 
 - Injecté via `_includes/footer-scripts.html`, qui surcharge l'include vide du thème : il est inclus par tous les layouts sauf `slides.html` (pas de widget sur les decks). Tout script ou widget global au site va dans ce fichier.
 - Masquer sur une page : `help_bot: false` dans son front matter. Sur mobile, seule la mascotte s'affiche (pas de bulle).
