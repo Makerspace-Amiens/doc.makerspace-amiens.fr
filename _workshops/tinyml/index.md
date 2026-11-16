@@ -6,7 +6,7 @@ type: workshop
 kind: course
 image: /workshops/microcontroleur/tutorials/environnement-et-outils/tiny
 project_slug: tinyml
-project_image: /workshops/microcontroleur/tutorials/toolchain-blink/uc.webp
+project_image: /workshops/microcontroleur/tutorials/environnement-et-outils/tiny
 project_tags:
   - Système embarqué
   - Intelligence artificielle
