@@ -23,17 +23,17 @@ Une fois les données préparées, nous pouvons construire le modèle qui appren
 - entraîner un modèle avec arrêt anticipé et réduction automatique du taux d'apprentissage ;
 - évaluer un modèle de classification avec la précision et la matrice de confusion.
 
-## Étapes
+### Entraînement du modèle
+
+Nous augmentons légèrement les images d'entraînement, nous construisons le réseau, puis nous l'entraînons sur les données préparées à l'étape précédente (train_data, validation_data et test_data) et nous mesurons sa précision sur le jeu de test
 
 {% include step-tuto.html
 greyBackground=true
-title="Étape 1 : Entraînement du modèle"
-content="Nous augmentons légèrement les images d'entraînement, nous construisons le réseau, puis nous l'entraînons sur les données préparées à l'étape précédente (train_data, validation_data et test_data) et nous mesurons sa précision sur le jeu de test."
+title="Étape 1 : Augmenter les images d'entraînement"
+content="L'augmentation de données crée de légères variations des images (retournement, petite rotation) pour que le modèle ne mémorise pas les images exactes. Elle n'est appliquée qu'à l'entraînement : la validation et le test restent inchangés.
+"
 %}
 
-### Augmenter les images d'entraînement
-
-L'augmentation de données crée de légères variations des images (retournement, petite rotation) pour que le modèle ne mémorise pas les images exactes. Elle n'est appliquée qu'à l'entraînement : la validation et le test restent inchangés.
 
 ```cpp
 # Augmentation légère des images d'entraînement
@@ -56,9 +56,12 @@ train_data_bn = (
 ```
 Chaque image d'entraînement est retournée au hasard et tournée d'au plus environ 0,05 tour. Le modèle voit ainsi des variantes différentes à chaque époque, ce qui limite le surapprentissage.
 
-### Définir le modèle
+{% include step-tuto.html
+greyBackground=true
+title="Étape 2 : Définir le modèle"
+content="Le réseau reçoit une image de 96 × 96 × 3 et renvoie un nombre entre 0 et 1 : la probabilité que l'image montre un chien (étiquette 1)."
+%}
 
-Le réseau reçoit une image de 96 × 96 × 3 et renvoie un nombre entre 0 et 1 : la probabilité que l'image montre un chien (étiquette 1).
 
 ```cpp
 modele_cnn3 = tf.keras.Sequential([
@@ -98,9 +101,11 @@ modele_cnn3 = tf.keras.Sequential([
 - **Normalisation, ReLU et pooling** : chaque bloc stabilise les valeurs, ajoute de la non-linéarité et réduit la taille des cartes. Les convolutions n'ont pas de biais (`use_bias=False`) car la normalisation qui suit joue ce rôle.
 - **Sortie** : un pooling global, une couche de 32 neurones, un Dropout de 0,3 et un neurone final à activation sigmoïde.
 
-### Entraîner le modèle
-
-On choisit la méthode d'apprentissage et deux outils qui évitent de gaspiller de l'entraînement : l'arrêt anticipé et la réduction du taux d'apprentissage.
+{% include step-tuto.html
+greyBackground=true
+title="Étape 3 : Entraîner le modèle"
+content="On choisit la méthode d'apprentissage et deux outils qui évitent de gaspiller de l'entraînement : l'arrêt anticipé et la réduction du taux d'apprentissage."
+%}
 
 ```cpp
 # Définir la méthode d'apprentissage et les critères d'évaluation
@@ -136,9 +141,13 @@ historique_cnn3 = modele_cnn3.fit(
 ```
 Le modèle atteint environ 86 % de précision en validation, sans surapprentissage marqué (86,2 % en entraînement contre 86,0 % en validation), et le taux d’apprentissage a été réduit automatiquement de 0,001 à 0,000125 pendant les 20 époques.
 
-### Évaluer sur le jeu de test
 
-Le jeu de test n'a jamais servi à l'entraînement ni au réglage : il donne une mesure honnête de la qualité du modèle.
+{% include step-tuto.html
+greyBackground=true
+title="Étape 4 : Évaluer sur le jeu de test"
+content="Le jeu de test n'a jamais servi à l'entraînement ni au réglage : il donne une mesure honnête de la qualité du modèle."
+%}
+
 
 ```cpp
 perte_test, accuracy_test = modele_cnn3.evaluate(test_data)
@@ -149,14 +158,14 @@ print("Perte sur le jeu de test :", round(perte_test, 4))
 
 Le modèle classe correctement 87,68 % des images de test, avec une perte de 0,2876. Ce résultat est cohérent avec celui de la validation (environ 86 %). Le modèle généralise donc bien aux images qu'il n'a jamais vues.
 
+### Matrice de confusion
+
+La précision ne dit pas quelles erreurs le modèle commet. La matrice de confusion compare les classes réelles aux classes prédites et montre si le modèle confond plus souvent les chats ou les chiens.
 
 {% include step-tuto.html
 greyBackground=true
-title="Étape 2 : Matrice de confusion"
-content="La précision ne dit pas quelles erreurs le modèle commet. La matrice de confusion compare les classes réelles aux classes prédites et montre si le modèle confond plus souvent les chats ou les chiens."
+title="Calculer et afficher la matrice. "
 %}
-
-### Calculer et afficher la matrice
 
 ```cpp
 # Récupérer les vraies classes
