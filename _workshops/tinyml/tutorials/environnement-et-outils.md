@@ -11,7 +11,6 @@ order: 10
 
 
 title: Environnement et outils de développement
-subtitle: Configurez votre environnement de développement pour votre modèle IA.
 description: Dans ce tutoriel, nous allons découvrir différents environnements de travail, puis présenter quelques outils et bibliothèques utilisés pour développer et entraîner un modèle d’apprentissage automatique.
 author: Lina Abousamama
 
