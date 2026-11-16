@@ -84,5 +84,3 @@ from sklearn.metrics import (      # Évaluer les prédictions du modèle
 from google.colab import drive, files  # Accéder à Google Drive et importer ou télécharger des fichiers
 
 ```
-
-

@@ -9,7 +9,7 @@ doc_header: true
 title: Quantification
 description: "Convertir le modèle entraîné au format TensorFlow Lite, puis le quantifier en entiers 8 bits pour réduire sa taille avant de l'embarquer sur un microcontrôleur"
 author: Lina Abousalama      # RÉDACTION : mettre son propre nom
-
+---
 
 ## Objectif
 
@@ -92,5 +92,3 @@ Nous avons converti le modèle au format TensorFlow Lite, puis quantifié en ent
 Il reste à noter ses paramètres de quantification (échelle et point zéro d'entrée et de sortie), qui seront nécessaires pour préparer les images et lire le score sur le microcontrôleur.
 
 L'étape suivante est le **déploiement du modèle sur l'ESP32**.
-
-

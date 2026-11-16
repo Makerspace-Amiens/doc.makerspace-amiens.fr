@@ -10,7 +10,7 @@ doc_header: true
 title: Modélisation
 description: "Construire un petit réseau de neurones convolutif (CNN), l'entraîner sur les images de chats et de chiens, puis évaluer ses résultats avec la précision et la matrice de confusion"
 author: Lina Abousalama      # RÉDACTION : mettre son propre nom
-
+---
 
 ## Objectif
 
@@ -191,6 +191,3 @@ Nous avons construit un petit CNN, l'avons entraîné avec une augmentation lég
 Ce résultat est correct pour un réseau aussi léger . Il sert de référence pour la suite : le modèle sera compressé par quantification en entiers de 8 bits, puis déployé sur le microcontrôleur, et nous vérifierons que ses résultats restent comparables.
 
 L'étape suivante est la **quantification et la conversion du modèle**.
-
-
-

@@ -10,7 +10,7 @@ doc_header: true
 title: Prétraitement des données
 description: "Découper le jeu de données en trois ensembles, redimensionner les images en 96 × 96 pixels et normaliser les valeurs des pixels avant l'entraînement"
 author: Lina Abousalama      # RÉDACTION : mettre son propre nom
-
+---
 
 ## Objectif
 
@@ -86,6 +86,3 @@ Le jeu de données est maintenant prêt pour l'entraînement : il est découpé 
 Deux points demandent de l'attention pour la suite. D'abord, les images rectangulaires sont déformées en carrés, car le redimensionnement ne conserve pas les proportions. Ensuite, le **même prétraitement** (redimensionnement en 96 × 96 puis division par 255) devra être reproduit à l'identique lors du déploiement sur le microcontrôleur, sinon le modèle recevra des données différentes de celles de l'entraînement.
 
 L'étape suivante est l'**entraînement du modèle**.
-
-
-

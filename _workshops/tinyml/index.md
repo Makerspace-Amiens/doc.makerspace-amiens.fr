@@ -28,11 +28,11 @@ concepts:
   - /docs/concepts/capteurs/
 
 tutorials:
-  - /workshops/tinyml/tutorials/Environnement-et-outils/
-  - /workshops/tinyml/tutorials/problème-et-données/
-  - /workshops/tinyml/tutorials/prétraitement/
-  - /workshops/tinyml/tutorials/Modélisation/
-  - /workshops/tinyml/tutorials/Quantification/
+  - /workshops/tinyml/tutorials/environnement-et-outils/
+  - /workshops/tinyml/tutorials/probleme-et-donnees/
+  - /workshops/tinyml/tutorials/pretraitement/
+  - /workshops/tinyml/tutorials/modelisation/
+  - /workshops/tinyml/tutorials/quantification/
 
 
 how_to_guides:

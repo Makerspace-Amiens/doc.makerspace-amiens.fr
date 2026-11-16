@@ -10,7 +10,7 @@ doc_header: true
 title: Compréhension du problème et des données
 description: "Découvrir le jeu de données, examiner les images et leurs étiquettes, puis explorer sa structure avant de préparer les données pour l’entraînement"
 author: Lina Abousalama      # RÉDACTION : mettre son propre nom
-
+---
 
 ## Objectif
 
@@ -118,5 +118,3 @@ Le jeu de données est équilibré, étiqueté et très varié. Il nécessite de
 - Les valeurs de 0 à 255 seront normalisées (divisées par 255) pour obtenir des nombres entre 0 et 1, plus faciles à traiter par un réseau de neurones.
 
 Ces opérations sont l’objet de l’étape suivante, la préparation des données.
-
-
