@@ -22,15 +22,14 @@ Le modèle entraîné stocke ses paramètres sous forme de nombres décimaux sur
 - quantifier un modèle en entiers 8 bits avec des images de calibration ;
 - comparer la taille des modèles avant et après quantification ;
 
-## Étapes
+### Convertir et quantifier le modèle
+
+Nous convertissons d'abord le modèle en TensorFlow Lite. Puis nous le quantifions en int8 en fournissant des images qui permettent de calibrer les valeurs.
 
 {% include step-tuto.html
 greyBackground=true
-title="Étape 1 : Convertir et quantifier le modèle"
-content="Nous convertissons d'abord le modèle en TensorFlow Lite. Puis nous le quantifions en int8 en fournissant des images qui permettent de calibrer les valeurs"
+title="Étape 1 : Convertir le modèle en TensorFlow Lite (référence float32). "
 %}
-
-### Convertir le modèle en TensorFlow Lite (référence float32)
 
 ```cpp
 # Convertir le modèle Keras au format TensorFlow Lite
@@ -48,9 +47,12 @@ print("Taille :", round(os.path.getsize(chemin_tflite) / 1024, 2), "Ko")
 ```
 Le format TensorFlow Lite est une version allégée du modèle, conçue pour les appareils embarqués. À ce stade, les paramètres sont encore en float32 : ce fichier de 109,47 Ko.
 
-### Quantifier le modèle en int8
+{% include step-tuto.html
+greyBackground=true
+title="Étape 2 : Quantifier le modèle en int8"
+content="La quantification remplace les nombres décimaux par des entiers entre -128 et 127. Pour choisir comment les convertir, le convertisseur a besoin d'observer les valeurs réelles que prend le modèle : c'est le rôle des **images de calibration** fournies par `donnees_representatives`. "
+%}
 
-La quantification remplace les nombres décimaux par des entiers entre -128 et 127. Pour choisir comment les convertir, le convertisseur a besoin d'observer les valeurs réelles que prend le modèle : c'est le rôle des **images de calibration** fournies par `donnees_representatives`.
 
 ```cpp
 # Fournir des images pour calibrer la quantification int8
