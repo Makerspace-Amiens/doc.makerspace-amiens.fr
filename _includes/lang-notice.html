@@ -1,0 +1,14 @@
+{%- comment -%}
+  Bandeau sous la navbar quand le contenu de la page n'est pas dans la langue du build :
+  page non traduite servie en français sous /en/, ou page seulement anglaise servie à la
+  racine (ex. atelier initiation-makerspace). `rendered_lang` est posé par jekyll-polyglot.
+{%- endcomment -%}
+{%- if page.rendered_lang and page.rendered_lang != site.lang -%}
+  {%- assign _ui = site.data.i18n[site.lang] | default: site.data.i18n.fr -%}
+  <div class="lang-notice" role="note">
+    <div class="container">
+      <span class="icon"><i class="fas fa-language"></i></span>
+      <span>{{ _ui.fallback_notice }}</span>
+    </div>
+  </div>
+{%- endif -%}

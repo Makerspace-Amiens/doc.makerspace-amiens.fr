@@ -15,7 +15,7 @@
 
 <html
     dir="{{ site.direction | default: 'ltr' }}"
-    lang="{{ site.lang | default: 'en' }}"
+    lang="{{ page.rendered_lang | default: page.lang | default: site.lang | default: 'fr' }}"
     class="{% if site.fixed_navbar %} has-navbar-fixed-{{ site.fixed_navbar }} {% endif %} {% if site.force_theme %} theme-{{ site.force_theme }} {% endif %}"
 >
     {% include head.html %}

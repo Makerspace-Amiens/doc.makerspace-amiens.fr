@@ -5,11 +5,14 @@ permalink: /search.json
 [
 {%- assign all_items = site.docs | concat: site.ressources | concat: site.workshops | concat: site.projects | concat: site.pages -%}
 {%- assign first = true -%}
+{%- comment -%} Sous /en/, les liens des résultats restent dans la version anglaise. {%- endcomment -%}
+{%- assign _lang_prefix = "" -%}
+{%- if site.lang != site.default_lang -%}{%- assign _lang_prefix = "/" | append: site.lang -%}{%- endif -%}
 {%- for item in all_items -%}
   {%- if item.title and item.type != "internal" and item.layout != "none" and item.disabled != true -%}
     {%- unless first -%},{%- endunless -%}
     {%- assign first = false -%}
-    {"title": {{ item.title | default: "" | jsonify }}, "subtitle": {{ item.subtitle | default: item.description | default: "" | jsonify }}, "url": {{ item.url | relative_url | jsonify }}}
+    {"title": {{ item.title | default: "" | jsonify }}, "subtitle": {{ item.subtitle | default: item.description | default: "" | jsonify }}, "url": {{ item.url | prepend: _lang_prefix | relative_url | jsonify }}}
   {%- endif -%}
 {%- endfor -%}
 ]
