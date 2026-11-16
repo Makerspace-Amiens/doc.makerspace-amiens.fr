@@ -6,10 +6,11 @@
   Exemple :
     {% include safety-banner.html machine="xTool P3" link="/docs/references/machines/xtool-p3/" %}
 {% endcomment %}
+{% assign _sb_lang = page.lang | default: site.lang %}{% assign _sb = site.data.i18n[_sb_lang] | default: site.data.i18n.fr %}
 {% if include.link %}<a class="safety-banner" href="{{ include.link | relative_url }}">{% else %}<div class="safety-banner">{% endif %}
   <span class="safety-banner-icon"><i class="fas fa-triangle-exclamation fa-2x"></i></span>
   <span class="safety-banner-body">
-    <strong>Avant d'utiliser {% if include.machine %}la {{ include.machine }}{% else %}cette machine{% endif %}, lisez les consignes de sécurité.</strong>
-    {% if include.link %}<span class="safety-banner-cta">Consignes de sécurité&nbsp;<i class="fas fa-arrow-right"></i></span>{% endif %}
+    <strong>{{ _sb.safety_before }} {% if include.machine %}{{ _sb.safety_the }}{{ include.machine }}{% else %}{{ _sb.safety_this_machine }}{% endif %}{{ _sb.safety_after }}</strong>
+    {% if include.link %}<span class="safety-banner-cta">{{ _sb.safety_cta }}&nbsp;<i class="fas fa-arrow-right"></i></span>{% endif %}
   </span>
 {% if include.link %}</a>{% else %}</div>{% endif %}

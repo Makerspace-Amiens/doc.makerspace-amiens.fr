@@ -109,6 +109,14 @@ fr:
   home_cta_sub: "Et du lundi au vendredi de 9h à 18h en présence d'un responsable (le mercredi selon disponibilité). Accessible à tous les étudiants et personnels du campus, sans inscription préalable. Chacun est responsable du matériel qu'il utilise."
   home_cta_info: Informations pratiques
   home_partners: Avec le soutien de
+  safety_before: "Avant d'utiliser"
+  safety_the: "la "
+  safety_this_machine: cette machine
+  safety_after: ", lisez les consignes de sécurité."
+  safety_cta: Consignes de sécurité
+  risk_low: Risque faible
+  risk_moderate: Risque modéré
+  risk_high: Risque élevé
 
 en:
   all_workshops: All workshops
@@ -217,3 +225,11 @@ en:
   home_cta_sub: "And Monday to Friday from 9 am to 6 pm when a supervisor is present (Wednesdays depending on availability). Open to all students and staff on campus, no registration needed. Everyone is responsible for the equipment they use."
   home_cta_info: Practical information
   home_partners: With the support of
+  safety_before: Before using
+  safety_the: "the "
+  safety_this_machine: this machine
+  safety_after: ", read the safety instructions."
+  safety_cta: Safety instructions
+  risk_low: Low risk
+  risk_moderate: Moderate risk
+  risk_high: High risk

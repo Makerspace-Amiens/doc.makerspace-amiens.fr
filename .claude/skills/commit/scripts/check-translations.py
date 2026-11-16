@@ -45,6 +45,8 @@ TRANSLATABLE = {
     "title", "subtitle", "description", "author", "lang", "label", "desc", "toc_title",
     "special_section_label", "special_section_desc", "project_tags", "kicker", "hero_title",
     "hero_subtitle", "todo", "excerpt", "tags", "permalink", "redirect_from",
+    "name", "precision", "working_area",  # fiches machines : textes affichés
+    "access_conditions", "safety_rules", "opening_hours", "typical_activities",
 }
 MENUS = [("_data/navigation.yml", "_data/en/navigation.yml"),
          ("_data/footer_navigation.yml", "_data/en/footer_navigation.yml")]
