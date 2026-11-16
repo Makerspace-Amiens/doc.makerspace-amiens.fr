@@ -33,6 +33,7 @@ tutorials:
   - /workshops/tinyml/tutorials/pretraitement/
   - /workshops/tinyml/tutorials/modelisation/
   - /workshops/tinyml/tutorials/quantification/
+  - /workshops/tinyml/tutorials/installation-arduino/
 
 
 how_to_guides:
