@@ -7,6 +7,15 @@ force_theme: light
 permalink: pretty
 footer_menu: footer_navigation
 lang: fr
+
+# Site bilingue (jekyll-polyglot) : le français est servi à la racine, l'anglais sous /en/.
+# Une page anglaise est un fichier frère `<nom>.en.md` avec `lang: en` ; une page non
+# traduite est servie en français sous /en/ avec un bandeau. Voir CLAUDE.md.
+languages: ["fr", "en"]
+default_lang: "fr"
+lang_vars: ["lang"]          # site.lang vaut la langue en cours de build (fr, puis en)
+exclude_from_localization: ["assets", "admin", "favicon.png", "robots.txt", "README.md"]
+
 theme_color: '#ef2e31'
 fixed_navbar: top
 favicon: favicon.png

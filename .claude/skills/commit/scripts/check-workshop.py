@@ -38,6 +38,8 @@ def page_url(path):
     rel = path.relative_to(ROOT)
     coll = COLLECTIONS[rel.parts[0]]
     stem = "/".join(rel.with_suffix("").parts[1:])
+    # Traduction `<nom>.en.md` (jekyll-polyglot) : même URL que la page française.
+    stem = re.sub(r"\.en$", "", stem)
     return f"/{coll}/{stem}/"
 
 
