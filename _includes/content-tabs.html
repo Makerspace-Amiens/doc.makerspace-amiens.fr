@@ -35,11 +35,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const contents = group.querySelectorAll(".tab-content");
     tabs.forEach(tab => {
       tab.addEventListener("click", () => {
-        const index = tab.dataset.tabIndex;
-        tabs.forEach(t => t.classList.remove("is-active"));
-        contents.forEach(c => c.classList.remove("is-active"));
-        tab.classList.add("is-active");
-        group.querySelector(`.tab-content[data-tab-index="${index}"]`).classList.add("is-active");
+        // Onglets synchronisés : choisir un onglet l'ouvre dans tous les groupes de la page qui ont le même titre
+        const title = tab.textContent.trim();
+        document.querySelectorAll(".tab-group").forEach(g => {
+          const same = [...g.querySelectorAll(".tabs li")].find(t => t.textContent.trim() === title);
+          if (!same) return;
+          g.querySelectorAll(".tabs li").forEach(t => t.classList.remove("is-active"));
+          g.querySelectorAll(".tab-content").forEach(c => c.classList.remove("is-active"));
+          same.classList.add("is-active");
+          g.querySelector(`.tab-content[data-tab-index="${same.dataset.tabIndex}"]`).classList.add("is-active");
+        });
       });
     });
     // Page partagée entre ateliers : ouvrir l'onglet de l'atelier d'origine (?project=)
