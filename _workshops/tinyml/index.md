@@ -4,9 +4,9 @@ layout: project-home
 permalink: /workshops/tinyml/
 type: workshop
 kind: course
-image: /workshops/microcontroleur/tutorials/environnement-et-outils/tiny
+image: /workshops/tinyml/tutorials/environnement-et-outils/tiny
 project_slug: tinyml
-project_image: /workshops/microcontroleur/tutorials/environnement-et-outils/tiny
+project_image: /workshops/tinyml/tutorials/environnement-et-outils/tiny
 project_tags:
   - Système embarqué
   - Intelligence artificielle
