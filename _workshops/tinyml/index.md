@@ -34,6 +34,7 @@ tutorials:
   - /workshops/tinyml/tutorials/modelisation/
   - /workshops/tinyml/tutorials/quantification/
   - /workshops/tinyml/tutorials/installation-arduino/
+  - /workshops/tinyml/tutorials/camera/
 
 
 how_to_guides:
