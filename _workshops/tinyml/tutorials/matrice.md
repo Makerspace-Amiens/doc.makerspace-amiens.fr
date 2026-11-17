@@ -7,19 +7,20 @@ component_toc: true
 doc_header: true
 
 title: Évaluer le modèle sur l’ESP32
-description: "Envoyer le jeu de test à l’ESP32-S3, récupérer les scores prédits et afficher la matrice de confusion ainsi que la précision globale du modèle"
+description: "Envoyer les images du jeu de test à l'ESP32 par liaison série, récupérer le score du modèle quantifié pour chacune, puis calculer la matrice de confusion et la précision pour les comparer à celles de Colab"
 author: Lina Abousalama     
 ---
 
 ## Objectif
 
-Après le déploiement du modèle, nous voulons vérifier ses prédictions sur les images du jeu de test. Dans ce tutoriel, nous préparons le programme Arduino pour recevoir les images depuis l’ordinateur et exécuter le modèle sur l’ESP32-S3. Un script Python envoie ensuite les images une par une, récupère les scores et compare les classes prédites aux étiquettes réelles.
+Le modèle quantifié s'exécute sur l'ESP32, mais nous ne savons pas encore s'il prédit aussi bien que sur Colab : la quantification en int8 peut modifier légèrement ses résultats. Dans ce tutoriel, nous testons le modèle sur la carte avec les 3 489 images du jeu de test préparé dans le tutoriel précédent. Un programme Arduino exécute le modèle, et un script Python sur l'ordinateur lui envoie les images une par une, récupère le score de chacune et construit la matrice de confusion.
 
 À la fin de ce tutoriel, vous saurez :
-- préparer et téléverser le programme de test sur l’ESP32-S3 ;
-- envoyer le jeu de test à la carte depuis l’ordinateur ;
-- calculer et afficher la matrice de confusion ;
-- consulter la précision globale du modèle.
+
+- recevoir des images par liaison série sur l'ESP32 et exécuter le modèle sur chacune ;
+- envoyer un jeu de test à la carte depuis un script Python ;
+- calculer la matrice de confusion et la précision à partir des prédictions de l'ESP32 ;
+- comparer ces résultats à ceux obtenus sur Colab.
 
 
 {% include step-tuto.html
@@ -149,6 +150,8 @@ title="Étape 5 : Lancer le test depuis l’ordinateur"
 content="Dans le dossier matrice-de-confusion, créez un fichier Python nommé test_esp32.py, puis copiez-y le code ci-dessous et enregistrez-le. Ouvrez ensuite l’invite de commandes dans ce dossier et exécutez la commande python test_esp32.py."
 %}
 
+Avant de lancer le script, installez ses deux bibliothèques avec la commande `py -m pip install pyserial numpy`. Attention : il faut installer `pyserial` et non `serial`, qui est un autre paquet.
+
 ```cpp
 import os
 import time
@@ -241,7 +244,32 @@ print(f"\nPrécision globale : {precision:.2f} %")
 
 ```
 
+### Lire et comparer les résultats
+
+Pour référence, voici la matrice de confusion du modèle float32 sur le même jeu de test, obtenue sur Colab dans le tutoriel sur la modélisation.
+
+| | Prédit chat | Prédit chien |
+|---|---|---|
+| Vrai chat | 1 538 | 182 |
+| Vrai chien | 248 | 1 521 |
+
+Précision : 87,68 %.
+
+Voici la matrice obtenue sur l'ESP32 avec le modèle quantifié :
+
+| | Prédit chat | Prédit chien |
+|---|---|---|
+| Vrai chat | 1 569 | 151 |
+| Vrai chien | 291 | 1 478 |
+
+La précision est de **87,33 %** : 3 047 images sont correctement classées sur 3 489. Sur Colab, le modèle float32 obtenait 87,68 %. La quantification en int8 fait donc perdre environ **0,35 point**, soit 12 images de plus mal classées (442 erreurs contre 430).
+
+Les erreurs se déplacent légèrement : l'ESP32 prend moins de chats pour des chiens (151 contre 182) mais plus de chiens pour des chats (291 contre 248). Ces écarts peuvent venir de la quantification et de l'arrondi des pixels dans `test_data.bin`.
+
+
 ## Conclusion
 
-Le jeu de test a été envoyé à l’ESP32-S3 et chaque image a été classée par le modèle embarqué. La matrice de confusion indique le nombre de chats et de chiens correctement classés, ainsi que les erreurs de prédiction. La précision globale résume la proportion d’images correctement classées.
+Nous avons testé le modèle quantifié sur l'ESP32 avec les 3 489 images du jeu de test. La carte atteint 87,33 % de précision, contre 87,68 % sur Colab : la quantification en int8 ne dégrade que très peu les résultats, alors que le modèle est environ trois fois plus petit (36,1 Ko contre 109,47 Ko). La matrice de confusion montre que les erreurs restent réparties dans les deux sens, avec un peu plus de chiens classés comme des chats.
+
+Le modèle est donc assez précis pour être utilisé tel quel sur la carte, avec la caméra.
 
