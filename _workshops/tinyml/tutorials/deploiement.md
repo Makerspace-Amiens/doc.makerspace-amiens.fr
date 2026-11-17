@@ -3,7 +3,7 @@
 # Chaque étape utilise l'include step-tuto.html (jamais de titres numérotés à la main).
 layout: documentation
 hide_hero: false
-image: "came.png"   
+image: "depl.png"   
 component_toc: true
 doc_header: true
 
