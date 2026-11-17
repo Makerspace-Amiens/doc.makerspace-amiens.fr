@@ -9,7 +9,7 @@ doc_header: true
 
 title: Configuration de la caméra
 description: "Vérifier le montage de la caméra du XIAO ESP32-S3 Sense, installer la bibliothèque d'autofocus, téléverser le code de streaming vidéo et afficher l'image de la caméra dans un navigateur"
-author: Lina Abousalama      # RÉDACTION : mettre son propre nom
+author: Lina Abousalama     
 ---
 
 ## Objectif
