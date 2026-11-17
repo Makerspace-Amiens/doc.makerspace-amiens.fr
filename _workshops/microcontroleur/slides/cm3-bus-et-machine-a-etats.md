@@ -15,6 +15,7 @@ back_link: /workshops/microcontroleur/
 3. Choisir son bus
 4. La game loop
 5. La machine à états, et un parseur de messages
+6. Et après le microcontrôleur ?
 
 <aside class="notes" markdown="1">
 1 h 30, dernier cours de la série, juste avant les TD. Garder du temps pour l'exercice de la FSM du Pong : une FSM se dessine sur papier, pas devant un écran.
@@ -999,6 +1000,193 @@ Piège classique à relever pendant la mise en commun : oublier de réinitialise
 - Un flux d'octets se découpe avec une FSM : début, longueur, données, contrôle
 
 [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link} [Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/){: .doc-link}
+
+---
+
+<!-- .slide: class="slide-section" -->
+
+## Et après le microcontrôleur ?
+
+Un océan de puces
+
+---
+
+## Votre ESP32-S3, vous n'en avez vu qu'une partie
+
+| Ressource | Ce qu'elle fait |
+|---|---|
+| Le second cœur | `loop()` n'occupe qu'un des deux cœurs |
+| Le DMA | Copie les données vers l'écran pendant que le code continue |
+| Le coprocesseur ULP | Un petit RISC-V qui veille pendant que le reste dort |
+| Les instructions vectorielles | Accélèrent les réseaux de neurones (ESP-DL) |
+| La cryptographie matérielle | Chiffre (AES) et signe (SHA) sans charger le processeur |
+| Caméra, USB OTG, tactile | Des périphériques entiers, jamais branchés |
+{: .table-dense}
+
+Et ce n'est qu'**un** microcontrôleur parmi des milliers. **↓** la famille.
+{: .caption}
+
+[Au-delà du microcontrôleur](/workshops/microcontroleur/concepts/au-dela-du-microcontroleur/){: .doc-link}
+
+<!-- .down -->
+
+## Même chez les microcontrôleurs
+
+| Puce | Ce qui la distingue |
+|---|---|
+| ATmega328P (Arduino Uno) | 8 bits, 16 MHz, 2 Ko de RAM : le point de départ |
+| ESP32-S3 (votre console) | 2 cœurs à 240 MHz, 512 Ko de RAM, Wi-Fi |
+| RP2040, RP2350 (Pico) | Des PIO : des machines à états **matérielles** |
+| STM32H7 | Jusqu'à 550 MHz : audio, moteurs, industrie |
+| STM32N6, MAX78000 | Un accélérateur de réseaux de neurones intégré |
+{: .table-dense}
+
+Les PIO du Pico exécutent de minuscules programmes pour inventer ses propres protocoles : vos FSM, gravées dans le silicium.
+{: .caption}
+
+[Au-delà du microcontrôleur](/workshops/microcontroleur/concepts/au-dela-du-microcontroleur/){: .doc-link}
+
+---
+
+## La carte des puces
+
+![Les puces de calcul de la plus flexible à la plus efficace : les généralistes MCU, MPU et CPU, le calcul massif DSP et GPU, le FPGA reconfigurable, les accélérateurs d'IA NPU et TPU, et l'ASIC sur mesure ; le MCU est marqué vous êtes ici](/workshops/microcontroleur/concepts/au-dela-du-microcontroleur/spectre.svg){: .img-md}
+
+À gauche, des puces qui exécutent n'importe quel programme ; à droite, des puces qui ne font qu'une chose, mais bien plus vite et pour bien moins d'énergie. **↓** chaque famille.
+{: .caption}
+
+[Au-delà du microcontrôleur](/workshops/microcontroleur/concepts/au-dela-du-microcontroleur/){: .doc-link}
+
+<!-- .down -->
+
+## Du MCU au CPU
+
+| Famille | Exemple | Ce qui change |
+|---|---|---|
+| MCU | ESP32-S3 | RAM intégrée, pas de système, temps réel |
+| MPU | Raspberry Pi 5 | 4 cœurs à 2,4 GHz, RAM externe, Linux |
+| SoC de smartphone | Apple A, Snapdragon | CPU, GPU, NPU et modem sur une puce |
+| CPU de serveur | AMD EPYC | Jusqu'à 192 cœurs, environ 500 W |
+{: .table-dense}
+
+Un MPU a une **MMU** (unité de gestion de la mémoire) : c'est ce qui lui permet de faire tourner Linux. Le STM32MP1 réunit les deux mondes : un cœur Linux et un cœur Cortex-M4 pour le temps réel.
+{: .caption}
+
+[Au-delà du microcontrôleur](/workshops/microcontroleur/concepts/au-dela-du-microcontroleur/#du-microcontrôleur-au-processeur){: .doc-link}
+
+<!-- .down -->
+
+## Calculer en masse : DSP et GPU
+
+<div class="columns" markdown="1">
+<div markdown="1">
+
+### DSP
+
+- Multiplier et additionner en **un cycle**
+- Filtres audio, radars, modems
+- Le Cortex-M4 en a déjà les instructions
+
+</div>
+<div markdown="1">
+
+### GPU
+
+- Des **milliers** de cœurs simples
+- Tous font le même calcul en parallèle
+- Conçus pour l'image, adoptés par l'IA
+
+</div>
+</div>
+
+Une NVIDIA H100 : environ 17 000 cœurs, 700 W. Votre ESP32-S3 : 2 cœurs, moins d'un demi-watt.
+{: .caption}
+
+[Au-delà du microcontrôleur](/workshops/microcontroleur/concepts/au-dela-du-microcontroleur/#calculer-en-masse--dsp-et-gpu){: .doc-link}
+
+<!-- .down -->
+
+## Accélérer l'IA : NPU et TPU
+
+Un réseau de neurones, c'est surtout des **multiplications de matrices**. D'où des puces qui ne savent faire que ça :
+
+- **TPU** (Google) : dans les datacenters, et en miniature, l'**Edge TPU** (Coral) : 4 TOPS pour 2 W, sur une clé USB
+- **NPU** : intégré à une puce plus large : Neural Engine d'Apple, PC récents, STM32N6
+
+Un TOPS : mille milliards d'opérations par seconde.
+{: .caption}
+
+[Au-delà du microcontrôleur](/workshops/microcontroleur/concepts/au-dela-du-microcontroleur/#accélérer-lia--npu-et-tpu){: .doc-link} [L'atelier TinyML](/workshops/tinyml/){: .doc-link}
+
+<!-- .down -->
+
+## Recâbler la puce : le FPGA
+
+- On ne programme plus un processeur : on **décrit un circuit** (Verilog, VHDL)
+- Tout s'exécute **en parallèle**, réglé à la nanoseconde
+- Du Lattice iCE40 (quelques euros, outils libres) aux AMD Versal
+- Les Zynq associent des cœurs ARM et un FPGA sur la même puce
+
+Une FSM y devient un vrai circuit, fait de bascules et de portes logiques. Usages : prototyper une puce avant de la graver, radio logicielle, vidéo.
+{: .caption}
+
+[Au-delà du microcontrôleur](/workshops/microcontroleur/concepts/au-dela-du-microcontroleur/#recâbler-la-puce--le-fpga){: .doc-link}
+
+<!-- .down -->
+
+## Graver sa propre puce : l'ASIC
+
+- Un circuit conçu pour **une seule tâche**, gravé dans le silicium
+- Imbattable en vitesse et en énergie, mais impossible à modifier
+- Le TPU de Google en est un, comme les puces des mineurs de Bitcoin
+- Fabriquer une puce coûte des millions, sauf à partager : **Tiny Tapeout** grave votre petit circuit avec des centaines d'autres, pour quelques centaines d'euros
+
+[Au-delà du microcontrôleur](/workshops/microcontroleur/concepts/au-dela-du-microcontroleur/#graver-sa-propre-puce--lasic){: .doc-link}
+
+---
+
+## Flexibilité contre efficacité
+
+| Famille | Flexibilité | Efficacité | Consommation |
+|---|---|---|---|
+| MCU, MPU, CPU | ★★★★★ | ★ | De quelques µW à 500 W |
+| DSP, GPU | ★★★ | ★★★ | Jusqu'à 700 W |
+| FPGA | ★★★ (on recâble) | ★★★★ | Du mW à quelques dizaines de W |
+| NPU, TPU, ASIC | ★ | ★★★★★ | 2 W pour 4 TOPS (Edge TPU) |
+{: .table-dense}
+
+Choisir une puce, c'est placer le curseur entre ces deux extrêmes, comme vous avez choisi un bus.
+{: .caption}
+
+[Au-delà du microcontrôleur](/workshops/microcontroleur/concepts/au-dela-du-microcontroleur/#flexibilité-contre-efficacité){: .doc-link}
+
+---
+
+## Et demain ?
+
+- **Neuromorphique** : des puces qui imitent les neurones et calculent par impulsions (Intel Loihi)
+- **Quantique** : des qubits, pour des problèmes hors de portée des puces classiques
+- **Photonique** : calculer avec de la lumière plutôt qu'avec des électrons
+- **RISC-V** : un jeu d'instructions libre, déjà partout, de l'ESP32-C3 aux cœurs que l'on implante soi-même dans un FPGA
+
+[Au-delà du microcontrôleur](/workshops/microcontroleur/concepts/au-dela-du-microcontroleur/#et-demain-){: .doc-link}
+
+---
+
+## Et vous pouvez y toucher
+
+| Pour découvrir... | Commencer par |
+|---|---|
+| Linux embarqué | Un Raspberry Pi |
+| L'IA embarquée | Votre ESP32-S3 avec ESP-DL, ou une clé Coral |
+| Le FPGA | Une petite carte Lattice iCE40, avec les outils libres |
+| La conception de puces | Tiny Tapeout, en ligne |
+{: .table-dense}
+
+Ce module vous a donné le socle : registres, bus, temps réel, machines à états. Il sert partout dans cet océan.
+{: .highlight-red}
+
+[Au-delà du microcontrôleur](/workshops/microcontroleur/concepts/au-dela-du-microcontroleur/#et-tu-peux-y-toucher){: .doc-link} [L'atelier TinyML](/workshops/tinyml/){: .doc-link}
 
 ---
 
