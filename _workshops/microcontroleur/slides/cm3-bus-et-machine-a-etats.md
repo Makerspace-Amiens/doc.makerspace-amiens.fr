@@ -165,9 +165,31 @@ Deux fils, point à point
 
 ## Anatomie d'une trame
 
-![Chronogramme d'une trame UART 8N1 pour la lettre A : repos à 1, bit de start à 0, huit bits de données du poids faible au poids fort, bit de stop à 1](/workshops/microcontroleur/concepts/bus-communication/uart-trame.svg){: .img-md}
+![Chronogramme d'une trame UART 8N1 : repos à 1, bit de start à 0, huit bits de données du poids faible au poids fort, bit de stop à 1](/workshops/microcontroleur/concepts/bus-communication/uart-trame.svg){: .img-md}
 
 Le **start** donne le signal, le récepteur compte les bits à la vitesse convenue. 8 bits, pas de parité, 1 stop : **`8N1`**. Format ou vitesse différents : du charabia.
+{: .caption}
+
+[Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link}
+
+---
+
+## Le bit de parité
+
+![Chronogramme d'une trame UART 8E1 pour la lettre C : start, huit bits de données dont trois à 1, bit de parité à 1, stop](/workshops/microcontroleur/concepts/bus-communication/uart-trame-parite.svg){: .img-md}
+
+Un bit ajouté après les données pour que le nombre total de 1 soit **pair** (`E`, *even*) ou **impair** (`O`, *odd*). En **`8E1`**, « C » compte trois 1 : la parité vaut 1. Le récepteur recompte ; un total impair signale un octet abîmé. **↓** pour un exemple d'erreur.
+{: .caption}
+
+[Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link}
+
+<!-- .down -->
+
+## Une erreur détectée
+
+![La même trame reçue avec le bit D1 inversé : les données valent 0x41, trois 1 au total avec la parité, le récepteur détecte l'erreur](/workshops/microcontroleur/concepts/bus-communication/uart-parite-erreur.svg){: .img-md}
+
+Sans parité, le récepteur lirait « A » au lieu de « C » sans rien voir. La parité **détecte** l'erreur mais ne la corrige pas (l'octet est à renvoyer), et deux bits inversés se compensent : ils passent inaperçus.
 {: .caption}
 
 [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link}
@@ -224,7 +246,76 @@ Deux fils, plusieurs composants
 
 ![Chronogramme I2C : START, sept bits d'adresse, bit R/W, ACK, huit bits de données, ACK, STOP, avec un coup d'horloge SCL par bit](/workshops/microcontroleur/concepts/bus-communication/i2c-trame.svg){: .img-md}
 
-**Start**, **adresse + R/W**, **ACK** de l'esclave, **données** (un ACK par octet), **stop**. Pas d'ACK après l'adresse : personne ne répond à cette adresse.
+**Start**, **adresse + R/W**, **ACK**, **données** (un ACK par octet), **stop**. Après chaque octet, celui qui l'a reçu répond **ACK** (*acknowledge*, « bien reçu ») ou **NACK**. **↓** le détail, puis une lecture.
+{: .caption}
+
+[Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link}
+
+<!-- .down -->
+
+## ACK et NACK
+
+![Chronogrammes SCL et SDA sur les bits D1, D0 et le 9e coup d'horloge : à gauche le récepteur tire SDA à 0 (ACK), à droite personne ne la tire et la pull-up la laisse à 1 (NACK)](/workshops/microcontroleur/concepts/bus-communication/i2c-ack-nack.svg){: .img-md}
+
+Un octet dure **9** coups d'horloge : 8 bits, puis un coup où l'émetteur **relâche** SDA. Le **récepteur** répond : il tire SDA à 0 (**ACK**), ou ne fait rien et la pull-up la laisse à 1 (**NACK**). Un esclave absent ne tire rien : il répond NACK sans le savoir.
+{: .caption}
+
+[Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link}
+
+<!-- .down -->
+
+## Ce que dit un NACK
+
+| Le NACK arrive... | Il signifie | Côté code |
+|---|---|---|
+| Après l'adresse | Personne à cette adresse | `endTransmission()` ≠ 0 |
+| Après un octet écrit | L'esclave refuse l'octet | `endTransmission()` ≠ 0 |
+| Après un octet lu | Le maître a fini de lire | Normal |
+{: .table-dense}
+
+Seul le dernier cas est normal. Le scanner I2C repose sur le premier : `endTransmission()` renvoie `0` quand l'adresse a été acquittée, donc quand un composant est là.
+{: .caption}
+
+[Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link}
+
+<!-- .down -->
+
+## Lire une donnée
+
+![Lecture I2C du capteur TMP102 : le maître écrit l'adresse 0x48 et le registre 0x00, start répété, adresse 0x48 en lecture, l'esclave envoie 0x19 puis 0x80, le maître acquitte le premier octet et répond NACK au second, puis stop](/workshops/microcontroleur/concepts/bus-communication/i2c-lecture.svg){: .img-md}
+
+Le maître **écrit** d'abord le registre voulu, puis, sans STOP, relance un **start répété** en lecture. L'esclave envoie les octets ; c'est alors le **maître** qui acquitte, et son **NACK** sur le dernier dit « j'ai fini ».
+{: .caption}
+
+[Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link}
+
+<!-- .down -->
+
+## La même lecture, avec Wire
+
+```cpp
+Wire.beginTransmission(0x48);
+Wire.write(0x00);              // le registre de température
+Wire.endTransmission(false);   // false : pas de STOP, start répété
+Wire.requestFrom(0x48, 2);     // adresse + R, 2 octets, NACK, STOP
+uint8_t fort = Wire.read();    // 0x19 = 0001 1001
+uint8_t faible = Wire.read();  // 0x80 = 1000 0000
+int brut = (fort << 4) | (faible >> 4);  // 0001 1001 1000 = 408
+float t = brut * 0.0625;       // 408 pas de 0,0625 °C = 25.5 °C
+```
+
+Chaque ligne correspond à un morceau de la trame. Les bibliothèques de capteurs font exactement cela pour vous. **↓** le calcul.
+{: .caption}
+
+[Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link}
+
+<!-- .down -->
+
+## Reconstituer la température
+
+![Assemblage des deux octets du TMP102 : fort décalé de 4 rangs vers la gauche, faible décalé de 4 rangs vers la droite, les deux combinés par un OU donnent 0x198, soit 408, puis 408 fois 0,0625 donne 25,5 °C](/workshops/microcontroleur/concepts/bus-communication/tmp102-octets.svg){: .img-md}
+
+La mesure tient sur **12 bits** : les 8 de `fort`, puis les 4 de tête de `faible`. `<< 4` décale `fort` pour leur faire place, `>> 4` jette les 4 bits inutilisés, `|` assemble le tout. Chaque pas vaut 0,0625 °C.
 {: .caption}
 
 [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link}

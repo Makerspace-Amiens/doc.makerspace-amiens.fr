@@ -89,6 +89,31 @@ D'autres formats existent, que l'on rencontre sur des appareils plus anciens ou 
 
 `7E1` désigne ainsi 7 bits de données, une parité paire et 1 bit de stop.
 
+#### Le bit de parité, sur un exemple
+
+Le bit de parité se place après les données, juste avant le stop. L'émetteur compte les 1 de l'octet et choisit le bit de parité pour que le total (données + parité) soit **pair** en parité paire (`E`), **impair** en parité impaire (`O`).
+
+Envoyons la lettre « C » (0x43, soit `0100 0011`) en `8E1` :
+
+![Chronogramme d'une trame UART 8E1 pour la lettre C : start, huit bits de données dont trois à 1, bit de parité à 1, stop](uart-trame-parite.svg)
+
+Les données contiennent trois 1, un nombre impair : le bit de parité vaut **1**, ce qui porte le total à quatre. À l'arrivée, le récepteur refait le compte. Supposons qu'un parasite inverse le bit D1 pendant le trajet :
+
+![La même trame reçue avec le bit D1 inversé : les données valent 0x41, trois 1 au total avec la parité, le récepteur détecte l'erreur](uart-parite-erreur.svg)
+
+Le récepteur lit 0x41, la lettre « A » : deux 1 dans les données, plus la parité à 1, font trois, un total impair alors qu'il devait être pair. L'octet est déclaré faux (**erreur de parité**). Sans bit de parité, il aurait affiché « A » au lieu de « C » sans rien remarquer.
+
+La parité a deux limites :
+
+- elle **détecte** une erreur mais ne la **corrige** pas : on ne sait pas quel bit a basculé, l'octet doit être renvoyé ;
+- deux bits inversés dans le même octet se compensent (le total garde sa parité) : l'erreur passe inaperçue. Les protocoles qui exigent plus de fiabilité ajoutent une somme de contrôle (*checksum*, CRC) sur tout le message.
+
+Sur ESP32, le format se choisit à l'ouverture du port, et doit être le même des deux côtés :
+
+```cpp
+Serial1.begin(9600, SERIAL_8E1, RX_PIN, TX_PIN);  // 8 bits, parité paire, 1 stop
+```
+
 ### Niveaux de tension et distance
 
 Entre deux cartes, les niveaux sont ceux des broches : 0 V pour un 0, 3,3 V (ou 5 V sur une carte Arduino Uno) pour un 1, avec la ligne à 1 au repos. Une telle liaison ne porte qu'à **un mètre environ** : au-delà, les fils captent des parasites et déforment les fronts.
@@ -136,16 +161,80 @@ Un échange I2C suit toujours le même rituel, orchestré par le maître :
 
 1. **Condition de start** : le maître prend la main sur le bus.
 2. **Adresse + bit R/W** : il émet l'adresse 7 bits du composant visé, suivie d'un bit « lecture ou écriture ».
-3. **ACK** : l'esclave concerné répond par un accusé de réception. Un silence (NACK) signifie « personne à cette adresse ».
+3. **ACK** : l'esclave concerné répond par un accusé de réception (détail ci-dessous). Sans réponse (**NACK**), personne n'est à cette adresse.
 4. **Données** : les octets circulent, chacun confirmé par un ACK.
 5. **Condition de stop** : le maître libère le bus.
 
 C'est ce système d'accusé de réception qui permet au scanner d'adresses (plus bas) de savoir « qui est là ».
 
+#### ACK et NACK : l'accusé de réception
+
+Sur un bus I2C, chaque octet dure **neuf** coups d'horloge, pas huit. Pendant les huit premiers, l'émetteur de l'octet pilote SDA bit par bit. Au neuvième, il **relâche** SDA et écoute : c'est au **récepteur** de répondre.
+
+![Chronogrammes SCL et SDA sur les bits D1, D0 et le 9e coup d'horloge : à gauche le récepteur tire SDA à 0 (ACK), à droite personne ne la tire et la pull-up la laisse à 1 (NACK)](i2c-ack-nack.svg)
+
+- **ACK** (*acknowledge*, « accusé de réception ») : le récepteur tire SDA à 0 pendant tout le coup d'horloge. Il dit « bien reçu, continue ».
+- **NACK** (*not acknowledge*) : personne ne tire SDA, que la résistance de pull-up maintient à 1.
+
+Le NACK n'est donc pas un signal envoyé : c'est l'**absence** de réponse. C'est ce qui le rend si utile : un composant absent, débranché ou mal alimenté ne peut rien tirer, et produit un NACK sans le savoir. C'est aussi pour cela que les pull-ups sont indispensables : sans elles, la ligne relâchée ne reviendrait pas proprement à 1.
+
+Qui acquitte dépend du sens de l'octet : **celui qui le reçoit**. En écriture, c'est l'esclave ; en lecture, c'est le maître. Un NACK peut donc vouloir dire trois choses :
+
+| Le NACK arrive... | Qui ne tire pas SDA | Ce que ça signifie |
+|---|---|---|
+| Après l'adresse | Aucun esclave | Personne ne répond à cette adresse (mauvaise adresse, composant absent, câblage) |
+| Après un octet écrit par le maître | L'esclave | Il refuse l'octet (occupé, registre inexistant...) |
+| Après un octet lu par le maître | Le maître | « J'ai fini de lire » : c'est la fin normale d'une lecture |
+
+Seul le dernier cas est normal. Avec la bibliothèque `Wire`, les deux premiers font que `Wire.endTransmission()` renvoie une valeur différente de `0` ; le scanner I2C repose sur le premier.
+
 ### Écrire ou lire
 
 - **Écrire** est direct : l'adresse avec R/W à 0, puis les octets, chacun acquitté par l'esclave.
 - **Lire** se fait souvent en deux temps. Le maître écrit d'abord **ce qu'il veut lire** (le numéro du registre de l'esclave, par exemple celui de la température), puis il enchaîne sans STOP, par un **start répété**, sur l'adresse avec R/W à 1. L'esclave envoie alors ses octets ; cette fois, c'est le **maître** qui acquitte chacun d'eux, sauf le dernier, auquel il répond par un **NACK** pour signaler qu'il a fini, avant le STOP.
+
+#### Exemple : lire la température d'un capteur
+
+Le capteur de température **TMP102** répond à l'adresse `0x48`. Sa mesure est rangée dans son registre `0x00`, sur deux octets. Voici la lecture complète, octet par octet. Chaque morceau est dessiné dans le couloir de celui qui pilote SDA à ce moment-là, et chaque ACK ou NACK est numéroté avec sa signification :
+
+![Lecture I2C du capteur TMP102 : le maître écrit l'adresse 0x48 et le registre 0x00, start répété, adresse 0x48 en lecture, l'esclave envoie 0x19 puis 0x80, le maître acquitte le premier octet et répond NACK au second, puis stop](i2c-lecture.svg)
+
+1. **Start**, puis l'adresse `0x48` avec R/W à 0 (écriture) ; le capteur acquitte.
+2. Le maître écrit `0x00`, le numéro du registre à lire ; le capteur acquitte.
+3. **Start répété** (sans STOP, le maître garde la main sur le bus), puis l'adresse `0x48` avec R/W à 1 (lecture) ; le capteur acquitte.
+4. Le capteur prend la main sur SDA et envoie l'octet de poids fort, `0x19`. Le **maître** l'acquitte : « continue ».
+5. Le capteur envoie l'octet de poids faible, `0x80`. Le maître répond **NACK** : « j'ai fini ».
+6. **Stop** : le bus est libre.
+
+Les deux octets forment `0x1980`. Le TMP102 code la température sur leurs 12 bits de tête, soit `0x198` = 408, à raison de 0,0625 °C par pas : **25,5 °C**.
+
+Avec la bibliothèque `Wire`, chaque ligne correspond à un morceau de la trame :
+
+```cpp
+Wire.beginTransmission(0x48);
+Wire.write(0x00);              // le registre de température
+Wire.endTransmission(false);   // false : pas de STOP, start répété
+Wire.requestFrom(0x48, 2);     // adresse + R, 2 octets, NACK, STOP
+uint8_t fort = Wire.read();    // 0x19 = 0001 1001
+uint8_t faible = Wire.read();  // 0x80 = 1000 0000
+int brut = (fort << 4) | (faible >> 4);  // 0001 1001 1000 = 408
+float t = brut * 0.0625;       // 408 pas de 0,0625 °C = 25.5 °C
+```
+
+Les deux dernières lignes reconstituent la mesure. Le TMP102 la code sur **12 bits**, mais l'I2C transporte des octets de 8 : elle est donc répartie sur deux octets, à cheval.
+
+![Assemblage des deux octets du TMP102 : fort décalé de 4 rangs vers la gauche, faible décalé de 4 rangs vers la droite, les deux combinés par un OU donnent 0x198, soit 408, puis 408 fois 0,0625 donne 25,5 °C](tmp102-octets.svg)
+
+- `fort` (`0x19`) contient les 8 bits de poids fort de la mesure ;
+- `faible` (`0x80`, soit `1000 0000`) contient les 4 bits restants dans sa moitié haute (`1000`) ; sa moitié basse ne fait pas partie de la mesure ;
+- `fort << 4` décale `fort` de 4 rangs vers la gauche, ce qui ajoute quatre 0 à droite : `0001 1001` devient `0001 1001 0000`. La place est libre pour les 4 bits manquants ;
+- `faible >> 4` décale `faible` de 4 rangs vers la droite : sa moitié basse inutilisée disparaît, et ses 4 bits utiles arrivent tout à droite : `1000 0000` devient `1000` ;
+- `|` (OU bit à bit) superpose les deux : chaque bit vaut 1 s'il vaut 1 d'un côté ou de l'autre. Le `1000` de `faible` vient se loger dans les quatre 0 libérés par le décalage de `fort` : on obtient `0001 1001 1000`, soit `0x198` = **408** ;
+- le capteur compte en pas de **0,0625 °C** (1/16 °C, ce qui donne sa résolution) : 408 × 0,0625 = **25,5 °C**. Le 1 venu de `faible` vaut 8 pas, soit 0,5 °C : c'est lui qui porte la partie après la virgule.
+
+Ce découpage est propre au TMP102 : chaque capteur décrit le sien dans sa *datasheet* (nombre de bits, ordre des octets, valeur d'un pas). Le calcul suppose ici une température positive : en dessous de 0 °C, la mesure est négative, codée en complément à deux, et il faudrait en tenir compte.
+
+Lire les deux octets dans deux variables séparées n'est pas qu'un détail de style : dans `(Wire.read() << 4) | (Wire.read() >> 4)`, le C++ ne garantit pas lequel des deux appels s'exécute en premier.
 
 En pratique, les bibliothèques de capteurs font tout cela pour toi ; savoir lire ce déroulement sert surtout à déboguer, à l'analyseur logique ou à l'oscilloscope.
 
