@@ -235,6 +235,133 @@ void loop() {
 
 La `loop()` ne bloque jamais (aucun `delay()`) : le programme pourrait donc, en même temps, lire un bouton piéton ou animer un afficheur. C'est tout l'intérêt de coupler FSM et `millis()`.
 
+## Un autre exemple : recevoir des messages
+
+Une FSM ne sert pas qu'à organiser les phases d'un jeu. Elle est aussi l'outil naturel pour **lire un flux de données**, octet par octet : c'est ce qu'on appelle un **parseur**.
+
+### Le problème : des octets, pas des messages
+
+Sur une liaison UART (voir [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/)), le récepteur reçoit une suite d'octets, sans aucune séparation entre les messages. Rien ne lui dit où un message commence : il a pu être allumé en cours de transmission, ou un octet a pu se perdre en route. S'il se trompe d'un seul octet, il lit tout le reste de travers.
+
+La solution est de s'entendre sur un **format de trame**, comme celui-ci :
+
+![Un flux d'octets reçu sur RX, dans lequel on repère une trame : début 0xAA, longueur 0x02, données 0x01 et 0x02, contrôle 0x01](trame-message.svg)
+
+| Champ | Taille | Rôle |
+|---|---|---|
+| **Début** | 1 octet, toujours `0xAA` | Repère reconnaissable : « un message commence ici » |
+| **Longueur** | 1 octet | Nombre d'octets de données qui suivent |
+| **Données** | autant d'octets que la longueur | Le message lui-même (par exemple un code de commande et sa valeur) |
+| **Contrôle** | 1 octet | Le XOR de la longueur et des données, pour détecter une erreur |
+
+### La somme de contrôle : une parité par colonne
+
+L'octet de contrôle se calcule avec le **XOR** (`^` en C++), le « ou exclusif » : bit à bit, il donne 1 quand les deux bits diffèrent. Appliqué à plusieurs octets, il met un 1 dans chaque colonne qui compte un nombre **impair** de 1 :
+
+```text
+LONGUEUR   0x02   0000 0010
+DONNÉE 1   0x01   0000 0001
+DONNÉE 2   0x02   0000 0010
+----------------------------
+CONTRÔLE   0x01   0000 0001   (XOR des trois)
+```
+
+C'est exactement le **bit de parité** de l'UART, appliqué aux huit colonnes à la fois. Le récepteur refait le calcul sur ce qu'il a reçu et le compare à l'octet de contrôle : si un bit a été inversé en route, sa colonne ne tombe plus juste et le message est rejeté. Comme la parité, ce contrôle a ses limites (deux erreurs dans la même colonne se compensent) ; les protocoles exigeants utilisent un **CRC**, plus robuste, sur le même principe.
+
+### La FSM du récepteur
+
+Chaque octet reçu est un **événement**, et le récepteur sait toujours ce qu'il attend : c'est une machine à états.
+
+```mermaid
+stateDiagram-v2
+  [*] --> ATTENTE_DEBUT
+  ATTENTE_DEBUT --> LONGUEUR : 0xAA
+  LONGUEUR --> DONNEES : 1 à 16
+  LONGUEUR --> ATTENTE_DEBUT : longueur absurde
+  DONNEES --> CONTROLE : n octets reçus
+  CONTROLE --> ATTENTE_DEBUT : message traité ou ignoré
+```
+
+| État | Ce qu'il fait de l'octet reçu | État suivant |
+|---|---|---|
+| **ATTENTE_DEBUT** | Le compare à `0xAA`, ignore tout le reste | LONGUEUR si `0xAA` |
+| **LONGUEUR** | Le garde : c'est le nombre d'octets de données à recevoir | DONNEES si 1 à 16, sinon ATTENTE_DEBUT |
+| **DONNEES** | Le range dans le tampon et l'ajoute au contrôle | CONTROLE au dernier octet |
+| **CONTROLE** | Le compare au contrôle calculé : message traité si juste, ignoré sinon | ATTENTE_DEBUT |
+
+Au moindre doute, le récepteur retourne à `ATTENTE_DEBUT` et se recale sur le prochain `0xAA`. Un `0xAA` peut très bien apparaître au milieu des données : si le récepteur le prend pour un début, la longueur ou le contrôle qui suivent ne tiendront pas, et il se recalera un peu plus loin.
+
+### Le code
+
+```cpp
+enum EtatRx { ATTENTE_DEBUT, LONGUEUR, DONNEES, CONTROLE };
+EtatRx etatRx = ATTENTE_DEBUT;
+
+uint8_t tampon[16];               // les données du message en cours
+uint8_t longueur, recus, somme;
+unsigned long dernierOctet = 0;   // date du dernier octet reçu
+
+void recevoirOctet(uint8_t o) {
+  switch (etatRx) {
+    case ATTENTE_DEBUT:
+      if (o == 0xAA) etatRx = LONGUEUR;   // tout le reste est ignoré
+      break;
+    case LONGUEUR:
+      if (o == 0 || o > sizeof(tampon)) { // longueur absurde : faux départ
+        etatRx = ATTENTE_DEBUT;
+        break;
+      }
+      longueur = o;
+      recus = 0;
+      somme = o;                          // la longueur compte dans le contrôle
+      etatRx = DONNEES;
+      break;
+    case DONNEES:
+      tampon[recus++] = o;
+      somme ^= o;                         // la parité, colonne par colonne
+      if (recus == longueur) etatRx = CONTROLE;
+      break;
+    case CONTROLE:
+      if (o == somme) traiterMessage();   // message sûr : on l'applique
+      etatRx = ATTENTE_DEBUT;             // juste ou faux, place au suivant
+      break;
+  }
+}
+
+void loop() {
+  while (Serial1.available()) {           // seulement les octets déjà arrivés
+    recevoirOctet(Serial1.read());
+    dernierOctet = millis();
+  }
+  // message coupé en route : on abandonne au bout de 50 ms de silence
+  if (etatRx != ATTENTE_DEBUT && millis() - dernierOctet > 50) {
+    etatRx = ATTENTE_DEBUT;
+  }
+  // ... puis la game loop habituelle
+}
+```
+
+`traiterMessage()` lit `tampon` et `longueur`, et applique la commande reçue. Trois points à retenir :
+
+- la `loop()` ne **bloque jamais** : elle ne lit que les octets déjà arrivés, et un message peut s'étaler sur plusieurs tours de boucle. C'est la FSM qui se souvient d'où elle en était ;
+- le délai de 50 ms est une **transition temporisée**, comme celles du feu tricolore : sans lui, un message coupé laisserait le récepteur attendre indéfiniment des données qui ne viendront pas ;
+- un message faux n'est **jamais appliqué**.
+
+### Que faire d'un message abîmé ?
+
+Deux stratégies, selon ce que contient le message :
+
+| Stratégie | Ce que fait le récepteur | Pour quels messages |
+|---|---|---|
+| **Ignorer** | Rien : le message suivant arrive bientôt | Envoyés en continu (position d'un joystick) |
+| **Redemander** | Il répond NAK (`0x15`), et l'émetteur renvoie le message ; ACK (`0x06`) quand tout va bien | Uniques, qui ne doivent pas se perdre (un score, un ordre) |
+
+ACK et NAK sont des caractères de la table ASCII, prévus pour cela. C'est la même idée que l'ACK et le NACK de l'I2C, mais à l'échelle d'un message entier.
+
+### Et dans le projet ?
+
+Dans le [projet Snake](/workshops/microcontroleur/projet-snake/), le joueur 2 communique par **WebSocket** : là, le découpage est fait pour toi, chaque message arrive entier. Mais le reste de la démarche ne change pas : écrire le **protocole** avant de le coder (quels messages, quel format, quel sens), et faire de la console l'**arbitre**, qui vérifie chaque message avant de l'appliquer et ignore un message invalide sans planter. C'est le réflexe de l'état `CONTROLE` : ne jamais croire ce qui arrive sur le fil.
+
 ## Exercice : dessiner la FSM du Pong
 
 Avant de coder le TD4, dessine sur papier la FSM du Pong :
@@ -257,4 +384,5 @@ Compare ensuite ta FSM avec celle du groupe : les différences de conception son
 - La FSM élimine les booléens incompatibles et rend le code extensible.
 - Une FSM se représente aussi par une **table de transitions** (état × événement → état suivant), utile pour n'oublier aucun cas.
 - Une FSM se combine avec `millis()` pour des **transitions temporisées** (ex. le feu tricolore), et avec des **actions d'entrée** exécutées une seule fois par changement d'état.
+- Une FSM sert aussi à **lire un flux d'octets** (parseur) : début, longueur, données, contrôle ; au moindre doute, retour à l'attente du début.
 - Dans ce projet : FSM du jeu (TD4) → étendue aux états réseau (Projet).

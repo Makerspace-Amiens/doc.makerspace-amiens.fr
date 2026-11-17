@@ -14,7 +14,7 @@ back_link: /workshops/microcontroleur/
 2. UART, I2C, SPI
 3. Choisir son bus
 4. La game loop
-5. La machine à états
+5. La machine à états, et un parseur de messages
 
 <aside class="notes" markdown="1">
 1 h 30, dernier cours de la série, juste avant les TD. Garder du temps pour l'exercice de la FSM du Pong : une FSM se dessine sur papier, pas devant un écran.
@@ -32,8 +32,9 @@ Ouvrir sur le quiz du CM2 : la haute impédance et l'open-drain reviennent avec 
 - écrire une **game loop** qui ne bloque jamais
 - reconnaître une situation où une **machine à états** s'impose
 - l'implémenter avec un `enum` et un `switch`
+- découper un flux d'octets en messages avec une FSM
 
-Les deux premiers font dialoguer la puce avec le monde ; les trois derniers gardent votre code lisible.
+Les deux premiers font dialoguer la puce avec le monde ; les quatre derniers gardent votre code lisible, jusqu'à la réception des messages.
 {: .caption}
 
 [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link} [Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/){: .doc-link}
@@ -812,6 +813,160 @@ Au projet, cette FSM s'étendra aux **états réseau** du Snake multijoueur.
 
 ---
 
+<!-- .slide: class="slide-section" -->
+
+## Un parseur est une FSM
+
+Recevoir des messages sur l'UART
+
+---
+
+## Recevoir un message, octet par octet
+
+![Un flux d'octets reçu sur RX, dans lequel on repère une trame : début 0xAA, longueur 0x02, données 0x01 et 0x02, contrôle 0x01](/workshops/microcontroleur/concepts/machine-etats-finis/trame-message.svg){: .img-md}
+
+L'UART livre des **octets**, pas des messages : rien ne dit où l'un commence. Le récepteur a pu démarrer en cours de route, ou perdre un octet. D'où un format : un **début** reconnaissable, la **longueur**, les **données**, un **contrôle**.
+{: .caption}
+
+[Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/#un-autre-exemple--recevoir-des-messages){: .doc-link} [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link}
+
+<!-- .down -->
+
+## Le contrôle, colonne par colonne
+
+```text
+LONGUEUR   0x02   0000 0010
+DONNÉE 1   0x01   0000 0001
+DONNÉE 2   0x02   0000 0010
+----------------------------
+CONTRÔLE   0x01   0000 0001   (XOR des trois)
+```
+
+Le XOR (`^`) met un 1 dans chaque colonne qui compte un nombre impair de 1 : c'est le **bit de parité** de l'UART, appliqué aux 8 colonnes à la fois. Un bit inversé en route, et sa colonne ne tombe plus juste.
+{: .caption}
+
+[Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/#un-autre-exemple--recevoir-des-messages){: .doc-link}
+
+---
+
+## Le récepteur est une FSM
+
+```mermaid!
+stateDiagram-v2
+  [*] --> ATTENTE_DEBUT
+  ATTENTE_DEBUT --> LONGUEUR : 0xAA
+  LONGUEUR --> DONNEES : 1 à 16
+  LONGUEUR --> ATTENTE_DEBUT : longueur absurde
+  DONNEES --> CONTROLE : n octets reçus
+  CONTROLE --> ATTENTE_DEBUT : message traité ou ignoré
+```
+
+Chaque **octet reçu** est un événement. Chaque état sait ce qu'il attend ; au moindre doute, retour à `ATTENTE_DEBUT`, et le récepteur se recale sur le prochain `0xAA`.
+{: .caption}
+
+[Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/#un-autre-exemple--recevoir-des-messages){: .doc-link}
+
+---
+
+## Le parseur en code
+
+```cpp
+enum EtatRx { ATTENTE_DEBUT, LONGUEUR, DONNEES, CONTROLE };
+EtatRx etatRx = ATTENTE_DEBUT;
+uint8_t tampon[16], longueur, recus, somme;
+
+void recevoirOctet(uint8_t o) {
+  switch (etatRx) {
+    case ATTENTE_DEBUT:
+      if (o == 0xAA) etatRx = LONGUEUR;  // le reste est ignoré
+      break;
+    case LONGUEUR:
+      if (o == 0 || o > sizeof(tampon)) { etatRx = ATTENTE_DEBUT; break; }
+      longueur = o; recus = 0; somme = o;
+      etatRx = DONNEES;
+      break;
+```
+
+Une longueur absurde trahit un faux départ (un `0xAA` au milieu des données) : on abandonne. **↓** la suite.
+{: .caption}
+
+[Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/#un-autre-exemple--recevoir-des-messages){: .doc-link}
+
+<!-- .down -->
+
+## Le parseur en code (suite)
+
+```cpp
+    case DONNEES:
+      tampon[recus++] = o;
+      somme ^= o;                        // la parité, colonne par colonne
+      if (recus == longueur) etatRx = CONTROLE;
+      break;
+    case CONTROLE:
+      if (o == somme) traiterMessage();  // message sûr : on l'applique
+      etatRx = ATTENTE_DEBUT;            // juste ou faux, place au suivant
+      break;
+  }
+}
+```
+
+Un message faux n'est **jamais appliqué** : il est ignoré, et le programme continue.
+{: .caption}
+
+[Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/#un-autre-exemple--recevoir-des-messages){: .doc-link}
+
+---
+
+## Brancher le parseur sur la game loop
+
+```cpp
+void loop() {
+  while (Serial1.available()) {          // seulement ce qui est arrivé
+    recevoirOctet(Serial1.read());
+    dernierOctet = millis();
+  }
+  if (etatRx != ATTENTE_DEBUT && millis() - dernierOctet > 50) {
+    etatRx = ATTENTE_DEBUT;              // message coupé : on abandonne
+  }
+  // ... puis la game loop habituelle
+}
+```
+
+On ne lit que les octets déjà arrivés : la boucle ne bloque jamais, un message peut s'étaler sur plusieurs tours. Le délai de 50 ms est une **transition temporisée**, comme pour le feu tricolore.
+{: .caption}
+
+[Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/#un-autre-exemple--recevoir-des-messages){: .doc-link}
+
+---
+
+## Et si le message est abîmé ?
+
+| Stratégie | Le récepteur... | Pour quels messages |
+|---|---|---|
+| Ignorer | ne fait rien : le suivant arrive bientôt | Envoyés en continu (joystick) |
+| Redemander | répond NAK (`0x15`) : l'émetteur renvoie | Uniques (un score, un ordre) |
+
+Le récepteur peut aussi confirmer chaque message juste par un ACK (`0x06`) : ces deux caractères existent dans la table ASCII. La même idée que l'ACK et le NACK de l'I2C, à l'échelle d'un message entier.
+{: .caption}
+
+[Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/#un-autre-exemple--recevoir-des-messages){: .doc-link} [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link}
+
+---
+
+## Et au projet ?
+
+Avec le **WebSocket** du Snake, le découpage est fait pour vous : chaque message arrive entier. Le reste ne change pas :
+
+- un **protocole écrit** avant d'être codé : quels messages, quel format, quel sens ;
+- une console **arbitre** : chaque message est vérifié avant d'être appliqué, un message invalide est ignoré sans planter.
+
+C'est le réflexe de l'état `CONTROLE` : ne jamais croire ce qui arrive sur le fil.
+{: .highlight-red}
+
+[Le projet Snake](/workshops/microcontroleur/projet-snake/){: .doc-link} [Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/#un-autre-exemple--recevoir-des-messages){: .doc-link}
+
+---
+
 ## Activité : la FSM de votre Pong
 
 ### Dessinez la machine à états de votre jeu
@@ -841,6 +996,7 @@ Piège classique à relever pendant la mise en commun : oublier de réinitialise
 - La game loop cadence à 16 ms avec `millis()`, sans jamais bloquer
 - Une FSM = états + transitions + un seul état actif
 - {: .highlight-red} Action d'entrée à la transition, jamais dans le `case`
+- Un flux d'octets se découpe avec une FSM : début, longueur, données, contrôle
 
 [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link} [Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/){: .doc-link}
 
