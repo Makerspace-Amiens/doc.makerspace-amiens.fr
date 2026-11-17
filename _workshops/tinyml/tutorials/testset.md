@@ -27,7 +27,7 @@ Ce fichier pourra ensuite être envoyé à l’ESP32 pour obtenir les prédictio
 
 {% include step-tuto.html
 greyBackground=true
-title="Étape 1 : Générer le fichier de test"
+title="Étape 1 : Charger la partie test"
 content="Ouvrez le notebook du projet dans Google Colab, puis exécutez le code ci-dessous. Il récupère les 15 % derniers exemples du jeu de données Cats vs Dogs, redimensionne les images en 96 × 96 pixels et enregistre chaque étiquette suivie des pixels RGB dans le fichier binaire test_data.bin, dans votre Google Drive."
 %}
 
@@ -74,10 +74,12 @@ print("Fichier créé :", chemin_sortie)
 print("Nombre d'images :", nombre_images)
 print("Taille du fichier :", os.path.getsize(chemin_sortie), "octets")
 ```
+Le fichier contient 3 489 images
 
 ## Conclusion
 
-Le jeu de test est maintenant enregistré dans Google Drive sous la forme du fichier test_data.bin. Il contient, pour chaque image, son étiquette réelle suivie de ses pixels RGB redimensionnés en 96 × 96.
+Le jeu de test est maintenant enregistré dans Google Drive sous le nom `test_data.bin`. Chaque image y figure redimensionnée en 96 × 96, précédée de son étiquette réelle.
 
-Ce fichier est prêt à être utilisé pour envoyer les images une par une à l’ESP32 et comparer les prédictions du modèle aux étiquettes réelles.
+Ce fichier est prêt à être utilisé pour envoyer les images une par une à l'ESP32 et comparer ses prédictions aux étiquettes réelles.
 
+L'étape suivante est le **test du modèle sur l'ESP32**.
