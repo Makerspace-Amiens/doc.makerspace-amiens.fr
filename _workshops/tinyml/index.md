@@ -36,6 +36,8 @@ tutorials:
   - /workshops/tinyml/tutorials/installation-arduino/
   - /workshops/tinyml/tutorials/camera/
   - /workshops/tinyml/tutorials/deploiement/
+  - /workshops/tinyml/tutorials/testset/
+  - /workshops/tinyml/tutorials/matrice/
 
 
 how_to_guides:
