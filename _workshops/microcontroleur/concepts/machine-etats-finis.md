@@ -235,132 +235,134 @@ void loop() {
 
 La `loop()` ne bloque jamais (aucun `delay()`) : le programme pourrait donc, en même temps, lire un bouton piéton ou animer un afficheur. C'est tout l'intérêt de coupler FSM et `millis()`.
 
-## Un autre exemple : recevoir des messages
+## Un autre exemple : lire des commandes
 
-Une FSM ne sert pas qu'à organiser les phases d'un jeu. Elle est aussi l'outil naturel pour **lire un flux de données**, octet par octet : c'est ce qu'on appelle un **parseur**.
+Une FSM ne sert pas qu'à organiser les phases d'un jeu. Elle est aussi l'outil naturel pour **lire des données qui arrivent morceau par morceau** : c'est ce qu'on appelle un **parseur**.
 
-### Le problème : des octets, pas des messages
+### Le problème : des caractères, pas des messages
 
-Sur une liaison UART (voir [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/)), le récepteur reçoit une suite d'octets, sans aucune séparation entre les messages. Rien ne lui dit où un message commence : il a pu être allumé en cours de transmission, ou un octet a pu se perdre en route. S'il se trompe d'un seul octet, il lit tout le reste de travers.
+Imaginons que l'on veuille piloter le Pong depuis le moniteur série, pour le tester ou le régler sans reflasher : taper `VITESSE:5` pour changer la vitesse de la balle, ou `MENU` pour revenir au menu. Côté ESP32-S3, `Serial.read()` ne rend pas une commande, mais **un seul caractère** à la fois :
 
-La solution est de s'entendre sur un **format de trame**, comme celui-ci :
+![Les onze caractères reçus quand on tape VITESSE:5 puis Entrée : sept lettres pour le nom, un deux-points séparateur, le chiffre 5 pour la valeur, un retour chariot ignoré et une fin de ligne qui déclenche l'exécution](ligne-commande.svg)
 
-![Un flux d'octets reçu sur RX, dans lequel on repère une trame : début 0xAA, longueur 0x02, données 0x01 et 0x02, contrôle 0x01](trame-message.svg)
+Et rien ne garantit qu'ils arrivent tous en même temps : une ligne peut s'étaler sur plusieurs tours de `loop()`. Le programme doit donc **se souvenir d'où il en est** entre deux tours. C'est précisément ce que fait une FSM.
 
-| Champ | Taille | Rôle |
-|---|---|---|
-| **Début** | 1 octet, toujours `0xAA` | Repère reconnaissable : « un message commence ici » |
-| **Longueur** | 1 octet | Nombre d'octets de données qui suivent |
-| **Données** | autant d'octets que la longueur | Le message lui-même (par exemple un code de commande et sa valeur) |
-| **Contrôle** | 1 octet | Le XOR de la longueur et des données, pour détecter une erreur |
-
-### La somme de contrôle : une parité par colonne
-
-L'octet de contrôle se calcule avec le **XOR** (`^` en C++), le « ou exclusif » : bit à bit, il donne 1 quand les deux bits diffèrent. Appliqué à plusieurs octets, il met un 1 dans chaque colonne qui compte un nombre **impair** de 1 :
-
-```text
-LONGUEUR   0x02   0000 0010
-DONNÉE 1   0x01   0000 0001
-DONNÉE 2   0x02   0000 0010
-----------------------------
-CONTRÔLE   0x01   0000 0001   (XOR des trois)
-```
-
-C'est exactement le **bit de parité** de l'UART, appliqué aux huit colonnes à la fois. Le récepteur refait le calcul sur ce qu'il a reçu et le compare à l'octet de contrôle : si un bit a été inversé en route, sa colonne ne tombe plus juste et le message est rejeté. Comme la parité, ce contrôle a ses limites (deux erreurs dans la même colonne se compensent) ; les protocoles exigeants utilisent un **CRC**, plus robuste, sur le même principe.
+Il faut d'abord fixer un **format** (un *protocole*) : ici, une commande par ligne, sous la forme `NOM:VALEUR`, ou `NOM` seul pour une commande sans valeur. La fin de ligne (`\n`, envoyée par la touche Entrée) marque la fin de la commande. Selon son réglage, le moniteur ajoute aussi un retour chariot (`\r`) juste avant : le parseur l'ignore.
 
 ### La FSM du récepteur
 
-Chaque octet reçu est un **événement**, et le récepteur sait toujours ce qu'il attend : c'est une machine à états.
+Chaque caractère reçu est un **événement**, et le récepteur passe par trois états :
 
 ```mermaid
 stateDiagram-v2
-  [*] --> ATTENTE_DEBUT
-  ATTENTE_DEBUT --> LONGUEUR : 0xAA
-  LONGUEUR --> DONNEES : 1 à 16
-  LONGUEUR --> ATTENTE_DEBUT : longueur absurde
-  DONNEES --> CONTROLE : n octets reçus
-  CONTROLE --> ATTENTE_DEBUT : message traité ou ignoré
+  direction LR
+  [*] --> NOM
+  NOM --> NOM : lettre
+  NOM --> VALEUR : deux-points
+  VALEUR --> VALEUR : chiffre
+  NOM --> NOM : fin de ligne, exécuter
+  VALEUR --> NOM : fin de ligne, exécuter
+  NOM --> IGNORER : caractère inattendu
+  VALEUR --> IGNORER : caractère inattendu
+  IGNORER --> NOM : fin de ligne
 ```
 
-| État | Ce qu'il fait de l'octet reçu | État suivant |
-|---|---|---|
-| **ATTENTE_DEBUT** | Le compare à `0xAA`, ignore tout le reste | LONGUEUR si `0xAA` |
-| **LONGUEUR** | Le garde : c'est le nombre d'octets de données à recevoir | DONNEES si 1 à 16, sinon ATTENTE_DEBUT |
-| **DONNEES** | Le range dans le tampon et l'ajoute au contrôle | CONTROLE au dernier octet |
-| **CONTROLE** | Le compare au contrôle calculé : message traité si juste, ignoré sinon | ATTENTE_DEBUT |
+| État | Lettre | `:` | Chiffre | Fin de ligne | Autre |
+|---|---|---|---|---|---|
+| **NOM** | ajoutée au nom | → VALEUR | → IGNORER | exécuter (commande sans valeur) | → IGNORER |
+| **VALEUR** | → IGNORER | → IGNORER | ajouté à la valeur | exécuter, → NOM | → IGNORER |
+| **IGNORER** | ignorée | ignoré | ignoré | → NOM | ignoré |
 
-Au moindre doute, le récepteur retourne à `ATTENTE_DEBUT` et se recale sur le prochain `0xAA`. Un `0xAA` peut très bien apparaître au milieu des données : si le récepteur le prend pour un début, la longueur ou le contrôle qui suivent ne tiendront pas, et il se recalera un peu plus loin.
+L'état `IGNORER` est la clé de la robustesse : dès qu'une ligne ne respecte pas le format, le parseur cesse de l'interpréter et attend la fin de ligne pour repartir de zéro. Une ligne fausse est perdue, mais la suivante est lue correctement.
 
 ### Le code
 
 ```cpp
-enum EtatRx { ATTENTE_DEBUT, LONGUEUR, DONNEES, CONTROLE };
-EtatRx etatRx = ATTENTE_DEBUT;
+enum EtatRx { NOM, VALEUR, IGNORER };
+EtatRx etatRx = NOM;
 
-uint8_t tampon[16];               // les données du message en cours
-uint8_t longueur, recus, somme;
-unsigned long dernierOctet = 0;   // date du dernier octet reçu
+char nom[12];      // le nom en cours de lecture
+uint8_t n = 0;     // nombre de lettres reçues
+int valeur = 0;    // la valeur, construite chiffre par chiffre
 
-void recevoirOctet(uint8_t o) {
+void executer() {
+  nom[n] = '\0';                             // termine la chaîne
+  if (strcmp(nom, "VITESSE") == 0) vitesseBalle = valeur;
+  else if (strcmp(nom, "MENU") == 0) allerVers(MENU);
+  // nom inconnu : ignoré
+  n = 0;
+  valeur = 0;
+  etatRx = NOM;                               // prêt pour la ligne suivante
+}
+
+void recevoirCaractere(char c) {
+  if (c == '\r') return;                     // envoyé par certains moniteurs
   switch (etatRx) {
-    case ATTENTE_DEBUT:
-      if (o == 0xAA) etatRx = LONGUEUR;   // tout le reste est ignoré
-      break;
-    case LONGUEUR:
-      if (o == 0 || o > sizeof(tampon)) { // longueur absurde : faux départ
-        etatRx = ATTENTE_DEBUT;
-        break;
+    case NOM:
+      if (c == ':') {
+        valeur = 0;
+        etatRx = VALEUR;
+      } else if (c == '\n') {
+        executer();                           // commande sans valeur
+      } else if (isalpha(c) && n < sizeof(nom) - 1) {
+        nom[n++] = c;                         // on garde une place pour '\0'
+      } else {
+        etatRx = IGNORER;                     // chiffre, symbole, nom trop long
       }
-      longueur = o;
-      recus = 0;
-      somme = o;                          // la longueur compte dans le contrôle
-      etatRx = DONNEES;
       break;
-    case DONNEES:
-      tampon[recus++] = o;
-      somme ^= o;                         // la parité, colonne par colonne
-      if (recus == longueur) etatRx = CONTROLE;
+    case VALEUR:
+      if (isdigit(c)) {
+        valeur = valeur * 10 + (c - '0');     // '4' puis '2' donnent 4, puis 42
+      } else if (c == '\n') {
+        executer();
+      } else {
+        etatRx = IGNORER;
+      }
       break;
-    case CONTROLE:
-      if (o == somme) traiterMessage();   // message sûr : on l'applique
-      etatRx = ATTENTE_DEBUT;             // juste ou faux, place au suivant
+    case IGNORER:
+      if (c == '\n') {                        // ligne suivante : on repart à zéro
+        n = 0;
+        etatRx = NOM;
+      }
       break;
   }
 }
 
 void loop() {
-  while (Serial1.available()) {           // seulement les octets déjà arrivés
-    recevoirOctet(Serial1.read());
-    dernierOctet = millis();
-  }
-  // message coupé en route : on abandonne au bout de 50 ms de silence
-  if (etatRx != ATTENTE_DEBUT && millis() - dernierOctet > 50) {
-    etatRx = ATTENTE_DEBUT;
+  while (Serial.available()) {                // seulement ce qui est déjà arrivé
+    recevoirCaractere(Serial.read());
   }
   // ... puis la game loop habituelle
 }
 ```
 
-`traiterMessage()` lit `tampon` et `longueur`, et applique la commande reçue. Trois points à retenir :
+Quelques points à retenir :
 
-- la `loop()` ne **bloque jamais** : elle ne lit que les octets déjà arrivés, et un message peut s'étaler sur plusieurs tours de boucle. C'est la FSM qui se souvient d'où elle en était ;
-- le délai de 50 ms est une **transition temporisée**, comme celles du feu tricolore : sans lui, un message coupé laisserait le récepteur attendre indéfiniment des données qui ne viendront pas ;
-- un message faux n'est **jamais appliqué**.
+- la `loop()` ne **bloque jamais** : elle ne lit que les caractères déjà arrivés. Si la ligne est incomplète, la FSM s'en souvient et reprend au tour suivant ;
+- `c - '0'` convertit un caractère chiffre en nombre : les caractères `'0'` à `'9'` se suivent dans la table ASCII, donc `'7' - '0'` vaut 7 ;
+- le parseur **découpe**, `executer()` **décide** : il ne connaît que les commandes prévues, et ignore toutes les autres.
 
-### Que faire d'un message abîmé ?
+### Tester avec des entrées fausses
 
-Deux stratégies, selon ce que contient le message :
+Un parseur se juge sur ce qu'il fait des entrées **mal formées**. En suivant la FSM caractère par caractère :
 
-| Stratégie | Ce que fait le récepteur | Pour quels messages |
-|---|---|---|
-| **Ignorer** | Rien : le message suivant arrive bientôt | Envoyés en continu (position d'un joystick) |
-| **Redemander** | Il répond NAK (`0x15`), et l'émetteur renvoie le message ; ACK (`0x06`) quand tout va bien | Uniques, qui ne doivent pas se perdre (un score, un ordre) |
+| Ligne tapée | Ce qui se passe |
+|---|---|
+| `VITESSE:5` | `vitesseBalle` vaut 5 |
+| `MENU` | Retour au menu |
+| `VITESSE:5x` | `x` n'est pas un chiffre : passage dans `IGNORER`, la ligne est perdue |
+| `VITESE:5` | Bien découpée, mais nom inconnu : `executer()` l'ignore |
+| `VITESSE:` | La valeur est vide, et `vitesseBalle` passe à **0** : c'est un bug |
 
-ACK et NAK sont des caractères de la table ASCII, prévus pour cela. C'est la même idée que l'ACK et le NACK de l'I2C, mais à l'échelle d'un message entier.
+Le dernier cas montre l'intérêt de ces tests. Pour le corriger, il suffit de retenir qu'au moins un chiffre a été lu (un booléen remis à `false` en entrant dans `VALEUR`), et de refuser la ligne sinon.
+
+### Pour aller plus loin : les trames binaires
+
+Un protocole texte est lisible et se teste à la main, mais il est verbeux. Entre deux microcontrôleurs, on préfère souvent des **trames binaires** : un octet de début reconnaissable, la longueur du message, les données, puis un **octet de contrôle**, par exemple le XOR de tous les octets. Ce XOR est un bit de parité pour chacune des huit colonnes de bits : il détecte un bit inversé en route. Le récepteur reste une FSM, avec un état par champ de la trame.
 
 ### Et dans le projet ?
 
-Dans le [projet Snake](/workshops/microcontroleur/projet-snake/), le joueur 2 communique par **WebSocket** : là, le découpage est fait pour toi, chaque message arrive entier. Mais le reste de la démarche ne change pas : écrire le **protocole** avant de le coder (quels messages, quel format, quel sens), et faire de la console l'**arbitre**, qui vérifie chaque message avant de l'appliquer et ignore un message invalide sans planter. C'est le réflexe de l'état `CONTROLE` : ne jamais croire ce qui arrive sur le fil.
+Dans le [projet Snake](/workshops/microcontroleur/projet-snake/), le joueur 2 communique par **WebSocket** : chaque message arrive entier, plus besoin de le découper caractère par caractère. Mais le reste de la démarche ne change pas : écrire le **protocole** avant de le coder (quels messages, quel format, quel sens), et faire de la console l'**arbitre**, qui vérifie chaque message avant de l'appliquer et ignore un message invalide sans planter. C'est le rôle d'`executer()` : ne jamais croire ce qui arrive sur le fil.
 
 ## Exercice : dessiner la FSM du Pong
 
@@ -384,5 +386,5 @@ Compare ensuite ta FSM avec celle du groupe : les différences de conception son
 - La FSM élimine les booléens incompatibles et rend le code extensible.
 - Une FSM se représente aussi par une **table de transitions** (état × événement → état suivant), utile pour n'oublier aucun cas.
 - Une FSM se combine avec `millis()` pour des **transitions temporisées** (ex. le feu tricolore), et avec des **actions d'entrée** exécutées une seule fois par changement d'état.
-- Une FSM sert aussi à **lire un flux d'octets** (parseur) : début, longueur, données, contrôle ; au moindre doute, retour à l'attente du début.
+- Une FSM sert aussi à **lire des commandes** caractère par caractère (parseur) : une ligne mal formée part dans un état `IGNORER`, et la fin de ligne remet le parseur à zéro.
 - Dans ce projet : FSM du jeu (TD4) → étendue aux états réseau (Projet).

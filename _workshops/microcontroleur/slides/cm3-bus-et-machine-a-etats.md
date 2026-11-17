@@ -33,7 +33,7 @@ Ouvrir sur le quiz du CM2 : la haute impédance et l'open-drain reviennent avec 
 - écrire une **game loop** qui ne bloque jamais
 - reconnaître une situation où une **machine à états** s'impose
 - l'implémenter avec un `enum` et un `switch`
-- découper un flux d'octets en messages avec une FSM
+- lire des commandes sur le port série avec une FSM
 
 Les deux premiers font dialoguer la puce avec le monde ; les quatre derniers gardent votre code lisible, jusqu'à la réception des messages.
 {: .caption}
@@ -818,35 +818,18 @@ Au projet, cette FSM s'étendra aux **états réseau** du Snake multijoueur.
 
 ## Un parseur est une FSM
 
-Recevoir des messages sur l'UART
+Lire des commandes sur le port série
 
 ---
 
-## Recevoir un message, octet par octet
+## Des caractères, pas des messages
 
-![Un flux d'octets reçu sur RX, dans lequel on repère une trame : début 0xAA, longueur 0x02, données 0x01 et 0x02, contrôle 0x01](/workshops/microcontroleur/concepts/machine-etats-finis/trame-message.svg){: .img-md}
+![Les onze caractères reçus quand on tape VITESSE:5 puis Entrée : sept lettres pour le nom, un deux-points séparateur, le chiffre 5 pour la valeur, un retour chariot ignoré et une fin de ligne qui déclenche l'exécution](/workshops/microcontroleur/concepts/machine-etats-finis/ligne-commande.svg){: .img-md}
 
-L'UART livre des **octets**, pas des messages : rien ne dit où l'un commence. Le récepteur a pu démarrer en cours de route, ou perdre un octet. D'où un format : un **début** reconnaissable, la **longueur**, les **données**, un **contrôle**.
+On veut piloter le Pong depuis le moniteur série : `VITESSE:5`, `MENU`. Mais `Serial.read()` rend **un caractère** à la fois, et une ligne peut s'étaler sur plusieurs tours de `loop()`. Format retenu : `NOM:VALEUR`, une commande par ligne.
 {: .caption}
 
-[Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/#un-autre-exemple--recevoir-des-messages){: .doc-link} [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link}
-
-<!-- .down -->
-
-## Le contrôle, colonne par colonne
-
-```text
-LONGUEUR   0x02   0000 0010
-DONNÉE 1   0x01   0000 0001
-DONNÉE 2   0x02   0000 0010
-----------------------------
-CONTRÔLE   0x01   0000 0001   (XOR des trois)
-```
-
-Le XOR (`^`) met un 1 dans chaque colonne qui compte un nombre impair de 1 : c'est le **bit de parité** de l'UART, appliqué aux 8 colonnes à la fois. Un bit inversé en route, et sa colonne ne tombe plus juste.
-{: .caption}
-
-[Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/#un-autre-exemple--recevoir-des-messages){: .doc-link}
+[Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/#un-autre-exemple--lire-des-commandes){: .doc-link}
 
 ---
 
@@ -854,67 +837,91 @@ Le XOR (`^`) met un 1 dans chaque colonne qui compte un nombre impair de 1 : c'e
 
 ```mermaid!
 stateDiagram-v2
-  [*] --> ATTENTE_DEBUT
-  ATTENTE_DEBUT --> LONGUEUR : 0xAA
-  LONGUEUR --> DONNEES : 1 à 16
-  LONGUEUR --> ATTENTE_DEBUT : longueur absurde
-  DONNEES --> CONTROLE : n octets reçus
-  CONTROLE --> ATTENTE_DEBUT : message traité ou ignoré
+  direction LR
+  [*] --> NOM
+  NOM --> NOM : lettre
+  NOM --> VALEUR : deux-points
+  VALEUR --> VALEUR : chiffre
+  NOM --> NOM : fin de ligne, exécuter
+  VALEUR --> NOM : fin de ligne, exécuter
+  NOM --> IGNORER : caractère inattendu
+  VALEUR --> IGNORER : caractère inattendu
+  IGNORER --> NOM : fin de ligne
 ```
 
-Chaque **octet reçu** est un événement. Chaque état sait ce qu'il attend ; au moindre doute, retour à `ATTENTE_DEBUT`, et le récepteur se recale sur le prochain `0xAA`.
+Chaque **caractère reçu** est un événement. Une ligne fausse part dans `IGNORER`, et la fin de ligne remet tout le monde d'accord.
 {: .caption}
 
-[Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/#un-autre-exemple--recevoir-des-messages){: .doc-link}
+[Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/#un-autre-exemple--lire-des-commandes){: .doc-link}
 
 ---
 
 ## Le parseur en code
 
 ```cpp
-enum EtatRx { ATTENTE_DEBUT, LONGUEUR, DONNEES, CONTROLE };
-EtatRx etatRx = ATTENTE_DEBUT;
-uint8_t tampon[16], longueur, recus, somme;
+enum EtatRx { NOM, VALEUR, IGNORER };
+EtatRx etatRx = NOM;
+char nom[12]; uint8_t n = 0;  // le nom lu, et son nombre de lettres
+int valeur = 0;
 
-void recevoirOctet(uint8_t o) {
+void recevoirCaractere(char c) {
+  if (c == '\r') return;      // envoyé par certains moniteurs : ignoré
   switch (etatRx) {
-    case ATTENTE_DEBUT:
-      if (o == 0xAA) etatRx = LONGUEUR;  // le reste est ignoré
-      break;
-    case LONGUEUR:
-      if (o == 0 || o > sizeof(tampon)) { etatRx = ATTENTE_DEBUT; break; }
-      longueur = o; recus = 0; somme = o;
-      etatRx = DONNEES;
+    case NOM:
+      if (c == ':')        { valeur = 0; etatRx = VALEUR; }
+      else if (c == '\n')  executer();       // commande sans valeur
+      else if (isalpha(c) && n < sizeof(nom) - 1) nom[n++] = c;
+      else                 etatRx = IGNORER;
       break;
 ```
 
-Une longueur absurde trahit un faux départ (un `0xAA` au milieu des données) : on abandonne. **↓** la suite.
+**↓** la suite.
 {: .caption}
 
-[Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/#un-autre-exemple--recevoir-des-messages){: .doc-link}
+[Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/#un-autre-exemple--lire-des-commandes){: .doc-link}
 
 <!-- .down -->
 
 ## Le parseur en code (suite)
 
 ```cpp
-    case DONNEES:
-      tampon[recus++] = o;
-      somme ^= o;                        // la parité, colonne par colonne
-      if (recus == longueur) etatRx = CONTROLE;
+    case VALEUR:
+      if (isdigit(c))      valeur = valeur * 10 + (c - '0');
+      else if (c == '\n')  executer();
+      else                 etatRx = IGNORER;
       break;
-    case CONTROLE:
-      if (o == somme) traiterMessage();  // message sûr : on l'applique
-      etatRx = ATTENTE_DEBUT;            // juste ou faux, place au suivant
+    case IGNORER:
+      if (c == '\n') { n = 0; etatRx = NOM; }   // on repart à zéro
       break;
   }
 }
 ```
 
-Un message faux n'est **jamais appliqué** : il est ignoré, et le programme continue.
+`valeur * 10 + (c - '0')` construit le nombre chiffre par chiffre : `'4'` puis `'2'` donnent 4, puis 42.
 {: .caption}
 
-[Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/#un-autre-exemple--recevoir-des-messages){: .doc-link}
+[Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/#un-autre-exemple--lire-des-commandes){: .doc-link}
+
+<!-- .down -->
+
+## Exécuter la commande
+
+```cpp
+void executer() {
+  nom[n] = '\0';                             // termine la chaîne
+  if (strcmp(nom, "VITESSE") == 0) vitesseBalle = valeur;
+  else if (strcmp(nom, "MENU") == 0) allerVers(MENU);
+  // nom inconnu : ignoré
+  n = 0;
+  valeur = 0;
+  etatRx = NOM;                               // prêt pour la ligne suivante
+}
+```
+
+Le parseur ne sait rien du jeu : il découpe. `executer()` décide, et **refuse** ce qu'il ne connaît pas.
+{: .caption}
+
+[Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/#un-autre-exemple--lire-des-commandes){: .doc-link}
 
 ---
 
@@ -922,49 +929,65 @@ Un message faux n'est **jamais appliqué** : il est ignoré, et le programme con
 
 ```cpp
 void loop() {
-  while (Serial1.available()) {          // seulement ce qui est arrivé
-    recevoirOctet(Serial1.read());
-    dernierOctet = millis();
-  }
-  if (etatRx != ATTENTE_DEBUT && millis() - dernierOctet > 50) {
-    etatRx = ATTENTE_DEBUT;              // message coupé : on abandonne
+  while (Serial.available()) {        // seulement ce qui est déjà arrivé
+    recevoirCaractere(Serial.read());
   }
   // ... puis la game loop habituelle
 }
 ```
 
-On ne lit que les octets déjà arrivés : la boucle ne bloque jamais, un message peut s'étaler sur plusieurs tours. Le délai de 50 ms est une **transition temporisée**, comme pour le feu tricolore.
+On ne lit que les caractères déjà reçus : la boucle ne bloque jamais. Si la ligne n'est pas complète, la FSM s'en souvient, et reprend au tour suivant.
 {: .caption}
 
-[Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/#un-autre-exemple--recevoir-des-messages){: .doc-link}
+[Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/#un-autre-exemple--lire-des-commandes){: .doc-link}
 
 ---
 
-## Et si le message est abîmé ?
+## À vous : que fait le parseur ?
 
-| Stratégie | Le récepteur... | Pour quels messages |
-|---|---|---|
-| Ignorer | ne fait rien : le suivant arrive bientôt | Envoyés en continu (joystick) |
-| Redemander | répond NAK (`0x15`) : l'émetteur renvoie | Uniques (un score, un ordre) |
+| Vous tapez | Résultat |
+|---|---|
+| `VITESSE:5` | `vitesseBalle` vaut 5 |
+| `MENU` | Retour au menu |
+| `VITESSE:5x` | ? |
+| `VITESE:5` | ? |
+| `VITESSE:` | ? |
+{: .table-dense}
 
-Le récepteur peut aussi confirmer chaque message juste par un ACK (`0x06`) : ces deux caractères existent dans la table ASCII. La même idée que l'ACK et le NACK de l'I2C, à l'échelle d'un message entier.
+Suivez la FSM caractère par caractère. **↓** la correction.
 {: .caption}
 
-[Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/#un-autre-exemple--recevoir-des-messages){: .doc-link} [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link}
+[Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/#un-autre-exemple--lire-des-commandes){: .doc-link}
+
+<!-- .down -->
+
+## Correction
+
+| Vous tapez | Résultat |
+|---|---|
+| `VITESSE:5x` | `x` n'est pas un chiffre : `IGNORER`, la ligne est perdue |
+| `VITESE:5` | Bien découpée, mais nom inconnu : `executer()` l'ignore |
+| `VITESSE:` | Valeur vide : `vitesseBalle` passe à **0**. Un bug ! |
+{: .table-dense}
+
+Le dernier cas montre qu'un parseur se **teste** avec des entrées fausses. Correctif : retenir qu'au moins un chiffre a été lu avant d'accepter la ligne.
+{: .caption}
+
+[Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/#un-autre-exemple--lire-des-commandes){: .doc-link}
 
 ---
 
 ## Et au projet ?
 
-Avec le **WebSocket** du Snake, le découpage est fait pour vous : chaque message arrive entier. Le reste ne change pas :
+Avec le **WebSocket** du Snake, chaque message arrive entier : plus besoin de découper caractère par caractère. Le reste ne change pas :
 
 - un **protocole écrit** avant d'être codé : quels messages, quel format, quel sens ;
 - une console **arbitre** : chaque message est vérifié avant d'être appliqué, un message invalide est ignoré sans planter.
 
-C'est le réflexe de l'état `CONTROLE` : ne jamais croire ce qui arrive sur le fil.
+C'est le réflexe d'`executer()` : ne jamais croire ce qui arrive sur le fil.
 {: .highlight-red}
 
-[Le projet Snake](/workshops/microcontroleur/projet-snake/){: .doc-link} [Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/#un-autre-exemple--recevoir-des-messages){: .doc-link}
+[Le projet Snake](/workshops/microcontroleur/projet-snake/){: .doc-link} [Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/#un-autre-exemple--lire-des-commandes){: .doc-link}
 
 ---
 
@@ -997,7 +1020,7 @@ Piège classique à relever pendant la mise en commun : oublier de réinitialise
 - La game loop cadence à 16 ms avec `millis()`, sans jamais bloquer
 - Une FSM = états + transitions + un seul état actif
 - {: .highlight-red} Action d'entrée à la transition, jamais dans le `case`
-- Un flux d'octets se découpe avec une FSM : début, longueur, données, contrôle
+- Une commande se lit caractère par caractère, avec une FSM
 
 [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link} [Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/){: .doc-link}
 
