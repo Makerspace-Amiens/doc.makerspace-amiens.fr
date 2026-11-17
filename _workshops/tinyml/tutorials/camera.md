@@ -43,7 +43,7 @@ content="Ouvrez le guide officiel de la caméra : https://wiki.seeedstudio.com/x
 {% include step-tuto.html
 greyBackground=true
 title="Étape 3 : Installer la bibliothèque ESP32_OV5640_AF "
-content="Le code utilise la bibliothèque ESP32_OV5640_AF, qui gère la mise au point automatique des caméras OV5640. Si elle manque, la compilation s'arrête avec une erreur indiquant que le fichier ESP32_OV5640_AF.h est introuvable. Pour l'ajouter : ouvrez le dépôt ESP32-OV5640-AF sur GitHub, cliquez sur Code puis sur Download ZIP. Dans Arduino IDE, choisissez Croquis > Inclure une bibliothèque > Ajouter la bibliothèque .ZIP, sélectionnez le fichier ZIP téléchargé et attendez le message confirmant l'installation. Compilez ensuite à nouveau le programme de la caméra."
+content="Le code téléchargé utilise la bibliothèque ESP32_OV5640_AF, qui gère la mise au point automatique des caméras OV5640. Si elle manque, la compilation s'arrête avec une erreur indiquant que le fichier ESP32_OV5640_AF.h est introuvable. Pour l'ajouter : ouvrez le dépôt ESP32-OV5640-AF sur GitHub, cliquez sur Code puis sur Download ZIP. Dans Arduino IDE, choisissez Croquis > Inclure une bibliothèque > Ajouter la bibliothèque .ZIP, sélectionnez le fichier ZIP téléchargé et attendez le message confirmant l'installation. Compilez ensuite à nouveau le programme de la caméra."
 %}
 
 {% include step-tuto.html
@@ -56,7 +56,7 @@ content="Dans le code, remplacez le nom et le mot de passe du Wi-Fi par ceux de 
 {% include step-tuto.html
 greyBackground=true
 title="Étape 5 : Afficher l'image de la caméra "
-content="Ouvrez le Moniteur série à 115200 bauds. Quand une adresse commençant par http:// s'affiche, ouvrez-la dans le navigateur d'un appareil connecté au même Wi-Fi : vous devriez voir l'image de la caméra. Si le flux ne démarre pas tout seul, cliquez sur « Start Stream ». Si aucune adresse n'apparaît, vérifiez le nom du réseau, son mot de passe et sa fréquence de 2,4 GHz."
+content="Ouvrez le Moniteur série à 115200 bauds. Quand une adresse commençant par http:// s'affiche, ouvrez-la dans le navigateur d'un appareil connecté au même Wi-Fi : vous devriez voir l'image de la caméra. Si le flux ne démarre pas tout seul, cliquez sur « Start Stream ». Si aucune adresse n'apparaît, vérifiez le nom du réseau, son mot de passe et sa fréquence de 2,4 GHz. Arrêtez le flux quand vous n'en avez plus besoin."
 %}
 
 
