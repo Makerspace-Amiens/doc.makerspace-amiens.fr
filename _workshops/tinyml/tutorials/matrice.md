@@ -147,7 +147,6 @@ content="Après avoir téléversé le programme, fermez le Moniteur série d’A
 greyBackground=true
 title="Étape 5 : Lancer le test depuis l’ordinateur"
 content="Dans le dossier matrice-de-confusion, créez un fichier Python nommé test_esp32.py, puis copiez-y le code ci-dessous et enregistrez-le. Ouvrez ensuite l’invite de commandes dans ce dossier et exécutez la commande python test_esp32.py."
- "
 %}
 
 ```cpp
