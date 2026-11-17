@@ -14,7 +14,8 @@ back_link: /workshops/microcontroleur/
 2. UART, I2C, SPI
 3. Choisir son bus
 4. La game loop
-5. La machine à états
+5. La machine à états, et un parseur de messages
+6. Et après le microcontrôleur ?
 
 <aside class="notes" markdown="1">
 1 h 30, dernier cours de la série, juste avant les TD. Garder du temps pour l'exercice de la FSM du Pong : une FSM se dessine sur papier, pas devant un écran.
@@ -32,8 +33,9 @@ Ouvrir sur le quiz du CM2 : la haute impédance et l'open-drain reviennent avec 
 - écrire une **game loop** qui ne bloque jamais
 - reconnaître une situation où une **machine à états** s'impose
 - l'implémenter avec un `enum` et un `switch`
+- découper un flux d'octets en messages avec une FSM
 
-Les deux premiers font dialoguer la puce avec le monde ; les trois derniers gardent votre code lisible.
+Les deux premiers font dialoguer la puce avec le monde ; les quatre derniers gardent votre code lisible, jusqu'à la réception des messages.
 {: .caption}
 
 [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link} [Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/){: .doc-link}
@@ -165,9 +167,31 @@ Deux fils, point à point
 
 ## Anatomie d'une trame
 
-![Chronogramme d'une trame UART 8N1 pour la lettre A : repos à 1, bit de start à 0, huit bits de données du poids faible au poids fort, bit de stop à 1](/workshops/microcontroleur/concepts/bus-communication/uart-trame.svg){: .img-md}
+![Chronogramme d'une trame UART 8N1 : repos à 1, bit de start à 0, huit bits de données du poids faible au poids fort, bit de stop à 1](/workshops/microcontroleur/concepts/bus-communication/uart-trame.svg){: .img-md}
 
 Le **start** donne le signal, le récepteur compte les bits à la vitesse convenue. 8 bits, pas de parité, 1 stop : **`8N1`**. Format ou vitesse différents : du charabia.
+{: .caption}
+
+[Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link}
+
+---
+
+## Le bit de parité
+
+![Chronogramme d'une trame UART 8E1 pour la lettre C : start, huit bits de données dont trois à 1, bit de parité à 1, stop](/workshops/microcontroleur/concepts/bus-communication/uart-trame-parite.svg){: .img-md}
+
+Un bit ajouté après les données pour que le nombre total de 1 soit **pair** (`E`, *even*) ou **impair** (`O`, *odd*). En **`8E1`**, « C » compte trois 1 : la parité vaut 1. Le récepteur recompte ; un total impair signale un octet abîmé. **↓** pour un exemple d'erreur.
+{: .caption}
+
+[Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link}
+
+<!-- .down -->
+
+## Une erreur détectée
+
+![La même trame reçue avec le bit D1 inversé : les données valent 0x41, trois 1 au total avec la parité, le récepteur détecte l'erreur](/workshops/microcontroleur/concepts/bus-communication/uart-parite-erreur.svg){: .img-md}
+
+Sans parité, le récepteur lirait « A » au lieu de « C » sans rien voir. La parité **détecte** l'erreur mais ne la corrige pas (l'octet est à renvoyer), et deux bits inversés se compensent : ils passent inaperçus.
 {: .caption}
 
 [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link}
@@ -224,7 +248,76 @@ Deux fils, plusieurs composants
 
 ![Chronogramme I2C : START, sept bits d'adresse, bit R/W, ACK, huit bits de données, ACK, STOP, avec un coup d'horloge SCL par bit](/workshops/microcontroleur/concepts/bus-communication/i2c-trame.svg){: .img-md}
 
-**Start**, **adresse + R/W**, **ACK** de l'esclave, **données** (un ACK par octet), **stop**. Pas d'ACK après l'adresse : personne ne répond à cette adresse.
+**Start**, **adresse + R/W**, **ACK**, **données** (un ACK par octet), **stop**. Après chaque octet, celui qui l'a reçu répond **ACK** (*acknowledge*, « bien reçu ») ou **NACK**. **↓** le détail, puis une lecture.
+{: .caption}
+
+[Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link}
+
+<!-- .down -->
+
+## ACK et NACK
+
+![Chronogrammes SCL et SDA sur les bits D1, D0 et le 9e coup d'horloge : à gauche le récepteur tire SDA à 0 (ACK), à droite personne ne la tire et la pull-up la laisse à 1 (NACK)](/workshops/microcontroleur/concepts/bus-communication/i2c-ack-nack.svg){: .img-md}
+
+Un octet dure **9** coups d'horloge : 8 bits, puis un coup où l'émetteur **relâche** SDA. Le **récepteur** répond : il tire SDA à 0 (**ACK**), ou ne fait rien et la pull-up la laisse à 1 (**NACK**). Un esclave absent ne tire rien : il répond NACK sans le savoir.
+{: .caption}
+
+[Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link}
+
+<!-- .down -->
+
+## Ce que dit un NACK
+
+| Le NACK arrive... | Il signifie | Côté code |
+|---|---|---|
+| Après l'adresse | Personne à cette adresse | `endTransmission()` ≠ 0 |
+| Après un octet écrit | L'esclave refuse l'octet | `endTransmission()` ≠ 0 |
+| Après un octet lu | Le maître a fini de lire | Normal |
+{: .table-dense}
+
+Seul le dernier cas est normal. Le scanner I2C repose sur le premier : `endTransmission()` renvoie `0` quand l'adresse a été acquittée, donc quand un composant est là.
+{: .caption}
+
+[Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link}
+
+<!-- .down -->
+
+## Lire une donnée
+
+![Lecture I2C du capteur TMP102 : le maître écrit l'adresse 0x48 et le registre 0x00, start répété, adresse 0x48 en lecture, l'esclave envoie 0x19 puis 0x80, le maître acquitte le premier octet et répond NACK au second, puis stop](/workshops/microcontroleur/concepts/bus-communication/i2c-lecture.svg){: .img-md}
+
+Le maître **écrit** d'abord le registre voulu, puis, sans STOP, relance un **start répété** en lecture. L'esclave envoie les octets ; c'est alors le **maître** qui acquitte, et son **NACK** sur le dernier dit « j'ai fini ».
+{: .caption}
+
+[Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link}
+
+<!-- .down -->
+
+## La même lecture, avec Wire
+
+```cpp
+Wire.beginTransmission(0x48);
+Wire.write(0x00);              // le registre de température
+Wire.endTransmission(false);   // false : pas de STOP, start répété
+Wire.requestFrom(0x48, 2);     // adresse + R, 2 octets, NACK, STOP
+uint8_t fort = Wire.read();    // 0x19 = 0001 1001
+uint8_t faible = Wire.read();  // 0x80 = 1000 0000
+int brut = (fort << 4) | (faible >> 4);  // 0001 1001 1000 = 408
+float t = brut * 0.0625;       // 408 pas de 0,0625 °C = 25.5 °C
+```
+
+Chaque ligne correspond à un morceau de la trame. Les bibliothèques de capteurs font exactement cela pour vous. **↓** le calcul.
+{: .caption}
+
+[Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link}
+
+<!-- .down -->
+
+## Reconstituer la température
+
+![Assemblage des deux octets du TMP102 : fort décalé de 4 rangs vers la gauche, faible décalé de 4 rangs vers la droite, les deux combinés par un OU donnent 0x198, soit 408, puis 408 fois 0,0625 donne 25,5 °C](/workshops/microcontroleur/concepts/bus-communication/tmp102-octets.svg){: .img-md}
+
+La mesure tient sur **12 bits** : les 8 de `fort`, puis les 4 de tête de `faible`. `<< 4` décale `fort` pour leur faire place, `>> 4` jette les 4 bits inutilisés, `|` assemble le tout. Chaque pas vaut 0,0625 °C.
 {: .caption}
 
 [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link}
@@ -721,6 +814,160 @@ Au projet, cette FSM s'étendra aux **états réseau** du Snake multijoueur.
 
 ---
 
+<!-- .slide: class="slide-section" -->
+
+## Un parseur est une FSM
+
+Recevoir des messages sur l'UART
+
+---
+
+## Recevoir un message, octet par octet
+
+![Un flux d'octets reçu sur RX, dans lequel on repère une trame : début 0xAA, longueur 0x02, données 0x01 et 0x02, contrôle 0x01](/workshops/microcontroleur/concepts/machine-etats-finis/trame-message.svg){: .img-md}
+
+L'UART livre des **octets**, pas des messages : rien ne dit où l'un commence. Le récepteur a pu démarrer en cours de route, ou perdre un octet. D'où un format : un **début** reconnaissable, la **longueur**, les **données**, un **contrôle**.
+{: .caption}
+
+[Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/#un-autre-exemple--recevoir-des-messages){: .doc-link} [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link}
+
+<!-- .down -->
+
+## Le contrôle, colonne par colonne
+
+```text
+LONGUEUR   0x02   0000 0010
+DONNÉE 1   0x01   0000 0001
+DONNÉE 2   0x02   0000 0010
+----------------------------
+CONTRÔLE   0x01   0000 0001   (XOR des trois)
+```
+
+Le XOR (`^`) met un 1 dans chaque colonne qui compte un nombre impair de 1 : c'est le **bit de parité** de l'UART, appliqué aux 8 colonnes à la fois. Un bit inversé en route, et sa colonne ne tombe plus juste.
+{: .caption}
+
+[Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/#un-autre-exemple--recevoir-des-messages){: .doc-link}
+
+---
+
+## Le récepteur est une FSM
+
+```mermaid!
+stateDiagram-v2
+  [*] --> ATTENTE_DEBUT
+  ATTENTE_DEBUT --> LONGUEUR : 0xAA
+  LONGUEUR --> DONNEES : 1 à 16
+  LONGUEUR --> ATTENTE_DEBUT : longueur absurde
+  DONNEES --> CONTROLE : n octets reçus
+  CONTROLE --> ATTENTE_DEBUT : message traité ou ignoré
+```
+
+Chaque **octet reçu** est un événement. Chaque état sait ce qu'il attend ; au moindre doute, retour à `ATTENTE_DEBUT`, et le récepteur se recale sur le prochain `0xAA`.
+{: .caption}
+
+[Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/#un-autre-exemple--recevoir-des-messages){: .doc-link}
+
+---
+
+## Le parseur en code
+
+```cpp
+enum EtatRx { ATTENTE_DEBUT, LONGUEUR, DONNEES, CONTROLE };
+EtatRx etatRx = ATTENTE_DEBUT;
+uint8_t tampon[16], longueur, recus, somme;
+
+void recevoirOctet(uint8_t o) {
+  switch (etatRx) {
+    case ATTENTE_DEBUT:
+      if (o == 0xAA) etatRx = LONGUEUR;  // le reste est ignoré
+      break;
+    case LONGUEUR:
+      if (o == 0 || o > sizeof(tampon)) { etatRx = ATTENTE_DEBUT; break; }
+      longueur = o; recus = 0; somme = o;
+      etatRx = DONNEES;
+      break;
+```
+
+Une longueur absurde trahit un faux départ (un `0xAA` au milieu des données) : on abandonne. **↓** la suite.
+{: .caption}
+
+[Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/#un-autre-exemple--recevoir-des-messages){: .doc-link}
+
+<!-- .down -->
+
+## Le parseur en code (suite)
+
+```cpp
+    case DONNEES:
+      tampon[recus++] = o;
+      somme ^= o;                        // la parité, colonne par colonne
+      if (recus == longueur) etatRx = CONTROLE;
+      break;
+    case CONTROLE:
+      if (o == somme) traiterMessage();  // message sûr : on l'applique
+      etatRx = ATTENTE_DEBUT;            // juste ou faux, place au suivant
+      break;
+  }
+}
+```
+
+Un message faux n'est **jamais appliqué** : il est ignoré, et le programme continue.
+{: .caption}
+
+[Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/#un-autre-exemple--recevoir-des-messages){: .doc-link}
+
+---
+
+## Brancher le parseur sur la game loop
+
+```cpp
+void loop() {
+  while (Serial1.available()) {          // seulement ce qui est arrivé
+    recevoirOctet(Serial1.read());
+    dernierOctet = millis();
+  }
+  if (etatRx != ATTENTE_DEBUT && millis() - dernierOctet > 50) {
+    etatRx = ATTENTE_DEBUT;              // message coupé : on abandonne
+  }
+  // ... puis la game loop habituelle
+}
+```
+
+On ne lit que les octets déjà arrivés : la boucle ne bloque jamais, un message peut s'étaler sur plusieurs tours. Le délai de 50 ms est une **transition temporisée**, comme pour le feu tricolore.
+{: .caption}
+
+[Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/#un-autre-exemple--recevoir-des-messages){: .doc-link}
+
+---
+
+## Et si le message est abîmé ?
+
+| Stratégie | Le récepteur... | Pour quels messages |
+|---|---|---|
+| Ignorer | ne fait rien : le suivant arrive bientôt | Envoyés en continu (joystick) |
+| Redemander | répond NAK (`0x15`) : l'émetteur renvoie | Uniques (un score, un ordre) |
+
+Le récepteur peut aussi confirmer chaque message juste par un ACK (`0x06`) : ces deux caractères existent dans la table ASCII. La même idée que l'ACK et le NACK de l'I2C, à l'échelle d'un message entier.
+{: .caption}
+
+[Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/#un-autre-exemple--recevoir-des-messages){: .doc-link} [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link}
+
+---
+
+## Et au projet ?
+
+Avec le **WebSocket** du Snake, le découpage est fait pour vous : chaque message arrive entier. Le reste ne change pas :
+
+- un **protocole écrit** avant d'être codé : quels messages, quel format, quel sens ;
+- une console **arbitre** : chaque message est vérifié avant d'être appliqué, un message invalide est ignoré sans planter.
+
+C'est le réflexe de l'état `CONTROLE` : ne jamais croire ce qui arrive sur le fil.
+{: .highlight-red}
+
+[Le projet Snake](/workshops/microcontroleur/projet-snake/){: .doc-link} [Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/#un-autre-exemple--recevoir-des-messages){: .doc-link}
+
+---
+
 ## Activité : la FSM de votre Pong
 
 ### Dessinez la machine à états de votre jeu
@@ -750,8 +997,196 @@ Piège classique à relever pendant la mise en commun : oublier de réinitialise
 - La game loop cadence à 16 ms avec `millis()`, sans jamais bloquer
 - Une FSM = états + transitions + un seul état actif
 - {: .highlight-red} Action d'entrée à la transition, jamais dans le `case`
+- Un flux d'octets se découpe avec une FSM : début, longueur, données, contrôle
 
 [Les bus de communication](/workshops/microcontroleur/concepts/bus-communication/){: .doc-link} [Machine à états finis](/workshops/microcontroleur/concepts/machine-etats-finis/){: .doc-link}
+
+---
+
+<!-- .slide: class="slide-section" -->
+
+## Et après le microcontrôleur ?
+
+Un océan de puces
+
+---
+
+## Votre ESP32-S3, vous n'en avez vu qu'une partie
+
+| Ressource | Ce qu'elle fait |
+|---|---|
+| Le second cœur | `loop()` n'occupe qu'un des deux cœurs |
+| Le DMA | Copie les données vers l'écran pendant que le code continue |
+| Le coprocesseur ULP | Un petit RISC-V qui veille pendant que le reste dort |
+| Les instructions vectorielles | Accélèrent les réseaux de neurones (ESP-DL) |
+| La cryptographie matérielle | Chiffre (AES) et signe (SHA) sans charger le processeur |
+| Caméra, USB OTG, tactile | Des périphériques entiers, jamais branchés |
+{: .table-dense}
+
+Et ce n'est qu'**un** microcontrôleur parmi des milliers. **↓** la famille.
+{: .caption}
+
+[Au-delà du microcontrôleur](/workshops/microcontroleur/concepts/au-dela-du-microcontroleur/){: .doc-link}
+
+<!-- .down -->
+
+## Même chez les microcontrôleurs
+
+| Puce | Ce qui la distingue |
+|---|---|
+| ATmega328P (Arduino Uno) | 8 bits, 16 MHz, 2 Ko de RAM : le point de départ |
+| ESP32-S3 (votre console) | 2 cœurs à 240 MHz, 512 Ko de RAM, Wi-Fi |
+| RP2040, RP2350 (Pico) | Des PIO : des machines à états **matérielles** |
+| STM32H7 | Jusqu'à 550 MHz : audio, moteurs, industrie |
+| STM32N6, MAX78000 | Un accélérateur de réseaux de neurones intégré |
+{: .table-dense}
+
+Les PIO du Pico exécutent de minuscules programmes pour inventer ses propres protocoles : vos FSM, gravées dans le silicium.
+{: .caption}
+
+[Au-delà du microcontrôleur](/workshops/microcontroleur/concepts/au-dela-du-microcontroleur/){: .doc-link}
+
+---
+
+## La carte des puces
+
+![Les puces de calcul de la plus flexible à la plus efficace : les généralistes MCU, MPU et CPU, le calcul massif DSP et GPU, le FPGA reconfigurable, les accélérateurs d'IA NPU et TPU, et l'ASIC sur mesure ; le MCU est marqué vous êtes ici](/workshops/microcontroleur/concepts/au-dela-du-microcontroleur/spectre.svg){: .img-md}
+
+À gauche, des puces qui exécutent n'importe quel programme ; à droite, des puces qui ne font qu'une chose, mais bien plus vite et pour bien moins d'énergie. **↓** chaque famille.
+{: .caption}
+
+[Au-delà du microcontrôleur](/workshops/microcontroleur/concepts/au-dela-du-microcontroleur/){: .doc-link}
+
+<!-- .down -->
+
+## Du MCU au CPU
+
+| Famille | Exemple | Ce qui change |
+|---|---|---|
+| MCU | ESP32-S3 | RAM intégrée, pas de système, temps réel |
+| MPU | Raspberry Pi 5 | 4 cœurs à 2,4 GHz, RAM externe, Linux |
+| SoC de smartphone | Apple A, Snapdragon | CPU, GPU, NPU et modem sur une puce |
+| CPU de serveur | AMD EPYC | Jusqu'à 192 cœurs, environ 500 W |
+{: .table-dense}
+
+Un MPU a une **MMU** (unité de gestion de la mémoire) : c'est ce qui lui permet de faire tourner Linux. Le STM32MP1 réunit les deux mondes : un cœur Linux et un cœur Cortex-M4 pour le temps réel.
+{: .caption}
+
+[Au-delà du microcontrôleur](/workshops/microcontroleur/concepts/au-dela-du-microcontroleur/#du-microcontrôleur-au-processeur){: .doc-link}
+
+<!-- .down -->
+
+## Calculer en masse : DSP et GPU
+
+<div class="columns" markdown="1">
+<div markdown="1">
+
+### DSP
+
+- Multiplier et additionner en **un cycle**
+- Filtres audio, radars, modems
+- Le Cortex-M4 en a déjà les instructions
+
+</div>
+<div markdown="1">
+
+### GPU
+
+- Des **milliers** de cœurs simples
+- Tous font le même calcul en parallèle
+- Conçus pour l'image, adoptés par l'IA
+
+</div>
+</div>
+
+Une NVIDIA H100 : environ 17 000 cœurs, 700 W. Votre ESP32-S3 : 2 cœurs, moins d'un demi-watt.
+{: .caption}
+
+[Au-delà du microcontrôleur](/workshops/microcontroleur/concepts/au-dela-du-microcontroleur/#calculer-en-masse--dsp-et-gpu){: .doc-link}
+
+<!-- .down -->
+
+## Accélérer l'IA : NPU et TPU
+
+Un réseau de neurones, c'est surtout des **multiplications de matrices**. D'où des puces qui ne savent faire que ça :
+
+- **TPU** (Google) : dans les datacenters, et en miniature, l'**Edge TPU** (Coral) : 4 TOPS pour 2 W, sur une clé USB
+- **NPU** : intégré à une puce plus large : Neural Engine d'Apple, PC récents, STM32N6
+
+Un TOPS : mille milliards d'opérations par seconde.
+{: .caption}
+
+[Au-delà du microcontrôleur](/workshops/microcontroleur/concepts/au-dela-du-microcontroleur/#accélérer-lia--npu-et-tpu){: .doc-link} [L'atelier TinyML](/workshops/tinyml/){: .doc-link}
+
+<!-- .down -->
+
+## Recâbler la puce : le FPGA
+
+- On ne programme plus un processeur : on **décrit un circuit** (Verilog, VHDL)
+- Tout s'exécute **en parallèle**, réglé à la nanoseconde
+- Du Lattice iCE40 (quelques euros, outils libres) aux AMD Versal
+- Les Zynq associent des cœurs ARM et un FPGA sur la même puce
+
+Une FSM y devient un vrai circuit, fait de bascules et de portes logiques. Usages : prototyper une puce avant de la graver, radio logicielle, vidéo.
+{: .caption}
+
+[Au-delà du microcontrôleur](/workshops/microcontroleur/concepts/au-dela-du-microcontroleur/#recâbler-la-puce--le-fpga){: .doc-link}
+
+<!-- .down -->
+
+## Graver sa propre puce : l'ASIC
+
+- Un circuit conçu pour **une seule tâche**, gravé dans le silicium
+- Imbattable en vitesse et en énergie, mais impossible à modifier
+- Le TPU de Google en est un, comme les puces des mineurs de Bitcoin
+- Fabriquer une puce coûte des millions, sauf à partager : **Tiny Tapeout** grave votre petit circuit avec des centaines d'autres, pour quelques centaines d'euros
+
+[Au-delà du microcontrôleur](/workshops/microcontroleur/concepts/au-dela-du-microcontroleur/#graver-sa-propre-puce--lasic){: .doc-link}
+
+---
+
+## Flexibilité contre efficacité
+
+| Famille | Flexibilité | Efficacité | Consommation |
+|---|---|---|---|
+| MCU, MPU, CPU | ★★★★★ | ★ | De quelques µW à 500 W |
+| DSP, GPU | ★★★ | ★★★ | Jusqu'à 700 W |
+| FPGA | ★★★ (on recâble) | ★★★★ | Du mW à quelques dizaines de W |
+| NPU, TPU, ASIC | ★ | ★★★★★ | 2 W pour 4 TOPS (Edge TPU) |
+{: .table-dense}
+
+Choisir une puce, c'est placer le curseur entre ces deux extrêmes, comme vous avez choisi un bus.
+{: .caption}
+
+[Au-delà du microcontrôleur](/workshops/microcontroleur/concepts/au-dela-du-microcontroleur/#flexibilité-contre-efficacité){: .doc-link}
+
+---
+
+## Et demain ?
+
+- **Neuromorphique** : des puces qui imitent les neurones et calculent par impulsions (Intel Loihi)
+- **Quantique** : des qubits, pour des problèmes hors de portée des puces classiques
+- **Photonique** : calculer avec de la lumière plutôt qu'avec des électrons
+- **RISC-V** : un jeu d'instructions libre, déjà partout, de l'ESP32-C3 aux cœurs que l'on implante soi-même dans un FPGA
+
+[Au-delà du microcontrôleur](/workshops/microcontroleur/concepts/au-dela-du-microcontroleur/#et-demain-){: .doc-link}
+
+---
+
+## Et vous pouvez y toucher
+
+| Pour découvrir... | Commencer par |
+|---|---|
+| Linux embarqué | Un Raspberry Pi |
+| L'IA embarquée | Votre ESP32-S3 avec ESP-DL, ou une clé Coral |
+| Le FPGA | Une petite carte Lattice iCE40, avec les outils libres |
+| La conception de puces | Tiny Tapeout, en ligne |
+{: .table-dense}
+
+Ce module vous a donné le socle : registres, bus, temps réel, machines à états. Il sert partout dans cet océan.
+{: .highlight-red}
+
+[Au-delà du microcontrôleur](/workshops/microcontroleur/concepts/au-dela-du-microcontroleur/#et-tu-peux-y-toucher){: .doc-link} [L'atelier TinyML](/workshops/tinyml/){: .doc-link}
 
 ---
 

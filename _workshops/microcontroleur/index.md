@@ -45,6 +45,7 @@ concepts:
   - /workshops/microcontroleur/concepts/bus-communication/
   - /workshops/microcontroleur/concepts/machine-etats-finis/
   - /workshops/microcontroleur/concepts/organiser-code-modules/
+  - /workshops/microcontroleur/concepts/au-dela-du-microcontroleur/
   - /docs/concepts/reseau-wifi-websocket/
   - /docs/concepts/capteurs/
 
