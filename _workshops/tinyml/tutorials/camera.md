@@ -37,7 +37,7 @@ content="Vérifiez que la caméra est bien fixée sur la carte d'extension et qu
 {% include step-tuto.html
 greyBackground=true
 title="Étape 2 : Télécharger le code de streaming vidéo "
-content="Ouvrez le guide officiel de la caméra et allez à la section « Project II: Video Streaming ». Téléchargez le code prévu pour la version 3.x du support ESP32 : notre Arduino IDE utilise la version 3.3.12. Décompressez le dossier téléchargé, puis ouvrez le fichier .ino dans Arduino IDE : https://wiki.seeedstudio.com/xiao_esp32s3_camera_usage/?utm_source=chatgpt.com ."
+content="Ouvrez le guide officiel de la caméra : https://wiki.seeedstudio.com/xiao_esp32s3_camera_usage/ . Allez à la section « Project II: Video Streaming ». Deux liens de téléchargement y sont proposés, selon la version du support ESP32 : 2.0.x ou 3.0.x. Notre installation du support ESP32 est en version 3.3.12, donc nous utilisons le lien 3.0.x. Ce lien ouvre un dossier sur GitHub : pour récupérer les fichiers, téléchargez l'ensemble du dépôt (Code puis Download ZIP) et décompressez-le. Ouvrez le dossier SeeedStudio-XIAO-ESP32S3-Sense-camera-main, puis le dossier CameraWebServer_for_esp-arduino_3.0.x, et ouvrez le fichier CameraWebServer_for_esp-arduino_3.0.x.ino dans Arduino IDE."
 %}
 
 {% include step-tuto.html
