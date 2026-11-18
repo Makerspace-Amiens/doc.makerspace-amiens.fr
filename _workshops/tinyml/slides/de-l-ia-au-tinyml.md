@@ -1,0 +1,662 @@
+---
+layout: slides
+title: De l'intelligence artificielle au TinyML
+subtitle: Déployer un modèle d'IA en Edge Computing sur ESP32
+description: "Support du cours d'introduction de l'atelier TinyML : intelligence artificielle, apprentissage automatique, réseaux de neurones convolutifs, puis compression d'un modèle pour l'embarquer sur une XIAO ESP32S3."
+author: Lina Abousalama · encadrée par Jérôme Gorin
+kicker: UniLaSalle Amiens · Université Mohammed Premier Oujda
+back_link: /workshops/tinyml/
+---
+
+## Plan
+
+1. Introduction : l'intelligence artificielle
+2. Tiny Machine Learning
+3. Edge computing par TinyML sur ESP32
+4. Conclusion
+
+<aside class="notes" markdown="1">
+La version rédigée du cours est la page concept « De l'intelligence artificielle au TinyML ». Fil rouge de l'atelier : reconnaître un chat ou un chien sur une image, avec une XIAO ESP32S3 et sa caméra.
+</aside>
+
+---
+
+<!-- .slide: class="slide-section" -->
+
+## Introduction : l'intelligence artificielle
+
+C'est quoi l'IA ? · Histoire de l'IA · Machine learning · Deep learning · Limite de l'IA
+
+---
+
+## C'est quoi l'IA ?
+
+L'**intelligence artificielle** (IA) regroupe des techniques qui permettent à une machine d'effectuer des tâches nécessitant habituellement des capacités humaines :
+
+- **reconnaître** une image
+- **comprendre** une question
+- faire une **prédiction**
+
+[De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
+
+---
+
+## Domaines et cas d'application
+
+| Domaine | Exemple |
+|---|---|
+| Santé | Détecter une anomalie dans une image médicale |
+| Industrie | Repérer une panne avant qu'elle ne survienne |
+| Transport | Aider un véhicule à reconnaître un obstacle |
+| Vie quotidienne | Proposer des films, des repas |
+| Traitement du langage naturel | Traduction automatique, chatbots |
+| Vision par ordinateur | Reconnaissance faciale, détection d'objets |
+| Reconnaissance vocale | Assistants vocaux, parole convertie en texte |
+{: .table-dense}
+
+[De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
+
+---
+
+## Histoire de l'IA
+
+| Paradigme d'IA | Émergence | Exemple |
+|---|---|---|
+| IA symbolique (*Old AI*) | 1956 – années 1980 | *Logic Theorist* démontre des théorèmes |
+| IA connexionniste, *machine learning* | fin des années 1980 | LeCun lit les codes postaux (1989) |
+| IA prédictive, *deep learning* | 2010 – 2012 | AlexNet classe des images |
+| IA générative | 2020 – 2022 | GPT-3, ChatGPT génèrent du texte |
+| Agents IA (*agentic AI*) | 2023 | Un assistant planifie et utilise des outils |
+{: .table-dense}
+
+[De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
+
+<aside class="notes" markdown="1">
+L'IA symbolique applique des règles écrites à la main. Toutes les approches suivantes apprennent à partir de données. Agent IA : un assistant qui planifie plusieurs étapes et utilise des outils pour accomplir une tâche.
+</aside>
+
+---
+
+## Le machine learning
+
+Le *machine learning* est une branche de l'IA qui permet aux machines d'**apprendre à partir de données**, sans programmer explicitement chaque règle. Il existe trois grandes méthodes d'apprentissage :
+
+- {: .highlight-red} L'apprentissage supervisé
+- L'apprentissage non supervisé
+- L'apprentissage par renforcement
+
+[De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
+
+---
+
+## L'apprentissage supervisé
+
+Le modèle apprend à partir de données **associées à leurs réponses**. Par exemple, il étudie des images étiquetées « chat » ou « chien », puis apprend à reconnaître la catégorie d'une nouvelle image.
+
+<div class="columns is-3" markdown="1">
+<div markdown="1">
+
+![Un chat blanc aux yeux bleus, étiqueté chat](/workshops/tinyml/slides/de-l-ia-au-tinyml/chat-etiquete.jpg){: style="max-height: 150px"}
+
+**Chat**
+{: .caption}
+
+</div>
+<div markdown="1">
+
+![Un petit chien blanc et beige, étiqueté chien](/workshops/tinyml/slides/de-l-ia-au-tinyml/chien-etiquete.jpg){: style="max-height: 150px"}
+
+**Chien**
+{: .caption}
+
+</div>
+<div markdown="1">
+
+![Un chat tigré, sans étiquette : le modèle doit le reconnaître](/workshops/tinyml/slides/de-l-ia-au-tinyml/chat-a-reconnaitre.jpg){: style="max-height: 150px"}
+
+**? ? ?**
+{: .caption .highlight-red}
+
+</div>
+</div>
+
+Deux types de problèmes : les **régressions** et les **classifications**.
+
+[De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
+
+---
+
+## Les régressions
+
+![La régression linéaire : trois maisons d'exemple (surface et prix), le nuage de points et la droite de régression, puis le prix prédit d'une nouvelle maison de 105 m², environ 285 000 €](/workshops/tinyml/slides/de-l-ia-au-tinyml/regression-lineaire.jpg){: style="max-height: 360px"}
+
+La régression, c'est quand on cherche à prédire une **quantité** : le prix d'une maison, la durée d'un trajet, une température, un poids...
+{: .caption}
+
+[De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
+
+---
+
+## Les classifications
+
+![La classification : un tableau d'animaux d'exemple (taille, poids, classe), le nuage de points coupé par une frontière entre chats et chiens, puis un nouvel animal de taille 105 et de poids 140, prédit chien](/workshops/tinyml/slides/de-l-ia-au-tinyml/classification.jpg){: style="max-height: 360px"}
+
+La classification, c'est quand on cherche à prédire une **classe** : un animal, un état de santé, une couleur, un type de véhicule...
+{: .caption}
+
+[De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link} [Le problème et les données](/workshops/tinyml/tutorials/probleme-et-donnees/){: .doc-link}
+
+---
+
+## Le machine learning
+
+Le *machine learning* est une branche de l'IA qui permet aux machines d'**apprendre à partir de données**, sans programmer explicitement chaque règle. Il existe trois grandes méthodes d'apprentissage :
+
+- L'apprentissage supervisé
+- {: .highlight-red} L'apprentissage non supervisé
+- L'apprentissage par renforcement
+
+[De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
+
+---
+
+## L'apprentissage non supervisé
+
+![L'apprentissage non supervisé en trois temps : des animaux sans étiquettes, leur regroupement automatique selon la taille et le poids, puis deux groupes trouvés sans en connaître le nom](/workshops/tinyml/slides/de-l-ia-au-tinyml/apprentissage-non-supervise.jpg){: style="max-height: 360px"}
+
+Le modèle analyse des données **sans réponses indiquées** et regroupe celles qui se ressemblent : des animaux de taille et de poids proches, sans savoir à l'avance s'il s'agit de chats ou de chiens.
+{: .caption}
+
+[De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
+
+---
+
+## Le machine learning
+
+Le *machine learning* est une branche de l'IA qui permet aux machines d'**apprendre à partir de données**, sans programmer explicitement chaque règle. Il existe trois grandes méthodes d'apprentissage :
+
+- L'apprentissage supervisé
+- L'apprentissage non supervisé
+- {: .highlight-red} L'apprentissage par renforcement
+
+[De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
+
+---
+
+## L'apprentissage par renforcement
+
+![La boucle de l'apprentissage par renforcement : l'agent agit sur l'environnement, qui lui renvoie un nouvel état et une récompense](/workshops/tinyml/slides/de-l-ia-au-tinyml/apprentissage-par-renforcement.png){: style="max-height: 360px"}
+
+Un **agent** apprend à choisir les meilleures actions en interagissant avec un environnement et en recevant des **récompenses** ou des **pénalités**.
+{: .caption}
+
+[De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
+
+---
+
+## Le deep learning
+
+Une branche du machine learning qui utilise des **réseaux de neurones à plusieurs couches**. Ces couches apprennent automatiquement des caractéristiques complexes à partir des données.
+
+| Architecture | Usage |
+|---|---|
+| **CNN** | Analyse des images et des vidéos |
+| **RNN** et **LSTM** | Données séquentielles : parole, séries temporelles |
+| **Transformers** | Langage et données multimodales |
+| **DNN**, **MLP** | Données structurées |
+{: .table-dense}
+
+[De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
+
+---
+
+## Image et vision par ordinateur
+
+<div class="columns" markdown="1">
+<div markdown="1">
+
+- Une image numérique est composée de **pixels**.
+- En niveaux de gris, chaque pixel vaut de **0 à 255**. En couleur, trois canaux : rouge, vert, bleu (**RGB**).
+- La vision par ordinateur permet à une machine d'analyser des images ou des vidéos.
+
+</div>
+<div markdown="1">
+
+![Une zone de 4 × 4 pixels, en couleur avec un triplet RGB par pixel, puis la même zone en niveaux de gris](/workshops/tinyml/concepts/de-l-ia-au-tinyml/pixels-rgb-niveaux-de-gris.png)
+
+</div>
+</div>
+
+[De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link} [Prétraitement](/workshops/tinyml/tutorials/pretraitement/){: .doc-link}
+
+---
+
+## Réseau de neurones convolutif (CNN)
+
+![Une maison analysée en trois couches : contours, puis formes, puis objet reconnu](/workshops/tinyml/concepts/de-l-ia-au-tinyml/hero.png){: style="max-height: 200px"}
+
+- Le CNN est un réseau de neurones spécialisé dans l'**analyse des images**.
+- De petits **filtres** (convolution) glissent sur l'image : d'abord les contours, puis les formes, puis les objets. Ils sont appris à l'entraînement.
+- Applications : voitures autonomes, imagerie médicale, sécurité, reconnaissance d'objets.
+
+[De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
+
+---
+
+## CNN : principe de convolution
+
+![Une image 6 × 6 convoluée par un filtre 3 × 3 donne une carte de caractéristiques 4 × 4](/workshops/tinyml/concepts/de-l-ia-au-tinyml/convolution-filtre-3x3.png){: .img-md}
+
+Un filtre (ici 3 × 3) glisse sur l'image : on multiplie case par case, puis on additionne. Chaque position donne un nombre, et l'ensemble forme une **feature map** (carte de caractéristiques).
+{: .caption}
+
+[De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
+
+<aside class="notes" markdown="1">
+Sur la première position : (3 + 1 + 2) − (1 + 8 + 2) = −5. Ce filtre `[1 0 −1]` réagit aux contours verticaux.
+</aside>
+
+---
+
+## CNN : principe de convolution
+
+- **Champ récepteur local** : chaque valeur de sortie ne dépend que d'une petite zone de l'image.
+- **Partage de poids** : le même filtre sert partout dans l'image, donc peu de paramètres (**9 poids** pour un filtre 3 × 3).
+- Les valeurs du filtre sont **apprises** pendant l'entraînement. Dans cet exemple, chaque ligne du filtre vaut `[1 0 -1]`.
+
+[De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
+
+---
+
+## CNN : paramètres et hyperparamètres
+
+- **Paramètres** : valeurs apprises par le réseau pendant l'entraînement, comme les poids du filtre et son biais.
+- **Hyperparamètres** : réglages choisis avant l'entraînement, comme la taille et le nombre de filtres, le stride et le padding.
+- Pendant l'entraînement, la **rétropropagation** calcule comment les poids doivent être corrigés.
+- La **descente de gradient** ajuste ensuite ces poids pour réduire l'erreur du réseau.
+
+[De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link} [Modélisation](/workshops/tinyml/tutorials/modelisation/){: .doc-link}
+
+---
+
+## CNN : padding et sliding
+
+<div class="columns" markdown="1">
+<div markdown="1">
+
+- **Padding** : des pixels, souvent des zéros, ajoutés autour de l'image. Les bords sont mieux traités, la taille peut être conservée.
+- **Sliding** : le filtre glisse de zone en zone ; le **stride** est son pas, en cases.
+
+</div>
+<div markdown="1">
+
+![À gauche, le padding ajoute une bordure de zéros et conserve la taille 5 × 5 ; à droite, un stride de 2 donne une sortie 2 × 2](/workshops/tinyml/concepts/de-l-ia-au-tinyml/padding-et-stride.png)
+
+</div>
+</div>
+
+$$\text{taille de sortie} = \left\lfloor \frac{n + 2p - f}{s} \right\rfloor + 1$$
+
+n : taille de l'image d'origine, p : padding, f : taille du filtre, s : sliding (stride)
+{: .caption}
+
+[De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
+
+<aside class="notes" markdown="1">
+Vérifier sur la convolution précédente : (6 + 0 − 3) / 1 + 1 = 4, d'où la carte 4 × 4. Question à poser : quelle sortie pour une image 96 × 96, un filtre 3 × 3, sans padding ? Réponse : 94 × 94.
+</aside>
+
+---
+
+## CNN : images couleur et filtres multiples
+
+<div class="columns" markdown="1">
+<div markdown="1">
+
+- Une image couleur a **3 canaux** : R, G et B (ici 6 × 6 × 3).
+- Un filtre couvre les trois canaux : il mesure **3 × 3 × 3**.
+- Les résultats des canaux sont combinés en **une** carte de caractéristiques.
+- Chaque filtre détecte des motifs différents : les cartes s'**empilent**.
+
+</div>
+<div markdown="1">
+
+![Une image 6 × 6 × 3 convoluée par deux filtres 3 × 3 × 3 : chacun donne une carte 4 × 4, et les deux cartes empilées forment une sortie 4 × 4 × 2](/workshops/tinyml/slides/de-l-ia-au-tinyml/filtres-multiples.png)
+
+</div>
+</div>
+
+Schéma : indoml.com
+{: .caption}
+
+[De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
+
+<aside class="notes" markdown="1">
+Avec 8 filtres, la sortie a 8 canaux : c'est la première couche du modèle de l'atelier. Un filtre 3 × 3 × 3 a 27 poids.
+</aside>
+
+---
+
+## CNN : ReLU
+
+**ReLU** (*Rectified Linear Unit*) est une fonction d'activation qui transforme chaque valeur $x$ ainsi :
+
+$$\text{ReLU}(x) = \max(0, x)$$
+
+Si $x$ est négatif, ReLU le remplace par 0 ; s'il est positif, elle le conserve.
+
+Elle apporte de la **non-linéarité**, ce qui permet au CNN d'apprendre des motifs plus complexes.
+{: .highlight-red}
+
+[De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
+
+---
+
+## CNN : pooling
+
+![Une carte 4 × 4 réduite à 2 × 2 par max pooling : chaque zone 2 × 2 est remplacée par sa valeur maximale](/workshops/tinyml/concepts/de-l-ia-au-tinyml/max-pooling.png){: style="max-height: 300px"}
+
+Le **pooling** réduit la taille d'une carte de caractéristiques en gardant l'essentiel, entre deux convolutions, sur chaque carte. **Max pooling** : la valeur maximale de la zone (1, 3, 5, 6 donne 6) ; **average pooling** : la moyenne. Aucun paramètre appris : moins de calculs, et moins de surapprentissage.
+{: .caption}
+
+[De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
+
+---
+
+## CNN : couche entièrement connectée et sortie
+
+La couche entièrement connectée utilise les caractéristiques extraites par le CNN pour déterminer la **classe** de l'image.
+
+1. Les cartes deviennent un **vecteur** (aplatissement ou résumé)
+2. La couche **dense** combine ces informations
+3. Une fonction de sortie donne les scores
+
+| Sortie | Score | Usage |
+|---|---|---|
+| **Softmax** | un par classe, somme = 1 | une classe parmi plusieurs |
+| **Sigmoid** | entre 0 et 1 par sortie | binaire, ou plusieurs classes à la fois |
+{: .table-dense}
+
+Exemple softmax : chat 0,06 ; chien 0,94.
+{: .caption}
+
+[De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
+
+---
+
+## CNN : architecture d'un CNN
+
+```mermaid!
+flowchart LR
+  I["Image d'entrée<br/>H × W × C"] --> C["Conv layer"]
+  C --> R["ReLU"]
+  R --> P["Pooling"]
+  P -->|"bloc répété"| C
+  P --> F["Flatten"]
+  F --> D["FFNN<br/>entièrement connectées"]
+  D --> O["Output<br/>1 × K"]
+```
+
+Le bloc convolution, ReLU, pooling peut être répété plusieurs fois.
+{: .caption}
+
+[De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
+
+---
+
+## CNN : rôle de chaque composant (inférence)
+
+| Composant | Rôle |
+|---|---|
+| Image d'entrée | L'image pixelisée, H × W × C |
+| Convolution | Des filtres génèrent des cartes de caractéristiques |
+| ReLU | Élimine les valeurs négatives, capte des relations complexes |
+| Pooling | Réduit les cartes, la complexité et le surapprentissage |
+| Flatten | Transforme la sortie en vecteur 1D |
+| FFNN | Combine les caractéristiques, réalise la tâche finale |
+{: .table-dense}
+
+[De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
+
+---
+
+## Limite de l'IA
+
+Les modèles d'IA volumineux sont souvent exécutés dans le **cloud**. Cela peut entraîner :
+
+- une **dépendance** à Internet ;
+- un **délai** entre l'envoi des données et la réponse ;
+- l'envoi de **données sensibles** vers des serveurs distants ;
+- une consommation de **bande passante** et d'**énergie**.
+
+Le TinyML exécute les modèles directement sur de petits appareils, comme les microcontrôleurs, en les adaptant à leur mémoire et à leur calcul limités.
+{: .highlight-red}
+
+[Qu'est-ce que le TinyML ?](/workshops/tinyml/concepts/qu-est-ce-que-le-tinyml/){: .doc-link}
+
+---
+
+<!-- .slide: class="slide-section" -->
+
+## Tiny Machine Learning
+
+C'est quoi le TinyML ? · Avantages et limites · Méthodes de compression
+
+---
+
+## C'est quoi le TinyML ?
+
+Exécuter des modèles de machine learning **directement sur de petits appareils**, comme les microcontrôleurs, qui ont peu de mémoire et d'énergie. Les données sont analysées localement, sans dépendre du cloud.
+
+| Domaine | Cas d'application |
+|---|---|
+| Santé | Rythme cardiaque, signes de stress |
+| Industrie | Anomalies des machines, aux vibrations ou au son |
+| Agriculture | Humidité du sol, maladies des plantes |
+| Maison intelligente | Mots-clés, sons, sans envoi au cloud |
+| Environnement | Qualité de l'air, détection d'incendies |
+{: .table-dense}
+
+[Qu'est-ce que le TinyML ?](/workshops/tinyml/concepts/qu-est-ce-que-le-tinyml/){: .doc-link}
+
+---
+
+## Avantages et limites
+
+<div class="columns" markdown="1">
+<div markdown="1">
+
+### Avantages du TinyML
+
+- **Efficacité énergétique** : sur batterie
+- **Faible latence** : décision sur l'appareil
+- **Protection des données** : rien ne part au cloud
+- **Bande passante** réduite, coûts aussi
+
+</div>
+<div markdown="1">
+
+### Limites du TinyML
+
+- Mémoire et calcul **limités**
+- Modèles réduits, précision parfois **moindre**
+- Toutes les tâches ne sont pas déployables
+- Modèle, outils et matériel **compatibles** ?
+
+</div>
+</div>
+
+[De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
+
+---
+
+## Optimisation des modèles
+
+Dans le contexte de l'Edge AI et du TinyML, optimiser un modèle consiste à améliorer ses performances et son efficacité. Elle vise à :
+
+- **réduire les ressources** nécessaires : mémoire, calcul et énergie ;
+- **accélérer** le temps d'inférence ;
+- **préserver** au mieux la précision du modèle.
+
+[De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
+
+---
+
+## Pourquoi optimiser un modèle ?
+
+<div class="columns" markdown="1">
+<div markdown="1">
+
+Un réseau de neurones est constitué de **couches de neurones** reliées entre elles. Chaque neurone possède un **biais**, chaque connexion un **poids**.
+
+Un modèle de classification d'images peut contenir **1,6 million de paramètres**, souvent stockés en nombres décimaux.
+
+</div>
+<div markdown="1">
+
+![Un réseau de neurones : des couches de neurones, chacun relié à tous les neurones de la couche suivante](/workshops/tinyml/slides/de-l-ia-au-tinyml/reseau-de-neurones.jpg){: style="max-height: 330px"}
+
+</div>
+</div>
+
+L'optimisation réduit les besoins en mémoire et en calcul, pour déployer le modèle sur un appareil comme l'ESP32.
+{: .caption}
+
+[De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
+
+<!-- .down -->
+
+## Pourquoi optimiser : les chiffres
+
+<div class="columns" markdown="1">
+<div markdown="1">
+
+<p class="big-number">6,4 Mo</p>
+
+**1,6 million** de paramètres en `float32`, 4 octets chacun : un modèle d'images courant.
+
+</div>
+<div markdown="1">
+
+<p class="big-number">512 Ko</p>
+
+**la RAM** de la XIAO ESP32S3.
+
+</div>
+</div>
+
+[De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
+
+---
+
+## Méthodes de compression des modèles
+
+| Méthode | Principe |
+|---|---|
+| **Pruning** (élagage) | Supprime les poids les moins importants du réseau |
+| **Weight clustering** | Remplace des poids similaires par des valeurs communes |
+| **Distillation de connaissances** | Un petit modèle reproduit les prédictions d'un grand |
+| **Quantification** | Représente les valeurs avec moins de bits |
+{: .table-dense}
+
+[De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
+
+---
+
+## La quantification
+
+Représenter les valeurs numériques d'un modèle avec **moins de bits** : par exemple, passer de `float32` à `int8`.
+
+![La plage des valeurs float32, de -3e38 à 3e38, dont seule la zone entre min et max est utilisée, projetée sur les 255 valeurs de l'int8, de -127 à 127](/workshops/tinyml/slides/de-l-ia-au-tinyml/quantification-int8.png)
+
+Les valeurs sont converties et arrondies dans un format plus compact : le modèle prend moins de mémoire, et les calculs peuvent aller plus vite selon le matériel. Un poids sur 32 bits utilise 4 octets ; en `int8`, 1 octet. La précision peut toutefois diminuer légèrement.
+{: .caption}
+
+[De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link} [Quantification](/workshops/tinyml/tutorials/quantification/){: .doc-link}
+
+<!-- .down -->
+
+## La quantification : le calcul
+
+Passer de `float32` (décimal, 4 octets) à `int8` (entier de -128 à 127, 1 octet), avec une **échelle** $S$ et un **point zéro** $Z$ :
+
+$$q = \text{arrondi}\left(\frac{x}{S}\right) + Z$$
+
+Les poids prennent **quatre fois moins** de place. L'arrondi coûte un peu de précision : on la **mesure**.
+{: .caption}
+
+[Quantification](/workshops/tinyml/tutorials/quantification/){: .doc-link}
+
+---
+
+<!-- .slide: class="slide-section" -->
+
+## Edge computing par TinyML sur ESP32
+
+Le modèle de l'atelier · Sa taille sur la carte
+
+---
+
+## Le modèle de l'atelier
+
+```python
+tf.keras.layers.Input(shape=(96, 96, 3)),
+tf.keras.layers.Conv2D(8, 3, use_bias=False),   # 8 filtres 3 × 3
+tf.keras.layers.BatchNormalization(),
+tf.keras.layers.ReLU(),
+tf.keras.layers.MaxPooling2D(),
+# ... trois autres blocs : 16, 32 puis 64 filtres
+tf.keras.layers.GlobalAveragePooling2D(),
+tf.keras.layers.Dense(32, activation="relu"),
+tf.keras.layers.Dense(1, activation="sigmoid"),  # probabilité « chien »
+```
+
+Un seul neurone de sortie, en sigmoïde : son score est la probabilité que l'image montre un chien.
+{: .caption}
+
+[Modélisation](/workshops/tinyml/tutorials/modelisation/){: .doc-link}
+
+---
+
+## Sa taille sur la carte
+
+<div class="columns" markdown="1">
+<div markdown="1">
+
+<p class="big-number">109 Ko</p>
+
+le modèle en `float32`, au format TensorFlow Lite
+
+</div>
+<div markdown="1">
+
+<p class="big-number">36 Ko</p>
+
+le même modèle quantifié en `int8`
+
+</div>
+</div>
+
+Trois fois plus petit, et non quatre : le fichier décrit aussi la structure du réseau et ses paramètres de quantification.
+{: .caption}
+
+[Quantification](/workshops/tinyml/tutorials/quantification/){: .doc-link} [Mesurer la mémoire et le temps d'inférence](/workshops/tinyml/how-to-guides/mesurer-memoire-temps-inference/){: .doc-link}
+
+---
+
+<!-- .slide: class="slide-section" -->
+
+## Conclusion
+
+---
+
+## À retenir
+
+- Supervisé (**régression**, **classification**), non supervisé, par renforcement
+- Un **CNN** enchaîne convolution, ReLU et pooling, puis des couches denses
+- Sortie : $\lfloor (n + 2p - f)/s \rfloor + 1$
+- **Softmax** pour une classe parmi plusieurs, **sigmoïde** pour le binaire
+- Le **TinyML** exécute le modèle sur l'appareil, sans cloud
+- {: .highlight-red} Pour y tenir, on **quantifie** : `float32` vers `int8`
+
+[De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link} [Qu'est-ce que le TinyML ?](/workshops/tinyml/concepts/qu-est-ce-que-le-tinyml/){: .doc-link}

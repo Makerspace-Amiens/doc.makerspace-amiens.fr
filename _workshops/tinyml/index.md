@@ -14,11 +14,19 @@ project_tags:
 description: "De l’intelligence artificielle au TinyML : analyser et prétraiter un jeu de données existant, entraîner un modèle d’IA, puis le déployer sur une carte XIAO ESP32S3."
 subtitle: L'intelligence artificielle dans quelques centaines de kilo-octets
 
+special_sections:
+  - label: Slides
+    icon: fas fa-chalkboard-teacher
+    desc: "Les supports du cours, à projeter en plein écran."
+    items:
+      - /workshops/tinyml/slides/de-l-ia-au-tinyml/
+
 prerequisites:
   - /workshops/microcontroleur/
 
 concepts:
   - /workshops/tinyml/concepts/qu-est-ce-que-le-tinyml/
+  - /workshops/tinyml/concepts/de-l-ia-au-tinyml/
   - /workshops/microcontroleur/concepts/qu-est-ce-qu-un-microcontroleur/
   - /workshops/microcontroleur/concepts/architecture-microcontroleur/
   - /workshops/microcontroleur/concepts/du-materiel-au-logiciel/
