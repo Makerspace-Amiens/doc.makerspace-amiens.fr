@@ -3,7 +3,7 @@
 > Fichier de suivi interne, **pas une page du site** (exclu du build via
 > `_config.yml`). Sert à reprendre le travail d'une session à l'autre.
 
-Dernière mise à jour : 2026-10-19.
+Dernière mise à jour : 2026-11-16.
 
 ## Objectif
 
@@ -15,13 +15,20 @@ Nom du cours côté thème : « Construis ton site ».
 ## Dépôts de référence (source de vérité)
 
 - `~/Documents/GitHub/portfolio-theme` : thème Jekyll (`remote_theme`),
-  et son site de démo/doc (`_docs/guide-etudiant.md`, `guide-enseignant.md`,
-  `boite-a-outils.md`). Son `CLAUDE.md` décrit le contrat de données.
+  et son site de démo/doc (`_docs/guide-etudiant.md`, `boite-a-outils.md`).
+  `MAINTENANCE.md` (non publié) décrit l'architecture, le versionnage et le
+  contrat de données.
 - `~/Documents/GitHub/portfolio-template` : dépôt « Use this template » des
-  étudiants (`GUIDE-ETUDIANT.md`, `GUIDE-ENSEIGNANT.md`).
-- État au 2026-10-19 : aucun des deux n'est poussé sur GitHub (pas de
-  remote, pas de tag `v1.0.0`), nom d'organisation `Makerspace-Amiens`
-  « à confirmer ». Les liens GitHub des tutoriels seront à vérifier.
+  étudiants (contenu d'exemple, renvoie au guide du thème).
+- Publiés le 2026-11-16, publics, dans l'organisation `Makerspace-Amiens` :
+  `github.com/Makerspace-Amiens/portfolio-theme` (tags datés `vAA.MM.JJ-NN`, ex. `v26.11.16-01`,
+  Pages sur `main`) et `github.com/Makerspace-Amiens/portfolio-template`
+  (« Template repository », sans Pages). L'organisation a un domaine
+  personnalisé : la doc du thème est sur
+  <https://makerspace-amiens.fr/portfolio-theme/> (l'adresse github.io
+  redirige). Les sites étudiants restent sur `pseudo.github.io`.
+- Ces deux dépôts sont publics : aucune mention de Claude (ni fichier, ni
+  `Co-Authored-By`) ; `CLAUDE.md` y est exclu via `.git/info/exclude`.
 
 Relire ces dépôts avant de rédiger une page : ils sont la référence, pas
 ce fichier.
@@ -56,8 +63,48 @@ tutoriels, syllabus, évaluation) a été proposé puis retiré le 2026-10-19 à
 sa demande. Ne créer une page qu'une fois son contenu discuté.
 
 Matière disponible pour la suite : les 12 parties de
-`portfolio-theme/_docs/guide-etudiant.md` et le déroulé en 5 séances de
-`portfolio-template/GUIDE-ENSEIGNANT.md` §2.
+`portfolio-theme/_docs/guide-etudiant.md` et le déroulé ci-dessous.
+
+## Déroulé des séances (matière pour les slides)
+
+Cette année : 4 séances, sans démarche compétence.
+
+Repris du guide enseignant du thème, retiré du site du thème le 2026-11-16
+(il était public et visible des étudiants). Idée : en faire les decks de
+présentation des séances, dans cet atelier (`layout: slides`, listés en
+`special_sections:`). À construire deck par deck avec l'utilisateur.
+
+| Séance | Contenu | Livrable |
+|---|---|---|
+| 1 | Pourquoi un portfolio ? Démo du site exemple (<https://makerspace-amiens.fr/portfolio-theme/>). Création du site, activation Pages, identité | URL du site déposée sur Moodle |
+| 2 | Markdown, « Qui suis-je », CV. Premier article | Page about + CV |
+| 3 | Documenter un projet : page projet, médias (graphiques, 3D, KiCad, Mermaid) | 1 projet complet |
+| 4 | Docs et journal de bord, liens avec les projets en cours | 1 doc + 2 entrées de journal |
+| Suivi | Mise à jour au fil des projets de l'année | Projets et journal à jour avant chaque évaluation |
+
+- Évaluation possible : rôle personnel et recul dans les pages projet,
+  régularité du journal de bord, qualité rédactionnelle, respect de la
+  propriété intellectuelle. L'esthétique n'est pas un critère (thème commun).
+- Collecter les URL : formulaire ou feuille partagée (nom, promo, URL du
+  site, URL du dépôt). L'historique des commits montre la régularité.
+- Parcours : 1 partie du guide étudiant ≈ 1 tutoriel ; les tutoriels de
+  Méthodologie (création de repo, Git, Markdown, édition GitHub, build
+  local) se réutilisent avec l'onglet Portfolio.
+
+## Démarche compétence : en attente (depuis le 2026-11-16)
+
+**Hors programme cette année** : elle sera appliquée à partir de l'année
+scolaire 2027-2028 (séance dédiée à ajouter au déroulé à ce moment-là).
+
+Le radar de compétences (référentiel, niveaux, justifications, preuves
+automatiques) est **mis de côté** tant que son usage n'est pas défini :
+retiré du template, de la démo et des guides du thème (thème `v26.11.16-02`,
+dont l'accueil n'affiche le bouton « Mes compétences » que si
+`_data/competences.yml` existe), et de la présentation de l'atelier.
+Le code reste dans le thème, en sommeil. L'état complet est conservé dans
+la branche `archive/competences` des deux dépôts (page, données, partie 9
+du guide étudiant, section 1.3 du guide enseignant, champs `competences:`).
+Ne pas en reparler dans les pages de l'atelier avant que ce soit décidé.
 
 ## État
 

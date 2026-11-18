@@ -280,7 +280,9 @@ trois : sinon, les trois premiers backticks internes ferment le bloc trop tôt.
 
 {% include message.html title="Et pour bien présenter du code ?" message="Quel extrait montrer, comment l'introduire, quels langages utiliser selon les fichiers du projet, comment présenter une commande et sa réponse : tout ça est dans [Documenter son code et son firmware](/workshops/methodologie-de-projet/tutorials/documenter-code-firmware/)." status="is-info" icon="fas fa-info-circle" %}
 
-## Aller plus loin sur le site Jekyll de votre projet
+## Aller plus loin avec votre site
+
+{% capture plus_projet %}
 
 Le site Jekyll de votre projet (dossier `docs/` de votre repo) est basé
 sur le thème [Just the Docs](https://just-the-docs.com), qui ajoute quelques
@@ -320,12 +322,70 @@ directement dans le fichier.
 
 **Une formule mathématique**, entre deux `$$` : voir
 [Documenter les tests et résultats](/workshops/methodologie-de-projet/tutorials/documenter-tests-resultats/).
+{% endcapture %}
+{% capture plus_portfolio %}
+
+Votre portfolio utilise le thème du MakerSpace, qui ajoute des briques
+prêtes à l'emploi au Markdown standard : encadrés, icônes, graphiques,
+diagrammes, modèles 3D, schémas KiCad, vidéos. Toutes sont présentées,
+avec le code à copier, dans la
+[boîte à outils du thème](https://makerspace-amiens.fr/portfolio-theme/docs/boite-a-outils/).
+Deux exemples pour donner envie :
+
+**Un encadré coloré**, en une ligne : le `type` choisit la couleur
+(`info`, `astuce`, `succes`, `attention` ou `danger`), et le `texte`
+accepte du Markdown.
+
+```liquid
+{% raw %}{% include encadre.html type="astuce" titre="Astuce" texte="Testez **avant** de souder." %}{% endraw %}
+```
+
+**Un diagramme**, écrit en texte : un bloc de code de langage `mermaid`.
+
+````markdown
+```mermaid
+flowchart LR
+  A[Besoin] --> B[Conception] --> C[Prototype] --> D[Tests]
+```
+````
+{% endcapture %}
+
+{% include content-tabs.html
+  id="aller-plus-loin"
+  tab_title1="Repo de projet"
+  tab_project1="methodologie-de-projet"
+  tab1=plus_projet
+  tab_title2="Portfolio"
+  tab_project2="portfolio-ingenieur"
+  tab2=plus_portfolio
+%}
 
 ## Exercice
+
+{% capture exo_projet %}
 
 Ouvrez `docs/objectifs.md` de votre projet (rempli dans le tutoriel sur le
 cahier des charges) et vérifiez qu'il utilise correctement les titres, une
 liste, et au moins un lien. Corrigez si besoin.
+{% endcapture %}
+{% capture exo_portfolio %}
+
+Ouvrez `about.md` dans votre portfolio et écrivez, sous les lignes entre
+`---`, un premier brouillon de présentation qui utilise un titre `##`,
+une liste, un mot en **gras** et un lien (vers votre école, par exemple).
+Vérifiez le rendu avec l'aperçu de VSCode (<kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>V</kbd>).
+Vous le compléterez dans le tutoriel suivant.
+{% endcapture %}
+
+{% include content-tabs.html
+  id="exercice"
+  tab_title1="Repo de projet"
+  tab_project1="methodologie-de-projet"
+  tab1=exo_projet
+  tab_title2="Portfolio"
+  tab_project2="portfolio-ingenieur"
+  tab2=exo_portfolio
+%}
 
 ---
 
