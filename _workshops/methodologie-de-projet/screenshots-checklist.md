@@ -43,6 +43,25 @@ Dossier cible : `_workshops/methodologie-de-projet/tutorials/git-github-desktop-
 4. VSCode, panneau **Source Control** ouvert avec des fichiers modifiés → `step4-source-control-vscode.png`
 5. VSCode, message de commit tapé + bouton **Sync Changes** visible → `step5-sync-vscode.png`
 
+### 2 bis. Refonte « Git et GitHub avec VSCode » (2026-11-17) : à faire
+
+Le tutoriel passe au tout-VSCode (GitHub Desktop en secours) et intègre le
+clonage. Captures manquantes, VSCode en français, avec un repo de test :
+
+1. ✅ VSCode sans dossier ouvert, panneau **Contrôle de code source** avec le bouton **Clone Repository** (resté en anglais) → `clone-bouton-vscode.png`
+2. ✅ Liste déroulante en haut : **Cloner à partir de GitHub** → `clone-depuis-github-vscode.png`
+2 bis. ✅ Fenêtre de choix du dossier, **Sélectionner comme destination de dépôt** (noms de dossiers floutés) → `clone-choisir-dossier.png`
+3. Liste des repos GitHub proposés, le repo de test surligné → `clone-liste-repos-vscode.png`
+4. Fenêtre « Faites-vous confiance aux auteurs... » → `confiance-dossier-vscode.png`
+5. Barre d'état en bas à gauche : branche `main` + icône de synchronisation (zoom) → `sync-barre-etat-vscode.png`
+6. Terminal intégré après les deux `git config` (optionnel) → `git-config-terminal-vscode.png`
+7. Aperçu Markdown à côté de l'éditeur (`Ctrl+Maj+V`) sur `about.md` d'un portfolio (optionnel) → `apercu-markdown-vscode.png`
+
+Les captures 1 à 4 vont dans les étapes « Lancer le clonage », « Choisir
+l'emplacement » et « Ouvrir le repo » ; la 5 dans « Récupérer les derniers
+changements ». Les anciennes captures 4 et 6 de la section 1 ont été
+déplacées ici (`clone-github-desktop.png`, `repo-ouvert-vscode.png`).
+
 ## 3. Gérer son projet avec GitHub
 
 Dossier cible : `_workshops/methodologie-de-projet/tutorials/gerer-projet-github/`
@@ -68,9 +87,9 @@ depuis l'interface GitHub » a été supprimée, ses captures ne sont plus à fa
 (Settings > Pages), `about-vide.png` + `edit-repository-details.png` (carte
 About), `social-preview.png`.
 
- 1. Onglet **Actions** avec un build en cours puis terminé (coche verte) → `step2-actions-build.png`
- 2. **Settings > Pages** avec la ligne « Your site is live at » → `step3-site-live.png`
- 3. Portfolio : **Settings > Pages** réglé sur « Deploy from a branch », `main`, `/ (root)` → `step1-pages-portfolio.png`
+ 1. ✅ (2026-11-18) Onglet **Actions**, étape 2 : `actions-deploy-jekyll.png` + `actions-run-workflow.png` (repo de projet), `actions-pages-build-deployment.png` + `actions-run-en-cours.png` (portfolio, pseudo flouté). Manque encore un run terminé (coche verte), optionnel
+ 2. ✅ (2026-11-18) **Settings > Pages** avec la ligne « Your site is live at », étape 3 : `site-live-projet.png` et `site-live-portfolio.png` (pseudos floutés)
+ 3. ✅ (2026-11-18) Menu **Source** ouvert, une capture par onglet de l'étape 1 : `source-github-actions.png` (repo de projet, nom de l'auteur flouté) et `source-deploy-from-branch.png` (portfolio)
 
 ## 6. Construire son site Jekyll en local
 

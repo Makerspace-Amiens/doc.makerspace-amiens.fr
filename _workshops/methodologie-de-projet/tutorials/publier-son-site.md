@@ -28,8 +28,6 @@ hardwares:
     link: ""
 ---
 
-{% include message.html title="Captures d'écran à venir" message="Les libellés de boutons ci-dessous correspondent à l'interface actuelle de GitHub." status="is-info" icon="fas fa-camera" %}
-
 ## Ce que vous allez faire
 
 Votre repo contient déjà tout ce qu'il faut pour devenir un site web : des
@@ -47,16 +45,23 @@ tard, vous saurez que l'erreur vient de vos modifications.
 
 ## Activer GitHub Pages
 
-{% capture step1_projet %}Sous **Build and deployment**, champ **Source**, choisissez **GitHub Actions** (pas « Deploy from a branch »).
+{% capture step1_projet %}Sous **Build and deployment** :
 
-Le template contient déjà les instructions de construction (dans `.github/workflows/`) : GitHub les utilise dès que cette option est choisie.{% endcapture %}
+- champ **Source** : **GitHub Actions** (pas « Deploy from a branch ») ;
+- rien d'autre à régler, il n'y a pas de bouton **Save** : le choix est enregistré tout de suite.
+
+Le template contient déjà les instructions de construction (dans `.github/workflows/`) : GitHub les utilise dès que cette option est choisie.
+
+![Source réglée sur GitHub Actions dans Settings > Pages](source-github-actions.png){% endcapture %}
 {% capture step1_portfolio %}Sous **Build and deployment** :
 
 - champ **Source** : **Deploy from a branch** ;
 - champ **Branch** : **main**, et le dossier **/ (root)** ;
 - cliquez sur **Save**.
 
-GitHub a peut-être déjà fait ce réglage tout seul, parce que votre repo s'appelle `pseudo.github.io` : vérifiez simplement que ce sont bien ces valeurs.{% endcapture %}
+GitHub a peut-être déjà fait ce réglage tout seul, parce que votre repo s'appelle `pseudo.github.io` : vérifiez simplement que ce sont bien ces valeurs.
+
+![Source réglée sur Deploy from a branch dans Settings > Pages](source-deploy-from-branch.png){% endcapture %}
 {% capture step1 %}Sur la page de votre repo, onglet **Settings** (en haut à droite), puis **Pages** dans le menu de gauche.
 
 {% include content-tabs.html
@@ -71,16 +76,19 @@ GitHub a peut-être déjà fait ce réglage tout seul, parce que votre repo s'ap
 {% include step-tuto.html
   greyBackground=true
   title="Étape 1 : Activer GitHub Pages"
-  content=step1
-  image="activer-pages-settings.png" %}
+  content=step1 %}
 
 {% capture step2_projet %}Deux workflows se lancent :
 
 - **Deploy Jekyll site to Pages** construit et publie votre site ;
 - **CI** reconstruit le site pour vérifier qu'il n'y a pas d'erreur, liste les blocs « À modifier » et « À supprimer » qui restent dans vos fichiers, et contrôle le poids des fichiers.
 
-Si rien ne se lance, ouvrez **Deploy Jekyll site to Pages** dans la liste de gauche et cliquez sur **Run workflow**.{% endcapture %}
-{% capture step2_portfolio %}Un workflow nommé **pages build and deployment** se lance : c'est GitHub qui construit votre site avec le thème du MakerSpace, puis le publie.
+Si rien ne se lance, ouvrez **Deploy Jekyll site to Pages** dans la liste de gauche, cliquez sur **Run workflow**, puis sur le bouton vert **Run workflow** de la fenêtre qui s'ouvre.
+
+{% include image-row.html image_1="actions-deploy-jekyll.png" image_2="actions-run-workflow.png" %}{% endcapture %}
+{% capture step2_portfolio %}Un workflow nommé **pages-build-deployment** apparaît dans la liste de gauche. Ouvrez-le : un run **pages build and deployment** est en cours. C'est GitHub qui construit votre site avec le thème du MakerSpace, puis le publie.
+
+{% include image-row.html image_1="actions-pages-build-deployment.png" image_2="actions-run-en-cours.png" %}
 
 Si rien ne se lance, revenez à l'étape 1 et vérifiez que vous avez bien cliqué sur **Save**.{% endcapture %}
 {% capture step2 %}Ouvrez l'onglet **Actions** de votre repo.
@@ -101,10 +109,16 @@ Un rond orange 🟠 signifie « en cours ». Attendez la coche verte ✅ : compt
   title="Étape 2 : Suivre la construction"
   content=step2 %}
 
-{% capture step3_projet %}L'adresse est de la forme `https://compte.github.io/nom-du-repo/`. Vous devez voir le site d'exemple du template : page d'accueil, menu de navigation, pages Objectifs, Équipe, etc.{% endcapture %}
-{% capture step3_portfolio %}L'adresse est `https://pseudo.github.io`, avec votre pseudo. Vous devez voir le site d'exemple : avatar, nom « Prénom Nom », menu (Accueil, Projets, Compétences, Blog, Docs, Qui suis-je), un projet et un article d'exemple. Cliquez sur **Compétences** : le radar doit s'afficher.
+{% capture step3_projet %}L'adresse est de la forme `https://compte.github.io/nom-du-repo/`. Vous devez voir le site d'exemple du template : page d'accueil, menu de navigation, pages Objectifs, Équipe, etc.
 
-C'est ce contenu d'exemple que vous remplacerez par le vôtre dans la suite de l'atelier.{% endcapture %}
+![Ligne Your site is live at et bouton Visit site dans Settings > Pages](site-live-projet.png){% endcapture %}
+{% capture step3_portfolio %}L'adresse est `https://pseudo.github.io`, avec votre pseudo. Vous devez voir le site d'exemple : avatar, nom « Prénom Nom », menu (Accueil, Projets, Blog, Docs, Qui suis-je), un projet et un article d'exemple.
+
+C'est ce contenu d'exemple que vous remplacerez par le vôtre dans la suite de l'atelier.
+
+![Ligne Your site is live at et bouton Visit site dans Settings > Pages](site-live-portfolio.png)
+
+Sur cette capture, l'adresse est différente parce que le repo appartient à l'organisation du MakerSpace, qui a son propre nom de domaine. Votre repo est dans votre compte : votre adresse est bien `https://pseudo.github.io`.{% endcapture %}
 {% capture step3 %}Revenez dans **Settings > Pages** : en haut, une ligne **Your site is live at** affiche l'adresse de votre site, avec un bouton **Visit site**. Ouvrez-la.
 
 {% include content-tabs.html
@@ -167,4 +181,4 @@ encadrant.{% endcapture %}
 %}
 
 Étape suivante : récupérer le repo sur votre ordinateur pour le modifier
-avec VSCode, dans [Git, GitHub Desktop et VSCode](/workshops/methodologie-de-projet/tutorials/git-github-desktop-vscode/).
+avec VSCode, dans [Git et GitHub avec VSCode](/workshops/methodologie-de-projet/tutorials/git-github-desktop-vscode/).

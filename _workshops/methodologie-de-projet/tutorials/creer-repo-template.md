@@ -64,8 +64,7 @@ complet, à remplacer par le vôtre. Ce remplacement fait l'objet du tutoriel
 [Personnaliser le template de son projet](/workshops/methodologie-de-projet/tutorials/personnaliser-template/).{% endcapture %}
 {% capture tab_portfolio %}Le repo [portfolio-template](https://github.com/Makerspace-Amiens/portfolio-template)
 du MakerSpace contient un site personnel déjà prêt : accueil, page « Qui
-suis-je » et CV, projets, journal de bord, documentation et radar de
-compétences. Vous n'allez pas modifier ce template : vous allez créer
+suis-je » et CV, projets, journal de bord et documentation. Vous n'allez pas modifier ce template : vous allez créer
 **votre propre repo**, une copie indépendante qui deviendra votre site.
 
 Ce site est rempli d'un contenu **d'exemple** (un projet, un article et une
