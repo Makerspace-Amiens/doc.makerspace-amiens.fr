@@ -19,11 +19,15 @@ difficulty: 1
 todo: 60
 
 prerequisites:
-  - label: Have cloned your repo (see the previous tutorial)
-    link: /workshops/methodologie-de-projet/tutorials/creer-repo-template/
+  - label: Have created your repo and published your site
+    link: /workshops/methodologie-de-projet/tutorials/publier-son-site/
+  - label: Have installed VSCode
+    link: /docs/tutorials/software/vscode-platformio/installation-vscode/
 softwares:
-  - label: GitHub Desktop or VSCode
-    link: "https://desktop.github.com"
+  - label: VSCode
+    link: /docs/tutorials/software/vscode-platformio/installation-vscode/
+  - label: Git
+    link: "https://git-scm.com/downloads"
 hardwares:
   - label: No machine required
     link: ""

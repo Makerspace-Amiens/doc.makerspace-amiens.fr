@@ -556,3 +556,16 @@ ordre du début du parcours, choisi par l'utilisateur :
    qu'elle donne de mauvaises habitudes (les étudiants oublient ensuite VSCode).
 3. `git-github-desktop-vscode` : installation de GitHub Desktop, clonage,
    ouverture dans VSCode, puis cycle commit/push (à faire).
+
+## Traductions anglaises à reprendre (depuis le 2026-11-18)
+
+Les `.en.md` suivants traduisent la version d'avant la refonte du 2026-11-18
+(front matter réaligné, texte pas encore) : reporter les changements
+(`git diff 6c07962 -- <page>.md` montre ce qui a bougé côté français).
+
+- `tutorials/git-github-desktop-vscode` : page réécrite (tout VSCode, clonage, GitHub Desktop en secours)
+- `tutorials/publier-son-site` : captures par onglet aux étapes 1 à 3, encadré « captures à venir » retiré
+- `tutorials/syntaxe-markdown` : onglets Portfolio dans « Aller plus loin » et l'exercice
+- `tutorials/creer-repo-template` : mention du radar retirée
+- titre « Git et GitHub avec VSCode » dans les liens : `evaluation`, `slides/introduction-methodologie`, `slides/seance-2-cahier-des-charges-existant`, `_docs/how-to-guides/pull-requests-et-conflits-git`
+- Pas encore de traduction : `portfolio-ingenieur/tutorials/personnaliser-portfolio`, `portfolio-ingenieur/slides/seance-1-creer-publier`
