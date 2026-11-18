@@ -21,7 +21,7 @@ prerequisites:
   - label: Connaître le cycle stage / commit / push
     link: /workshops/methodologie-de-projet/tutorials/git-github-desktop-vscode/
 softwares:
-  - label: GitHub Desktop ou VSCode
+  - label: VSCode (ou GitHub Desktop)
     link: ""
 hardwares:
   - label: Aucune machine requise
@@ -40,7 +40,7 @@ plus souvent au moment de fusionner une Pull Request.
 ## Prérequis
 
 - Être à l'aise avec le cycle stage / commit / push de base : voir
-  [Git, GitHub Desktop et VSCode](/workshops/methodologie-de-projet/tutorials/git-github-desktop-vscode/).
+  [Git et GitHub avec VSCode](/workshops/methodologie-de-projet/tutorials/git-github-desktop-vscode/).
 
 ## Procédure
 
@@ -71,7 +71,7 @@ graph LR
 
 **Avec VSCode** : cliquez sur le nom de branche en bas à gauche, `Create new branch`, entrez le nom.
 
-Travaillez et committez normalement sur cette branche : voir [Git, GitHub Desktop et VSCode](/workshops/methodologie-de-projet/tutorials/git-github-desktop-vscode/)." %}
+Travaillez et committez normalement sur cette branche : voir [Git et GitHub avec VSCode](/workshops/methodologie-de-projet/tutorials/git-github-desktop-vscode/)." %}
 
 ### 3. Ouvrir la Pull Request
 
@@ -143,7 +143,7 @@ La version de l'autre branche
 
 Des commits petits et fréquents, plutôt que d'énormes commits accumulés
 pendant des jours, réduisent fortement la fréquence et la taille des
-conflits : voir [Git, GitHub Desktop et VSCode](/workshops/methodologie-de-projet/tutorials/git-github-desktop-vscode/).
+conflits : voir [Git et GitHub avec VSCode](/workshops/methodologie-de-projet/tutorials/git-github-desktop-vscode/).
 Travailler sur des branches séparées par brique du projet (voir
 [Constituer et organiser son équipe](/workshops/methodologie-de-projet/concepts/constituer-organiser-equipe/))
 aide aussi, puisque les mêmes fichiers sont alors modifiés par moins de

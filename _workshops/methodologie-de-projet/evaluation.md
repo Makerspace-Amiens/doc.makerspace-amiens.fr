@@ -34,7 +34,7 @@ L'évaluation porte sur **l'état de votre repo à la fin du cours**, à une dat
 | **Contributions au repo** | Des commits faits depuis **votre** compte GitHub, réguliers, avec des messages qui disent ce qui change |
 | **Participation à la gestion** | Issues créées, assignées et fermées ; relectures faites pour les autres |
 
-Voir [Tenir un journal de bord](/workshops/methodologie-de-projet/tutorials/journal-de-bord/) et [Git, GitHub Desktop et VSCode](/workshops/methodologie-de-projet/tutorials/git-github-desktop-vscode/).
+Voir [Tenir un journal de bord](/workshops/methodologie-de-projet/tutorials/journal-de-bord/) et [Git et GitHub avec VSCode](/workshops/methodologie-de-projet/tutorials/git-github-desktop-vscode/).
 
 ## Part groupe (40 %)
 

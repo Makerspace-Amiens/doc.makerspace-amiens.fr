@@ -444,7 +444,7 @@ Fait, Pourquoi, Reste à faire. N'ajoute aucune information.
 3. Racontez cette séance : ce que vous avez fait, le besoin retravaillé, ce qui reste à faire
 4. **Commit** avec un message clair, puis **Push**
 
-[Tenir un journal de bord](/workshops/methodologie-de-projet/tutorials/journal-de-bord/){: .doc-link} [Git, GitHub Desktop et VSCode](/workshops/methodologie-de-projet/tutorials/git-github-desktop-vscode/){: .doc-link}
+[Tenir un journal de bord](/workshops/methodologie-de-projet/tutorials/journal-de-bord/){: .doc-link} [Git et GitHub avec VSCode](/workshops/methodologie-de-projet/tutorials/git-github-desktop-vscode/){: .doc-link}
 
 ---
 

@@ -47,7 +47,7 @@ graph LR
 | Envoyer | **Push origin** | **Synchroniser les modifications** |
 {: .table-dense}
 
-[Git, GitHub Desktop et VSCode](/workshops/methodologie-de-projet/tutorials/git-github-desktop-vscode/){: .doc-link}
+[Git et GitHub avec VSCode](/workshops/methodologie-de-projet/tutorials/git-github-desktop-vscode/){: .doc-link}
 
 ---
 
@@ -174,7 +174,7 @@ Un niveau inventé « pour remplir la case » ne sert à rien : il faut pouvoir 
 Si le Push est refusé, faites un Pull puis recommencez : Git fusionne seul tant que vous n'avez pas modifié la même ligne.
 {: .caption}
 
-[Git, GitHub Desktop et VSCode](/workshops/methodologie-de-projet/tutorials/git-github-desktop-vscode/){: .doc-link}
+[Git et GitHub avec VSCode](/workshops/methodologie-de-projet/tutorials/git-github-desktop-vscode/){: .doc-link}
 
 ---
 
