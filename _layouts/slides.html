@@ -16,7 +16,7 @@
 {% endcomment -%}
 {%- assign slides = content | replace: '<img src=', '<img data-src=' | split: '<hr />' -%}
 <!DOCTYPE html>
-<html lang="{{ page.lang | default: site.lang | default: 'fr' }}">
+<html lang="{{ page.rendered_lang | default: page.lang | default: site.lang | default: 'fr' }}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">

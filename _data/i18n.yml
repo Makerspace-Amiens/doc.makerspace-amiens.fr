@@ -1,5 +1,7 @@
 # Libellés d'interface des layouts project-home / documentation / project-tutos.
-# La langue est choisie par `lang:` dans le front matter de la page (défaut : site.lang).
+# La langue est choisie par `lang:` dans le front matter de la page (défaut : site.lang,
+# qui vaut la langue du build : fr à la racine, en sous /en/, cf. jekyll-polyglot).
+# Les clés « Interface globale » suivent toujours la langue du build.
 fr:
   all_workshops: Toutes les thématiques
   tutorials_count: tutoriels
@@ -40,6 +42,82 @@ fr:
   todo_label: Documentation réalisée à
   created_by: "Créée par :"
 
+  # --- Pages de listing (/docs/, /ressources/, /workshops/) : _includes/docs-index.html...
+  docs_search_placeholder: Rechercher dans la documentation...
+  ressources_search_placeholder: Rechercher dans les ressources...
+  filter_all: Tous
+  section_empty: Aucun résultat dans cette section.
+  docs_tutorials_sub: Des tutoriels pas-à-pas pour s'initier
+  docs_guides: Guides
+  docs_guides_sub: Des guides pour une utilisation en autonomie
+  docs_concepts_sub: Des cours et ressources pour approfondir ses connaissances
+  docs_references_sub: Des références pour aller plus loin
+  workshops_projects_sub: Des projets guidés à concevoir et fabriquer de A à Z
+  workshops_courses_sub: Des parcours pour se former à un domaine ou une technique
+  # Libellés des catégories (nom du sous-dossier) ; à défaut, le nom du dossier capitalisé.
+  categories:
+    design: Conception
+    electronics: Électronique
+    production: Production
+    software: Logiciels
+    hardware: Matériel
+    machines: Machines
+    plans: Plans
+    others: Autres
+    components: Composants
+    libraries: Bibliothèques
+    resellers: Revendeurs
+    tools: Outils
+    mechanical: Mécanique
+    general: Général
+  # --- Interface globale (navbar, footer, accueil, recherche) : langue du build (site.lang)
+  language_name: Français
+  switch_language: Read this page in English
+  nav_projects: Projets
+  nav_courses: Thématiques
+  search_placeholder: Rechercher...
+  search_empty: Aucun résultat.
+  writing_guide_title: "Guide de rédaction : comment créer une page de documentation"
+  admin_title: Administration du site
+  help_bot_label: Besoin d'aide ?
+  help_bot_aria: Ouvrir l'assistant IA (nouvel onglet)
+  fallback_notice: "Cette page n'existe qu'en anglais."
+  home_hero_title: "L'atelier ouvert aux étudiants UniLaSalle."
+  home_hero_sub: "Imprimante 3D, découpe laser, électronique, programmation : les machines et la documentation pour aller de l'idée à l'objet."
+  home_btn_docs: Voir la documentation
+  home_btn_access: Accès &amp; horaires
+  home_stat_docs: Pages de documentation
+  home_stat_workshops: Ateliers disponibles
+  home_stat_ressources: Ressources & outils
+  home_start_title: Par où commencer ?
+  home_start_sub: "Fiches machines, tutoriels pas-à-pas, ateliers encadrés : tout est documenté et accessible."
+  home_docs_title: Documentation
+  home_docs_desc: Tutoriels, guides pratiques, références et concepts classés par thème.
+  home_docs_link: Consulter
+  home_workshops_title: Ateliers
+  home_workshops_desc: "Fabrication additive, robot Otto MKS : des projets guidés du début à la fin."
+  home_workshops_link: Voir les ateliers
+  home_equipment_title: Équipements
+  home_equipment_desc: Imprimantes 3D, découpe laser, fraiseuse PCB, oscilloscopes, fers à souder.
+  home_equipment_link: Voir le matériel
+  home_gallery_title: Le MakerSpace en images
+  home_gallery_sub: "Fabrication, projets, événements : la vie du MakerSpace."
+  home_news_title: Dernières actualités
+  home_news_sub: Projets, événements et vie du MakerSpace.
+  home_news_all: Toutes les actualités
+  home_cta_title: Ouvert en accès libre le mercredi de 18h à 21h et le jeudi de 13h30 à 18h.
+  home_cta_sub: "Et du lundi au vendredi de 9h à 18h en présence d'un responsable (le mercredi selon disponibilité). Accessible à tous les étudiants et personnels du campus, sans inscription préalable. Chacun est responsable du matériel qu'il utilise."
+  home_cta_info: Informations pratiques
+  home_partners: Avec le soutien de
+  safety_before: "Avant d'utiliser"
+  safety_the: "la "
+  safety_this_machine: cette machine
+  safety_after: ", lisez les consignes de sécurité."
+  safety_cta: Consignes de sécurité
+  risk_low: Risque faible
+  risk_moderate: Risque modéré
+  risk_high: Risque élevé
+
 en:
   all_workshops: All workshops
   tutorials_count: tutorials
@@ -79,3 +157,79 @@ en:
   hardwares_label: "Machines/Tools:"
   todo_label: "Documentation completed:"
   created_by: "Created by:"
+
+  # --- Listing pages (/docs/, /ressources/, /workshops/): _includes/docs-index.html...
+  docs_search_placeholder: Search the documentation...
+  ressources_search_placeholder: Search the resources...
+  filter_all: All
+  section_empty: No results in this section.
+  docs_tutorials_sub: Step-by-step tutorials to get started
+  docs_guides: Guides
+  docs_guides_sub: Guides to work on your own
+  docs_concepts_sub: Lessons and resources to deepen your knowledge
+  docs_references_sub: References to go further
+  workshops_projects_sub: Guided projects to design and build from start to finish
+  workshops_courses_sub: Learning paths to train in a field or a technique
+  # Category labels (subfolder name); otherwise the capitalized folder name.
+  categories:
+    design: Design
+    electronics: Electronics
+    production: Production
+    software: Software
+    hardware: Hardware
+    machines: Machines
+    plans: Plans
+    others: Other
+    components: Components
+    libraries: Libraries
+    resellers: Resellers
+    tools: Tools
+    mechanical: Mechanics
+    general: General
+  # --- Global interface (navbar, footer, home, search): build language (site.lang)
+  language_name: English
+  switch_language: Lire cette page en français
+  nav_projects: Projects
+  nav_courses: Topics
+  search_placeholder: Search...
+  search_empty: No results.
+  writing_guide_title: "Writing guide: how to create a documentation page"
+  admin_title: Site administration
+  help_bot_label: Need help?
+  help_bot_aria: Open the AI assistant (new tab)
+  fallback_notice: "This page has not been translated into English yet: you are reading the French version."
+  home_hero_title: "The makerspace open to UniLaSalle students."
+  home_hero_sub: "3D printing, laser cutting, electronics, programming: the machines and the documentation to go from an idea to an object."
+  home_btn_docs: Browse the documentation
+  home_btn_access: Access &amp; opening hours
+  home_stat_docs: Documentation pages
+  home_stat_workshops: Workshops available
+  home_stat_ressources: Resources & tools
+  home_start_title: Where to start?
+  home_start_sub: "Machine sheets, step-by-step tutorials, supervised workshops: everything is documented and available."
+  home_docs_title: Documentation
+  home_docs_desc: Tutorials, how-to guides, references and concepts sorted by topic.
+  home_docs_link: Browse
+  home_workshops_title: Workshops
+  home_workshops_desc: "Additive manufacturing, the Otto MKS robot: guided projects from start to finish."
+  home_workshops_link: See the workshops
+  home_equipment_title: Equipment
+  home_equipment_desc: 3D printers, laser cutter, PCB milling machine, oscilloscopes, soldering irons.
+  home_equipment_link: See the equipment
+  home_gallery_title: The MakerSpace in pictures
+  home_gallery_sub: "Making, projects, events: life at the MakerSpace."
+  home_news_title: Latest news
+  home_news_sub: Projects, events and life at the MakerSpace.
+  home_news_all: All news
+  home_cta_title: Open access on Wednesdays from 6 to 9 pm and on Thursdays from 1:30 to 6 pm.
+  home_cta_sub: "And Monday to Friday from 9 am to 6 pm when a supervisor is present (Wednesdays depending on availability). Open to all students and staff on campus, no registration needed. Everyone is responsible for the equipment they use."
+  home_cta_info: Practical information
+  home_partners: With the support of
+  safety_before: Before using
+  safety_the: "the "
+  safety_this_machine: this machine
+  safety_after: ", read the safety instructions."
+  safety_cta: Safety instructions
+  risk_low: Low risk
+  risk_moderate: Moderate risk
+  risk_high: High risk

@@ -1,0 +1,15 @@
+# Navbar du build anglais (/en/). jekyll-polyglot remplace _data/navigation.yml par ce
+# fichier sous /en/ : garder les mêmes entrées, dans le même ordre, que la version française.
+- name: Information
+  link: /informations/
+- name: Equipment
+  link: /equipment/
+- name: Workshops
+  link: /workshops/
+  dropdown: true
+- name: Documentation
+  link: /docs/
+- name: Resources
+  link: /ressources/
+- name: Student projects
+  link: https://makerspace-amiens.fr/makerspace-projects/

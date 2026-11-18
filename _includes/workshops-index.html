@@ -1,0 +1,21 @@
+{%- comment -%}
+  Contenu de la page /workshops/, partagé par workshops.md (français) et
+  workshops.en.md (anglais). Libellés dans _data/i18n.yml, selon la langue du build.
+{%- endcomment -%}
+{%- assign _ui = site.data.i18n[site.lang] | default: site.data.i18n.fr -%}
+
+<div class="doc-section" id="projets-section">
+  <h2 id="projets" class="title is-3">{{ _ui.nav_projects }}</h2>
+  <p class="subtitle is-5 has-text-grey">{{ _ui.workshops_projects_sub }}</p>
+
+  {% include card_collections.html collection="workshops" type="workshop" kind="project" %}
+</div>
+
+<hr class="has-background-grey-lighter my-6" style="height: 2px; border: none;">
+
+<div class="doc-section" id="thematiques-section">
+  <h2 id="thematiques" class="title is-3">{{ _ui.nav_courses }}</h2>
+  <p class="subtitle is-5 has-text-grey">{{ _ui.workshops_courses_sub }}</p>
+
+  {% include card_collections.html collection="workshops" type="workshop" kind="course" %}
+</div>

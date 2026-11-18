@@ -1,0 +1,9 @@
+# Footer du build anglais (/en/), remplace _data/footer_navigation.yml sous /en/.
+- name: About
+  link: /about/
+- name: Info
+  link: /informations/
+- name: MakerSpace Amiens
+  link: https://makerspace-amiens.fr
+- name: Sources
+  link: https://github.com/Makerspace-Amiens/makerspace-doc

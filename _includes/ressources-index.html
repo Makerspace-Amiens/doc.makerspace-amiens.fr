@@ -1,0 +1,72 @@
+{%- comment -%}
+  Contenu de la page /ressources/, partagé par ressources.md (français) et
+  ressources.en.md (anglais). Libellés dans _data/i18n.yml, selon la langue du build.
+{%- endcomment -%}
+{%- assign _ui = site.data.i18n[site.lang] | default: site.data.i18n.fr -%}
+
+<div class="field">
+  <div class="control has-icons-left">
+    <input class="input is-medium" type="text" id="doc-search" placeholder="{{ _ui.ressources_search_placeholder }}">
+    <span class="icon is-left"><i class="fas fa-search"></i></span>
+  </div>
+</div>
+
+{%- assign ressourceCategories = "" | split: "" -%}
+{%- for item in site.ressources -%}
+  {%- if item.path -%}
+    {%- assign pathSegments = item.path | split: "/" -%}
+    {%- if pathSegments.size > 2 -%}
+      {%- assign cat = pathSegments[1] -%}
+      {%- unless ressourceCategories contains cat -%}
+        {%- assign ressourceCategories = ressourceCategories | push: cat -%}
+      {%- endunless -%}
+    {%- endif -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- assign ressourceCategories = ressourceCategories | sort -%}
+
+{% for category in ressourceCategories %}
+  {%- assign categoryLabel = category | replace: "-", " " | capitalize -%}
+  {%- assign categoryLabel = _ui.categories[category] | default: categoryLabel -%}
+  {%- assign pathPrefix = "_ressources/" | append: category | append: "/" -%}
+
+  <div class="doc-section" id="{{ category }}-section">
+    <h2 id="{{ category }}" class="title is-3">{{ categoryLabel }}</h2>
+
+    {%- assign subCategories = "" | split: "" -%}
+    {%- for item in site.ressources -%}
+      {%- if item.path and item.path contains pathPrefix -%}
+        {%- assign pathSegments = item.path | split: "/" -%}
+        {%- if pathSegments.size > 3 -%}
+          {%- assign subCat = pathSegments[2] -%}
+          {%- unless subCategories contains subCat -%}
+            {%- assign subCategories = subCategories | push: subCat -%}
+          {%- endunless -%}
+        {%- endif -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- assign subCategories = subCategories | sort -%}
+
+    {% if subCategories.size > 0 %}
+    <div class="tags doc-filter">
+      <button type="button" class="tag is-medium is-link doc-filter-btn is-active" data-category="all">{{ _ui.filter_all }}</button>
+      {% for subCat in subCategories %}
+        {%- assign subcat_default = subCat | replace: "-", " " | capitalize -%}
+        <button type="button" class="tag is-medium doc-filter-btn" data-category="{{ subCat }}">
+          {{- _ui.categories[subCat] | default: subcat_default -}}
+        </button>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    {% include card_collections.html collection="ressources" image_fit="cover" path_prefix=pathPrefix category_path_offset=2 %}
+
+    <p class="doc-empty has-text-grey" style="display:none">{{ _ui.section_empty }}</p>
+  </div>
+
+  {% unless forloop.last %}
+  <hr class="has-background-grey-lighter my-6" style="height: 2px; border: none;">
+  {% endunless %}
+{% endfor %}
+
+<script src="{{ '/assets/js/doc-search.js' | relative_url }}"></script>

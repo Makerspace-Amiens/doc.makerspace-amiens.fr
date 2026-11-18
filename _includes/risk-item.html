@@ -12,7 +12,8 @@
     {% include risk-item.html level="eleve" icon="fas fa-fire" title="Incendie pendant la découpe" content="..." %}
 {% endcomment %}
 {% assign _level = include.level | default: "modere" %}
-{% capture _level_label %}{% case _level %}{% when "faible" %}Risque faible{% when "eleve" %}Risque élevé{% else %}Risque modéré{% endcase %}{% endcapture %}
+{% assign _ri_lang = page.lang | default: site.lang %}{% assign _ri = site.data.i18n[_ri_lang] | default: site.data.i18n.fr %}
+{% capture _level_label %}{% case _level %}{% when "faible" %}{{ _ri.risk_low }}{% when "eleve" %}{{ _ri.risk_high }}{% else %}{{ _ri.risk_moderate }}{% endcase %}{% endcapture %}
 <div class="risk-item risk-item--{{ _level }}">
   <span class="risk-item-icon"><i class="{{ include.icon | default: 'fas fa-triangle-exclamation' }}"></i></span>
   <div class="risk-item-body">

@@ -41,7 +41,7 @@
       if (matches.length === 0) {
         var empty = document.createElement('div');
         empty.className = 'site-search-empty';
-        empty.textContent = 'Aucun résultat.';
+        empty.textContent = input.dataset.emptyLabel || 'Aucun résultat.';
         results.appendChild(empty);
         wrapper.classList.add('is-active');
         return;

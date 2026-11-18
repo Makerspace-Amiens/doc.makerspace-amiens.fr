@@ -2,11 +2,19 @@
   Widget « Besoin d'aide ? » : Otto en bas à droite de toutes les pages,
   lien vers l'assistant IA. URL et libellé dans _config.yml (help_bot).
   Masquer sur une page : help_bot: false dans son front matter.
+  Libellés dans _data/i18n.yml (help_bot_label, help_bot_aria), selon la langue du build ;
+  site.help_bot.label (_config.yml) reste prioritaire pour le français.
 {%- endcomment -%}
 {%- if site.help_bot.url and page.help_bot != false -%}
+{%- assign _ui = site.data.i18n[site.lang] | default: site.data.i18n.fr -%}
+{%- if site.lang == site.default_lang -%}
+  {%- assign _hb_label = site.help_bot.label | default: _ui.help_bot_label -%}
+{%- else -%}
+  {%- assign _hb_label = _ui.help_bot_label -%}
+{%- endif -%}
 <a class="help-bot" href="{{ site.help_bot.url }}" target="_blank" rel="noopener"
-   aria-label="{{ site.help_bot.label | default: "Besoin d'aide ?" }} Ouvrir l'assistant IA (nouvel onglet)">
-  <span class="help-bot-bubble">{{ site.help_bot.label | default: "Besoin d'aide ?" }}</span>
+   aria-label="{{ _hb_label }} {{ _ui.help_bot_aria }}">
+  <span class="help-bot-bubble">{{ _hb_label }}</span>
   <img class="help-bot-otto" src="{{ '/assets/img/otto-help.webp' | relative_url }}" alt="" width="58" height="80">
 </a>
 {%- endif -%}

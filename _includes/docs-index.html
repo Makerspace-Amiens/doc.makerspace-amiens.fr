@@ -1,0 +1,108 @@
+{%- comment -%}
+  Contenu de la page /docs/, partagé par docs.md (français) et docs.en.md (anglais).
+  Libellés dans _data/i18n.yml, selon la langue du build.
+{%- endcomment -%}
+{%- assign _ui = site.data.i18n[site.lang] | default: site.data.i18n.fr -%}
+
+<div class="field">
+  <div class="control has-icons-left">
+    <input class="input is-medium" type="text" id="doc-search" placeholder="{{ _ui.docs_search_placeholder }}">
+    <span class="icon is-left"><i class="fas fa-search"></i></span>
+  </div>
+</div>
+
+<div class="doc-section" id="tutoriels-section">
+  <h2 id="tutoriels" class="title is-3">{{ _ui.tutorials }}</h2>
+  <p class="subtitle is-5 has-text-grey">{{ _ui.docs_tutorials_sub }}</p>
+
+  {%- assign tutoCategories = "" | split: "" -%}
+  {%- for item in site.docs -%}
+    {%- if item.type contains "tutorial" and item.path -%}
+      {%- assign pathSegments = item.path | split: "/" -%}
+      {%- if pathSegments.size > 3 -%}
+        {%- assign cat = pathSegments[2] -%}
+        {%- unless tutoCategories contains cat -%}
+          {%- assign tutoCategories = tutoCategories | push: cat -%}
+        {%- endunless -%}
+      {%- endif -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- assign tutoCategories = tutoCategories | sort -%}
+
+  {% if tutoCategories.size > 0 %}
+  <div class="tags doc-filter">
+    <button type="button" class="tag is-medium is-link doc-filter-btn is-active" data-category="all">{{ _ui.filter_all }}</button>
+    {% for cat in tutoCategories %}
+      {%- assign cat_default = cat | replace: "-", " " | capitalize -%}
+      <button type="button" class="tag is-medium doc-filter-btn" data-category="{{ cat }}">
+        {{- _ui.categories[cat] | default: cat_default -}}
+      </button>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% include card_collections.html type="tutorial" category_path_offset=2 %}
+
+  <p class="doc-empty has-text-grey" style="display:none">{{ _ui.section_empty }}</p>
+</div>
+
+<hr class="has-background-grey-lighter my-6" style="height: 2px; border: none;">
+
+<div class="doc-section" id="guides-section">
+  <h2 id="guides" class="title is-3">{{ _ui.docs_guides }}</h2>
+  <p class="subtitle is-5 has-text-grey">{{ _ui.docs_guides_sub }}</p>
+
+  {% include card_collections.html type="how-to" %}
+
+  <p class="doc-empty has-text-grey" style="display:none">{{ _ui.section_empty }}</p>
+</div>
+
+<hr class="has-background-grey-lighter my-6" style="height: 2px; border: none;">
+
+<div class="doc-section" id="concepts-section">
+  <h2 id="concepts" class="title is-3">{{ _ui.concepts }}</h2>
+  <p class="subtitle is-5 has-text-grey">{{ _ui.docs_concepts_sub }}</p>
+
+  {% include card_collections.html type="concept" %}
+
+  <p class="doc-empty has-text-grey" style="display:none">{{ _ui.section_empty }}</p>
+</div>
+
+<hr class="has-background-grey-lighter my-6" style="height: 2px; border: none;">
+
+<div class="doc-section" id="references-section">
+  <h2 id="references" class="title is-3">{{ _ui.references }}</h2>
+  <p class="subtitle is-5 has-text-grey">{{ _ui.docs_references_sub }}</p>
+
+  {%- assign refCategories = "" | split: "" -%}
+  {%- for item in site.docs -%}
+    {%- if item.path contains "_docs/references/" -%}
+      {%- assign pathSegments = item.path | split: "/" -%}
+      {%- if pathSegments.size > 3 -%}
+        {%- assign cat = pathSegments[2] -%}
+        {%- unless refCategories contains cat -%}
+          {%- assign refCategories = refCategories | push: cat -%}
+        {%- endunless -%}
+      {%- endif -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- assign refCategories = refCategories | sort -%}
+
+  {% if refCategories.size > 0 %}
+  <div class="tags doc-filter">
+    <button type="button" class="tag is-medium is-link doc-filter-btn is-active" data-category="all">{{ _ui.filter_all }}</button>
+    {% for cat in refCategories %}
+      {%- assign cat_default = cat | replace: "-", " " | capitalize -%}
+      <button type="button" class="tag is-medium doc-filter-btn" data-category="{{ cat }}">
+        {{- _ui.categories[cat] | default: cat_default -}}
+      </button>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% include card_collections.html path_prefix="_docs/references/" category_path_offset=2 %}
+
+  <p class="doc-empty has-text-grey" style="display:none">{{ _ui.section_empty }}</p>
+</div>
+
+<script src="{{ '/assets/js/doc-search.js' | relative_url }}"></script>

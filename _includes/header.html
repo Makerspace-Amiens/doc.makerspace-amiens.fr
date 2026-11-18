@@ -1,3 +1,4 @@
+{%- assign _ui = site.data.i18n[site.lang] | default: site.data.i18n.fr -%}
 <nav
     class="navbar is-primary {% if site.fixed_navbar %} is-fixed-{{ site.fixed_navbar }} {% endif %}"
     x-data="{ openNav: false }"
@@ -48,7 +49,7 @@
                                 </a>
                                 <div class="navbar-dropdown">
                                     {% if item.link == "/workshops/" %}
-                                        <div class="navbar-item has-text-weight-semibold is-size-7 has-text-grey is-uppercase">Projets</div>
+                                        <div class="navbar-item has-text-weight-semibold is-size-7 has-text-grey is-uppercase">{{ _ui.nav_projects }}</div>
                                         {% for subitem in workshops_projects %}
                                             <a
                                                 href="{{ subitem.permalink | relative_url }}"
@@ -58,7 +59,7 @@
                                             </a>
                                         {% endfor %}
                                         <hr class="navbar-divider">
-                                        <div class="navbar-item has-text-weight-semibold is-size-7 has-text-grey is-uppercase">Thématiques</div>
+                                        <div class="navbar-item has-text-weight-semibold is-size-7 has-text-grey is-uppercase">{{ _ui.nav_courses }}</div>
                                         {% for subitem in workshops_courses %}
                                             <a
                                                 href="{{ subitem.permalink | relative_url }}"
@@ -100,9 +101,10 @@
                             class="input is-small"
                             type="text"
                             id="site-search-input"
-                            placeholder="Rechercher..."
+                            placeholder="{{ _ui.search_placeholder }}"
                             autocomplete="off"
-                            data-search-url="{{ '/search.json' | relative_url }}"
+                            data-search-url="{% if site.lang != site.default_lang %}{{ '/' | append: site.lang | append: '/search.json' | relative_url }}{% else %}{{ '/search.json' | relative_url }}{% endif %}"
+                            data-empty-label="{{ _ui.search_empty }}"
                         >
                         <span class="icon is-small is-left"><i class="fas fa-search"></i></span>
                     </div>
@@ -111,17 +113,18 @@
                 <a
                     class="navbar-item"
                     href="{{ '/docs/tutorials/writing-guide/' | relative_url }}"
-                    title="Guide de rédaction : comment créer une page de documentation"
+                    title="{{ _ui.writing_guide_title }}"
                 >
                     <span class="icon"><i class="fas fa-file-code"></i></span>
                 </a>
                 <a
                     class="navbar-item"
                     href="{{ '/admin/' | relative_url }}"
-                    title="Administration du site"
+                    title="{{ _ui.admin_title }}"
                 >
                     <span class="icon"><i class="fas fa-gear"></i></span>
                 </a>
+                {% include lang-switch.html %}
                 {% if site.gh_sponsor %}
                     <a class="navbar-item" href="https://github.com/sponsors/{{ site.gh_sponsor }}">
                         <span class="icon gh-sponsor"><i class="fas fa-heart"></i></span>
@@ -132,5 +135,7 @@
         </div>
     </div>
 </nav>
+
+{% include lang-notice.html %}
 
 <script src="{{ '/assets/js/site-search.js' | relative_url }}"></script>

@@ -1,0 +1,23 @@
+/* Site bilingue (jekyll-polyglot) : sélecteur de langue et bandeau « page non traduite »
+   (_includes/lang-switch.html, _includes/lang-notice.html) */
+
+.navbar-item.lang-switch {
+  gap: 0.15rem;
+  font-size: 0.85rem;
+}
+
+.lang-notice {
+  padding: 0.6rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-subtle);
+  color: var(--fg-strong);
+  font-size: 0.9rem;
+
+  .container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .icon { color: var(--primary); }
+}

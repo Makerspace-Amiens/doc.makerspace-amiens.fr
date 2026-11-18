@@ -1,0 +1,30 @@
+{%- comment -%}
+  Sélecteur de langue de la navbar (jekyll-polyglot). Toutes les pages existent dans toutes
+  les langues (une page non traduite est servie dans la langue d'origine, avec un bandeau),
+  le lien vers l'autre langue est donc toujours valide.
+  - vers une langue non par défaut : /en + URL de la page (polyglot ne retouche pas ces liens) ;
+  - vers le français : `static_href`, sinon polyglot ajouterait /en/ devant le lien.
+{%- endcomment -%}
+{%- for _lang in site.languages -%}
+  {%- if _lang != site.lang -%}
+    {%- assign _target = site.data.i18n[_lang] -%}
+    {%- assign _here = site.data.i18n[site.lang] -%}
+    {%- if _lang == site.default_lang -%}
+      <a class="navbar-item lang-switch" {% static_href %}href="{{ page.url | relative_url }}"{% endstatic_href %} hreflang="{{ _lang }}" lang="{{ _lang }}" title="{{ _here.switch_language }}">
+    {%- else -%}
+      <a class="navbar-item lang-switch" href="{{ '/' | append: _lang | append: page.url | relative_url }}" hreflang="{{ _lang }}" lang="{{ _lang }}" title="{{ _here.switch_language }}">
+    {%- endif -%}
+        <span class="icon"><i class="fas fa-globe"></i></span>
+        <span class="is-uppercase has-text-weight-semibold">{{ _lang }}</span>
+        <span class="is-sr-only">{{ _target.language_name }}</span>
+      </a>
+  {%- endif -%}
+{%- endfor -%}
+{%- comment -%} Garde ?project=... et l'ancre en changeant de langue. {%- endcomment -%}
+<script>
+  document.querySelectorAll('a.lang-switch').forEach(function (a) {
+    a.addEventListener('click', function () {
+      a.href = a.href.split(/[?#]/)[0] + window.location.search + window.location.hash;
+    });
+  });
+</script>
