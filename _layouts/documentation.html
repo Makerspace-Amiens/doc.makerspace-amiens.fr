@@ -451,22 +451,14 @@ layout: default
 
             {% comment %} Prev / next navigation for project tutorials {% endcomment %}
             {% if _in_project %}
-              {% assign _parent_proj = nil %}
-              {% for proj in _all_docs %}
-                {% if proj.tutorials and _parent_proj == nil %}
-                  {% for tuto_url in proj.tutorials %}
-                    {% if tuto_url == page.url %}{% assign _parent_proj = proj %}{% endif %}
-                  {% endfor %}
-                {% endif %}
-              {% endfor %}
+              {% comment %} Une navigation par atelier qui liste la page dans tutorials: (page partagée) ; le script affiche celle de ?project= {% endcomment %}
+              {% for _parent_proj in _referencing_projects %}
               {% assign all_tutos = '' | split: '' %}
-              {% if _parent_proj %}
-                {% for tuto_url in _parent_proj.tutorials %}
-                  {% assign found = _all_docs | where: 'url', tuto_url | first %}
-                  {% if found %}{% assign all_tutos = all_tutos | push: found %}{% endif %}
-                {% endfor %}
-              {% endif %}
-              {% comment %} L'ordre vient de la liste tutorials: du projet — pas de sort {% endcomment %}
+              {% for tuto_url in _parent_proj.tutorials %}
+                {% assign found = _all_docs | where: 'url', tuto_url | first %}
+                {% if found %}{% assign all_tutos = all_tutos | push: found %}{% endif %}
+              {% endfor %}
+              {% comment %} L'ordre vient de la liste tutorials: du projet, pas de sort {% endcomment %}
 
               {% assign prev_tuto = nil %}
               {% assign next_tuto = nil %}
@@ -483,7 +475,7 @@ layout: default
                 {% endunless %}
               {% endfor %}
 
-              <nav class="tuto-nav" style="display:none">
+              <nav class="tuto-nav" data-project="{{ _parent_proj.project_slug }}" style="display:none">
                 <div class="tuto-nav-prev">
                   {% if prev_tuto %}
                   <a href="{{ prev_tuto.url | relative_url }}" class="tuto-nav-btn" data-base-url="{{ prev_tuto.url | relative_url }}">
@@ -507,6 +499,7 @@ layout: default
                   {% endif %}
                 </div>
               </nav>
+              {% endfor %}
             {% endif %}
 
             {% comment %} Prev / next navigation for project concepts {% endcomment %}
@@ -639,7 +632,8 @@ layout: default
   if (!slug) return;
   var sidebar = document.querySelector('.pt-project-sidebar[data-project="' + slug + '"]');
   if (sidebar) sidebar.style.removeProperty('display');
-  var nav = document.querySelector('.tuto-nav');
+  // Page partagée : la navigation de l'atelier d'origine, sinon la première (concepts, modules)
+  var nav = document.querySelector('.tuto-nav[data-project="' + slug + '"]') || document.querySelector('.tuto-nav:not([data-project])');
   if (nav) nav.style.removeProperty('display');
   document.querySelectorAll('.tuto-nav-btn[data-base-url]').forEach(function (a) {
     a.href = a.dataset.baseUrl + '?project=' + encodeURIComponent(slug);

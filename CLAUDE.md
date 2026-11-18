@@ -131,7 +131,7 @@ Toutes les listes acceptent des URLs internes d'autres collections (cross-refere
 
 ### Page partagée entre plusieurs ateliers
 
-Une même page peut figurer dans les listes de plusieurs ateliers (ex. `creer-repo-template` de Méthodologie, aussi utilisé par `portfolio-ingenieur`). Le lien d'une carte porte `?project=<slug>` : la page affiche alors la navigation de l'atelier d'origine. Pour adapter le contenu :
+Une même page peut figurer dans les listes de plusieurs ateliers (ex. `creer-repo-template` de Méthodologie, aussi utilisé par `portfolio-ingenieur`). Le lien d'une carte porte `?project=<slug>` : la page affiche alors la navigation de l'atelier d'origine (barre de progression et boutons Précédent / Suivant : `documentation.html` génère un `<nav class="tuto-nav" data-project="...">` par atelier qui liste la page dans `tutorials:`, le script montre celui de `?project=`). Pour adapter le contenu :
 
 - **Onglets par atelier** : `content-tabs.html` avec `tab_project1="methodologie-de-projet"`, `tab_project2="portfolio-ingenieur"`... L'onglet de l'atelier d'origine s'ouvre seul ; sans `?project=`, le premier onglet reste affiché (le mettre pour l'atelier historique). Un onglet peut être placé dans le `content=` d'un `step-tuto` via `{% capture %}`.
 - **Bloc masqué pour un atelier** : `<div data-project-hide="portfolio-ingenieur" markdown="1">...</div>` (script dans `documentation.html`, chargé seulement si la page contient `data-project-hide`).
