@@ -436,9 +436,6 @@ Le bloc convolution, ReLU, pooling peut être répété plusieurs fois.
 
 [De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
 
----
-
-## CNN : rôle de chaque composant (inférence)
 
 | Composant | Rôle |
 |---|---|
