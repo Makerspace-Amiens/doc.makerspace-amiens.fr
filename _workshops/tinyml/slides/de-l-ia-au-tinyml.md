@@ -275,7 +275,7 @@ Sur la première position : (3 + 1 + 2) − (1 + 8 + 2) = −5. Ce filtre `[1 0 
 - Le même filtre sert partout dans l'image, donc peu de paramètres (**9 poids** pour un filtre 3 × 3).
 - Les valeurs du filtre sont **apprises** pendant l'entraînement. Dans cet exemple, chaque ligne du filtre vaut `[1 0 -1]`.
 
-  ![Une image 6 × 6 convoluée par un filtre 3 × 3 donne une carte de caractéristiques 4 × 4](/workshops/tinyml/slides/de-l-ia-au-tinyml/convolution-filtre-3x33.png){: .img-md}
+  ![Une image 6 × 6 convoluée par un filtre 3 × 3 donne une carte de caractéristiques 4 × 4](/workshops/tinyml/slides/de-l-ia-au-tinyml/convolution-filtre-3x33.png){: width="300px"}
 
 [De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
 
