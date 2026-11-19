@@ -258,7 +258,7 @@ Un réseau de neurones artificiels est un modèle composé de neurones connecté
 
 ## CNN : principe de convolution
 
-![Une image 6 × 6 convoluée par un filtre 3 × 3 donne une carte de caractéristiques 4 × 4](/workshops/tinyml/concepts/de-l-ia-au-tinyml/convolution-filtre-3x2.png){: .img-md}
+![Une image 6 × 6 convoluée par un filtre 3 × 3 donne une carte de caractéristiques 4 × 4](/workshops/tinyml/concepts/de-l-ia-au-tinyml/convolution-filtre-3x3.png){: .img-md}
 
 Un filtre (ici 3 × 3) glisse sur l'image : on multiplie case par case, puis on additionne. Chaque position donne un nombre, et l'ensemble forme une **feature map** (carte de caractéristiques).
 {: .caption}
@@ -277,7 +277,7 @@ Sur la première position : (3 + 1 + 2) − (1 + 8 + 2) = −5. Ce filtre `[1 0 
 - Le même filtre sert partout dans l'image, donc peu de paramètres (**9 poids** pour un filtre 3 × 3).
 - Les valeurs du filtre sont **apprises** pendant l'entraînement. Dans cet exemple, chaque ligne du filtre vaut `[1 0 -1]`.
 
-  ![Une image 6 × 6 convoluée par un filtre 3 × 3 donne une carte de caractéristiques 4 × 4](/workshops/tinyml/concepts/de-l-ia-au-tinyml/convolution-filtre-3x2.png){: .img-md}
+  ![Une image 6 × 6 convoluée par un filtre 3 × 3 donne une carte de caractéristiques 4 × 4](/workshops/tinyml/concepts/de-l-ia-au-tinyml/convolution-filtre-3x3.png){: .img-md}
 
 [De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
 
@@ -294,18 +294,20 @@ Sur la première position : (3 + 1 + 2) − (1 + 8 + 2) = −5. Ce filtre `[1 0 
 
 ---
 
-## CNN : padding et sliding
+## CNN : Padding 
 
 <div class="columns" markdown="1">
 <div markdown="1">
 
-- **Padding** : des pixels, souvent des zéros, ajoutés autour de l'image. Les bords sont mieux traités, la taille peut être conservée.
-- **Sliding** : le filtre glisse de zone en zone ; le **stride** est son pas, en cases.
+- **Padding** : ajout de pixels, souvent des zéros, autour de l’image avant la convolution. Il permet de mieux traiter les bords et peut aider à conserver la taille de l’image en sortie.
+
+
+
 
 </div>
 <div markdown="1">
 
-![À gauche, le padding ajoute une bordure de zéros et conserve la taille 5 × 5 ; à droite, un stride de 2 donne une sortie 2 × 2](/workshops/tinyml/concepts/de-l-ia-au-tinyml/padding-et-stride.png)
+![À gauche, le padding ajoute une bordure de zéros et conserve la taille 5 × 5 ; à droite, un stride de 2 donne une sortie 2 × 2](/workshops/tinyml/concepts/de-l-ia-au-tinyml/padding.png)
 
 </div>
 </div>
@@ -317,11 +319,29 @@ n : taille de l'image d'origine, p : padding, f : taille du filtre, s : sliding 
 
 [De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
 
-<aside class="notes" markdown="1">
-Vérifier sur la convolution précédente : (6 + 0 − 3) / 1 + 1 = 4, d'où la carte 4 × 4. Question à poser : quelle sortie pour une image 96 × 96, un filtre 3 × 3, sans padding ? Réponse : 94 × 94.
-</aside>
 
 ---
+## CNN :  sliding
+
+<div class="columns" markdown="1">
+<div markdown="1">
+
+- **Sliding** : déplacement du filtre sur l’image pour examiner les zones les unes après les autres. Le stride indique de combien de cases le filtre avance à chaque déplacement.
+
+</div>
+<div markdown="1">
+
+![À gauche, le padding ajoute une bordure de zéros et conserve la taille 5 × 5 ; à droite, un stride de 2 donne une sortie 2 × 2](/workshops/tinyml/concepts/de-l-ia-au-tinyml/stride.png)
+
+</div>
+</div>
+
+
+[De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
+
+
+---
+
 
 ## CNN : images couleur et filtres multiples
 
