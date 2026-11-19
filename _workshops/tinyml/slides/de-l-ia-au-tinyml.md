@@ -128,7 +128,7 @@ Deux types de problèmes : les **régressions** et les **classifications**.
 
 ## Les régressions
 
-![La régression linéaire : trois maisons d'exemple (surface et prix), le nuage de points et la droite de régression, puis le prix prédit d'une nouvelle maison de 105 m², environ 285 000 €](/workshops/tinyml/slides/de-l-ia-au-tinyml/regression-lineaire.jpg){: style="max-height: 360px"}
+![La régression linéaire : trois maisons d'exemple (surface et prix), le nuage de points et la droite de régression, puis le prix prédit d'une nouvelle maison de 105 m², environ 285 000 €](/workshops/tinyml/slides/de-l-ia-au-tinyml/regression-lineaire.png){: style="max-height: 360px"}
 
 La régression, c'est quand on cherche à prédire une **quantité** : le prix d'une maison, la durée d'un trajet, une température, un poids...
 {: .caption}
@@ -139,12 +139,12 @@ La régression, c'est quand on cherche à prédire une **quantité** : le prix d
 
 ## Les classifications
 
-![La classification : un tableau d'animaux d'exemple (taille, poids, classe), le nuage de points coupé par une frontière entre chats et chiens, puis un nouvel animal de taille 105 et de poids 140, prédit chien](/workshops/tinyml/slides/de-l-ia-au-tinyml/classification.jpg){: style="max-height: 360px"}
+![La classification : un tableau d'animaux d'exemple (taille, poids, classe), le nuage de points coupé par une frontière entre chats et chiens, puis un nouvel animal de taille 105 et de poids 140, prédit chien](/workshops/tinyml/slides/de-l-ia-au-tinyml/classification.png){: style="max-height: 360px"}
 
 La classification, c'est quand on cherche à prédire une **classe** : un animal, un état de santé, une couleur, un type de véhicule...
 {: .caption}
 
-[De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link} [Le problème et les données](/workshops/tinyml/tutorials/probleme-et-donnees/){: .doc-link}
+[De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link} 
 
 ---
 
@@ -162,7 +162,7 @@ Le *machine learning* est une branche de l'IA qui permet aux machines d'**appren
 
 ## L'apprentissage non supervisé
 
-![L'apprentissage non supervisé en trois temps : des animaux sans étiquettes, leur regroupement automatique selon la taille et le poids, puis deux groupes trouvés sans en connaître le nom](/workshops/tinyml/slides/de-l-ia-au-tinyml/apprentissage-non-supervise.jpg){: style="max-height: 360px"}
+![L'apprentissage non supervisé en trois temps : des animaux sans étiquettes, leur regroupement automatique selon la taille et le poids, puis deux groupes trouvés sans en connaître le nom](/workshops/tinyml/slides/de-l-ia-au-tinyml/apprentissage-non-supervise.png){: style="max-height: 360px"}
 
 Le modèle analyse des données **sans réponses indiquées** et regroupe celles qui se ressemblent : des animaux de taille et de poids proches, sans savoir à l'avance s'il s'agit de chats ou de chiens.
 {: .caption}
@@ -210,6 +210,19 @@ Une branche du machine learning qui utilise des **réseaux de neurones à plusie
 
 ---
 
+---
+
+## Réseau de neurones artificiels
+
+Un réseau de neurones artificiels est un modèle composé de neurones connectés et organisés en couches. Il apprend à reconnaître des relations dans les données en ajustant les poids de ses connexions.
+
+(/workshops/tinyml/slides/de-l-ia-au-tinyml/reseau.png){: style="max-height: 360px"}
+
+[De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
+
+---
+
+
 ## Image et vision par ordinateur
 
 <div class="columns" markdown="1">
@@ -227,7 +240,7 @@ Une branche du machine learning qui utilise des **réseaux de neurones à plusie
 </div>
 </div>
 
-[De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link} [Prétraitement](/workshops/tinyml/tutorials/pretraitement/){: .doc-link}
+[De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
 
 ---
 
