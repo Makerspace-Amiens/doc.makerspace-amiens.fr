@@ -12,8 +12,6 @@ back_link: /workshops/tinyml/
 
 1. Introduction : l'intelligence artificielle
 2. Tiny Machine Learning
-3. Edge computing par TinyML sur ESP32
-4. Conclusion
 
 <aside class="notes" markdown="1">
 La version rédigée du cours est la page concept « De l'intelligence artificielle au TinyML ». Fil rouge de l'atelier : reconnaître un chat ou un chien sur une image, avec une XIAO ESP32S3 et sa caméra.
@@ -434,7 +432,7 @@ flowchart LR
 Le bloc convolution, ReLU, pooling peut être répété plusieurs fois.
 {: .caption}
 
-[De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
+
 
 
 | Composant | Rôle |
@@ -600,7 +598,7 @@ Représenter les valeurs numériques d'un modèle avec **moins de bits** : par e
 
 ![La plage des valeurs float32, de -3e38 à 3e38, dont seule la zone entre min et max est utilisée, projetée sur les 255 valeurs de l'int8, de -127 à 127](/workshops/tinyml/slides/de-l-ia-au-tinyml/quantification-int8.png)
 
-Les valeurs sont converties et arrondies dans un format plus compact : le modèle prend moins de mémoire, et les calculs peuvent aller plus vite selon le matériel. Un poids sur 32 bits utilise 4 octets ; en `int8`, 1 octet. La précision peut toutefois diminuer légèrement.
+Les valeurs sont converties et arrondies dans un format plus compact : le modèle prend moins de mémoire, et les calculs peuvent aller plus vite selon le matériel. Un poids sur 32 bits utilise 4 octets ; en `int8`,il utilise 1 octet. La précision peut toutefois diminuer légèrement.
 {: .caption}
 
 [De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link} [Quantification](/workshops/tinyml/tutorials/quantification/){: .doc-link}
@@ -617,67 +615,6 @@ Les poids prennent **quatre fois moins** de place. L'arrondi coûte un peu de pr
 {: .caption}
 
 [Quantification](/workshops/tinyml/tutorials/quantification/){: .doc-link}
-
----
-
-<!-- .slide: class="slide-section" -->
-
-## Edge computing par TinyML sur ESP32
-
-Le modèle de l'atelier · Sa taille sur la carte
-
----
-
-## Le modèle de l'atelier
-
-```python
-tf.keras.layers.Input(shape=(96, 96, 3)),
-tf.keras.layers.Conv2D(8, 3, use_bias=False),   # 8 filtres 3 × 3
-tf.keras.layers.BatchNormalization(),
-tf.keras.layers.ReLU(),
-tf.keras.layers.MaxPooling2D(),
-# ... trois autres blocs : 16, 32 puis 64 filtres
-tf.keras.layers.GlobalAveragePooling2D(),
-tf.keras.layers.Dense(32, activation="relu"),
-tf.keras.layers.Dense(1, activation="sigmoid"),  # probabilité « chien »
-```
-
-Un seul neurone de sortie, en sigmoïde : son score est la probabilité que l'image montre un chien.
-{: .caption}
-
-[Modélisation](/workshops/tinyml/tutorials/modelisation/){: .doc-link}
-
----
-
-## Sa taille sur la carte
-
-<div class="columns" markdown="1">
-<div markdown="1">
-
-<p class="big-number">109 Ko</p>
-
-le modèle en `float32`, au format TensorFlow Lite
-
-</div>
-<div markdown="1">
-
-<p class="big-number">36 Ko</p>
-
-le même modèle quantifié en `int8`
-
-</div>
-</div>
-
-Trois fois plus petit, et non quatre : le fichier décrit aussi la structure du réseau et ses paramètres de quantification.
-{: .caption}
-
-[Quantification](/workshops/tinyml/tutorials/quantification/){: .doc-link} [Mesurer la mémoire et le temps d'inférence](/workshops/tinyml/how-to-guides/mesurer-memoire-temps-inference/){: .doc-link}
-
----
-
-<!-- .slide: class="slide-section" -->
-
-## Conclusion
 
 ---
 
