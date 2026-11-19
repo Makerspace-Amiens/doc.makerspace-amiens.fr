@@ -70,6 +70,47 @@ fr:
     tools: Outils
     mechanical: Mécanique
     general: Général
+  # Simulateur de mouvement (_includes/simulateur-robot.html, assets/js/robot-sim.js)
+  robot_sim:
+    aria: "Simulateur de mouvement d'un robot mobile vu de dessus"
+    type_differentiel: robot différentiel
+    type_tricycle: tricycle
+    type_ackermann: type voiture
+    type_omni: robot omnidirectionnel à roues omni
+    type_mecanum: robot à roues mecanum
+    type_swerve: robot swerve
+    left_wheel: Roue gauche
+    right_wheel: Roue droite
+    front_wheel_speed: Vitesse de la roue avant
+    steering: Braquage
+    speed: Vitesse
+    forward: Avancer / reculer
+    sideways: Droite / gauche
+    rotation: Rotation
+    preset_straight: Ligne droite
+    preset_turn_left: Virage à gauche
+    preset_turn_right: Virage à droite
+    preset_spin: Rotation sur place
+    preset_max_steer: Braquage maximal
+    preset_forward: Avancer
+    preset_crab: En crabe
+    preset_diagonal: En diagonale
+    preset_turn_moving: Tourner en se déplaçant
+    preset_stop: Arrêt
+    pause: Pause
+    play: Reprendre
+    reset: Recentrer
+    wheels: Vitesse des roues
+    saturated: "Une roue atteint sa vitesse maximale : tout le mouvement est ralenti d'autant."
+    icr: CIR
+    w_left: Gauche
+    w_right: Droite
+    w_front: Avant
+    w_back: Arrière
+    w_front_left: Av. gauche
+    w_front_right: Av. droite
+    w_rear_left: Ar. gauche
+    w_rear_right: Ar. droite
   # --- Interface globale (navbar, footer, accueil, recherche) : langue du build (site.lang)
   language_name: Français
   switch_language: Read this page in English
@@ -186,6 +227,47 @@ en:
     tools: Tools
     mechanical: Mechanics
     general: General
+  # Motion simulator (_includes/simulateur-robot.html, assets/js/robot-sim.js)
+  robot_sim:
+    aria: Motion simulator of a mobile robot seen from above
+    type_differentiel: differential drive robot
+    type_tricycle: tricycle
+    type_ackermann: car-like robot
+    type_omni: omnidirectional robot with omni wheels
+    type_mecanum: mecanum wheel robot
+    type_swerve: swerve drive robot
+    left_wheel: Left wheel
+    right_wheel: Right wheel
+    front_wheel_speed: Front wheel speed
+    steering: Steering
+    speed: Speed
+    forward: Forward / backward
+    sideways: Right / left
+    rotation: Rotation
+    preset_straight: Straight line
+    preset_turn_left: Turn left
+    preset_turn_right: Turn right
+    preset_spin: Spin in place
+    preset_max_steer: Full lock
+    preset_forward: Forward
+    preset_crab: Sideways
+    preset_diagonal: Diagonal
+    preset_turn_moving: Turn while moving
+    preset_stop: Stop
+    pause: Pause
+    play: Resume
+    reset: Recenter
+    wheels: Wheel speeds
+    saturated: "A wheel has reached its top speed: the whole motion is slowed down to match."
+    icr: ICR
+    w_left: Left
+    w_right: Right
+    w_front: Front
+    w_back: Back
+    w_front_left: Front left
+    w_front_right: Front right
+    w_rear_left: Rear left
+    w_rear_right: Rear right
   # --- Global interface (navbar, footer, home, search): build language (site.lang)
   language_name: English
   switch_language: Lire cette page en français

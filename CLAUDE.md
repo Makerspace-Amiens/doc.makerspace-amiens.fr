@@ -323,6 +323,14 @@ Structure de l'atelier (depuis le 2026-11-02) : les **trois CM d'abord**, puis l
 {% include youtube.html video="VIDEO_ID" %}
 ```
 
+**Simulateur de mouvement d'un robot mobile** (vue de dessus, curseurs + mouvements prédéfinis, trace et CIR) :
+
+```liquid
+{% include simulateur-robot.html type="differentiel" %}
+```
+
+`type` : `differentiel`, `tricycle`, `ackermann` (commande des roues) ou `omni`, `mecanum`, `swerve` (commande du mouvement voulu, vitesses des roues calculées et saturées). Script `assets/js/robot-sim.js`, chargé une fois par page ; libellés dans la clé `robot_sim` de `_data/i18n.yml`. Exemple : `_docs/concepts/robot-mobile-a-roues.md`.
+
 **Visionneuse 3D** (`model-viewer`) et **KiCanvas** (schémas KiCad) : activés automatiquement via `documentation.html` — utiliser les balises HTML natives `<model-viewer>` et `<kicanvas-schematic>`.
 
 ---

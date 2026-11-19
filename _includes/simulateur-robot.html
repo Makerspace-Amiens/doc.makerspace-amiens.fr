@@ -1,0 +1,20 @@
+{%- comment -%}
+Simulateur de mouvement d'un robot mobile à roues, vu de dessus (canvas + curseurs).
+  {% include simulateur-robot.html type="differentiel" %}
+type : differentiel (défaut), tricycle, ackermann, omni, mecanum, swerve.
+Le script assets/js/robot-sim.js n'est chargé qu'une fois par page, et seulement
+s'il y a un simulateur. Libellés : clé robot_sim de _data/i18n.yml.
+{%- endcomment -%}
+{%- assign _rs_lang = page.lang | default: site.lang -%}
+{%- assign _rs = site.data.i18n[_rs_lang].robot_sim | default: site.data.i18n.fr.robot_sim -%}
+<figure class="robot-sim" data-type="{{ include.type | default: 'differentiel' }}" data-labels='{{ _rs | jsonify | replace: "'", "&#39;" }}'></figure>
+<script>
+(function () {
+  if (window.RobotSim) { document.querySelectorAll(".robot-sim[data-type]").forEach(window.RobotSim.mount); return; }
+  if (window.chargementRobotSim) return;
+  window.chargementRobotSim = true;
+  var s = document.createElement("script");
+  s.src = "{{ '/assets/js/robot-sim.js' | relative_url }}";
+  document.head.appendChild(s);
+})();
+</script>
