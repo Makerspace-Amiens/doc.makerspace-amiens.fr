@@ -162,10 +162,6 @@ Le modèle classe correctement 87,68 % des images de test, avec une perte de 0,2
 
 La précision ne dit pas quelles erreurs le modèle commet. La matrice de confusion compare les classes réelles aux classes prédites et montre si le modèle confond plus souvent les chats ou les chiens.
 
-{% include step-tuto.html
-greyBackground=true
-title="Calculer et afficher la matrice. "
-%}
 
 ```cpp
 # Récupérer les vraies classes
