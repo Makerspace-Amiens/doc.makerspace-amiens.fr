@@ -256,7 +256,7 @@ Un réseau de neurones artificiels est un modèle composé de neurones connecté
 
 ## CNN : principe de convolution
 
-![Une image 6 × 6 convoluée par un filtre 3 × 3 donne une carte de caractéristiques 4 × 4](/workshops/tinyml/concepts/de-l-ia-au-tinyml/convolution-filtre-3x33.png){: .img-md}
+![Une image 6 × 6 convoluée par un filtre 3 × 3 donne une carte de caractéristiques 4 × 4](/workshops/tinyml/slides/de-l-ia-au-tinyml/convolution-filtre-3x33.png){: .img-md}
 
 Un filtre (ici 3 × 3) glisse sur l'image : on multiplie case par case, puis on additionne. Chaque position donne un nombre, et l'ensemble forme une **feature map** (carte de caractéristiques).
 {: .caption}
@@ -275,7 +275,7 @@ Sur la première position : (3 + 1 + 2) − (1 + 8 + 2) = −5. Ce filtre `[1 0 
 - Le même filtre sert partout dans l'image, donc peu de paramètres (**9 poids** pour un filtre 3 × 3).
 - Les valeurs du filtre sont **apprises** pendant l'entraînement. Dans cet exemple, chaque ligne du filtre vaut `[1 0 -1]`.
 
-  ![Une image 6 × 6 convoluée par un filtre 3 × 3 donne une carte de caractéristiques 4 × 4](/workshops/tinyml/concepts/de-l-ia-au-tinyml/convolution-filtre-3x33.png){: .img-md}
+  ![Une image 6 × 6 convoluée par un filtre 3 × 3 donne une carte de caractéristiques 4 × 4](/workshops/tinyml/slides/de-l-ia-au-tinyml/convolution-filtre-3x33.png){: .img-md}
 
 [De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
 
@@ -305,7 +305,7 @@ Sur la première position : (3 + 1 + 2) − (1 + 8 + 2) = −5. Ce filtre `[1 0 
 </div>
 <div markdown="1">
 
-![À gauche, le padding ajoute une bordure de zéros et conserve la taille 5 × 5 ; à droite, un stride de 2 donne une sortie 2 × 2](/workshops/tinyml/concepts/de-l-ia-au-tinyml/paddingg.png)
+![À gauche, le padding ajoute une bordure de zéros et conserve la taille 5 × 5 ; à droite, un stride de 2 donne une sortie 2 × 2](/workshops/tinyml/slides/de-l-ia-au-tinyml/paddingg.png)
 
 </div>
 </div>
@@ -329,7 +329,7 @@ n : taille de l'image d'origine, p : padding, f : taille du filtre, s : sliding 
 </div>
 <div markdown="1">
 
-![À gauche, le padding ajoute une bordure de zéros et conserve la taille 5 × 5 ; à droite, un stride de 2 donne une sortie 2 × 2](/workshops/tinyml/concepts/de-l-ia-au-tinyml/stridee.png)
+![À gauche, le padding ajoute une bordure de zéros et conserve la taille 5 × 5 ; à droite, un stride de 2 donne une sortie 2 × 2](/workshops/tinyml/slides/de-l-ia-au-tinyml/stridee.png)
 
 </div>
 </div>
@@ -386,7 +386,7 @@ Elle apporte de la **non-linéarité**, ce qui permet au CNN d'apprendre des mot
 
 ## CNN : pooling
 
-![Une carte 4 × 4 réduite à 2 × 2 par max pooling : chaque zone 2 × 2 est remplacée par sa valeur maximale](/workshops/tinyml/concepts/de-l-ia-au-tinyml/max-poolingg.png){: style="max-height: 300px"}
+![Une carte 4 × 4 réduite à 2 × 2 par max pooling : chaque zone 2 × 2 est remplacée par sa valeur maximale](/workshops/tinyml/slides/de-l-ia-au-tinyml/max-poolingg.png){: style="max-height: 300px"}
 
 Le **pooling** réduit la taille d'une carte de caractéristiques en gardant l'essentiel, entre deux convolutions, sur chaque carte. **Max pooling** : la valeur maximale de la zone (1, 3, 5, 6 donne 6) ; **average pooling** : la moyenne. Aucun paramètre appris : moins de calculs, et moins de surapprentissage.
 {: .caption}
