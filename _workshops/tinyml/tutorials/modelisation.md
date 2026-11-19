@@ -18,25 +18,25 @@ Une fois les données préparées, nous pouvons construire le modèle qui appren
 
 À la fin de ce tutoriel, vous saurez :
 
-- augmenter légèrement les images d'entraînement ;
+- appliquer de légères transformations aléatoires aux images d'entraînement ;
 - construire un réseau de neurones convolutif avec Keras ;
 - entraîner un modèle avec arrêt anticipé et réduction automatique du taux d'apprentissage ;
 - évaluer un modèle de classification avec la précision et la matrice de confusion.
 
 ### Entraînement du modèle
 
-Nous augmentons légèrement les images d'entraînement, nous construisons le réseau, puis nous l'entraînons sur les données préparées à l'étape précédente (train_data, validation_data et test_data) et nous mesurons sa précision sur le jeu de test
+Nous appliquons de légères transformations aléatoires aux images d'entraînement, nous construisons le réseau, puis nous l'entraînons sur les données préparées à l'étape précédente (train_data, validation_data et test_data) et nous mesurons sa précision sur le jeu de test.
 
 {% include step-tuto.html
 greyBackground=true
-title="Étape 1 : Augmenter les images d'entraînement"
-content="L'augmentation de données crée de légères variations des images (retournement, petite rotation) pour que le modèle ne mémorise pas les images exactes. Elle n'est appliquée qu'à l'entraînement : la validation et le test restent inchangés.
+title="Étape 1 : Transformer légèrement les images d'entraînement"
+content="Pour que le modèle ne mémorise pas les images exactes, nous les modifions au hasard à chaque époque : retournement horizontal et petite rotation. Le modèle voit une variante légèrement différente de chaque image à chaque époque. Ces transformations ne sont appliquées qu'à l'entraînement : la validation et le test restent inchangés.
 "
 %}
 
 
 ```cpp
-# Augmentation légère des images d'entraînement
+# # Transformations aléatoires légères des images d'entraînement
 augmentation_bn = tf.keras.Sequential([
     tf.keras.layers.RandomFlip("horizontal"),
     tf.keras.layers.RandomRotation(0.05)
@@ -195,7 +195,7 @@ La matrice de confusion montre que le modèle a correctement classé 1538 chats 
 
 ## Conclusion
 
-Nous avons construit un petit CNN, l'avons entraîné avec une augmentation légère des images, puis évalué sur le jeu de test. Il atteint 87,68 % de précision et une perte de 0,2876. La matrice de confusion montre que les erreurs sont réparties dans les deux sens, avec un peu plus de chiens classés comme chats.
+Nous avons construit un petit CNN, l'avons entraîné avec de légères transformations aléatoires des images, puis évalué sur le jeu de test. Il atteint 87,68 % de précision et une perte de 0,2876. La matrice de confusion montre que les erreurs sont réparties dans les deux sens, avec un peu plus de chiens classés comme chats.
 
 Ce résultat est correct pour un réseau aussi léger . Il sert de référence pour la suite : le modèle sera compressé par quantification en entiers de 8 bits, puis déployé sur le microcontrôleur, et nous vérifierons que ses résultats restent comparables.
 
