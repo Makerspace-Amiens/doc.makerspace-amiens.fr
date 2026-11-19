@@ -273,9 +273,11 @@ Sur la première position : (3 + 1 + 2) − (1 + 8 + 2) = −5. Ce filtre `[1 0 
 
 ## CNN : principe de convolution
 
-- **Champ récepteur local** : chaque valeur de sortie ne dépend que d'une petite zone de l'image.
-- **Partage de poids** : le même filtre sert partout dans l'image, donc peu de paramètres (**9 poids** pour un filtre 3 × 3).
+- Chaque valeur de sortie ne dépend que d'une petite zone de l'image.
+- Le même filtre sert partout dans l'image, donc peu de paramètres (**9 poids** pour un filtre 3 × 3).
 - Les valeurs du filtre sont **apprises** pendant l'entraînement. Dans cet exemple, chaque ligne du filtre vaut `[1 0 -1]`.
+
+  ![Une image 6 × 6 convoluée par un filtre 3 × 3 donne une carte de caractéristiques 4 × 4](/workshops/tinyml/concepts/de-l-ia-au-tinyml/convolution-filtre-3x3.png){: .img-md}
 
 [De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
 
