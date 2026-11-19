@@ -106,9 +106,17 @@ la branche `archive/competences` des deux dépôts (page, données, partie 9
 du guide étudiant, section 1.3 du guide enseignant, champs `competences:`).
 Ne pas en reparler dans les pages de l'atelier avant que ce soit décidé.
 
-## État
+## État (2026-11-19)
 
-- `index.md` : présentation rédigée, aucune liste de pages pour l'instant.
+- `index.md` / `index.en.md` : présentation, 5 tutoriels, section Slides.
+- Decks des quatre séances écrits, en français et en anglais
+  (`slides/seance-1-creer-publier`, `seance-2-presentation-cv`,
+  `seance-3-documenter-projet`, `seance-4-docs-journal`). Les séances 2 à 4
+  sont une **structure à relire avec l'utilisateur** : durées des activités,
+  consignes, exemples.
+- Guides à écrire, cités dans les notes orateur des decks (lien à ajouter
+  dans les slides quand ils existeront) : CV (séance 2), Ajouter un projet et
+  Enrichir ses pages (séance 3), Écrire une page de documentation (séance 4).
 
 ## Questions ouvertes
 

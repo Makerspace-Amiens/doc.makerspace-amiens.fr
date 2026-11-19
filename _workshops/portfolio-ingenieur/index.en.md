@@ -19,6 +19,9 @@ special_sections:
     desc: "The slide decks of the sessions, to project full screen."
     items:
       - /workshops/portfolio-ingenieur/slides/seance-1-creer-publier/
+      - /workshops/portfolio-ingenieur/slides/seance-2-presentation-cv/
+      - /workshops/portfolio-ingenieur/slides/seance-3-documenter-projet/
+      - /workshops/portfolio-ingenieur/slides/seance-4-docs-journal/
 
 tutorials:
   - /workshops/methodologie-de-projet/tutorials/creer-repo-template/
