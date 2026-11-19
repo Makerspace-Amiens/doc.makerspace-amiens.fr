@@ -27,7 +27,6 @@ Le modèle entraîné stocke ses paramètres sous forme de nombres décimaux sur
 Nous convertissons d'abord le modèle en TensorFlow Lite. Puis nous le quantifions en int8 en fournissant des images qui permettent de calibrer les valeurs.
 
 {% include step-tuto.html
-greyBackground=true
 title="Étape 1 : Convertir le modèle en TensorFlow Lite (référence float32). "
 %}
 
