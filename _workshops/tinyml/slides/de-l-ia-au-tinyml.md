@@ -374,8 +374,7 @@ Avec 8 filtres, la sortie a 8 canaux : c'est la première couche du modèle de l
 
 ## CNN : ReLU
 
-**ReLU** (*Rectified Linear Unit*) est une fonction d'activation qui transforme chaque valeur $x$ ainsi :
-
+**ReLU** (*Rectified Linear Unit*) est une fonction d’activation qui transforme la valeur \(x\) produite par un neurone avant de la transmettre à la couche suivante, selon la règle suivante :
 $$\text{ReLU}(x) = \max(0, x)$$
 
 Si $x$ est négatif, ReLU le remplace par 0 ; s'il est positif, elle le conserve.
@@ -389,7 +388,7 @@ Elle apporte de la **non-linéarité**, ce qui permet au CNN d'apprendre des mot
 
 ## CNN : pooling
 
-![Une carte 4 × 4 réduite à 2 × 2 par max pooling : chaque zone 2 × 2 est remplacée par sa valeur maximale](/workshops/tinyml/concepts/de-l-ia-au-tinyml/max-pooling.png){: style="max-height: 300px"}
+![Une carte 4 × 4 réduite à 2 × 2 par max pooling : chaque zone 2 × 2 est remplacée par sa valeur maximale](/workshops/tinyml/concepts/de-l-ia-au-tinyml/max-poolingg.png){: style="max-height: 300px"}
 
 Le **pooling** réduit la taille d'une carte de caractéristiques en gardant l'essentiel, entre deux convolutions, sur chaque carte. **Max pooling** : la valeur maximale de la zone (1, 3, 5, 6 donne 6) ; **average pooling** : la moyenne. Aucun paramètre appris : moins de calculs, et moins de surapprentissage.
 {: .caption}
