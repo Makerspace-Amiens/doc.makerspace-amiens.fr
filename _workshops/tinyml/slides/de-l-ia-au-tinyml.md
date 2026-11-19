@@ -216,7 +216,7 @@ Une branche du machine learning qui utilise des **réseaux de neurones à plusie
 
 Un réseau de neurones artificiels est un modèle composé de neurones connectés et organisés en couches. Il apprend à reconnaître des relations dans les données en ajustant les poids de ses connexions.
 
-(/workshops/tinyml/slides/de-l-ia-au-tinyml/reseau.png){: style="max-height: 360px"}
+![Un réseau de neurones artificiels est un modèle composé de neurones connectés et organisés en couches. Il apprend à reconnaître des relations dans les données en ajustant les poids de ses connexions.](/workshops/tinyml/slides/de-l-ia-au-tinyml/reseau.png){: style="max-height: 360px"}
 
 [De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
 
