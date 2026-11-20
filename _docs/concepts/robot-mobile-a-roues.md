@@ -27,7 +27,7 @@ Un **robot mobile** est un robot capable de se déplacer dans son environnement.
 
 Ce parcours s'intéresse aux robots mobiles **à roues**, les plus répandus : ils sont simples à fabriquer, efficaces sur un sol plat et faciles à commander.
 
-**À la fin de ce concept, tu sauras :**
+**Objectifs de ce concept :**
 
 - décrire la boucle qui fait fonctionner tout robot mobile ;
 - reconnaître les principaux types de roues et ce qu'elles permettent ;
@@ -96,7 +96,7 @@ Deux roues motrices **indépendantes**, sur le même axe, et un ou deux appuis (
 - **Limites** : non holonome (pas de déplacement latéral) ; aller droit demande que les deux roues tournent exactement à la même vitesse.
 - **Exemples** : robots aspirateurs, la plupart des robots de compétition étudiante, Thymio.
 
-**À toi de jouer** : règle la vitesse de chaque roue, ou choisis un mouvement. Observe le **centre instantané de rotation** (CIR, point rouge) : c'est le point autour duquel le robot tourne. Que devient-il quand les deux roues vont à la même vitesse ? Quand elles tournent en sens opposés ?
+**Dans le simulateur** : régler la vitesse de chaque roue, ou choisir un mouvement, puis observer le **centre instantané de rotation** (CIR, point rouge) : c'est le point autour duquel le robot tourne. Que devient-il quand les deux roues vont à la même vitesse ? Quand elles tournent en sens opposés ?
 
 {% include simulateur-robot.html type="differentiel" %}
 
@@ -110,7 +110,7 @@ Une roue avant à la fois **motrice et directrice**, et deux roues arrière libr
 - **Limites** : non holonome, moins stable en virage serré (trois points d'appui seulement). Il ne tourne sur place que si la roue avant peut braquer presque à 90° : il pivote alors autour du milieu de l'essieu arrière.
 - **Exemples** : certains chariots élévateurs et chariots autonomes d'usine.
 
-**À toi de jouer** : braque la roue avant et regarde le CIR, toujours sur l'axe des roues arrière. Que se passe-t-il au braquage maximal ?
+**Dans le simulateur** : braquer la roue avant et observer le CIR, toujours sur l'axe des roues arrière. Que se passe-t-il au braquage maximal ?
 
 {% include simulateur-robot.html type="tricycle" %}
 
@@ -124,7 +124,7 @@ Quatre roues : deux roues **motrices** (souvent à l'arrière) et deux roues **d
 - **Limites** : non holonome, ne tourne pas sur place, grand rayon de braquage, manœuvres difficiles en espace réduit.
 - **Exemples** : voitures, voitures autonomes, robots de course à l'échelle 1/10.
 
-**À toi de jouer** : braque les roues avant. Observe que la roue intérieure braque plus que l'extérieure, et que les quatre roues pointent toutes vers le même CIR.
+**Dans le simulateur** : braquer les roues avant et constater que la roue intérieure braque plus que l'extérieure, et que les quatre roues pointent toutes vers le même CIR.
 
 {% include simulateur-robot.html type="ackermann" %}
 
@@ -138,7 +138,7 @@ Trois (ou quatre) roues omnidirectionnelles motrices, disposées autour du robot
 - **Limites** : trois moteurs ou plus, commande plus complexe (chaque déplacement demande un calcul sur toutes les roues), adhérence faible : les galets glissent facilement.
 - **Exemples** : robots de football de la RoboCup, plateformes de recherche.
 
-**À toi de jouer** : ici, tu ne commandes plus les roues mais le **mouvement voulu** (avancer, aller sur le côté, tourner) ; le simulateur calcule la vitesse de chaque roue, comme le ferait le programme du robot. Essaie « En crabe », puis « Tourner en se déplaçant ».
+**Dans le simulateur** : les curseurs ne commandent plus les roues mais le **mouvement voulu** (avancer, aller sur le côté, tourner) ; le simulateur calcule la vitesse de chaque roue, comme le ferait le programme du robot. Essayer « En crabe », puis « Tourner en se déplaçant ».
 
 {% include simulateur-robot.html type="omni" %}
 
@@ -152,7 +152,7 @@ Quatre roues mecanum, disposées comme sur une voiture, chacune avec son moteur.
 - **Limites** : quatre moteurs, roues coûteuses, glissement important (donc mesure du déplacement par les roues motrices imprécise), sensible aux sols irréguliers.
 - **Exemples** : chariots industriels pour charges lourdes, robots de compétition lycéenne (FTC).
 
-**À toi de jouer** : compare le sens de rotation des quatre roues pour « Avancer » et pour « En crabe ».
+**Dans le simulateur** : comparer le sens de rotation des quatre roues pour « Avancer » et pour « En crabe ».
 
 {% include simulateur-robot.html type="mecanum" %}
 
@@ -166,7 +166,7 @@ Quatre **modules swerve**, un dans chaque coin. Chaque module a deux moteurs : u
 - **Limites** : huit moteurs, mécanique complexe et coûteuse, commande la plus difficile de toutes.
 - **Exemples** : robots de compétition FRC (FIRST Robotics Competition), où il s'est imposé.
 
-**À toi de jouer** : choisis « Tourner en se déplaçant » et observe chaque module s'orienter dans sa propre direction.
+**Dans le simulateur** : choisir « Tourner en se déplaçant » et observer chaque module s'orienter dans sa propre direction.
 
 {% include simulateur-robot.html type="swerve" %}
 
@@ -206,7 +206,7 @@ C'est le robot qui sert de fil conducteur à ce parcours :
 
 Pourquoi des roues codeuses **séparées** des roues motrices ? Une roue motrice peut patiner ou glisser, et un moteur pas à pas peut perdre des pas : compter ce que les moteurs ont fait ne dit pas forcément ce que le robot a vraiment parcouru. Une roue libre, fine et toujours plaquée au sol, mesure le déplacement réel. Ce sera l'objet de la page sur l'odométrie.
 
-{% include message.html title="Dimensionner les moteurs" message="Avant de choisir les moteurs d'un robot, il faut estimer le couple et la vitesse nécessaires à partir de sa masse, du diamètre des roues, de la vitesse et de l'accélération voulues. Le site propose un [calculateur de motorisation](/ressources/tools/general/calculateur-moteur-robot/) qui fait ce calcul pour vous." status="is-info" icon="fas fa-calculator" %}
+{% include message.html title="Dimensionner les moteurs" message="Avant de choisir les moteurs d'un robot, il faut estimer le couple et la vitesse nécessaires à partir de sa masse, du diamètre des roues, de la vitesse et de l'accélération voulues. Le site propose un [calculateur de motorisation](/ressources/tools/general/calculateur-moteur-robot/) qui fait ce calcul." status="is-info" icon="fas fa-calculator" %}
 
 ## À retenir
 

@@ -36,6 +36,8 @@ d'un modèle précis.
 
 ## Conventions de l'atelier
 
+- Ton **neutre** : ni « tu » ni « vous », consignes à l'infinitif
+  (« Dans le simulateur : régler... puis observer... ») (2026-11-20).
 - Rester générique sur l'électronique dans les schémas et le texte : « carte de
   commande » ou « microcontrôleur », pas « ESP32-S3 » (demande du 2026-11-19).
 - Illustrer le mouvement par des simulateurs interactifs
