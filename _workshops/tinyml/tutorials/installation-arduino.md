@@ -40,10 +40,10 @@ content="Double-cliquez sur le fichier téléchargé pour lancer l'installation 
 {% include step-tuto.html
 greyBackground=true
 title="Étape 3 : Finaliser l'installation"
-content="Une fois l'installation terminée, cliquez sur Terminer. Arduino IDE se lance alors pour la première fois.  "
+content="Une fois l'installation terminée, cliquez sur Terminer.  Lancez Arduino IDE pour la première fois.  "
 %}
 
-### configuration de l’environnement Arduino
+### Configuration de l’environnement Arduino
 
 {% include step-tuto.html
 greyBackground=true
@@ -66,7 +66,7 @@ content="Rendez-vous sur https://github.com/j-siderius/TFLiteMicro_ArduinoESP32S
 {% include step-tuto.html
 greyBackground=true
 title="Étape 4 : Installer la bibliothèque"
-content="Dans Arduino IDE, ouvrez Croquis > Inclure une bibliothèque > Ajouter la bibliothèque .ZIP (Sketch > Include Library > Add .ZIP Library), sélectionnez le fichier ZIP téléchargé, puis validez [6]."
+content="Dans Arduino IDE, ouvrez Croquis > Inclure une bibliothèque > Ajouter la bibliothèque .ZIP (Sketch > Include Library > Add .ZIP Library), sélectionnez le fichier ZIP téléchargé, puis validez."
 %}
 
 
