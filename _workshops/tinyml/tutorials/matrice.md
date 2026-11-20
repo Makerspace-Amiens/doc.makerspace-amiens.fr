@@ -39,7 +39,8 @@ content="Téléchargez le fichier test_data.bin depuis Google Drive. Placez-le d
 {% include step-tuto.html
 greyBackground=true
 title="Étape 3 : Ajouter et téléverser le programme de test"
-content="Ouvrez le nouveau croquis Arduino et remplacez son contenu par le code ci-dessous. Ce programme charge le modèle quantifié, reçoit les images envoyées par l’ordinateur et renvoie un score pour chacune."
+content="Ouvrez le nouveau croquis Arduino et remplacez son contenu par le code ci-dessous. Ce programme charge le modèle quantifié, reçoit les images envoyées par l’ordinateur et renvoie un score pour chacune.
+Ce programme attend les commandes envoyées par le script Python de l'étape 5 : il répond à `R` par `PRET`, traite une image à chaque `I` et répond à `F` par `FIN`."
 %}
 
 
@@ -148,7 +149,7 @@ content="Après avoir téléversé le programme, fermez le Moniteur série d’A
 {% include step-tuto.html
 greyBackground=true
 title="Étape 5 : Lancer le test depuis l’ordinateur"
-content="Dans le dossier matrice-de-confusion, créez un fichier Python nommé test_esp32.py, puis copiez-y le code ci-dessous et enregistrez-le. Ouvrez ensuite l’invite de commandes dans ce dossier et exécutez la commande python test_esp32.py."
+content="Dans le dossier matrice-de-confusion, créez un fichier Python nommé test_esp32.py, puis copiez-y le code ci-dessous et enregistrez-le. Ouvrez ensuite l’invite de commandes dans ce dossier et exécutez la commande py test_esp32.py. Ce script envoie à l'ESP32 les images de `test_data.bin` une par une, récupère le score que le modèle calcule pour chacune, décide « chat » ou « chien » avec le seuil de 0,57, puis compare cette décision à la vraie classe pour remplir la matrice de confusion. La carte, elle, se contente d'exécuter le modèle."
 %}
 
 Avant de lancer le script, installez ses deux bibliothèques avec la commande `py -m pip install pyserial numpy`. Attention : il faut installer `pyserial` et non `serial`, qui est un autre paquet.
