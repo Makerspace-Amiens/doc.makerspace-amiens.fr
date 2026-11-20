@@ -43,7 +43,7 @@ content="Ouvrez le guide officiel de la caméra : https://wiki.seeedstudio.com/x
 {% include step-tuto.html
 greyBackground=true
 title="Étape 3 : Installer la bibliothèque ESP32_OV5640_AF "
-content="Le code téléchargé utilise la bibliothèque ESP32_OV5640_AF, qui gère la mise au point automatique des caméras OV5640. Si elle manque, la compilation s'arrête avec une erreur indiquant que le fichier ESP32_OV5640_AF.h est introuvable. Pour l'ajouter : ouvrez le dépôt ESP32-OV5640-AF sur GitHub, cliquez sur Code puis sur Download ZIP. Dans Arduino IDE, choisissez Croquis > Inclure une bibliothèque > Ajouter la bibliothèque .ZIP, sélectionnez le fichier ZIP téléchargé et attendez le message confirmant l'installation. Compilez ensuite à nouveau le programme de la caméra."
+content="Le code téléchargé utilise la bibliothèque ESP32_OV5640_AF, qui gère la mise au point automatique des caméras OV5640. Si elle manque, la compilation s'arrête avec une erreur indiquant que le fichier ESP32_OV5640_AF.h est introuvable. Pour l'ajouter : ouvrez le dépôt ESP32-OV5640-AF sur GitHub https://github.com/0015/ESP32-OV5640-AF, cliquez sur Code puis sur Download ZIP. Dans Arduino IDE, choisissez Croquis > Inclure une bibliothèque > Ajouter la bibliothèque .ZIP, sélectionnez le fichier ZIP téléchargé et attendez le message confirmant l'installation. Compilez ensuite à nouveau le programme de la caméra."
 %}
 
 {% include step-tuto.html
