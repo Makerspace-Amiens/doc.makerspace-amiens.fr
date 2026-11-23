@@ -132,7 +132,14 @@ volatile bool demande_prediction = false;
 {% include step-tuto.html
 greyBackground=true
 title="Étape 2 : Créer la page web et le flux vidéo"
-content="Nous démarrons deux petits serveurs web : le premier affiche une page avec un bouton Prédire, le second diffuse la vidéo de la caméra."
+content="Nous démarrons deux petits serveurs web : 
+
+-Page web : Affiche le flux de la caméra et un bouton « Prédire ». Quand on clique sur le bouton, une demande est envoyée à l’ESP32 et le résultat s’affiche sur la page.
+
+-Flux vidéo : La caméra capture des images, qui sont converties en JPEG puis envoyées en continu au navigateur pour afficher la vidéo en direct.
+
+- Démarrage des serveurs web : La fonction démarre deux serveurs : celui du port 80 pour la page et la prédiction, et celui du port 81 pour le flux vidéo. Ils ont chacun un ctrl_port différent pour leur gestion interne.
+"
 %}
 
 
