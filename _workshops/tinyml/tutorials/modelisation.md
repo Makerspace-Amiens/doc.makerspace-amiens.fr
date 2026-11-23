@@ -160,7 +160,7 @@ Le modèle classe correctement 87,68 % des images de test, avec une perte de 0,2
 
 ### Matrice de confusion
 
-La précision ne dit pas quelles erreurs le modèle commet. La matrice de confusion compare les classes réelles aux classes prédites et montre si le modèle confond plus souvent les chats ou les chiens.
+La précision ne dit pas où le modèle se trompe. La matrice de confusion croise les classes réelles et les classes prédites, ce qui montre combien de chats et de chiens sont bien reconnus, et quelles erreurs reviennent le plus souvent.
 
 
 ```cpp
