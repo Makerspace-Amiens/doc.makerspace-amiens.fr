@@ -91,6 +91,4 @@ Le fichier passe de 109,47 Ko à 36,1 Ko, soit une réduction d'environ 67 %.
 
 Nous avons converti le modèle au format TensorFlow Lite, puis quantifié en entiers 8 bits. Sa taille passe de 109,47 Ko à 36,1 Ko, soit environ trois fois moins. Ce modèle est assez petit et assez précis pour être embarqué.
 
-Il reste à noter ses paramètres de quantification (échelle et point zéro d'entrée et de sortie), qui seront nécessaires pour préparer les images et lire le score sur le microcontrôleur.
-
 L'étape suivante est le **déploiement du modèle sur l'ESP32**.
