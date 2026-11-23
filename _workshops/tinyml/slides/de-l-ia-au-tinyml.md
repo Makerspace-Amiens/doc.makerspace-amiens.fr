@@ -583,11 +583,11 @@ L'optimisation réduit les besoins en mémoire et en calcul, pour déployer le m
 
 ## La quantification
 
-Représenter les valeurs numériques d'un modèle avec **moins de bits** : par exemple, passer de `float32` à `int8`.
+La quantification consiste à réduire la précision des nombres utilisés par le modèle. Par exemple, on peut convertir ses poids de float32 en int8.
 
 ![La plage des valeurs float32, de -3e38 à 3e38, dont seule la zone entre min et max est utilisée, projetée sur les 255 valeurs de l'int8, de -127 à 127](/workshops/tinyml/slides/de-l-ia-au-tinyml/quantification-int8.png)
 
-Les valeurs sont converties et arrondies dans un format plus compact : le modèle prend moins de mémoire, et les calculs peuvent aller plus vite selon le matériel. Un poids sur 32 bits utilise 4 octets ; en `int8`,il utilise 1 octet. La précision peut toutefois diminuer légèrement.
+Le modèle occupe moins de mémoire et ses calculs peuvent être plus rapides sur un appareil embarqué. cette réduction peut entraîner une légère baisse de précision. Exemple : un poids occupe 4 octets en float32, contre 1 octet en int8.
 {: .caption}
 
 [De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link} [Quantification](/workshops/tinyml/tutorials/quantification/){: .doc-link}
