@@ -97,9 +97,9 @@ modele_cnn3 = tf.keras.Sequential([
     tf.keras.layers.Dense(1, activation="sigmoid") # Prédire chat ou chien
 ])
 ```
-- **Quatre blocs de convolution** (8, 16, 32 puis 64 filtres de 3 × 3) : les premiers repèrent des motifs simples (contours, textures), les suivants des motifs plus complexes (formes d'oreilles, de museaux).
-- **Normalisation, ReLU et pooling** : chaque bloc stabilise les valeurs, ajoute de la non-linéarité et réduit la taille des cartes. Les convolutions n'ont pas de biais (`use_bias=False`) car la normalisation qui suit joue ce rôle.
-- **Sortie** : un pooling global, une couche de 32 neurones, un Dropout de 0,3 et un neurone final à activation sigmoïde.
+- **Repérer des motifs (4 blocs)** : chaque bloc applique de petits filtres de 3 × 3 (8, 16, 32 puis 64) qui cherchent des motifs dans l'image : d'abord des contours et des textures, puis des formes plus complexes, comme des oreilles ou des museaux. Les convolutions n'ont pas de biais (`use_bias=False`) car la normalisation joue ce rôle.
+- Le pooling global remplace chaque carte par une seule valeur, sa moyenne. Il reste 64 valeurs, une par filtre du dernier bloc.
+- Une couche de 32 neurones combine ces valeurs. Le Dropout de 0,3 éteint au hasard 30 % de ces neurones pendant l'entraînement, pour que le modèle ne mémorise pas les images. Le neurone final, à activation sigmoïde, donne le score entre 0 et 1 : proche de 1, c'est un chien ; proche de 0, un chat.
 
 {% include step-tuto.html
 greyBackground=true
