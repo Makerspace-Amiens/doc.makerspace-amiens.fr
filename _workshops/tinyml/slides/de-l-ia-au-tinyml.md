@@ -497,10 +497,10 @@ Exécuter des modèles de machine learning **directement sur de petits appareils
 
 ### Avantages du TinyML
 
-- **Efficacité énergétique** : sur batterie
-- **Faible latence** : décision sur l'appareil
+- **Efficacité énergétique** : il consomme peu d’énergie
+- **Faible latence** : répond rapidement et permet de garder les données sur l’appareil
 - **Protection des données** : rien ne part au cloud
-- **Bande passante** réduite, coûts aussi
+- **Bande passante** Il réduit aussi les échanges de données
 
 </div>
 <div markdown="1">
