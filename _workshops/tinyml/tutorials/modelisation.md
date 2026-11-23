@@ -139,7 +139,7 @@ historique_cnn3 = modele_cnn3.fit(
 )
 
 ```
-Le modèle atteint environ 86 % de précision en validation, sans surapprentissage marqué (86,2 % en entraînement contre 86,0 % en validation), et le taux d’apprentissage a été réduit automatiquement de 0,001 à 0,000125 pendant les 20 époques.
+À chaque époque, le modèle apprend à partir des données d’entraînement, puis on vérifie ses performances sur les données de validation. La meilleure précision de validation est d’environ 86,3 %. Les résultats d’entraînement et de validation sont proches à la fin, ce qui ne montre pas de surapprentissage important sur ces données.
 
 
 {% include step-tuto.html
