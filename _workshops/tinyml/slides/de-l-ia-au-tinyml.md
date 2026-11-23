@@ -519,17 +519,6 @@ Exécuter des modèles de machine learning **directement sur de petits appareils
 
 ---
 
-## Optimisation des modèles
-
-Dans le contexte de l'Edge AI et du TinyML, optimiser un modèle consiste à améliorer ses performances et son efficacité. Elle vise à :
-
-- **réduire les ressources** nécessaires : mémoire, calcul et énergie ;
-- **accélérer** le temps d'inférence ;
-- **préserver** au mieux la précision du modèle.
-
-[De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
-
----
 
 ## Pourquoi optimiser un modèle ?
 
