@@ -268,7 +268,7 @@ bool demarrerServeursWeb() {
 {% include step-tuto.html
 greyBackground=true
 title="Étape 3 : Initialiser la caméra"
-content="Nous configurons les broches de la caméra, le format des images (RGB565, 240 par 240 pixels) et l'endroit où elles sont stockées, puis nous démarrons la caméra."
+content="Nous configurons les broches de la caméra, le format des images et l'endroit où elles sont stockées, puis nous démarrons la caméra."
 %}
 
 ```cpp
