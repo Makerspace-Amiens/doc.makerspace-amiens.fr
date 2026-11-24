@@ -11,7 +11,15 @@ back_link: /workshops/tinyml/
 ## Plan
 
 1. Introduction : l'intelligence artificielle
+     - C'est quoi l'IA ?
+     - Histoire de l’IA
+     - Machine learning
+     - Deep learning
+     - Limite de l’IA
 2. Tiny Machine Learning
+     - C’est quoi le TinyML
+     - Avantages et limites
+     - Méthodes de compression
 
 <aside class="notes" markdown="1">
 La version rédigée du cours est la page concept « De l'intelligence artificielle au TinyML ». Fil rouge de l'atelier : reconnaître un chat ou un chien sur une image, avec une XIAO ESP32S3 et sa caméra.
