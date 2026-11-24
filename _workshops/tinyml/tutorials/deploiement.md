@@ -529,8 +529,8 @@ Pour le programme qui intègre la caméra et le modèle, Arduino IDE indique :
 
 | Mémoire | Utilisée | Maximum | Reste |
 |---|---|---|---|
-| Programme (partition) | 1 101 847 octets (environ 1 076 Ko, 84 %) | 1 310 720 octets (1 280 Ko) | environ 204 Ko |
-| Variables globales (mémoire dynamique) | 68 148 octets (environ 66,6 Ko, 20 %) | 327 680 octets (320 Ko) | environ 253,4 Ko |
+| Flash — programme et modèle | 1 101 847 octets (environ 1 076 Ko, 84 %) | 1 310 720 octets (1 280 Ko) | environ 204 Ko |
+| RAM interne — variables globales | 68 148 octets (environ 66,6 Ko, 20 %) | 327 680 octets (320 Ko) | environ 253,4 Ko |
 
 - Le modèle seul occupe 36 968 octets (environ 36,1 Ko). Il est déjà compris dans la taille du programme, puisqu'il est stocké dans la mémoire du programme.
 - Les grandes zones de travail (arène du modèle, images, tampons de la caméra) sont placées dans la **PSRAM** de 8 Mo, et non dans les variables globales : elles n'apparaissent donc pas dans le tableau ci-dessus.
