@@ -272,6 +272,15 @@ flowchart LR
   F --> D["FFNN<br/>entièrement connectées"]
   D --> O["Output<br/>1 × K"]
 ```
+| Composant | Rôle |
+|---|---|
+| Image d'entrée | L'image pixelisée, H × W × C |
+| Convolution | Des filtres génèrent des cartes de caractéristiques |
+| ReLU | Élimine les valeurs négatives, capte des relations complexes |
+| Pooling | Réduit les cartes, la complexité et le surapprentissage |
+| Flatten | Transforme la sortie en vecteur 1D |
+| FFNN | Combine les caractéristiques, réalise la tâche finale |
+{: .table-dense}
 
 Le bloc convolution, ReLU, pooling peut être répété plusieurs fois.
 {: .caption}
@@ -435,20 +444,6 @@ La couche entièrement connectée utilise les caractéristiques extraites par le
 
 Exemple softmax : chat 0,06 ; chien 0,94.
 {: .caption}
-
-[De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
-
----
-
-| Composant | Rôle |
-|---|---|
-| Image d'entrée | L'image pixelisée, H × W × C |
-| Convolution | Des filtres génèrent des cartes de caractéristiques |
-| ReLU | Élimine les valeurs négatives, capte des relations complexes |
-| Pooling | Réduit les cartes, la complexité et le surapprentissage |
-| Flatten | Transforme la sortie en vecteur 1D |
-| FFNN | Combine les caractéristiques, réalise la tâche finale |
-{: .table-dense}
 
 [De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
 
