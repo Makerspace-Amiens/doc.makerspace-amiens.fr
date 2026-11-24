@@ -601,11 +601,13 @@ Passer de `float32` (décimal, 4 octets) à `int8` (entier de -128 à 127, 1 oct
 $$q = \text{arrondi}\left(\frac{x}{S}\right) + Z$$
 
 Scale $S$ : la valeur décimale correspondant à un pas entier.
+
 Zero point $Z$ : l’entier qui représente la valeur décimale zéro.
 
 **Exemple** : si \(S=1/255\) et \(Z=-128\), pour un pixel \(x=0{,}6\) :
 
-\[q=\operatorname{arrondi}(0{,}6 \times 255)-128=153-128=25\]
+$$q = \text{arrondi}\left(\frac{0,6}{1/255}\right) - 128$$
+
 Le pixel, initialement représenté par 0,6, est donc stocké sous la forme de l’entier 25.
 
 [Quantification](/workshops/tinyml/tutorials/quantification/){: .doc-link}
