@@ -604,9 +604,9 @@ Scale $S$ : la valeur décimale correspondant à un pas entier.
 
 Zero point $Z$ : l’entier qui représente la valeur décimale zéro.
 
-**Exemple** : si \(S=1/255\) et \(Z=-128\), pour un pixel \(x=0{,}6\) :
+**Exemple** : si \(S=1/255\) et \(Z=-128\), pour un pixel \(x=0,6\) :
 
-$$q = \text{arrondi}\left(\frac{0,6}{1/255}\right) - 128$$
+$$q = \text{arrondi}\left(\frac{0,6}{1/255}\right) - 128 = 25$$
 
 Le pixel, initialement représenté par 0,6, est donc stocké sous la forme de l’entier 25.
 
