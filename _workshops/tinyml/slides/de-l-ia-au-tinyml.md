@@ -262,7 +262,7 @@ Un réseau de neurones artificiels est un modèle composé de neurones connecté
 
 ## CNN : architecture d'un CNN
 
-```mermaid!
+```mermaid
 flowchart LR
   I["Image d'entrée<br/>H × W × C"] --> C["Conv layer"]
   C --> R["ReLU"]
@@ -352,6 +352,22 @@ n : taille de l'image d'origine, p : padding, f : taille du filtre, s : sliding 
 
 
 ---
+
+
+## CNN : Padding 
+
+- Sans padding, le filtre ne passe qu'une seule fois sur un coin, mais neuf fois sur un pixel du centre. Les bords pèsent donc moins dans le résultat, et la sortie rétrécit en 4 × 4.
+- Avec padding, Le filtre peut alors se centrer sur les pixels du bord.
+
+  ![Une image 6 × 6 convoluée par un filtre 3 × 3 donne une carte de caractéristiques 4 × 4](/workshops/tinyml/slides/de-l-ia-au-tinyml/couverture-pixels-padding.png){: width="310px"}
+
+
+[De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
+
+
+---
+
+
 ## CNN :  sliding
 
 <div class="columns" markdown="1">
@@ -374,34 +390,6 @@ n : taille de l'image d'origine, p : padding, f : taille du filtre, s : sliding 
 ---
 
 
-## CNN : images couleur et filtres multiples
-
-<div class="columns" markdown="1">
-<div markdown="1">
-
-- Une image couleur a **3 canaux** : R, G et B (ici 6 × 6 × 3).
-- Un filtre couvre les trois canaux : il mesure **3 × 3 × 3**.
-- Les résultats des canaux sont combinés en **une** carte de caractéristiques.
-- Chaque filtre détecte des motifs différents : les cartes s'**empilent**.
-
-</div>
-<div markdown="1">
-
-![Une image 6 × 6 × 3 convoluée par deux filtres 3 × 3 × 3 : chacun donne une carte 4 × 4, et les deux cartes empilées forment une sortie 4 × 4 × 2](/workshops/tinyml/slides/de-l-ia-au-tinyml/filtres-multiples.png)
-
-</div>
-</div>
-
-Schéma : indoml.com
-{: .caption}
-
-[De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
-
-<aside class="notes" markdown="1">
-Avec 8 filtres, la sortie a 8 canaux : c'est la première couche du modèle de l'atelier. Un filtre 3 × 3 × 3 a 27 poids.
-</aside>
-
----
 
 ## CNN : ReLU
 
@@ -412,6 +400,8 @@ Si $x$ est négatif, ReLU le remplace par 0 ; s'il est positif, elle le conserve
 
 Elle apporte de la **non-linéarité**, ce qui permet au CNN d'apprendre des motifs plus complexes.
 {: .highlight-red}
+
+  ![Une image 6 × 6 ](/workshops/tinyml/slides/de-l-ia-au-tinyml/Fonction-dactivation-ReLU.png){: width="310px"}
 
 [De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
 
@@ -448,6 +438,36 @@ Exemple softmax : chat 0,06 ; chien 0,94.
 [De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
 
 ---
+
+## CNN : images couleur et filtres multiples
+
+<div class="columns" markdown="1">
+<div markdown="1">
+
+- Une image couleur a **3 canaux** : R, G et B (ici 6 × 6 × 3).
+- Un filtre couvre les trois canaux : il mesure **3 × 3 × 3**.
+- Les résultats des canaux sont combinés en **une** carte de caractéristiques.
+- Chaque filtre détecte des motifs différents : les cartes s'**empilent**.
+
+</div>
+<div markdown="1">
+
+![Une image 6 × 6 × 3 convoluée par deux filtres 3 × 3 × 3 : chacun donne une carte 4 × 4, et les deux cartes empilées forment une sortie 4 × 4 × 2](/workshops/tinyml/slides/de-l-ia-au-tinyml/filtres-multiples.png)
+
+</div>
+</div>
+
+Schéma : indoml.com
+{: .caption}
+
+[De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
+
+<aside class="notes" markdown="1">
+Avec 8 filtres, la sortie a 8 canaux : c'est la première couche du modèle de l'atelier. Un filtre 3 × 3 × 3 a 27 poids.
+</aside>
+
+---
+
 
 ## Limite de l'IA
 
