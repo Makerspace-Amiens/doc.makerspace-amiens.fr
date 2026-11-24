@@ -272,6 +272,7 @@ flowchart LR
   F --> D["FFNN<br/>entièrement connectées"]
   D --> O["Output<br/>1 × K"]
 ```
+
 | Composant | Rôle |
 |---|---|
 | Image d'entrée | L'image pixelisée, H × W × C |
@@ -314,16 +315,6 @@ Sur la première position : (3 + 1 + 2) − (1 + 8 + 2) = −5. Ce filtre `[1 0 
 
 ---
 
-## CNN : paramètres et hyperparamètres
-
-- **Paramètres** : valeurs apprises par le réseau pendant l'entraînement, comme les poids du filtre et son biais.
-- **Hyperparamètres** : réglages choisis avant l'entraînement, comme la taille et le nombre de filtres, le stride et le padding.
-- Pendant l'entraînement, la **rétropropagation** calcule comment les poids doivent être corrigés.
-- La **descente de gradient** ajuste ensuite ces poids pour réduire l'erreur du réseau.
-
-[De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link} [Modélisation](/workshops/tinyml/tutorials/modelisation/){: .doc-link}
-
----
 
 ## CNN : Padding 
 
@@ -401,7 +392,7 @@ Si $x$ est négatif, ReLU le remplace par 0 ; s'il est positif, elle le conserve
 Elle apporte de la **non-linéarité**, ce qui permet au CNN d'apprendre des motifs plus complexes.
 {: .highlight-red}
 
-  ![Une image 6 × 6 ](/workshops/tinyml/slides/de-l-ia-au-tinyml/Fonction-dactivation-ReLU.png){: width="310px"}
+  ![Une image 6 × 6 ](/workshops/tinyml/slides/de-l-ia-au-tinyml/Fonction-dactivation-ReLU.png){: width="290px"}
 
 [De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
 
@@ -468,6 +459,16 @@ Avec 8 filtres, la sortie a 8 canaux : c'est la première couche du modèle de l
 
 ---
 
+## CNN : paramètres et hyperparamètres
+
+- **Paramètres** : valeurs apprises par le réseau pendant l'entraînement, comme les poids du filtre et son biais.
+- **Hyperparamètres** : réglages choisis avant l'entraînement, comme la taille et le nombre de filtres, le stride et le padding.
+- Pendant l'entraînement, la **rétropropagation** calcule comment les poids doivent être corrigés.
+- La **descente de gradient** ajuste ensuite ces poids pour réduire l'erreur du réseau.
+
+[De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link} [Modélisation](/workshops/tinyml/tutorials/modelisation/){: .doc-link}
+
+---
 
 ## Limite de l'IA
 
