@@ -417,13 +417,14 @@ La couche entièrement connectée utilise les caractéristiques extraites par le
 2. La couche **dense** combine ces informations
 3. Une fonction de sortie donne les scores
 
-| Sortie | Score | Usage |
+| Sortie | Ce que produit le modèle | Quand l’utiliser |
 |---|---|---|
-| **Softmax** | un par classe, somme = 1 | une classe parmi plusieurs |
-| **Sigmoid** | entre 0 et 1 par sortie | binaire, ou plusieurs classes à la fois |
+| **Softmax** | Un score pour chaque classe ; les scores totalisent 1 | Pour choisir une classe parmi plusieurs |
+| **Sigmoid** | Un score entre 0 et 1 | Pour une classification binaire avec une seule sortie, comme chat ou chien |
 {: .table-dense}
 
 Exemple softmax : chat 0,06 ; chien 0,94.
+exemple segmoid : Score chien = 0,8 ; score chat = 1 − 0,8 = 0,2
 {: .caption}
 
 [De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
