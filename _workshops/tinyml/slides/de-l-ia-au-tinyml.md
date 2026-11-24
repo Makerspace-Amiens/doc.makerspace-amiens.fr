@@ -208,8 +208,7 @@ Une branche du machine learning qui utilise des **réseaux de neurones à plusie
 |---|---|
 | **CNN** | Analyse des images et des vidéos |
 | **RNN** et **LSTM** | Données séquentielles : parole, séries temporelles |
-| **Transformers** | Langage et données multimodales |
-| **DNN**, **MLP** | Données structurées |
+| **Transformers** | Langage et données multimodales : texte associé à des images ou à du son |
 {: .table-dense}
 
 [De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
@@ -255,10 +254,27 @@ Un réseau de neurones artificiels est un modèle composé de neurones connecté
 ![Une maison analysée en trois couches : contours, puis formes, puis objet reconnu](/workshops/tinyml/concepts/de-l-ia-au-tinyml/hero.png){: style="max-height: 200px"}
 
 - Le CNN est un réseau de neurones spécialisé dans l'**analyse des images**.
-- De petits **filtres** (convolution) glissent sur l'image : d'abord les contours, puis les formes, puis les objets. Ils sont appris à l'entraînement.
-- Applications : voitures autonomes, imagerie médicale, sécurité, reconnaissance d'objets.
+
 
 [De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
+
+---
+
+## CNN : architecture d'un CNN
+
+```mermaid!
+flowchart LR
+  I["Image d'entrée<br/>H × W × C"] --> C["Conv layer"]
+  C --> R["ReLU"]
+  R --> P["Pooling"]
+  P -->|"bloc répété"| C
+  P --> F["Flatten"]
+  F --> D["FFNN<br/>entièrement connectées"]
+  D --> O["Output<br/>1 × K"]
+```
+
+Le bloc convolution, ReLU, pooling peut être répété plusieurs fois.
+{: .caption}
 
 ---
 
@@ -423,25 +439,6 @@ Exemple softmax : chat 0,06 ; chien 0,94.
 [De l'IA au TinyML](/workshops/tinyml/concepts/de-l-ia-au-tinyml/){: .doc-link}
 
 ---
-
-## CNN : architecture d'un CNN
-
-```mermaid!
-flowchart LR
-  I["Image d'entrée<br/>H × W × C"] --> C["Conv layer"]
-  C --> R["ReLU"]
-  R --> P["Pooling"]
-  P -->|"bloc répété"| C
-  P --> F["Flatten"]
-  F --> D["FFNN<br/>entièrement connectées"]
-  D --> O["Output<br/>1 × K"]
-```
-
-Le bloc convolution, ReLU, pooling peut être répété plusieurs fois.
-{: .caption}
-
-
-
 
 | Composant | Rôle |
 |---|---|
