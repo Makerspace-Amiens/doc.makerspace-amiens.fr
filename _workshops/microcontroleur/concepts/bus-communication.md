@@ -68,6 +68,10 @@ La vitesse est fixée à l'avance des deux côtés : c'est le **baud rate**. Ici
 
 {% include message.html title="Croisement obligatoire" message="TX d'un appareil se connecte au RX de l'autre, et inversement. Un câblage TX→TX ne fonctionne pas." status="is-info" icon="fas fa-info-circle" %}
 
+En animation : chaque appareil émet un octet, bit après bit, sur son fil TX, entre un bit de START et un bit de STOP. Utilise les boutons pour mettre en pause ou ralentir.
+
+{% include bus-protocols.html protocols="uart" %}
+
 ### Anatomie d'une trame
 
 ![Chronogramme d'une trame UART 8N1 pour la lettre A : repos à 1, bit de start à 0, huit bits de données du poids faible au poids fort, bit de stop à 1](uart-trame.svg)
@@ -152,6 +156,10 @@ Chaque composant I2C possède une **adresse 7 bits** unique (ex : `0x3C` pour un
 ![Bus I2C : un maître et trois esclaves, chacun avec son adresse, reliés à deux fils partagés SDA et SCL, avec deux résistances de tirage vers 3,3 V](i2c-bus.svg)
 
 C'est un bus **multipoint**, **synchrone** (le maître génère l'horloge sur SCL) et **half-duplex** (SDA sert dans les deux sens, chacun son tour).
+
+En animation : le maître envoie START, puis l'adresse ; seul l'esclave qui se reconnaît répond ACK, puis reçoit la donnée.
+
+{% include bus-protocols.html protocols="i2c" %}
 
 ### Le déroulement d'un échange
 
@@ -322,6 +330,10 @@ La transmission est **synchrone** (l'horloge SCK cadence chaque bit) et **full-d
 
 SCK, MOSI et MISO sont **partagés** ; chaque esclave a son propre fil **CS**. Pas d'adresse : le maître met à 0 le CS de l'esclave qu'il veut, et les autres laissent leur MISO en haute impédance. Selon les composants, les broches portent d'autres noms : SCLK ou SCL pour SCK ; SS, nCS, nSS, CSN ou STE pour CS ; SDI, DI ou SI pour l'entrée de données (côté esclave, MOSI) ; SDO, DO ou SO pour sa sortie (MISO). MOSI et MISO ne vont chacun que dans un sens, contrairement au SDA de l'I2C.
 
+En animation : le maître baisse le CS d'un esclave, puis à chaque coup d'horloge un bit part sur MOSI et un bit revient sur MISO, en même temps.
+
+{% include bus-protocols.html protocols="spi" %}
+
 ### Le déroulement d'un échange
 
 ![Chronogramme SPI : CS passe à 0, huit coups d'horloge SCK, un bit envoyé sur MOSI et un bit reçu sur MISO à chaque coup, puis CS remonte](spi-trame.svg)
@@ -391,6 +403,10 @@ UART, I2C et SPI couvrent l'essentiel des besoins sur une carte, et l'I2C et le 
 | **USB** | 2 de données + alimentation | Point à point vers un hôte, rapide, avec détection automatique des appareils | Programmation de la XIAO, claviers, clés |
 
 L'ESP32-S3 intègre un contrôleur compatible CAN (appelé TWAI chez Espressif) : il suffit de lui ajouter une puce d'interface (*transceiver*, comme le TJA1050) pour rejoindre un réseau CAN. Sur une carte qui n'a pas de contrôleur CAN, un module à MCP2515 en fournit un, piloté en SPI. On croise aussi, hors des cartes électroniques, SATA (disques), RS-485 (réseaux industriels) ou Ethernet.
+
+Le CAN en animation : pas de maître ni d'adresse, chaque message porte un **identifiant**. Tous les nœuds reçoivent la trame et chacun garde celles qui l'intéressent ; quand deux nœuds émettent en même temps, l'identifiant le plus petit gagne l'accès au bus.
+
+{% include bus-protocols.html protocols="can" %}
 
 ## Tableau comparatif
 

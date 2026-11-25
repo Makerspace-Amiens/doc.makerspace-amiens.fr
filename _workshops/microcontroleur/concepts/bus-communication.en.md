@@ -69,6 +69,10 @@ The speed is set in advance on both sides: this is the **baud rate**. Here, a tw
 
 {% include message.html title="Crossing is mandatory" message="One device's TX connects to the other's RX, and vice versa. TX→TX wiring does not work." status="is-info" icon="fas fa-info-circle" %}
 
+Animated: each device sends a byte, bit by bit, on its TX wire, between a START bit and a STOP bit. Use the buttons to pause or slow down. The labels of the animations are in French.
+
+{% include bus-protocols.html protocols="uart" %}
+
 ### Anatomy of a frame
 
 ![Timing diagram of an 8N1 UART frame for the letter A: idle at 1, start bit at 0, eight data bits from least to most significant, stop bit at 1](uart-trame.svg)
@@ -128,6 +132,10 @@ Each I2C component has a unique **7-bit address** (e.g. `0x3C` for an SSD1306 OL
 ![I2C bus: one master and three slaves, each with its address, connected to two shared wires SDA and SCL, with two pull-up resistors to 3.3 V](i2c-bus.svg)
 
 It is a **multipoint**, **synchronous** (the master generates the clock on SCL) and **half-duplex** bus (SDA is used in both directions, in turn).
+
+Animated: the master sends START, then the address; only the slave that recognises itself answers ACK, then receives the data.
+
+{% include bus-protocols.html protocols="i2c" %}
 
 ### How an exchange goes
 
@@ -234,6 +242,10 @@ Transmission is **synchronous** (the SCK clock paces each bit) and **full-duplex
 
 SCK, MOSI and MISO are **shared**; each slave has its own **CS** wire. No address: the master sets the CS of the slave it wants to 0, and the others leave their MISO in high impedance. Depending on the components, the pins have other names: SCLK or SCL for SCK; SS, nCS, nSS, CSN or STE for CS; SDI, DI or SI for the data input (slave side, MOSI); SDO, DO or SO for its output (MISO). MOSI and MISO each go in only one direction, unlike I2C's SDA.
 
+Animated: the master pulls one slave's CS low, then on each clock tick one bit leaves on MOSI and one bit comes back on MISO, at the same time.
+
+{% include bus-protocols.html protocols="spi" %}
+
 ### How an exchange goes
 
 ![SPI timing diagram: CS goes to 0, eight SCK clock pulses, one bit sent on MOSI and one bit received on MISO at each pulse, then CS goes back up](spi-trame.svg)
@@ -303,6 +315,10 @@ UART, I2C and SPI cover most needs on a board, and I2C and SPI are the two to le
 | **USB** | 2 data + power | Point-to-point to a host, fast, with automatic device detection | Programming the XIAO, keyboards, USB sticks |
 
 The ESP32-S3 includes a CAN-compatible controller (called TWAI by Espressif): you just need to add an interface chip (*transceiver*, such as the TJA1050) to join a CAN network. On a board without a CAN controller, an MCP2515 module provides one, driven over SPI. Outside electronic boards, you also come across SATA (disks), RS-485 (industrial networks) or Ethernet.
+
+CAN animated: no master and no address, each message carries an **identifier**. Every node receives the frame and keeps the ones it cares about; when two nodes transmit at once, the lowest identifier wins the bus.
+
+{% include bus-protocols.html protocols="can" %}
 
 ## Comparison table
 

@@ -331,6 +331,14 @@ Structure de l'atelier (depuis le 2026-11-02) : les **trois CM d'abord**, puis l
 
 `type` : `differentiel`, `tricycle`, `ackermann` (commande des roues) ou `omni`, `mecanum`, `swerve` (commande du mouvement voulu, vitesses des roues calculées et saturées). Script `assets/js/robot-sim.js`, chargé une fois par page ; libellés dans la clé `robot_sim` de `_data/i18n.yml`. Exemple : `_docs/concepts/robot-mobile-a-roues.md`.
 
+**Animation des bus série** (UART, I²C, SPI, CAN : trames bit à bit, boutons lecture / pause et vitesse) :
+
+```liquid
+{% include bus-protocols.html protocols="i2c" %}
+```
+
+`protocols` : un ou plusieurs bus parmi `uart`, `i2c`, `spi`, `can`, séparés par des virgules (défaut : les 4) ; `summary=true` ajoute un tableau comparatif. Web Component `<bus-protocols>` dans `assets/js/bus-protocols.js`, chargé une fois par page, forcé en thème clair. Libellés en français, écrits dans le script (ils restent en français sur les pages `.en.md`). Utilisé dans le concept `bus-communication` de l'atelier `microcontroleur`.
+
 **Visionneuse 3D** (`model-viewer`) et **KiCanvas** (schémas KiCad) : activés automatiquement via `documentation.html` — utiliser les balises HTML natives `<model-viewer>` et `<kicanvas-schematic>`.
 
 ---
