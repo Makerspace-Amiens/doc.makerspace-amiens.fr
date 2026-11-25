@@ -1,0 +1,18 @@
+{%- comment -%}
+Animation pédagogique d'un ou plusieurs bus série (canvas, lecture / pause, vitesse).
+  {% include bus-protocols.html protocols="i2c" %}
+protocols : liste parmi uart, i2c, spi, can, séparés par des virgules (défaut : les 4).
+summary=true ajoute un tableau comparatif sous les animations.
+Le script assets/js/bus-protocols.js n'est chargé qu'une fois par page. Libellés en
+français, écrits dans le script.
+{%- endcomment -%}
+<bus-protocols{% if include.protocols %} protocols="{{ include.protocols }}"{% endif %}{% if include.summary %} summary{% endif %} theme="light"></bus-protocols>
+<script>
+(function () {
+  if (window.chargementBusProtocols) return;
+  window.chargementBusProtocols = true;
+  var s = document.createElement("script");
+  s.src = "{{ '/assets/js/bus-protocols.js' | relative_url }}";
+  document.head.appendChild(s);
+})();
+</script>
