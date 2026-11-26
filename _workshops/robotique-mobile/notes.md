@@ -47,6 +47,16 @@ d'un modèle précis.
 - Schémas SVG générés par script (palette du site : rouge = motrice, gris =
   libre) ; le générateur n'est pas versionné, retoucher les SVG à la main.
 
+## Calculateur de motorisation (refondu le 2026-11-20)
+
+`_includes/calculator-motor.html` + page `_ressources/tools/general/calculateur-moteur-robot.md`.
+Sortie = point de fonctionnement (couple avec marge à telle vitesse). Pente
+**réelle** + roulement (Crr) + **coefficient de sécurité** (défaut 2), plus de
+« pente fictive de 20° ». Volontairement **sans** tension/batterie (brouillait
+les pistes). Adhérence en option (μ mesuré au plan incliné, part du poids à la
+balance). Valeurs par défaut = exemple de la page 2 (3 kg, Ø60, 0,5 m/s,
+1 m/s², 10°) : garder les deux alignés.
+
 ## À décider
 
 - Public et durée définitifs, plateforme matérielle.
@@ -57,9 +67,13 @@ d'un modèle précis.
 
 1. Qu'est-ce qu'un robot mobile à roues (types de roues ; architectures :
    différentiel, tricycle, voiture/Ackermann, omnidirectionnel/mecanum)
-   **← rédigée (`_docs/concepts/robot-mobile-a-roues.md`), en relecture**
-2. Moteurs : centré sur le pas à pas et son driver, comparé au moteur CC +
-   pont en H (s'appuyer sur `references/hardware/stepper` et le tuto A4988)
+   **← publiée (`_docs/concepts/robot-mobile-a-roues.md`)**
+2. Motoriser un robot mobile (révisée le 2026-11-20) : tour d'horizon, pas
+   seulement le pas à pas. v = ωr, C = Fr, chaîne de motorisation, familles
+   (CC + réducteur/codeur, pas à pas, brushless/moteur-roue, servomoteur
+   intelligent ; **pas de servo à rotation continue**, mauvais exemple),
+   réducteur, courbes couple/vitesse, choix. Drivers seulement cités, pas
+   approfondis. **← rédigée (`_docs/concepts/motoriser-robot-mobile.md`), en relecture**
 3. Capteurs du robot mobile (ultrason, IR, suivi de ligne, encodeurs, IMU, lidar)
 4. Cinématique d'un robot différentiel
 5. Odométrie : pourquoi des roues codeuses libres plutôt que compter les pas

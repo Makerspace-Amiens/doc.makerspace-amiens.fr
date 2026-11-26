@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 300" width="900" height="300" font-family="Inter, Arial, Helvetica, sans-serif">
+<defs><marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#3f3f46"/></marker><marker id="r" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#ef2e31"/></marker></defs>
+<rect width="900" height="300" fill="#ffffff"/>
+<rect x="30" y="170" width="140" height="70" rx="8" fill="#f4f4f5" stroke="#3f3f46" stroke-width="2"/>
+<text x="100.0" y="201" font-size="14" fill="#18181b" text-anchor="middle" font-weight="700">Batterie</text>
+<text x="100.0" y="220" font-size="12" fill="#71717a" text-anchor="middle" font-weight="500">énergie</text>
+<rect x="205" y="170" width="140" height="70" rx="8" fill="#f4f4f5" stroke="#3f3f46" stroke-width="2"/>
+<text x="275.0" y="201" font-size="14" fill="#18181b" text-anchor="middle" font-weight="700">Électronique</text>
+<text x="275.0" y="220" font-size="12" fill="#71717a" text-anchor="middle" font-weight="500">de puissance</text>
+<rect x="380" y="170" width="140" height="70" rx="8" fill="#fde8e8" stroke="#ef2e31" stroke-width="2"/>
+<text x="450.0" y="210" font-size="14" fill="#18181b" text-anchor="middle" font-weight="700">Moteur</text>
+<rect x="555" y="170" width="140" height="70" rx="8" fill="#f4f4f5" stroke="#3f3f46" stroke-width="2"/>
+<text x="625.0" y="210" font-size="14" fill="#18181b" text-anchor="middle" font-weight="700">Réducteur</text>
+<rect x="730" y="170" width="140" height="70" rx="8" fill="#f4f4f5" stroke="#3f3f46" stroke-width="2"/>
+<text x="800.0" y="210" font-size="14" fill="#18181b" text-anchor="middle" font-weight="700">Roue</text>
+<line x1="172" y1="205.0" x2="201" y2="205.0" stroke="#3f3f46" stroke-width="2.5" marker-end="url(#a)"/>
+<line x1="347" y1="205.0" x2="376" y2="205.0" stroke="#3f3f46" stroke-width="2.5" marker-end="url(#a)"/>
+<line x1="522" y1="205.0" x2="551" y2="205.0" stroke="#3f3f46" stroke-width="2.5" marker-end="url(#a)"/>
+<line x1="697" y1="205.0" x2="726" y2="205.0" stroke="#3f3f46" stroke-width="2.5" marker-end="url(#a)"/>
+<rect x="205" y="30" width="140" height="60" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+<text x="275.0" y="56" font-size="14" fill="#18181b" text-anchor="middle" font-weight="700">Carte de</text>
+<text x="275.0" y="74" font-size="14" fill="#18181b" text-anchor="middle" font-weight="700">commande</text>
+<line x1="275.0" y1="92" x2="275.0" y2="166" stroke="#2563eb" stroke-width="2.5" stroke-dasharray="6 4" marker-end="url(#a)"/>
+<text x="287.0" y="135" font-size="12" fill="#71717a" text-anchor="start" font-weight="500">consigne (signal faible)</text>
+<path d="M450.0,166 L450.0,60 L351,60" fill="none" stroke="#a1a1aa" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#a)"/>
+<text x="460.0" y="120" font-size="12" fill="#71717a" text-anchor="start" font-weight="500">retour éventuel (codeur)</text>
+<text x="450" y="275" font-size="12" fill="#71717a" text-anchor="middle" font-weight="500">Puissance : de la batterie à la roue</text>
+</svg>

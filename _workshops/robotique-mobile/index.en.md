@@ -20,6 +20,7 @@ prerequisites:
 
 concepts:
   - /docs/concepts/robot-mobile-a-roues/
+  - /docs/concepts/motoriser-robot-mobile/
   - /docs/concepts/capteurs/
   - /docs/concepts/reseau-wifi-websocket/
 
