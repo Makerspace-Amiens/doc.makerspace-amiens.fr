@@ -16,6 +16,8 @@ Données écrites dans la page (petits graphiques) :
 
 Options : type="line" (défaut), "bar", "scatter" ou "radar" (x_valeurs = les branches) ; titre ; x et y (titres des axes) ;
 hauteur="300" (en pixels, sinon proportions 2:1 sur une page, hauteur fixe dans les slides).
+y_min="0" : valeur basse de l'axe Y (sinon choisie par Chart.js d'après les données). Option propre
+à ce site, absente de l'include du template étudiant.
 {%- endcomment -%}
 {%- assign _csv = include.csv -%}
 {%- assign _csv_url = nil -%}
@@ -43,6 +45,7 @@ hauteur="300" (en pixels, sinon proportions 2:1 sur une page, hauteur fixe dans 
   var titre = {{ include.titre | default: '' | jsonify }};
   var titreX = {{ include.x | default: '' | jsonify }};
   var titreY = {{ include.y | default: '' | jsonify }};
+  var yMin = {{ include.y_min | default: '' | jsonify }};
   var hauteurFixe = {{ include.hauteur | default: '' | jsonify }} !== "" || !!figure.closest(".reveal");
 
   // Chart.js n'est chargé qu'une fois par page, et seulement s'il y a un graphique
@@ -131,7 +134,7 @@ hauteur="300" (en pixels, sinon proportions 2:1 sur une page, hauteur fixe dans 
         // Un radar n'a pas d'axes X et Y mais une échelle circulaire, qui part de 0
         scales: radar ? { r: { beginAtZero: true } } : {
           x: { type: lineaire ? "linear" : "category", title: { display: (titreX || tableau.entetes[0]) !== "", text: titreX || tableau.entetes[0] } },
-          y: { title: { display: titreY !== "", text: titreY } }
+          y: { min: yMin === "" ? undefined : Number(yMin), title: { display: titreY !== "", text: titreY } }
         }
       }
     });
