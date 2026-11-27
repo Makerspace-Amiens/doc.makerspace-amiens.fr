@@ -127,7 +127,7 @@ ressources:
 ---
 ```
 
-Toutes les listes acceptent des URLs internes d'autres collections (cross-referencing autorisé). Le layout `project-home` cherche les pages dans `site.docs | concat: site.workshops` — l'URL doit correspondre exactement au `url` généré par Jekyll (tester avec trailing slash).
+Toutes les listes acceptent des URLs internes d'autres collections (cross-referencing autorisé). Le layout `project-home` cherche les pages dans `site.docs | concat: site.workshops | concat: site.ressources` (une page de `_ressources/` peut donc figurer dans `ressources:`) — l'URL doit correspondre exactement au `url` généré par Jekyll (tester avec trailing slash).
 
 ### Page partagée entre plusieurs ateliers
 
@@ -179,7 +179,7 @@ Le site est construit deux fois par le plugin **jekyll-polyglot** (`Gemfile`, gr
 Deux mécanismes, rendus par `_includes/ph-special-section.html` (cartes titre + description + « Découvrir ») :
 
 - `specials:` + `special_section_label` / `_icon` / `_desc` : **une** section en **bas** de page (historique : otto-mks, certification-securite, medieval-challenge).
-- `special_sections:` : **plusieurs** sections en **haut** de page, juste après Présentation et avant Prérequis/Concepts, en cartes courtes comme Concepts (icône de la section, titre, `subtitle` ou à défaut `description`). Chaque entrée : `label`, `icon`, `desc`, `items` (liste d'URLs).
+- `special_sections:` : **plusieurs** sections en **haut** de page, juste après Présentation et avant Prérequis/Concepts, en cartes courtes comme Concepts (icône de la section, titre, `subtitle` ou à défaut `description`). Chaque entrée : `label`, `icon`, `desc`, `items` (liste d'URLs). `large: true` (optionnel) affiche à la place les grandes cartes à image de `specials:` (`image`, `title`, `description` de la page ; ex. section Règlement de `medieval-challenge`).
 
 ```yaml
 special_sections:

@@ -81,7 +81,8 @@ Champs optionnels à connaître :
 - `prerequisites:` : URLs `/workshops/<autre-slug>/` des ateliers à suivre avant. Utile
   pour enchaîner un `course` en amont d'un `project`.
 - `special_sections:` : sections de cartes en haut de page (programme, évaluation, decks
-  de slides). Voir `CLAUDE.md` et `_workshops/methodologie-de-projet/index.md`.
+  de slides). Voir `CLAUDE.md` et `_workshops/methodologie-de-projet/index.md`. `large: true`
+  sur une section : grandes cartes à image (ex. Règlement de `medieval-challenge`).
 - `lang: en` : bascule l'interface de la page en anglais. À poser sur l'`index.md`
   **et sur chaque sous-page** ; tout nouveau libellé passe par `_data/i18n.yml`.
 

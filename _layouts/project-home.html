@@ -3,7 +3,7 @@
 {%- comment %} Collect all docs for this project. Les pages peuvent vivre dans
   la collection "docs" (contenu global) ou "workshops" (contenu propre à un
   workshop, ex: _workshops/otto-mks/tutorials/) ─── {% endcomment -%}
-{%- assign all_docs  = site.docs | concat: site.workshops -%}
+{%- assign all_docs  = site.docs | concat: site.workshops | concat: site.ressources -%}
 {%- assign tutos     = '' | split: '' -%}
 {%- assign howtos    = '' | split: '' -%}
 {%- assign ressources= '' | split: '' -%}
@@ -87,7 +87,7 @@
             <h1 class="ph-hero-title">{{ page.title }}</h1>
             <p class="ph-hero-desc">{{ page.description }}</p>
             <div class="ph-hero-stats">
-              <span class="ph-stat"><i class="fas fa-list-ol"></i> {{ tutos.size }} {{ _i18n.tutorials_count }}</span>
+              {% if tutos.size > 0 %}<span class="ph-stat"><i class="fas fa-list-ol"></i> {{ tutos.size }} {{ _i18n.tutorials_count }}</span>{% endif %}
               {% if total_time > 0 %}<span class="ph-stat"><i class="fas fa-clock"></i> ~{{ total_time }}h</span>{% endif %}
               {% if hardware.size > 0 %}<span class="ph-stat"><i class="fas fa-microchip"></i> {{ hardware.size }} {{ _i18n.components_count }}</span>{% endif %}
               {% if software.size > 0 or ressources.size > 0 %}
@@ -122,7 +122,9 @@
 
     <!-- ══ SECTIONS SPÉCIFIQUES DU HAUT (special_sections:) ═══════════════ -->
     {% for sec in page.special_sections %}
-    {% include ph-special-section.html label=sec.label icon=sec.icon desc=sec.desc urls=sec.items compact=true %}
+    {%- comment %} large: true : grandes cartes à image (comme specials:) au lieu des cartes courtes {% endcomment -%}
+    {% if sec.large %}{% assign _compact = false %}{% else %}{% assign _compact = true %}{% endif %}
+    {% include ph-special-section.html label=sec.label icon=sec.icon desc=sec.desc urls=sec.items compact=_compact %}
     {% endfor %}
 
     <!-- ══ PRÉREQUIS ════════════════════════════════════════════════════════ -->
