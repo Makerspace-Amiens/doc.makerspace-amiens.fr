@@ -5,9 +5,10 @@ doc_header: false
 component_toc: true
 hero_image: isocontours.png
 hero_darken: true
-image: isocontours.png
-title: Informations sur le projet
-subtitle: Tout ce que vous devez savoir
+image: Base Support.png
+title: Cahier des charges
+subtitle: Contraintes et attendus de la catapulte
+description: "Dimensions, matériaux, sécurité, documentation : les contraintes de la catapulte et ce qui est attendu de chaque binôme."
 tags: medieval-challenge
 ---
 

@@ -14,21 +14,25 @@ project_tags:
   - Laser cutting
   - 3D printing
 description: "Design and build a working medieval catapult for the MakerSpace inter-student tournament. A challenge combining mechanics, digital fabrication and creativity."
-special_section_label: Tournament
-special_section_icon: fas fa-chess-rook
-special_section_desc: "The rules of the final tournament, where each catapult will have to show what it can do."
-specials:
-  - /workshops/medieval-challenge/concepts/medieval-challenge/tournament/
-tutorials:
+special_sections:
+  - label: Rules
+    icon: fas fa-chess-rook
+    large: true
+    desc: "The catapult specifications and the rules of the final tournament: read them before designing."
+    items:
+      - /workshops/medieval-challenge/concepts/medieval-challenge/informations/
+      - /workshops/medieval-challenge/concepts/medieval-challenge/tournament/
+how_to_guides:
   - /docs/tutorials/production/imprimer-une-piece/
   - /docs/tutorials/production/laser-cut-makeblock/
-how_to_guides:
-  - /docs/how-to-guides/integrer_insert/
-  - /docs/how-to-guides/tuto-vis/
+  - /docs/how-to-guides/fasteners-guide/
+  - /docs/how-to-guides/3d-printing-insert/
 software:
   - /docs/references/software/algodoo/
   - /docs/references/software/507movements/
   - /docs/references/software/motiongen/
+ressources:
+  - /ressources/tools/general/simulateur-vernier/
 ---
 
 ## About the project

@@ -6,9 +6,10 @@ doc_header: false
 component_toc: true
 hero_image: isocontours.png
 hero_darken: true
-image: isocontours.png
-title: Project information
-subtitle: Everything you need to know
+image: Base Support.png
+title: Specifications
+subtitle: Constraints and expectations for the catapult
+description: "Dimensions, materials, safety, documentation: the constraints on the catapult and what each pair is expected to deliver."
 tags: medieval-challenge
 ---
 

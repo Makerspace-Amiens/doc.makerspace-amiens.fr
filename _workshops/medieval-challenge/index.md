@@ -13,21 +13,25 @@ project_tags:
   - Découpe laser
   - Impression 3D
 description: "Concevez et construisez une catapulte médiévale fonctionnelle pour le tournoi inter-étudiants du MakerSpace. Un défi mêlant mécanique, fabrication numérique et créativité."
-special_section_label: Tournoi
-special_section_icon: fas fa-chess-rook
-special_section_desc: "Le règlement du tournoi final où chaque catapulte devra démontrer ses capacités."
-specials:
-  - /workshops/medieval-challenge/concepts/medieval-challenge/tournament/
-tutorials:
+special_sections:
+  - label: Règlement
+    icon: fas fa-chess-rook
+    large: true
+    desc: "Le cahier des charges de la catapulte et les règles du tournoi final : à lire avant de concevoir."
+    items:
+      - /workshops/medieval-challenge/concepts/medieval-challenge/informations/
+      - /workshops/medieval-challenge/concepts/medieval-challenge/tournament/
+how_to_guides:
   - /docs/tutorials/production/imprimer-une-piece/
   - /docs/tutorials/production/laser-cut-makeblock/
-how_to_guides:
-  - /docs/how-to-guides/integrer_insert/
-  - /docs/how-to-guides/tuto-vis/
+  - /docs/how-to-guides/fasteners-guide/
+  - /docs/how-to-guides/3d-printing-insert/
 software:
   - /docs/references/software/algodoo/
   - /docs/references/software/507movements/
   - /docs/references/software/motiongen/
+ressources:
+  - /ressources/tools/general/simulateur-vernier/
 ---
 
 ## À propos du projet
