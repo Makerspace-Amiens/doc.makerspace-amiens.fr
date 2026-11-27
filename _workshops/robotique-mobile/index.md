@@ -24,6 +24,7 @@ concepts:
   - /docs/concepts/reseau-wifi-websocket/
 
 tutorials:
+  - /docs/tutorials/electronics/souder-connecteur-xt60/
   - /docs/tutorials/electronics/servomotor/
   - /docs/tutorials/electronics/a4988-stepper-driver/
   - /docs/tutorials/electronics/remoteXY/
