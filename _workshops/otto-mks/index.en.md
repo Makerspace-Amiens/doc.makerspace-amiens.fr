@@ -41,8 +41,8 @@ tutorials:
   - /docs/tutorials/electronics/remoteXY/
 how_to_guides:
   - /docs/how-to-guides/design-rules/
-  - /docs/how-to-guides/integrer_insert/
-  - /docs/how-to-guides/tuto-vis/
+  - /docs/how-to-guides/3d-printing-insert/
+  - /docs/how-to-guides/fasteners-guide/
   - /docs/how-to-guides/print-troubleshooting/
 ressources:
   - /workshops/otto-mks/references/otto-official/
